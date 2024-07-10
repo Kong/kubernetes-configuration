@@ -1,0 +1,292 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.15.0
+  name: kongservices.configuration.konghq.com
+spec:
+  group: configuration.konghq.com
+  names:
+    kind: KongService
+    listKind: KongServiceList
+    plural: kongservices
+    singular: kongservice
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - description: Host of the service
+      jsonPath: .spec.host
+      name: Host
+      type: string
+    - description: Protocol of the service
+      jsonPath: .spec.procol
+      name: Protocol
+      type: string
+    - description: The Resource is Programmed on Konnect
+      jsonPath: .status.conditions[?(@.type=='Programmed')].status
+      name: Programmed
+      type: string
+    - description: Konnect ID
+      jsonPath: .status.id
+      name: ID
+      type: string
+    - description: Konnect Organization ID this resource belongs to.
+      jsonPath: .status.organizationID
+      name: OrgID
+      type: string
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: KongService is the schema for Services API which defines a Kong
+          Service.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: KongServiceSpec defines specification of a Kong Route.
+            properties:
+              connect_timeout:
+                description: The timeout in milliseconds for establishing a connection
+                  to the upstream server.
+                format: int64
+                type: integer
+              controlPlaneRef:
+                description: ControlPlaneRef is a reference to a ControlPlane this
+                  Route is associated with.
+                properties:
+                  kic:
+                    description: TODO(pmalek)
+                    type: object
+                  konnectID:
+                    description: TODO(pmalek)
+                    type: string
+                  konnectNamespacedRef:
+                    description: |-
+                      KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster.
+                      It contains the name of the Konnect Control Plane and the namespace in which it exists.
+                      If the namespace is not provided, it is assumed that the Konnect Control Plane
+                      is in the same namespace as the resource that references it.
+                    properties:
+                      name:
+                        type: string
+                      namespace:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type:
+                    description: |-
+                      Type can be one of:
+                      - konnectID
+                      - konnectNamespacedRef
+                      - kic
+                    type: string
+                type: object
+              enabled:
+                description: 'Whether the Service is active. If set to `false`, the
+                  proxy behavior will be as if any routes attached to it do not exist
+                  (404). Default: `true`.'
+                type: boolean
+              host:
+                description: The host of the upstream server. Note that the host value
+                  is case sensitive.
+                type: string
+              konnect:
+                properties:
+                  authRef:
+                    description: |-
+                      APIAuthConfigurationRef is the reference to the API Auth Configuration
+                      that should be used for this Konnect Configuration.
+                    properties:
+                      name:
+                        description: Name is the name of the KonnectAPIAuthConfiguration
+                          resource.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                    x-kubernetes-validations:
+                    - message: authRef is immutable
+                      rule: self == oldSelf
+                type: object
+              name:
+                description: The Service name.
+                type: string
+              path:
+                description: The path to be used in requests to the upstream server.
+                type: string
+              port:
+                description: The upstream server port.
+                format: int64
+                type: integer
+              protocol:
+                description: The protocol used to communicate with the upstream.
+                type: string
+              read_timeout:
+                description: The timeout in milliseconds between two successive read
+                  operations for transmitting a request to the upstream server.
+                format: int64
+                type: integer
+              retries:
+                description: The number of retries to execute upon failure to proxy.
+                format: int64
+                type: integer
+              tags:
+                description: An optional set of strings associated with the Service
+                  for grouping and filtering.
+                items:
+                  type: string
+                type: array
+              tls_verify:
+                description: Whether to enable verification of upstream server TLS
+                  certificate. If set to `null`, then the Nginx default is respected.
+                type: boolean
+              tls_verify_depth:
+                description: Maximum depth of chain while verifying Upstream server's
+                  TLS certificate. If set to `null`, then the Nginx default is respected.
+                format: int64
+                type: integer
+              url:
+                description: Helper field to set `protocol`, `host`, `port` and `path`
+                  using a URL. This field is write-only and is not returned in responses.
+                type: string
+              write_timeout:
+                description: The timeout in milliseconds between two successive write
+                  operations for transmitting a request to the upstream server.
+                format: int64
+                type: integer
+            required:
+            - controlPlaneRef
+            - host
+            type: object
+          status:
+            description: KongServiceStatus represents the current status of the Kong
+              Service resource.
+            properties:
+              conditions:
+                default:
+                - lastTransitionTime: "1970-01-01T00:00:00Z"
+                  message: Waiting for controller
+                  reason: Pending
+                  status: Unknown
+                  type: Programmed
+                description: Conditions describe the status of the Konnect entity.
+                items:
+                  description: "Condition contains details for one aspect of the current
+                    state of this API Resource.\n---\nThis struct is intended for
+                    direct use as an array at the field path .status.conditions.  For
+                    example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the
+                    observations of a foo's current state.\n\t    // Known .status.conditions.type
+                    are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    //
+                    +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t
+                    \   // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\"
+                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t
+                    \   // other fields\n\t}"
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: |-
+                        type of condition in CamelCase or in foo.example.com/CamelCase.
+                        ---
+                        Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be
+                        useful (see .node.status.conditions), the ability to deconflict is important.
+                        The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                maxItems: 8
+                minItems: 1
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              controlPlaneID:
+                description: |-
+                  ControlPlaneID is the unique identifier of the ControlPlane this Route is associated with.
+                  This is currently only set for Konnect Control Planes.
+                type: string
+              id:
+                description: |-
+                  KonnectID is the unique identifier of the Konnect entity as assigned by Konnect API.
+                  If it's unset (empty string), it means the Konnect entity hasn't been created yet.
+                type: string
+              organizationID:
+                description: OrgID is ID of Konnect Org that this entity has been
+                  created in.
+                type: string
+              serverURL:
+                description: ServerURL is the URL of the Konnect server in which the
+                  entity exists.
+                type: string
+            type: object
+        required:
+        - spec
+        type: object
+        x-kubernetes-validations:
+        - message: Konnect Configuration's API auth ref reference is required once
+            set
+          rule: '!has(oldSelf.spec.konnect.authRef) || has(self.spec.konnect.authRef)'
+    served: true
+    storage: true
+    subresources:
+      status: {}
