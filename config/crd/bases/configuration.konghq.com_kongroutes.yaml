@@ -19,14 +19,6 @@ spec:
       jsonPath: .status.conditions[?(@.type=='Programmed')].status
       name: Programmed
       type: string
-    - description: Konnect ID
-      jsonPath: .status.id
-      name: ID
-      type: string
-    - description: Konnect Organization ID this resource belongs to.
-      jsonPath: .status.organizationID
-      name: OrgID
-      type: string
     name: v1alpha1
     schema:
       openAPIV3Schema:
