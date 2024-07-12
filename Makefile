@@ -89,6 +89,13 @@ yq: mise # Download yq locally if necessary.
 	@$(MAKE) mise-plugin-install DEP=yq
 	@$(MAKE) mise-install DEP_VER=yq@$(YQ_VERSION)
 
+CRD_REF_DOCS_VERSION = $(shell yq -ojson -r '.crd-ref-docs' < $(TOOLS_VERSIONS_FILE))
+CRD_REF_DOCS = $(PROJECT_DIR)/bin/crd-ref-docs
+.PHONY: crd-ref-docs
+crd-ref-docs: ## Download crd-ref-docs locally if necessary.
+	GOBIN=$(PROJECT_DIR)/bin go install -v \
+		github.com/elastic/crd-ref-docs@v$(CRD_REF_DOCS_VERSION)
+
 # ------------------------------------------------------------------------------
 # Verify steps
 # ------------------------------------------------------------------------------
@@ -112,29 +119,22 @@ verify.manifests: verify.repo manifests verify.diff
 verify.generators: verify.repo generate verify.diff
 
 # ------------------------------------------------------------------------------
-# Build - Manifests
+# Build - Generators
 # ------------------------------------------------------------------------------
 
 CRD_GEN_PATHS ?= ./api/configuration/...
 CRD_INCUBATOR_GEN_PATHS ?= ./api/incubator/...
 CRD_OPTIONS ?= "+crd:allowDangerousTypes=true"
 
-.PHONY: manifests
-manifests: manifests.crds manifests.webhook
-
-.PHONY: manifests.crds
-manifests.crds: controller-gen ## Generate WebhookConfiguration and CustomResourceDefinition objects.
-	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=kong-ingress webhook paths="$(CRD_INCUBATOR_GEN_PATHS)" output:crd:artifacts:config=config/crd/incubator
-	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=kong-ingress webhook paths="$(CRD_GEN_PATHS)" output:crd:artifacts:config=config/crd/bases
-
-# ------------------------------------------------------------------------------
-# Build - Generators
-# ------------------------------------------------------------------------------
-
 API_DIR ?= api
 
 .PHONY: generate
-generate: generate.deepcopy generate.clientsets generate.docs generate.go
+generate: generate.crds generate.deepcopy generate.clientsets generate.docs
+
+.PHONY: generate.crds
+generate.crds: controller-gen ## Generate WebhookConfiguration and CustomResourceDefinition objects.
+	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=kong-ingress webhook paths="$(CRD_INCUBATOR_GEN_PATHS)" output:crd:artifacts:config=config/crd/incubator
+	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=kong-ingress webhook paths="$(CRD_GEN_PATHS)" output:crd:artifacts:config=config/crd/bases
 
 .PHONY: generate.deepcopy
 generate.deepcopy: controller-gen
@@ -156,16 +156,16 @@ generate.clientsets: client-gen
 		--output-pkg $(REPO_URL)/pkg/
 
 .PHONY: generate.docs
-generate.docs: generate.apidocs generate.cli-arguments-docs
+generate.docs: generate.apidocs # generate.cli-arguments-docs
 
 .PHONY: generate.apidocs
 generate.apidocs: crd-ref-docs
 	./scripts/apidocs-gen/generate.sh $(CRD_REF_DOCS)
 
-.PHONY: generate.cli-arguments
-generate.cli-arguments-docs:
-	go run ./scripts/cli-arguments-docs-gen/main.go > ./docs/cli-arguments.md
-
-.PHONY: generate.go
-generate.go:
-	go generate ./...
+# NOTE(pmalek): We can't generate CLI args docs because the tool at 
+# https://github.com/Kong/kubernetes-ingress-controller/blob/513db87cbf94ce66207f74365b502e8cde841357/scripts/cli-arguments-docs-gen/main.go
+#
+# relies on an internal KIC package. We could solve this by exportint the internal/manager package.
+# .PHONY: generate.cli-arguments
+# generate.cli-arguments-docs:
+# 	go run ./scripts/cli-arguments-docs-gen/main.go > ./docs/cli-arguments.md

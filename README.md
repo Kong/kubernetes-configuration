@@ -2,11 +2,7 @@
 
 This repository holds the API definitions for Kong's Kubernetes configuration.
 
-<<<<<<< HEAD
 > 👷 🚧 This is currently a work in progress which is heavily based on [Kong's Ingress Controller][kic] CRDs
-=======
-> This is currently a work in progress which is heavily based on [Kong's Ingress Controller][kic] CRDs
->>>>>>> 09eb63c (chore: first generation)
 > Before KIC starts using these CRDs this repo should contain only additive,
 > non-breaking changes on top of KIC's types.
 
@@ -29,6 +25,10 @@ In order to install the CRDs from this repo:
 ```terminal
 kustomize build github.com/kong/kubernetes-configuration/config/crd | kubectl apply -f -
 ```
+
+## Generate code
+
+In order to run code generation in this repo you can use `make generate`.
 
 ## Adding new CRDs
 
