@@ -73,6 +73,61 @@ spec:
             type: string
           metadata:
             type: object
+          spec:
+            properties:
+              controlPlaneRef:
+                description: ControlPlaneRef is a reference to a ControlPlane this
+                  Route is associated with.
+                properties:
+                  kic:
+                    description: TODO(pmalek)
+                    type: object
+                  konnectID:
+                    description: TODO(pmalek)
+                    type: string
+                  konnectNamespacedRef:
+                    description: |-
+                      KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster.
+                      It contains the name of the Konnect Control Plane and the namespace in which it exists.
+                      If the namespace is not provided, it is assumed that the Konnect Control Plane
+                      is in the same namespace as the resource that references it.
+                    properties:
+                      name:
+                        type: string
+                      namespace:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type:
+                    description: |-
+                      Type can be one of:
+                      - konnectID
+                      - konnectNamespacedRef
+                      - kic
+                    type: string
+                type: object
+              konnect:
+                description: KonnectConfiguration holds the Konnect configuration
+                  like authentication configuration.
+                properties:
+                  authRef:
+                    description: |-
+                      APIAuthConfigurationRef is the reference to the API Auth Configuration
+                      that should be used for this Konnect Configuration.
+                    properties:
+                      name:
+                        description: Name is the name of the KonnectAPIAuthConfiguration
+                          resource.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                    x-kubernetes-validations:
+                    - message: authRef is immutable
+                      rule: self == oldSelf
+                type: object
+            type: object
           status:
             description: Status represents the current status of the KongConsumer
               resource.
@@ -164,6 +219,27 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              konnect:
+                description: Konnect contains the Konnect entity status.
+                properties:
+                  controlPlaneID:
+                    description: ControlPlaneID is the Konnect ID of the ControlPlane
+                      this Route is associated with.
+                    type: string
+                  id:
+                    description: |-
+                      ID is the unique identifier of the Konnect entity as assigned by Konnect API.
+                      If it's unset (empty string), it means the Konnect entity hasn't been created yet.
+                    type: string
+                  organizationID:
+                    description: OrgID is ID of Konnect Org that this entity has been
+                      created in.
+                    type: string
+                  serverURL:
+                    description: ServerURL is the URL of the Konnect server in which
+                      the entity exists.
+                    type: string
+                type: object
             type: object
           username:
             description: Username is a Kong cluster-unique username of the consumer.

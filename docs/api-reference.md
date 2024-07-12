@@ -55,6 +55,7 @@ KongConsumer is the Schema for the kongconsumers API.
 | `custom_id` _string_ | CustomID is a Kong cluster-unique existing ID for the consumer - useful for mapping Kong with users in your existing database. |
 | `credentials` _string array_ | Credentials are references to secrets containing a credential to be provisioned in Kong. |
 | `consumerGroups` _string array_ | ConsumerGroups are references to consumer groups (that consumer wants to be part of) provisioned in Kong. |
+| `spec` _[KongConsumerSpec](#kongconsumerspec)_ |  |
 
 
 
@@ -143,6 +144,22 @@ _Appears in:_
 - [KongPlugin](#kongplugin)
 
 
+
+#### KongConsumerSpec
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this Route is associated with. |
+| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration holds the Konnect configuration like authentication configuration. |
+
+
+_Appears in:_
+- [KongConsumer](#kongconsumer)
 
 
 
@@ -453,6 +470,7 @@ In this section you will find types that the CRDs rely on.
 
 
 _Appears in:_
+- [KongConsumerSpec](#kongconsumerspec)
 - [KongRouteSpec](#kongroutespec)
 - [KongServiceSpec](#kongservicespec)
 
@@ -615,7 +633,7 @@ KongRouteSpec defines specification of a Kong Route.
 | --- | --- |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this Route is associated with. |
 | `serviceRef` _[ServiceRef](#serviceref)_ | ServiceRef is a reference to a Service this Route is associated with. |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
+| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration holds the Konnect configuration like authentication configuration. |
 | `destinations` _CreateRouteDestinations array_ | A list of IP destinations of incoming connections that match this Route when using stream routing. Each entry is an object with fields "ip" (optionally in CIDR range notation) and/or "port". |
 | `headers` _object (keys:string, values:string)_ | One or more lists of values indexed by header name that will cause this Route to match if present in the request. The `Host` header cannot be used with this attribute: hosts should be specified using the `hosts` attribute. When `headers` contains only one value and that value starts with the special prefix `~*`, the value is interpreted as a regular expression. |
 | `hosts` _string array_ | A list of domain names that match this Route. Note that the hosts value is case sensitive. |
@@ -678,7 +696,7 @@ KongServiceSpec defines specification of a Kong Route.
 | Field | Description |
 | --- | --- |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this Route is associated with. |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
+| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration holds the Konnect configuration like authentication configuration. |
 | `url` _string_ | Helper field to set `protocol`, `host`, `port` and `path` using a URL. This field is write-only and is not returned in responses. |
 | `connect_timeout` _integer_ | The timeout in milliseconds for establishing a connection to the upstream server. |
 | `enabled` _boolean_ | Whether the Service is active. If set to `false`, the proxy behavior will be as if any routes attached to it do not exist (404). Default: `true`. |
@@ -766,6 +784,7 @@ _Appears in:_
 
 
 _Appears in:_
+- [KongConsumerSpec](#kongconsumerspec)
 - [KongRouteSpec](#kongroutespec)
 - [KongServiceSpec](#kongservicespec)
 
@@ -778,14 +797,51 @@ _Appears in:_
 
 | Field | Description |
 | --- | --- |
-| `id` _string_ | KonnectID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
 | `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
 | `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-| `conditions` _[Condition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#condition-v1-meta) array_ | Conditions describe the status of the Konnect entity. |
+
+
+_Appears in:_
+- [KonnectEntityStatusWithControlPlaneAndServiceRefs](#konnectentitystatuswithcontrolplaneandservicerefs)
+- [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
+
+#### KonnectEntityStatusWithControlPlaneAndServiceRefs
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with. |
+| `serviceID` _string_ | ServiceID is the Konnect ID of the Service this entity is associated with. |
 
 
 _Appears in:_
 - [KongRouteStatus](#kongroutestatus)
+
+#### KonnectEntityStatusWithControlPlaneRef
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this Route is associated with. |
+
+
+_Appears in:_
+- [KongConsumerStatus](#kongconsumerstatus)
 - [KongServiceStatus](#kongservicestatus)
 
 #### KonnectNamespacedRef
