@@ -31,6 +31,7 @@ type ConfigurationV1alpha1Interface interface {
 	IngressClassParametersesGetter
 	KongCustomEntitiesGetter
 	KongLicensesGetter
+	KongPluginBindingsGetter
 	KongRoutesGetter
 	KongServicesGetter
 	KongVaultsGetter
@@ -52,6 +53,10 @@ func (c *ConfigurationV1alpha1Client) KongCustomEntities(namespace string) KongC
 
 func (c *ConfigurationV1alpha1Client) KongLicenses() KongLicenseInterface {
 	return newKongLicenses(c)
+}
+
+func (c *ConfigurationV1alpha1Client) KongPluginBindings(namespace string) KongPluginBindingInterface {
+	return newKongPluginBindings(c, namespace)
 }
 
 func (c *ConfigurationV1alpha1Client) KongRoutes(namespace string) KongRouteInterface {
