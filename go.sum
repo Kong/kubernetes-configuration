@@ -1,5 +1,5 @@
-github.com/Kong/sdk-konnect-go v0.0.0-20240710152204-959c7a212f74 h1:8Q5EOCmKqZIdeaCraMPPUK7rS3YXiJkd1GKrURZfPME=
-github.com/Kong/sdk-konnect-go v0.0.0-20240710152204-959c7a212f74/go.mod h1:75YzLhfnYfmCvBJgkafzVuREwBAec2/jihCW2fyn6hY=
+github.com/Kong/sdk-konnect-go v0.0.0-20240723160412-999d9a987e1a h1:0mQhPVVA2/+uTVmoKrEIGf+0eTrNyr80Ssv1zGs/1Lk=
+github.com/Kong/sdk-konnect-go v0.0.0-20240723160412-999d9a987e1a/go.mod h1:ipu67aQNnwDzu/LXKePG46cVqkkZnAHKWpsbhTEI8xE=
 github.com/cenkalti/backoff/v4 v4.3.0 h1:MyRJ/UdXutAwSAT+s3wNd7MfTIcy71VQueUuFK343L8=
 github.com/cenkalti/backoff/v4 v4.3.0/go.mod h1:Y3VNntkOUPxTVeUxJ/G5vcM//AlwfmyYozVcomhLiZE=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
