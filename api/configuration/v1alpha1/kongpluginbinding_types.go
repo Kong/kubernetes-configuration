@@ -101,6 +101,7 @@ type KongReferences struct {
 type PluginRef struct {
 	// TODO(mattia): What about cross-namespace references? Do we want to introduce a namespace field
 	// to allow such a reference? We could allow it and require a RefGrant.
+	// https://github.com/Kong/kubernetes-configuration/issues/9
 
 	// Name is the name of the KongPlugin or KongClusterPlugin resource.
 	// +kubebuilder:validation:Required
