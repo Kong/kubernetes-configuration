@@ -33,10 +33,6 @@ import (
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Plugin-kind",type=string,JSONPath=`.spec.pluginReference.kind`,description="Kind of the plugin"
 // +kubebuilder:printcolumn:name="Plugin-name",type=string,JSONPath=`.spec.pluginReference.name`,description="Name of the plugin"
-// +kubebuilder:printcolumn:name="Kong-Service",type=string,JSONPath=`.spec.kong.serviceReference.name`,description="Service name"
-// +kubebuilder:printcolumn:name="Kong-Route",type=string,JSONPath=`.spec.kong.routeReference.name`,description="Route name"
-// +kubebuilder:printcolumn:name="Kong-Consumer",type=string,JSONPath=`.spec.kong.consumerReference.name`,description="Consumer name"
-// +kubebuilder:printcolumn:name="Kong-ConsumerGroup",type=string,JSONPath=`.spec.kong.consumerGroupReference.name`,description="ConsumerGroup name"
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
 type KongPluginBinding struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -73,7 +69,7 @@ type KongPluginBindingSpec struct {
 	Kong *KongReferences `json:"kong,omitempty"`
 
 	// Let's defer this one to the future as we are not sure about the shape we want to give it.
-	//EntityReference        *GenericEntityRef `json:"genericEntityRef,omitempty"`
+	// EntityReference        *GenericEntityRef `json:"genericEntityRef,omitempty"`
 }
 
 type KongReferences struct {
