@@ -31,6 +31,7 @@ import (
 // +kubebuilder:printcolumn:name="Plugin-kind",type=string,JSONPath=`.spec.pluginReference.kind`,description="Kind of the plugin"
 // +kubebuilder:printcolumn:name="Plugin-name",type=string,JSONPath=`.spec.pluginReference.name`,description="Name of the plugin"
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
+// +kubebuilder:validation:XValidation:rule="(has(self.spec.kong.consumerRef) && has(self.spec.kong.routeRef) && has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.consumerGroupRef) && has(self.spec.kong.serviceRef) && has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerRef)) || (has(self.spec.kong.consumerRef) && has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerGroupRef) && !has(self.spec.kong.serviceRef)) || (has(self.spec.kong.consumerRef) && has(self.spec.kong.serviceRef) && !has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.consumerGroupRef) && has(self.spec.kong.routeRef) && !has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerRef)) || (has(self.spec.kong.consumerGroupRef) && has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerRef) && !has(self.spec.kong.routeRef)) || (has(self.spec.kong.routeRef) && has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerRef) && !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.consumerRef) && !has(self.spec.kong.serviceRef) && !has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.consumerGroupRef) && !has(self.spec.kong.serviceRef) && !has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerRef)) || (has(self.spec.kong.routeRef) && !has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerRef) && !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.serviceRef) && !has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerGroupRef) && !has(self.spec.kong.consumerRef))", message="The combinations of entities set is not allowed"
 type KongPluginBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -90,8 +91,6 @@ type KongPluginBindingSpec struct {
 
 type KongReferences struct {
 	// TODO(mlavacca): add validation that at least one of the following field is properly set.
-	// TODO(mlavacca): add validation to ensure that when genericEntityReference is set, no other reference is set.
-
 	RouteReference         *EntityRef `json:"routeRef,omitempty"`
 	ServiceReference       *EntityRef `json:"serviceRef,omitempty"`
 	ConsumerReference      *EntityRef `json:"consumerRef,omitempty"`

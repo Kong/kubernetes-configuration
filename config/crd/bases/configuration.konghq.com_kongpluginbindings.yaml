@@ -92,6 +92,8 @@ spec:
                     - name
                     type: object
                   routeRef:
+                    description: 'TODO(mlavacca): add validation that at least one
+                      of the following field is properly set.'
                     properties:
                       name:
                         description: Name is the name of the entity.
@@ -244,6 +246,30 @@ spec:
         required:
         - spec
         type: object
+        x-kubernetes-validations:
+        - message: The combinations of entities set is not allowed
+          rule: (has(self.spec.kong.consumerRef) && has(self.spec.kong.routeRef) &&
+            has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerGroupRef))
+            || (has(self.spec.kong.consumerGroupRef) && has(self.spec.kong.serviceRef)
+            && has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerRef)) ||
+            (has(self.spec.kong.consumerRef) && has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerGroupRef)
+            && !has(self.spec.kong.serviceRef)) || (has(self.spec.kong.consumerRef)
+            && has(self.spec.kong.serviceRef) && !has(self.spec.kong.routeRef) &&
+            !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.consumerGroupRef)
+            && has(self.spec.kong.routeRef) && !has(self.spec.kong.serviceRef) &&
+            !has(self.spec.kong.consumerRef)) || (has(self.spec.kong.consumerGroupRef)
+            && has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerRef)
+            && !has(self.spec.kong.routeRef)) || (has(self.spec.kong.routeRef) &&
+            has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerRef) &&
+            !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.consumerRef)
+            && !has(self.spec.kong.serviceRef) && !has(self.spec.kong.routeRef) &&
+            !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.consumerGroupRef)
+            && !has(self.spec.kong.serviceRef) && !has(self.spec.kong.routeRef) &&
+            !has(self.spec.kong.consumerRef)) || (has(self.spec.kong.routeRef) &&
+            !has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerRef) &&
+            !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.serviceRef)
+            && !has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerGroupRef)
+            && !has(self.spec.kong.consumerRef))
     served: true
     storage: true
     subresources:
