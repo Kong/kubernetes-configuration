@@ -20,9 +20,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// TODO(pmalek): expression field is not in OpenAPI spec but error message references it:
-//   when protocols has 'http', at least one of 'hosts', 'methods', 'paths', 'headers' or 'expression' must be set
-
 // KongPluginBinding is the schema for Plugin Bindings API which defines a Kong Plugin Binding.
 //
 // +genclient
