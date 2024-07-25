@@ -524,8 +524,6 @@ _Appears in:_
 _Appears in:_
 - [KongReferences](#kongreferences)
 
-
-
 #### Group
 _Underlying type:_ `string`
 

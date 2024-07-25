@@ -117,20 +117,20 @@ type EntityRef struct {
 	Name string `json:"name"`
 }
 
-type GenericEntityRef struct {
-	// Name is the name of the generic entity.
-	// +kubebuilder:validation:Required
-	Name string `json:"name"`
+// type GenericEntityRef struct {
+// 	// Name is the name of the generic entity.
+// 	// +kubebuilder:validation:Required
+// 	Name string `json:"name"`
 
-	// kind is the kind of the entity.
-	// +kubebuilder:validation:Enum=Service;HTTPRoute;GCPRoute;TLSRoute;TCPRoute;UDPRoute;Ingress
-	Kind string `json:"kind"`
+// 	// kind is the kind of the entity.
+// 	// +kubebuilder:validation:Enum=Service;HTTPRoute;GCPRoute;TLSRoute;TCPRoute;UDPRoute;Ingress
+// 	Kind string `json:"kind"`
 
-	// TODO(mlavacca): add cross-field validation. Kind can be set depending on the group.
-	// Group is the group of the entity.
-	// +kubebuilder:validation:Enum="";core;gateway.networking.k8s.io;networking.k8s.io
-	Group string `json:"group"`
-}
+// 	// TODO(mlavacca): add cross-field validation. Kind can be set depending on the group.
+// 	// Group is the group of the entity.
+// 	// +kubebuilder:validation:Enum="";core;gateway.networking.k8s.io;networking.k8s.io
+// 	Group string `json:"group"`
+// }
 
 // KongPluginBindingStatus represents the current status of the KongBinding resource.
 type KongPluginBindingStatus struct {
