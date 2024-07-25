@@ -106,7 +106,7 @@ verify.repo:
 
 .PHONY: verify.diff
 verify.diff:
-	./scripts/verify-diff.sh
+	@$(PROJECT_DIR)/scripts/verify-diff.sh $(PROJECT_DIR)
 
 .PHONY: verify.versions
 verify.versions:
@@ -169,3 +169,12 @@ generate.apidocs: crd-ref-docs
 # .PHONY: generate.cli-arguments
 # generate.cli-arguments-docs:
 # 	go run ./scripts/cli-arguments-docs-gen/main.go > ./docs/cli-arguments.md
+
+# Install CRDs into the K8s cluster specified in ~/.kube/config.
+.PHONY: install
+install: generate.crds kustomize
+	$(KUSTOMIZE) build config/crd | kubectl apply -f -
+
+.PHONY: test.samples
+test.samples: kustomize
+	find ./config/samples -not -name "kustomization.*" -type f | sort | xargs -I{} bash -c "kubectl apply -f {}; kubectl delete -f {}"
