@@ -9,6 +9,7 @@ resources:
 - bases/configuration.konghq.com_kongconsumergroups.yaml
 - bases/configuration.konghq.com_kongingresses.yaml
 - bases/configuration.konghq.com_kongplugins.yaml
+- bases/configuration.konghq.com_kongpluginbindings.yaml
 - bases/configuration.konghq.com_ingressclassparameterses.yaml
 - bases/configuration.konghq.com_kongupstreampolicies.yaml
 - bases/configuration.konghq.com_kongvaults.yaml
