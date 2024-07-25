@@ -33,7 +33,7 @@ import (
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Plugin-kind",type=string,JSONPath=`.spec.pluginReference.kind`,description="Kind of the plugin"
 // +kubebuilder:printcolumn:name="Plugin-name",type=string,JSONPath=`.spec.pluginReference.name`,description="Name of the plugin"
-// +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
+// +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
 type KongPluginBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -65,10 +65,29 @@ type KongPluginBindingSpec struct {
 	// PluginReference is a reference to the KongPlugin or KongClusterPlugin resource. It is required
 	PluginReference PluginRef `json:"pluginRef"`
 
-	// Kong contains the Kong entity references.
+	// Kong contains the Kong entity references. It is possible to set multiple combinations
+	// of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence
+	// The complete order of precedence for plugins configured to multiple entities is:
+	// 1. Consumer + route + service
+	// 2. Consumer group + service + route
+	// 3. Consumer + route
+	// 4. Consumer + service
+	// 5. Consumer group + route
+	// 6. Consumer group + service
+	// 7. Route + service
+	// 8. Consumer
+	// 9. Consumer group
+	// 10. Route
+	// 11. Service
+	// 12. Global
+	// TODO(mlavacca): we need to figure out how to deal with global plugins. By means of this new API,
+	// KongClusterPlugin can be replaced by kongPluginBindings with no Kong references. This way we'd be
+	// more coherent with the Konnect approach.
+	// https://github.com/Kong/kubernetes-configuration/issues/7
 	Kong *KongReferences `json:"kong,omitempty"`
 
-	// Let's defer this one to the future as we are not sure about the shape we want to give it.
+	// TODO(mlavacca): let's defer this one to the future as we are not sure about the shape we want to give it.
+	// https://github.com/Kong/kubernetes-configuration/issues/8
 	// EntityReference        *GenericEntityRef `json:"genericEntityRef,omitempty"`
 }
 

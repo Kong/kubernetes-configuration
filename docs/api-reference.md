@@ -633,7 +633,7 @@ KongPluginBindingSpec defines specification of a KongPluginBinding.
 | Field | Description |
 | --- | --- |
 | `pluginRef` _[PluginRef](#pluginref)_ | PluginReference is a reference to the KongPlugin or KongClusterPlugin resource. It is required |
-| `kong` _[KongReferences](#kongreferences)_ | Kong contains the Kong entity references. |
+| `kong` _[KongReferences](#kongreferences)_ | Kong contains the Kong entity references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete order of precedence for plugins configured to multiple entities is: 1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service 12. Global TODO(mlavacca): we need to figure out how to deal with global plugins. By means of this new API, KongClusterPlugin can be replaced by kongPluginBindings with no Kong references. This way we'd be more coherent with the Konnect approach. https://github.com/Kong/kubernetes-configuration/issues/7 |
 
 
 _Appears in:_
