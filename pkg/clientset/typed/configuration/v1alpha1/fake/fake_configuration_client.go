@@ -40,6 +40,10 @@ func (c *FakeConfigurationV1alpha1) KongLicenses() v1alpha1.KongLicenseInterface
 	return &FakeKongLicenses{c}
 }
 
+func (c *FakeConfigurationV1alpha1) KongPluginBindings(namespace string) v1alpha1.KongPluginBindingInterface {
+	return &FakeKongPluginBindings{c, namespace}
+}
+
 func (c *FakeConfigurationV1alpha1) KongRoutes(namespace string) v1alpha1.KongRouteInterface {
 	return &FakeKongRoutes{c, namespace}
 }

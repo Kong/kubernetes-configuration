@@ -1,0 +1,15 @@
+apiVersion: configuration.konghq.com/v1alpha1
+kind: KongPluginBinding
+metadata:
+  generation: 1
+  name: sample-1
+spec:
+  pluginRef:
+    name: plugin-sample
+  kong:
+    consumerRef:
+      name: consumer-sample
+    serviceRef:
+      name: service-sample
+    routeRef:
+      name: route-sample

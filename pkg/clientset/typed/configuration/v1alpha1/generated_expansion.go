@@ -24,6 +24,8 @@ type KongCustomEntityExpansion interface{}
 
 type KongLicenseExpansion interface{}
 
+type KongPluginBindingExpansion interface{}
+
 type KongRouteExpansion interface{}
 
 type KongServiceExpansion interface{}

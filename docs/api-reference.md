@@ -332,6 +332,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [IngressClassParameters](#ingressclassparameters)
 - [KongCustomEntity](#kongcustomentity)
 - [KongLicense](#konglicense)
+- [KongPluginBinding](#kongpluginbinding)
 - [KongRoute](#kongroute)
 - [KongService](#kongservice)
 - [KongVault](#kongvault)
@@ -382,6 +383,22 @@ KongLicense stores a Kong enterprise license to apply to managed Kong gateway in
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `rawLicenseString` _string_ | RawLicenseString is a string with the raw content of the license. |
 | `enabled` _boolean_ | Enabled is set to true to let controllers (like KIC or KGO) to reconcile it. Default value is true to apply the license by default. |
+
+
+
+### KongPluginBinding
+
+
+KongPluginBinding is the schema for Plugin Bindings API which defines a Kong Plugin Binding.
+
+<!-- kong_plugin_binding description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongPluginBinding`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongPluginBindingSpec](#kongpluginbindingspec)_ |  |
 
 
 
@@ -492,6 +509,21 @@ _Appears in:_
 _Appears in:_
 - [KongLicenseControllerStatus](#konglicensecontrollerstatus)
 
+#### EntityRef
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the entity. |
+
+
+_Appears in:_
+- [KongReferences](#kongreferences)
+
 #### Group
 _Underlying type:_ `string`
 
@@ -588,6 +620,42 @@ _Appears in:_
 
 
 
+
+#### KongPluginBindingSpec
+
+
+KongPluginBindingSpec defines specification of a KongPluginBinding.
+
+
+
+| Field | Description |
+| --- | --- |
+| `pluginRef` _[PluginRef](#pluginref)_ | PluginReference is a reference to the KongPlugin or KongClusterPlugin resource. It is required |
+| `kong` _[KongReferences](#kongreferences)_ | Kong contains the Kong entity references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br /> 1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service 12. Global<br /><br /> TODO(mlavacca): we need to figure out how to deal with global plugins. By means of this new API, KongClusterPlugin can be replaced by kongPluginBindings with no Kong references. This way we'd be more coherent with the Konnect approach. https://github.com/Kong/kubernetes-configuration/issues/7 |
+
+
+_Appears in:_
+- [KongPluginBinding](#kongpluginbinding)
+
+
+
+#### KongReferences
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `routeRef` _[EntityRef](#entityref)_ |  |
+| `serviceRef` _[EntityRef](#entityref)_ |  |
+| `consumerRef` _[EntityRef](#entityref)_ |  |
+| `consumerGroupRef` _[EntityRef](#entityref)_ |  |
+
+
+_Appears in:_
+- [KongPluginBindingSpec](#kongpluginbindingspec)
 
 #### KongRouteAPISpec
 
@@ -823,6 +891,7 @@ _Appears in:_
 
 
 _Appears in:_
+- [KongPluginBindingStatus](#kongpluginbindingstatus)
 - [KongRouteStatus](#kongroutestatus)
 
 #### KonnectEntityStatusWithControlPlaneRef
@@ -919,6 +988,22 @@ ObjectReference defines reference of a kubernetes object.
 
 _Appears in:_
 - [KongCustomEntitySpec](#kongcustomentityspec)
+
+#### PluginRef
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the KongPlugin or KongClusterPlugin resource. |
+| `kind` _string_ | kind can be KongPlugin or KongClusterPlugin. If not set, it is assumed to be KongPlugin. |
+
+
+_Appears in:_
+- [KongPluginBindingSpec](#kongpluginbindingspec)
 
 #### ServiceRef
 
