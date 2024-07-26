@@ -250,7 +250,7 @@ spec:
         - spec
         type: object
         x-kubernetes-validations:
-        - message: The combinations of entities set is not allowed
+        - message: The combination of entities set is not allowed
           rule: (has(self.spec.kong.consumerRef) && has(self.spec.kong.routeRef) &&
             has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerGroupRef))
             || (has(self.spec.kong.consumerGroupRef) && has(self.spec.kong.serviceRef)
