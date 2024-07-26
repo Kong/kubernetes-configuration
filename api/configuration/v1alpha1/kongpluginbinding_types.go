@@ -93,7 +93,6 @@ type KongPluginBindingSpec struct {
 }
 
 type KongReferences struct {
-	// TODO(mlavacca): add validation that at least one of the following field is properly set.
 	RouteReference         *EntityRef `json:"routeRef,omitempty"`
 	ServiceReference       *EntityRef `json:"serviceRef,omitempty"`
 	ConsumerReference      *EntityRef `json:"consumerRef,omitempty"`

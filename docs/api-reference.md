@@ -648,7 +648,7 @@ _Appears in:_
 
 | Field | Description |
 | --- | --- |
-| `routeRef` _[EntityRef](#entityref)_ | TODO(mlavacca): add validation that at least one of the following field is properly set. |
+| `routeRef` _[EntityRef](#entityref)_ |  |
 | `serviceRef` _[EntityRef](#entityref)_ |  |
 | `consumerRef` _[EntityRef](#entityref)_ |  |
 | `consumerGroupRef` _[EntityRef](#entityref)_ |  |

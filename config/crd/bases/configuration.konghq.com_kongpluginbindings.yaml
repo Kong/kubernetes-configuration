@@ -97,8 +97,6 @@ spec:
                     - name
                     type: object
                   routeRef:
-                    description: 'TODO(mlavacca): add validation that at least one
-                      of the following field is properly set.'
                     properties:
                       name:
                         description: Name is the name of the entity.
