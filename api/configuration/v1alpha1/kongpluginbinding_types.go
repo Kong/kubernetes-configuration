@@ -87,18 +87,15 @@ type KongPluginBindingSpec struct {
 	// KongClusterPlugin can be replaced by kongPluginBindings with no Kong references. This way we'd be
 	// more coherent with the Konnect approach.
 	// https://github.com/Kong/kubernetes-configuration/issues/7
-	Kong *KongReferences `json:"kong,omitempty"`
 
-	// TODO(mlavacca): let's defer this one to the future as we are not sure about the shape we want to give it.
-	// https://github.com/Kong/kubernetes-configuration/issues/8
-	// EntityReference        *GenericEntityRef `json:"genericEntityRef,omitempty"`
-}
-
-type KongReferences struct {
-	RouteReference         *EntityRef `json:"routeRef,omitempty"`
-	ServiceReference       *EntityRef `json:"serviceRef,omitempty"`
-	ConsumerReference      *EntityRef `json:"consumerRef,omitempty"`
-	ConsumerGroupReference *EntityRef `json:"consumerGroupRef,omitempty"`
+	// TODO(mlavacca): RouteReference allows references to KongRoute, Ingress, HTTPRoute, or GCPRoute resource.
+	// TODO(mlavacca): ServiceReference allows Service or KongService resource.
+	// TODO(mlavacca): In case the routeRef references a KongRoute, the ServiceRef should be unset or set to a KongService.
+	// The same applies the other way around.
+	RouteReference         *TargetRefWithGroupKind `json:"routeRef,omitempty"`
+	ServiceReference       *TargetRefWithGroupKind `json:"serviceRef,omitempty"`
+	ConsumerReference      *TargetRef              `json:"consumerRef,omitempty"`
+	ConsumerGroupReference *TargetRef              `json:"consumerGroupRef,omitempty"`
 }
 
 type PluginRef struct {
@@ -115,10 +112,25 @@ type PluginRef struct {
 	Kind *string `json:"kind,omitempty"`
 }
 
-type EntityRef struct {
+type TargetRef struct {
 	// Name is the name of the entity.
 	// +kubebuilder:validation:Required
 	Name string `json:"name"`
+}
+
+// TODO(mlavacca): add xvalidation between group and kind
+type TargetRefWithGroupKind struct {
+	// Name is the name of the entity.
+	// +kubebuilder:validation:Required
+	Name string `json:"name"`
+
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Enum=KongService;KongRoute;Service;HTTPRoute;GCPRoute;Ingress
+	Kind string `json:"kind"`
+
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Enum="";core;gateway.networking.k8s.io;networking.k8s.io
+	Group string `json:"group"`
 }
 
 // type GenericEntityRef struct {

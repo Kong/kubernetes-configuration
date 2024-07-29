@@ -492,21 +492,6 @@ _Appears in:_
 _Appears in:_
 - [KongLicenseControllerStatus](#konglicensecontrollerstatus)
 
-#### EntityRef
-
-
-
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the entity. |
-
-
-_Appears in:_
-- [KongReferences](#kongreferences)
-
 #### Group
 _Underlying type:_ `string`
 
@@ -614,31 +599,16 @@ KongPluginBindingSpec defines specification of a KongPluginBinding.
 | Field | Description |
 | --- | --- |
 | `pluginRef` _[PluginRef](#pluginref)_ | PluginReference is a reference to the KongPlugin or KongClusterPlugin resource. It is required |
-| `kong` _[KongReferences](#kongreferences)_ | Kong contains the Kong entity references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br /> 1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service 12. Global<br /><br /> TODO(mlavacca): we need to figure out how to deal with global plugins. By means of this new API, KongClusterPlugin can be replaced by kongPluginBindings with no Kong references. This way we'd be more coherent with the Konnect approach. https://github.com/Kong/kubernetes-configuration/issues/7 |
+| `routeRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ | TODO(mlavacca): RouteReference allows references to KongRoute, Ingress, HTTPRoute, or GCPRoute resource. TODO(mlavacca): ServiceReference allows Service or KongService resource. TODO(mlavacca): In case the routeRef references a KongRoute, the ServiceRef should be unset or set to a KongService. The same applies the other way around. |
+| `serviceRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ |  |
+| `consumerRef` _[TargetRef](#targetref)_ |  |
+| `consumerGroupRef` _[TargetRef](#targetref)_ |  |
 
 
 _Appears in:_
 - [KongPluginBinding](#kongpluginbinding)
 
 
-
-#### KongReferences
-
-
-
-
-
-
-| Field | Description |
-| --- | --- |
-| `routeRef` _[EntityRef](#entityref)_ |  |
-| `serviceRef` _[EntityRef](#entityref)_ |  |
-| `consumerRef` _[EntityRef](#entityref)_ |  |
-| `consumerGroupRef` _[EntityRef](#entityref)_ |  |
-
-
-_Appears in:_
-- [KongPluginBindingSpec](#kongpluginbindingspec)
 
 #### KongRouteAPISpec
 
@@ -896,6 +866,38 @@ _Appears in:_
 
 _Appears in:_
 - [KongRouteSpec](#kongroutespec)
+
+#### TargetRef
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the entity. |
+
+
+_Appears in:_
+- [KongPluginBindingSpec](#kongpluginbindingspec)
+
+#### TargetRefWithGroupKind
+
+
+TODO(mlavacca): add xvalidation between group and kind
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the entity. |
+| `kind` _string_ |  |
+| `group` _string_ |  |
+
+
+_Appears in:_
+- [KongPluginBindingSpec](#kongpluginbindingspec)
 
 
 ## configuration.konghq.com/v1beta1
