@@ -35,7 +35,6 @@ type ConfigurationV1alpha1Interface interface {
 	KongRoutesGetter
 	KongServicesGetter
 	KongVaultsGetter
-	KonnectAPIAuthConfigurationsGetter
 }
 
 // ConfigurationV1alpha1Client is used to interact with features provided by the configuration.konghq.com group.
@@ -69,10 +68,6 @@ func (c *ConfigurationV1alpha1Client) KongServices(namespace string) KongService
 
 func (c *ConfigurationV1alpha1Client) KongVaults() KongVaultInterface {
 	return newKongVaults(c)
-}
-
-func (c *ConfigurationV1alpha1Client) KonnectAPIAuthConfigurations(namespace string) KonnectAPIAuthConfigurationInterface {
-	return newKonnectAPIAuthConfigurations(c, namespace)
 }
 
 // NewForConfig creates a new ConfigurationV1alpha1Client for the given config.

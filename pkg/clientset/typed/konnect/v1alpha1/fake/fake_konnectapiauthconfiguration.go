@@ -21,7 +21,7 @@ package fake
 import (
 	"context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	v1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	types "k8s.io/apimachinery/pkg/types"
@@ -31,7 +31,7 @@ import (
 
 // FakeKonnectAPIAuthConfigurations implements KonnectAPIAuthConfigurationInterface
 type FakeKonnectAPIAuthConfigurations struct {
-	Fake *FakeConfigurationV1alpha1
+	Fake *FakeKonnectV1alpha1
 	ns   string
 }
 

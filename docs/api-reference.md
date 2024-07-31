@@ -336,7 +336,6 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [KongRoute](#kongroute)
 - [KongService](#kongservice)
 - [KongVault](#kongvault)
-- [KonnectAPIAuthConfiguration](#konnectapiauthconfiguration)
 ### IngressClassParameters
 
 
@@ -449,22 +448,6 @@ See: https://docs.konghq.com/gateway/latest/kong-enterprise/secrets-management/
 | `kind` _string_ | `KongVault`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongVaultSpec](#kongvaultspec)_ |  |
-
-
-
-### KonnectAPIAuthConfiguration
-
-
-KonnectAPIAuthConfiguration is the Schema for the Konnect configuration type.
-
-<!-- konnect_api_auth_configuration description placeholder -->
-
-| Field | Description |
-| --- | --- |
-| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
-| `kind` _string_ | `KonnectAPIAuthConfiguration`
-| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[KonnectAPIAuthConfigurationSpec](#konnectapiauthconfigurationspec)_ | Spec is the specification of the KonnectAPIAuthConfiguration resource. |
 
 
 
@@ -805,56 +788,6 @@ _Appears in:_
 - [KongVault](#kongvault)
 
 
-
-#### KonnectAPIAuthConfigurationRef
-
-
-
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the KonnectAPIAuthConfiguration resource. |
-
-
-_Appears in:_
-- [KonnectConfiguration](#konnectconfiguration)
-
-#### KonnectAPIAuthConfigurationSpec
-
-
-KonnectAPIAuthConfigurationSpec is the specification of the KonnectAPIAuthConfiguration resource.
-
-
-
-| Field | Description |
-| --- | --- |
-| `token` _string_ | Token is the Konnect token used to authenticate with the Konnect API. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server. TODO(pmalek): do we want this validation? |
-
-
-_Appears in:_
-- [KonnectAPIAuthConfiguration](#konnectapiauthconfiguration)
-
-
-
-#### KonnectConfiguration
-
-
-
-
-
-
-| Field | Description |
-| --- | --- |
-| `authRef` _[KonnectAPIAuthConfigurationRef](#konnectapiauthconfigurationref)_ | APIAuthConfigurationRef is the reference to the API Auth Configuration that should be used for this Konnect Configuration. |
-
-
-_Appears in:_
-- [KongConsumerSpec](#kongconsumerspec)
-- [KongRouteSpec](#kongroutespec)
-- [KongServiceSpec](#kongservicespec)
 
 #### KonnectEntityStatus
 

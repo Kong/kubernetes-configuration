@@ -28,6 +28,8 @@ import (
 	fakeconfigurationv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1beta1/fake"
 	incubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1"
 	fakeincubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1/fake"
+	konnectv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha1"
+	fakekonnectv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -103,4 +105,9 @@ func (c *Clientset) ConfigurationV1beta1() configurationv1beta1.ConfigurationV1b
 // IncubatorV1alpha1 retrieves the IncubatorV1alpha1Client
 func (c *Clientset) IncubatorV1alpha1() incubatorv1alpha1.IncubatorV1alpha1Interface {
 	return &fakeincubatorv1alpha1.FakeIncubatorV1alpha1{Fake: &c.Fake}
+}
+
+// KonnectV1alpha1 retrieves the KonnectV1alpha1Client
+func (c *Clientset) KonnectV1alpha1() konnectv1alpha1.KonnectV1alpha1Interface {
+	return &fakekonnectv1alpha1.FakeKonnectV1alpha1{Fake: &c.Fake}
 }
