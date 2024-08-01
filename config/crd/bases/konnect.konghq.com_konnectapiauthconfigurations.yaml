@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.15.0
-  name: konnectapiauthconfigurations.configuration.konghq.com
+  name: konnectapiauthconfigurations.konnect.konghq.com
 spec:
-  group: configuration.konghq.com
+  group: konnect.konghq.com
   names:
     kind: KonnectAPIAuthConfiguration
     listKind: KonnectAPIAuthConfigurationList
@@ -56,9 +56,7 @@ spec:
               resource.
             properties:
               serverURL:
-                description: |-
-                  ServerURL is the URL of the Konnect server.
-                  TODO(pmalek): do we want this validation?
+                description: ServerURL is the URL of the Konnect server.
                 type: string
                 x-kubernetes-validations:
                 - message: Server URL is immutable

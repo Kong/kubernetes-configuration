@@ -22,7 +22,7 @@ import (
 	"context"
 	"time"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	v1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -57,7 +57,7 @@ type konnectAPIAuthConfigurations struct {
 }
 
 // newKonnectAPIAuthConfigurations returns a KonnectAPIAuthConfigurations
-func newKonnectAPIAuthConfigurations(c *ConfigurationV1alpha1Client, namespace string) *konnectAPIAuthConfigurations {
+func newKonnectAPIAuthConfigurations(c *KonnectV1alpha1Client, namespace string) *konnectAPIAuthConfigurations {
 	return &konnectAPIAuthConfigurations{
 		client: c.RESTClient(),
 		ns:     namespace,

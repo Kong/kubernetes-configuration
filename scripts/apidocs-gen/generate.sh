@@ -19,4 +19,5 @@ generate() {
 }
 
 generate "/api/configuration" "/docs/api-reference.md"
+generate "/api/konnect" "/docs/konnect-api-reference.md"
 generate "/api/incubator" "/docs/incubator-api-reference.md"
