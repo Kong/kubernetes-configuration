@@ -55,6 +55,21 @@ spec:
             description: Spec is the specification of the KonnectAPIAuthConfiguration
               resource.
             properties:
+              secretRef:
+                description: |-
+                  SecretRef is a reference to a Kubernetes Secret containing the Konnect token.
+                  This secret is required to has the konghq.com/credential label set to "konnect".
+                properties:
+                  name:
+                    description: name is unique within a namespace to reference a
+                      secret resource.
+                    type: string
+                  namespace:
+                    description: namespace defines the space within which the secret
+                      name must be unique.
+                    type: string
+                type: object
+                x-kubernetes-map-type: atomic
               serverURL:
                 description: ServerURL is the URL of the Konnect server.
                 type: string
@@ -65,10 +80,20 @@ spec:
                 description: Token is the Konnect token used to authenticate with
                   the Konnect API.
                 type: string
+              type:
+                enum:
+                - token
+                - secretRef
+                type: string
             required:
             - serverURL
-            - token
+            - type
             type: object
+            x-kubernetes-validations:
+            - message: Token is required if auth type is set to token or secretRef
+                is required if auth type is set to secretRef
+              rule: (self.type == 'token' && has(self.token)) || (self.type == 'secretRef'
+                && has(self.secretRef))
           status:
             description: Status is the status of the KonnectAPIAuthConfiguration resource.
             properties:
@@ -164,9 +189,10 @@ spec:
         type: object
         x-kubernetes-validations:
         - message: Konnect tokens have to start with spat_ or kpat_
-          rule: self.spec.token.startsWith('spat_') || self.spec.token.startsWith('kpat_')
+          rule: self.spec.type != 'token' || (self.spec.token.startsWith('spat_')
+            || self.spec.token.startsWith('kpat_'))
         - message: Token is required once set
-          rule: '!has(oldSelf.spec.token) || has(self.spec.token)'
+          rule: self.spec.type != 'token' || (!has(oldSelf.spec.token) || has(self.spec.token))
         - message: Server URL is required once set
           rule: '!has(oldSelf.spec.serverURL) || has(self.spec.serverURL)'
     served: true

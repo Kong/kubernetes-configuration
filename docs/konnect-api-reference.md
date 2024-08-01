@@ -52,7 +52,9 @@ KonnectAPIAuthConfigurationSpec is the specification of the KonnectAPIAuthConfig
 
 | Field | Description |
 | --- | --- |
+| `type` _[KonnectAPIAuthType](#konnectapiauthtype)_ |  |
 | `token` _string_ | Token is the Konnect token used to authenticate with the Konnect API. |
+| `secretRef` _[SecretReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#secretreference-v1-core)_ | SecretRef is a reference to a Kubernetes Secret containing the Konnect token. This secret is required to has the konghq.com/credential label set to "konnect". |
 | `serverURL` _string_ | ServerURL is the URL of the Konnect server. |
 
 
@@ -60,6 +62,18 @@ _Appears in:_
 - [KonnectAPIAuthConfiguration](#konnectapiauthconfiguration)
 
 
+
+#### KonnectAPIAuthType
+_Underlying type:_ `string`
+
+
+
+
+
+
+
+_Appears in:_
+- [KonnectAPIAuthConfigurationSpec](#konnectapiauthconfigurationspec)
 
 
 
