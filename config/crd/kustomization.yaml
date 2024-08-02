@@ -19,5 +19,6 @@ resources:
 - bases/configuration.konghq.com_kongroutes.yaml
 
 - bases/konnect.konghq.com_konnectapiauthconfigurations.yaml
+- bases/konnect.konghq.com_konnectcontrolplanes.yaml
 
 #+kubebuilder:scaffold:crdkustomizeresource
