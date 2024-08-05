@@ -84,6 +84,8 @@ spec:
                     x-kubernetes-validations:
                     - message: authRef is immutable
                       rule: self == oldSelf
+                required:
+                - authRef
                 type: object
               labels:
                 additionalProperties:
@@ -228,9 +230,6 @@ spec:
                 type: string
             type: object
         type: object
-        x-kubernetes-validations:
-        - message: Konnect Configuration's API auth ref reference is immutable
-          rule: '!has(oldSelf.spec.konnect.authRef) || has(oldSelf.spec.konnect.authRef)'
     served: true
     storage: true
     subresources:

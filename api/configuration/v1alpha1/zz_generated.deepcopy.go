@@ -22,6 +22,7 @@ package v1alpha1
 
 import (
 	"github.com/Kong/sdk-konnect-go/models/components"
+	konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
@@ -483,7 +484,7 @@ func (in *KongPluginBindingStatus) DeepCopyInto(out *KongPluginBindingStatus) {
 	*out = *in
 	if in.Konnect != nil {
 		in, out := &in.Konnect, &out.Konnect
-		*out = new(KonnectEntityStatusWithControlPlaneAndServiceRefs)
+		*out = new(konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndServiceRefs)
 		**out = **in
 	}
 	if in.Conditions != nil {
@@ -729,7 +730,7 @@ func (in *KongRouteStatus) DeepCopyInto(out *KongRouteStatus) {
 	*out = *in
 	if in.Konnect != nil {
 		in, out := &in.Konnect, &out.Konnect
-		*out = new(KonnectEntityStatusWithControlPlaneAndServiceRefs)
+		*out = new(konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndServiceRefs)
 		**out = **in
 	}
 	if in.Conditions != nil {
@@ -913,7 +914,7 @@ func (in *KongServiceStatus) DeepCopyInto(out *KongServiceStatus) {
 	*out = *in
 	if in.Konnect != nil {
 		in, out := &in.Konnect, &out.Konnect
-		*out = new(KonnectEntityStatusWithControlPlaneRef)
+		*out = new(konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef)
 		**out = **in
 	}
 	if in.Conditions != nil {

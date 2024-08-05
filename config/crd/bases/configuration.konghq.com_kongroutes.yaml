@@ -133,6 +133,8 @@ spec:
                     x-kubernetes-validations:
                     - message: authRef is immutable
                       rule: self == oldSelf
+                required:
+                - authRef
                 type: object
               methods:
                 description: A list of HTTP methods that match this Route.
