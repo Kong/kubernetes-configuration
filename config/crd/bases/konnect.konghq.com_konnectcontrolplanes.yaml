@@ -4,36 +4,34 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.15.0
-  name: kongconsumers.configuration.konghq.com
+  name: konnectcontrolplanes.konnect.konghq.com
 spec:
-  group: configuration.konghq.com
+  group: konnect.konghq.com
   names:
-    categories:
-    - kong-ingress-controller
-    kind: KongConsumer
-    listKind: KongConsumerList
-    plural: kongconsumers
-    shortNames:
-    - kc
-    singular: kongconsumer
+    kind: KonnectControlPlane
+    listKind: KonnectControlPlaneList
+    plural: konnectcontrolplanes
+    singular: konnectcontrolplane
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - description: Username of a Kong Consumer
-      jsonPath: .username
-      name: Username
-      type: string
-    - description: Age
-      jsonPath: .metadata.creationTimestamp
-      name: Age
-      type: date
-    - jsonPath: .status.conditions[?(@.type=="Programmed")].status
+    - description: The Resource is Programmed on Konnect
+      jsonPath: .status.conditions[?(@.type=='Programmed')].status
       name: Programmed
       type: string
-    name: v1
+    - description: Konnect ID
+      jsonPath: .status.id
+      name: ID
+      type: string
+    - description: Konnect Organization ID this resource belongs to.
+      jsonPath: .status.organizationID
+      name: OrgID
+      type: string
+    name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: KongConsumer is the Schema for the kongconsumers API.
+        description: KonnectControlPlane is the Schema for the KonnectControlplanes
+          API.
         properties:
           apiVersion:
             description: |-
@@ -41,27 +39,6 @@ spec:
               Servers should convert recognized schemas to the latest internal value, and
               may reject unrecognized values.
               More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-            type: string
-          consumerGroups:
-            description: |-
-              ConsumerGroups are references to consumer groups (that consumer wants to be part of)
-              provisioned in Kong.
-            items:
-              type: string
-            type: array
-            x-kubernetes-list-type: set
-          credentials:
-            description: |-
-              Credentials are references to secrets containing a credential to be
-              provisioned in Kong.
-            items:
-              type: string
-            type: array
-            x-kubernetes-list-type: set
-          custom_id:
-            description: |-
-              CustomID is a Kong cluster-unique existing ID for the consumer - useful for mapping
-              Kong with users in your existing database.
             type: string
           kind:
             description: |-
@@ -74,42 +51,23 @@ spec:
           metadata:
             type: object
           spec:
+            description: KonnectControlPlaneSpec defines the desired state of KonnectControlPlane.
             properties:
-              controlPlaneRef:
-                description: ControlPlaneRef is a reference to a ControlPlane this
-                  Route is associated with.
-                properties:
-                  kic:
-                    description: TODO(pmalek)
-                    type: object
-                  konnectID:
-                    description: TODO(pmalek)
-                    type: string
-                  konnectNamespacedRef:
-                    description: |-
-                      KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster.
-                      It contains the name of the Konnect Control Plane and the namespace in which it exists.
-                      If the namespace is not provided, it is assumed that the Konnect Control Plane
-                      is in the same namespace as the resource that references it.
-                    properties:
-                      name:
-                        type: string
-                      namespace:
-                        type: string
-                    required:
-                    - name
-                    type: object
-                  type:
-                    description: |-
-                      Type can be one of:
-                      - konnectID
-                      - konnectNamespacedRef
-                      - kic
-                    type: string
-                type: object
+              auth_type:
+                description: The auth type value of the cluster associated with the
+                  Runtime Group.
+                type: string
+              cloud_gateway:
+                description: Whether this control-plane can be used for cloud-gateways.
+                type: boolean
+              cluster_type:
+                description: The ClusterType value of the cluster associated with
+                  the Control Plane.
+                type: string
+              description:
+                description: The description of the control plane in Konnect.
+                type: string
               konnect:
-                description: KonnectConfiguration holds the Konnect configuration
-                  like authentication configuration.
                 properties:
                   authRef:
                     description: |-
@@ -129,10 +87,46 @@ spec:
                 required:
                 - authRef
                 type: object
+              labels:
+                additionalProperties:
+                  type: string
+                description: |-
+                  Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.
+
+
+                  Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_".
+                type: object
+              name:
+                description: The name of the control plane.
+                type: string
+              proxy_urls:
+                description: Array of proxy URLs associated with reaching the data-planes
+                  connected to a control-plane.
+                items:
+                  description: ProxyURL - Proxy URL associated with reaching the data-planes
+                    connected to a control-plane.
+                  properties:
+                    host:
+                      description: Hostname of the proxy URL.
+                      type: string
+                    port:
+                      description: Port of the proxy URL.
+                      format: int64
+                      type: integer
+                    protocol:
+                      description: Protocol of the proxy URL.
+                      type: string
+                  required:
+                  - host
+                  - port
+                  - protocol
+                  type: object
+                type: array
+            required:
+            - name
             type: object
           status:
-            description: Status represents the current status of the KongConsumer
-              resource.
+            description: KonnectControlPlaneStatus defines the observed state of KonnectControlPlane.
             properties:
               conditions:
                 default:
@@ -142,7 +136,7 @@ spec:
                   status: Unknown
                   type: Programmed
                 description: |-
-                  Conditions describe the current conditions of the KongConsumer.
+                  Conditions describe the current conditions of the KonnectControlPlane.
 
 
                   Known condition types are:
@@ -221,35 +215,21 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
-              konnect:
-                description: Konnect contains the Konnect entity status.
-                properties:
-                  controlPlaneID:
-                    description: ControlPlaneID is the Konnect ID of the ControlPlane
-                      this Route is associated with.
-                    type: string
-                  id:
-                    description: |-
-                      ID is the unique identifier of the Konnect entity as assigned by Konnect API.
-                      If it's unset (empty string), it means the Konnect entity hasn't been created yet.
-                    type: string
-                  organizationID:
-                    description: OrgID is ID of Konnect Org that this entity has been
-                      created in.
-                    type: string
-                  serverURL:
-                    description: ServerURL is the URL of the Konnect server in which
-                      the entity exists.
-                    type: string
-                type: object
+              id:
+                description: |-
+                  ID is the unique identifier of the Konnect entity as assigned by Konnect API.
+                  If it's unset (empty string), it means the Konnect entity hasn't been created yet.
+                type: string
+              organizationID:
+                description: OrgID is ID of Konnect Org that this entity has been
+                  created in.
+                type: string
+              serverURL:
+                description: ServerURL is the URL of the Konnect server in which the
+                  entity exists.
+                type: string
             type: object
-          username:
-            description: Username is a Kong cluster-unique username of the consumer.
-            type: string
         type: object
-        x-kubernetes-validations:
-        - message: Need to provide either username or custom_id
-          rule: has(self.username) || has(self.custom_id)
     served: true
     storage: true
     subresources:

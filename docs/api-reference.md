@@ -789,63 +789,6 @@ _Appears in:_
 
 
 
-#### KonnectEntityStatus
-
-
-
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-
-
-_Appears in:_
-- [KonnectEntityStatusWithControlPlaneAndServiceRefs](#konnectentitystatuswithcontrolplaneandservicerefs)
-- [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
-
-#### KonnectEntityStatusWithControlPlaneAndServiceRefs
-
-
-
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with. |
-| `serviceID` _string_ | ServiceID is the Konnect ID of the Service this entity is associated with. |
-
-
-_Appears in:_
-- [KongPluginBindingStatus](#kongpluginbindingstatus)
-- [KongRouteStatus](#kongroutestatus)
-
-#### KonnectEntityStatusWithControlPlaneRef
-
-
-
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this Route is associated with. |
-
-
-_Appears in:_
-- [KongConsumerStatus](#kongconsumerstatus)
-- [KongServiceStatus](#kongservicestatus)
-
 #### KonnectNamespacedRef
 
 

@@ -118,6 +118,8 @@ spec:
                     x-kubernetes-validations:
                     - message: authRef is immutable
                       rule: self == oldSelf
+                required:
+                - authRef
                 type: object
               name:
                 description: The Service name.
