@@ -205,11 +205,12 @@ spec:
             - pluginRef
             type: object
             x-kubernetes-validations:
-            - message: One field between global and targets must be set
-              rule: '(((has(self.global) && self.global == true) ? !has(self.targets)
-                : true) && (((!has(self.global) || self.global == false) ? has(self.targets)
-                : true) || (!has(self.targets) ? (has(self.global) && self.global
-                == true) : true)))'
+            - message: When global is set, target refs cannot be used
+              rule: '(has(self.global) && self.global == true) ? !has(self.targets)
+                : true'
+            - message: When global is unset, target refs have to be used
+              rule: '(!has(self.global) || self.global == false) ? has(self.targets)
+                : true'
           status:
             description: KongPluginBindingStatus represents the current status of
               the KongBinding resource.

@@ -37,7 +37,8 @@ type KongPluginBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	// +kubebuilder:validation:XValidation:message="One field between global and targets must be set",rule="(((has(self.global) && self.global == true) ? !has(self.targets) : true) && (((!has(self.global) || self.global == false) ? has(self.targets) : true) || (!has(self.targets) ? (has(self.global) && self.global == true) : true)))"
+	// +kubebuilder:validation:XValidation:message="When global is set, target refs cannot be used",rule="(has(self.global) && self.global == true) ? !has(self.targets) : true"
+	// +kubebuilder:validation:XValidation:message="When global is unset, target refs have to be used",rule="(!has(self.global) || self.global == false) ? has(self.targets) : true"
 	Spec   KongPluginBindingSpec   `json:"spec"`
 	Status KongPluginBindingStatus `json:"status,omitempty"`
 }
