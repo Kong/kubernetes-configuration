@@ -599,16 +599,32 @@ KongPluginBindingSpec defines specification of a KongPluginBinding.
 | Field | Description |
 | --- | --- |
 | `pluginRef` _[PluginRef](#pluginref)_ | PluginReference is a reference to the KongPlugin or KongClusterPlugin resource. It is required |
-| `routeRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ | TODO(mlavacca): RouteReference allows references to KongRoute, Ingress, HTTPRoute, or GCPRoute resource. TODO(mlavacca): ServiceReference allows Service or KongService resource. TODO(mlavacca): In case the routeRef references a KongRoute, the ServiceRef should be unset or set to a KongService. The same applies the other way around. |
-| `serviceRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ |  |
-| `consumerRef` _[TargetRef](#targetref)_ |  |
-| `consumerGroupRef` _[TargetRef](#targetref)_ |  |
+| `global` _boolean_ |  |
+| `targets` _[KongPluginBindingTargets](#kongpluginbindingtargets)_ |  |
 
 
 _Appears in:_
 - [KongPluginBinding](#kongpluginbinding)
 
 
+
+#### KongPluginBindingTargets
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `routeRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ | Kong contains the Kong entity references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br /> 1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service |
+| `serviceRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ |  |
+| `consumerRef` _[TargetRef](#targetref)_ |  |
+| `consumerGroupRef` _[TargetRef](#targetref)_ |  |
+
+
+_Appears in:_
+- [KongPluginBindingSpec](#kongpluginbindingspec)
 
 #### KongRouteAPISpec
 
@@ -880,7 +896,7 @@ _Appears in:_
 
 
 _Appears in:_
-- [KongPluginBindingSpec](#kongpluginbindingspec)
+- [KongPluginBindingTargets](#kongpluginbindingtargets)
 
 #### TargetRefWithGroupKind
 
@@ -897,7 +913,7 @@ TODO(mlavacca): add xvalidation between group and kind
 
 
 _Appears in:_
-- [KongPluginBindingSpec](#kongpluginbindingspec)
+- [KongPluginBindingTargets](#kongpluginbindingtargets)
 
 
 ## configuration.konghq.com/v1beta1

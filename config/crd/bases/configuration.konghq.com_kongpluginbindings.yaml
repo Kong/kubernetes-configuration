@@ -53,22 +53,8 @@ spec:
           spec:
             description: KongPluginBindingSpec defines specification of a KongPluginBinding.
             properties:
-              consumerGroupRef:
-                properties:
-                  name:
-                    description: Name is the name of the entity.
-                    type: string
-                required:
-                - name
-                type: object
-              consumerRef:
-                properties:
-                  name:
-                    description: Name is the name of the entity.
-                    type: string
-                required:
-                - name
-                type: object
+              global:
+                type: boolean
               pluginRef:
                 description: PluginReference is a reference to the KongPlugin or KongClusterPlugin
                   resource. It is required
@@ -88,67 +74,144 @@ spec:
                 required:
                 - name
                 type: object
-              routeRef:
-                description: |-
-                  TODO(mlavacca): RouteReference allows references to KongRoute, Ingress, HTTPRoute, or GCPRoute resource.
-                  TODO(mlavacca): ServiceReference allows Service or KongService resource.
-                  TODO(mlavacca): In case the routeRef references a KongRoute, the ServiceRef should be unset or set to a KongService.
-                  The same applies the other way around.
+              targets:
                 properties:
-                  group:
-                    enum:
-                    - ""
-                    - core
-                    - gateway.networking.k8s.io
-                    - networking.k8s.io
-                    type: string
-                  kind:
-                    enum:
-                    - KongService
-                    - KongRoute
-                    - Service
-                    - HTTPRoute
-                    - GCPRoute
-                    - Ingress
-                    type: string
-                  name:
-                    description: Name is the name of the entity.
-                    type: string
-                required:
-                - group
-                - kind
-                - name
+                  consumerGroupRef:
+                    properties:
+                      name:
+                        description: Name is the name of the entity.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  consumerRef:
+                    properties:
+                      name:
+                        description: Name is the name of the entity.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  routeRef:
+                    description: |-
+                      Kong contains the Kong entity references. It is possible to set multiple combinations
+                      of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence
+                      The complete set of allowed combinations and their order of precedence for plugins
+                      configured to multiple entities is:
+
+
+                      1. Consumer + route + service
+                      2. Consumer group + service + route
+                      3. Consumer + route
+                      4. Consumer + service
+                      5. Consumer group + route
+                      6. Consumer group + service
+                      7. Route + service
+                      8. Consumer
+                      9. Consumer group
+                      10. Route
+                      11. Service
+                    properties:
+                      group:
+                        enum:
+                        - ""
+                        - core
+                        - gateway.networking.k8s.io
+                        - networking.k8s.io
+                        - configuration.konghq.com
+                        type: string
+                      kind:
+                        enum:
+                        - KongService
+                        - KongRoute
+                        - Service
+                        - HTTPRoute
+                        - GCPRoute
+                        - Ingress
+                        type: string
+                      name:
+                        description: Name is the name of the entity.
+                        type: string
+                    required:
+                    - group
+                    - kind
+                    - name
+                    type: object
+                    x-kubernetes-validations:
+                    - message: group/kind not allowed for the routeRef
+                      rule: (self.kind == 'KongRoute' && self.group == 'configuration.konghq.com')
+                        || (self.kind == 'Ingress' && self.group == 'networking.k8s.io')
+                        || (self.kind == 'HTTPRoute' && self.group == 'gateway.networking.k8s.io')
+                        || (self.kind == 'GCPRoute' && self.group == 'gateway.networking.k8s.io')
+                  serviceRef:
+                    description: 'TODO(mlavacca): add xvalidation between group and
+                      kind'
+                    properties:
+                      group:
+                        enum:
+                        - ""
+                        - core
+                        - gateway.networking.k8s.io
+                        - networking.k8s.io
+                        - configuration.konghq.com
+                        type: string
+                      kind:
+                        enum:
+                        - KongService
+                        - KongRoute
+                        - Service
+                        - HTTPRoute
+                        - GCPRoute
+                        - Ingress
+                        type: string
+                      name:
+                        description: Name is the name of the entity.
+                        type: string
+                    required:
+                    - group
+                    - kind
+                    - name
+                    type: object
+                    x-kubernetes-validations:
+                    - message: group/kind not allowed for the serviceRef
+                      rule: (self.kind == 'KongService' && self.group == 'configuration.konghq.com')
+                        || (self.kind == 'Service' && (self.group == '' || self.group
+                        == 'core'))
                 type: object
-              serviceRef:
-                description: 'TODO(mlavacca): add xvalidation between group and kind'
-                properties:
-                  group:
-                    enum:
-                    - ""
-                    - core
-                    - gateway.networking.k8s.io
-                    - networking.k8s.io
-                    type: string
-                  kind:
-                    enum:
-                    - KongService
-                    - KongRoute
-                    - Service
-                    - HTTPRoute
-                    - GCPRoute
-                    - Ingress
-                    type: string
-                  name:
-                    description: Name is the name of the entity.
-                    type: string
-                required:
-                - group
-                - kind
-                - name
-                type: object
+                x-kubernetes-validations:
+                - message: The combination of entities set is not allowed
+                  rule: (has(self.consumerRef) && has(self.routeRef) && has(self.serviceRef)
+                    && !has(self.consumerGroupRef)) || (has(self.consumerGroupRef)
+                    && has(self.serviceRef) && has(self.routeRef) && !has(self.consumerRef))
+                    || (has(self.consumerRef) && has(self.routeRef) && !has(self.consumerGroupRef)
+                    && !has(self.serviceRef)) || (has(self.consumerRef) && has(self.serviceRef)
+                    && !has(self.routeRef) && !has(self.consumerGroupRef)) || (has(self.consumerGroupRef)
+                    && has(self.routeRef) && !has(self.serviceRef) && !has(self.consumerRef))
+                    || (has(self.consumerGroupRef) && has(self.serviceRef) && !has(self.consumerRef)
+                    && !has(self.routeRef)) || (has(self.routeRef) && has(self.serviceRef)
+                    && !has(self.consumerRef) && !has(self.consumerGroupRef)) || (has(self.consumerRef)
+                    && !has(self.serviceRef) && !has(self.routeRef) && !has(self.consumerGroupRef))
+                    || (has(self.consumerGroupRef) && !has(self.serviceRef) && !has(self.routeRef)
+                    && !has(self.consumerRef)) || (has(self.routeRef) && !has(self.serviceRef)
+                    && !has(self.consumerRef) && !has(self.consumerGroupRef)) || (has(self.serviceRef)
+                    && !has(self.routeRef) && !has(self.consumerGroupRef) && !has(self.consumerRef))
+                - message: At least one entity reference must be set
+                  rule: has(self.routeRef) || has(self.serviceRef) || has(self.consumerRef)
+                    || has(self.consumerGroupRef)
+                - message: KongRoute can be used only when serviceRef is unset or
+                    set to KongService, and viceversa
+                  rule: '(has(self.routeRef) && self.routeRef.kind == ''KongRoute'')
+                    ? (!has(self.serviceRef) || self.serviceRef.kind == ''KongService'')
+                    : true'
             required:
             - pluginRef
             type: object
+            x-kubernetes-validations:
+            - message: One field between global and targets must be set
+              rule: '(((has(self.global) && self.global == true) ? !has(self.targets)
+                : true) && (((!has(self.global) || self.global == false) ? has(self.targets)
+                : true) || (!has(self.targets) ? (has(self.global) && self.global
+                == true) : true)))'
           status:
             description: KongPluginBindingStatus represents the current status of
               the KongBinding resource.
@@ -239,7 +302,7 @@ spec:
                 properties:
                   controlPlaneID:
                     description: ControlPlaneID is the Konnect ID of the ControlPlane
-                      this entity is associated with.
+                      this Route is associated with.
                     type: string
                   id:
                     description: |-
@@ -254,39 +317,11 @@ spec:
                     description: ServerURL is the URL of the Konnect server in which
                       the entity exists.
                     type: string
-                  serviceID:
-                    description: ServiceID is the Konnect ID of the Service this entity
-                      is associated with.
-                    type: string
                 type: object
             type: object
         required:
         - spec
         type: object
-        x-kubernetes-validations:
-        - message: The combination of entities set is not allowed
-          rule: (has(self.spec.kong.consumerRef) && has(self.spec.kong.routeRef) &&
-            has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerGroupRef))
-            || (has(self.spec.kong.consumerGroupRef) && has(self.spec.kong.serviceRef)
-            && has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerRef)) ||
-            (has(self.spec.kong.consumerRef) && has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerGroupRef)
-            && !has(self.spec.kong.serviceRef)) || (has(self.spec.kong.consumerRef)
-            && has(self.spec.kong.serviceRef) && !has(self.spec.kong.routeRef) &&
-            !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.consumerGroupRef)
-            && has(self.spec.kong.routeRef) && !has(self.spec.kong.serviceRef) &&
-            !has(self.spec.kong.consumerRef)) || (has(self.spec.kong.consumerGroupRef)
-            && has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerRef)
-            && !has(self.spec.kong.routeRef)) || (has(self.spec.kong.routeRef) &&
-            has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerRef) &&
-            !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.consumerRef)
-            && !has(self.spec.kong.serviceRef) && !has(self.spec.kong.routeRef) &&
-            !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.consumerGroupRef)
-            && !has(self.spec.kong.serviceRef) && !has(self.spec.kong.routeRef) &&
-            !has(self.spec.kong.consumerRef)) || (has(self.spec.kong.routeRef) &&
-            !has(self.spec.kong.serviceRef) && !has(self.spec.kong.consumerRef) &&
-            !has(self.spec.kong.consumerGroupRef)) || (has(self.spec.kong.serviceRef)
-            && !has(self.spec.kong.routeRef) && !has(self.spec.kong.consumerGroupRef)
-            && !has(self.spec.kong.consumerRef))
     served: true
     storage: true
     subresources:
