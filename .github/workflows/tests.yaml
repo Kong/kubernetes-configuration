@@ -77,6 +77,28 @@ jobs:
     - name: Install and delete each sample one by one
       run: make test.samples
 
+  CRDs-validation:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-go@v5
+      with:
+        go-version-file: go.mod
+
+    - uses: jdx/mise-action@v2
+      with:
+        install: false
+
+    - name: Create k8s KinD Cluster
+      uses: helm/kind-action@v1.10.0
+
+    - name: Verify installing CRDs via kustomize works
+      run: make install
+
+    - name: Run the crds validation tests
+      run: make test.crds-validation
+
   # We need this step to fail the workflow if any of the previous steps failed or were cancelled.
   # It allows to use this particular job as a required check for PRs.
   # Ref: https://github.com/orgs/community/discussions/26822#discussioncomment-3305794
@@ -86,6 +108,7 @@ jobs:
       - test-unit
       - generate
       - apply
+      - CRDs-validation
     if: always()
     steps:
       - if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
