@@ -492,21 +492,6 @@ _Appears in:_
 _Appears in:_
 - [KongLicenseControllerStatus](#konglicensecontrollerstatus)
 
-#### EntityRef
-
-
-
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the entity. |
-
-
-_Appears in:_
-- [KongReferences](#kongreferences)
-
 #### Group
 _Underlying type:_ `string`
 
@@ -614,7 +599,8 @@ KongPluginBindingSpec defines specification of a KongPluginBinding.
 | Field | Description |
 | --- | --- |
 | `pluginRef` _[PluginRef](#pluginref)_ | PluginReference is a reference to the KongPlugin or KongClusterPlugin resource. It is required |
-| `kong` _[KongReferences](#kongreferences)_ | Kong contains the Kong entity references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br /> 1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service 12. Global<br /><br /> TODO(mlavacca): we need to figure out how to deal with global plugins. By means of this new API, KongClusterPlugin can be replaced by kongPluginBindings with no Kong references. This way we'd be more coherent with the Konnect approach. https://github.com/Kong/kubernetes-configuration/issues/7 |
+| `global` _boolean_ | Global can be set to automatically target all the entities in the Kong cluster. When set to true, all the services, routes and consumers in the Kong cluster are targeted by the plugin. |
+| `targets` _[KongPluginBindingTargets](#kongpluginbindingtargets)_ | Targets contains the targets references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br /> 1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service |
 
 
 _Appears in:_
@@ -622,19 +608,19 @@ _Appears in:_
 
 
 
-#### KongReferences
+#### KongPluginBindingTargets
 
 
-
+KongPluginBindingTargets contains the targets references.
 
 
 
 | Field | Description |
 | --- | --- |
-| `routeRef` _[EntityRef](#entityref)_ |  |
-| `serviceRef` _[EntityRef](#entityref)_ |  |
-| `consumerRef` _[EntityRef](#entityref)_ |  |
-| `consumerGroupRef` _[EntityRef](#entityref)_ |  |
+| `routeRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ | RouteReference can be used to reference one of the following resouces: - networking.k8s.io/Ingress - gateway.networking.k8s.io/HTTPRoute - gateway.networking.k8s.io/GRPCRoute - configuration.konghq.com/KongRoute |
+| `serviceRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ | ServiceReference can be used to reference one of the following resouces: - core/Service or /Service - configuration.konghq.com/KongService |
+| `consumerRef` _[TargetRef](#targetref)_ | ConsumerReference is used to reference a configuration.konghq.com/Consumer resource. The group/kind is fixed, therefore the reference is performed only by name. |
+| `consumerGroupRef` _[TargetRef](#targetref)_ | ConsumerGroupReference is used to reference a configuration.konghq.com/ConsumerGroup resource. The group/kind is fixed, therefore the reference is performed only by name. |
 
 
 _Appears in:_
@@ -868,14 +854,14 @@ _Appears in:_
 #### PluginRef
 
 
-
+PluginRef is a reference to a KongPlugin or KongClusterPlugin resource.
 
 
 
 | Field | Description |
 | --- | --- |
 | `name` _string_ | Name is the name of the KongPlugin or KongClusterPlugin resource. |
-| `kind` _string_ | kind can be KongPlugin or KongClusterPlugin. If not set, it is assumed to be KongPlugin. |
+| `kind` _string_ | Kind can be KongPlugin or KongClusterPlugin. If not set, it is assumed to be KongPlugin. |
 
 
 _Appears in:_
@@ -896,6 +882,38 @@ _Appears in:_
 
 _Appears in:_
 - [KongRouteSpec](#kongroutespec)
+
+#### TargetRef
+
+
+TargetRef is a reference based on the object's name.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the entity. |
+
+
+_Appears in:_
+- [KongPluginBindingTargets](#kongpluginbindingtargets)
+
+#### TargetRefWithGroupKind
+
+
+TargetRefWithGroupKind is a reference based on the object's group, kind, and name.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the entity. |
+| `kind` _string_ |  |
+| `group` _string_ |  |
+
+
+_Appears in:_
+- [KongPluginBindingTargets](#kongpluginbindingtargets)
 
 
 ## configuration.konghq.com/v1beta1
