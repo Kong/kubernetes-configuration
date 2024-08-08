@@ -144,8 +144,6 @@ spec:
                         || (self.kind == 'HTTPRoute' && self.group == 'gateway.networking.k8s.io')
                         || (self.kind == 'GCPRoute' && self.group == 'gateway.networking.k8s.io')
                   serviceRef:
-                    description: 'TODO(mlavacca): add xvalidation between group and
-                      kind'
                     properties:
                       group:
                         enum:

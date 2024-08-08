@@ -124,7 +124,6 @@ type TargetRef struct {
 	Name string `json:"name"`
 }
 
-// TODO(mlavacca): add xvalidation between group and kind
 type TargetRefWithGroupKind struct {
 	// Name is the name of the entity.
 	// +kubebuilder:validation:Required

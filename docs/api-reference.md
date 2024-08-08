@@ -901,7 +901,7 @@ _Appears in:_
 #### TargetRefWithGroupKind
 
 
-TODO(mlavacca): add xvalidation between group and kind
+
 
 
 
