@@ -16,7 +16,7 @@ spec:
   versions:
   - additionalPrinterColumns:
     - description: The API authentication information is valid
-      jsonPath: .status.conditions[?(@.type=='Valid')].status
+      jsonPath: .status.conditions[?(@.type=='APIAuthValid')].status
       name: Valid
       type: string
     - description: Konnect Organization ID this API authentication configuration belongs
