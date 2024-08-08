@@ -130,7 +130,6 @@ type TargetRefWithGroupKind struct {
 	// +kubebuilder:validation:Required
 	Name string `json:"name"`
 
-	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:Enum=KongService;KongRoute;Service;HTTPRoute;GCPRoute;Ingress
 	Kind string `json:"kind"`
 
