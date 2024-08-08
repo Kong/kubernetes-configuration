@@ -54,6 +54,9 @@ spec:
             description: KongPluginBindingSpec defines specification of a KongPluginBinding.
             properties:
               global:
+                description: |-
+                  Global can be set to automatically target all the entities in the Kong cluster. When set to true,
+                  all the services, routes and consumers in the Kong cluster are targeted by the plugin.
                 type: boolean
               pluginRef:
                 description: PluginReference is a reference to the KongPlugin or KongClusterPlugin

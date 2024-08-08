@@ -68,6 +68,8 @@ type KongPluginBindingSpec struct {
 	// PluginReference is a reference to the KongPlugin or KongClusterPlugin resource. It is required
 	PluginReference PluginRef `json:"pluginRef"`
 
+	// Global can be set to automatically target all the entities in the Kong cluster. When set to true,
+	// all the services, routes and consumers in the Kong cluster are targeted by the plugin.
 	// +optional
 	Global *bool `json:"global,omitempty"`
 
