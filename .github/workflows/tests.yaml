@@ -20,6 +20,22 @@ on:
   workflow_dispatch: {}
 
 jobs:
+  test-unit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-go@v5
+      with:
+        go-version-file: go.mod
+
+    - uses: jdx/mise-action@v2
+      with:
+        install: false
+
+    - name: Run tests
+      run: make test.unit.pretty
+
   generate:
     runs-on: ubuntu-latest
     steps:
@@ -67,6 +83,7 @@ jobs:
   passed:
     runs-on: ubuntu-latest
     needs:
+      - test-unit
       - generate
       - apply
     if: always()
