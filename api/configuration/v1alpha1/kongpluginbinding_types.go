@@ -48,7 +48,7 @@ func (c *KongPluginBinding) GetKonnectStatus() *konnectv1alpha1.KonnectEntitySta
 	return &c.Status.Konnect.KonnectEntityStatus
 }
 
-// GetTypeName return the KongPluginBinding Kind name
+// GetTypeName returns the KongPluginBinding Kind name
 func (c KongPluginBinding) GetTypeName() string {
 	return "KongPluginBinding"
 }
