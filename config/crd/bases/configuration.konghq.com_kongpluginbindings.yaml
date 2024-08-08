@@ -61,7 +61,7 @@ spec:
                 properties:
                   kind:
                     default: KongPlugin
-                    description: kind can be KongPlugin or KongClusterPlugin. If not
+                    description: Kind can be KongPlugin or KongClusterPlugin. If not
                       set, it is assumed to be KongPlugin.
                     enum:
                     - KongPlugin
@@ -75,8 +75,29 @@ spec:
                 - name
                 type: object
               targets:
+                description: |-
+                  Targets contains the targets references. It is possible to set multiple combinations
+                  of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence
+                  The complete set of allowed combinations and their order of precedence for plugins
+                  configured to multiple entities is:
+
+
+                  1. Consumer + route + service
+                  2. Consumer group + service + route
+                  3. Consumer + route
+                  4. Consumer + service
+                  5. Consumer group + route
+                  6. Consumer group + service
+                  7. Route + service
+                  8. Consumer
+                  9. Consumer group
+                  10. Route
+                  11. Service
                 properties:
                   consumerGroupRef:
+                    description: |-
+                      ConsumerGroupReference is used to reference a configuration.konghq.com/ConsumerGroup resource.
+                      The group/kind is fixed, therefore the reference is performed only by name.
                     properties:
                       name:
                         description: Name is the name of the entity.
@@ -85,6 +106,9 @@ spec:
                     - name
                     type: object
                   consumerRef:
+                    description: |-
+                      ConsumerReference is used to reference a configuration.konghq.com/Consumer resource.
+                      The group/kind is fixed, therefore the reference is performed only by name.
                     properties:
                       name:
                         description: Name is the name of the entity.
@@ -94,40 +118,28 @@ spec:
                     type: object
                   routeRef:
                     description: |-
-                      Kong contains the Kong entity references. It is possible to set multiple combinations
-                      of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence
-                      The complete set of allowed combinations and their order of precedence for plugins
-                      configured to multiple entities is:
-
-
-                      1. Consumer + route + service
-                      2. Consumer group + service + route
-                      3. Consumer + route
-                      4. Consumer + service
-                      5. Consumer group + route
-                      6. Consumer group + service
-                      7. Route + service
-                      8. Consumer
-                      9. Consumer group
-                      10. Route
-                      11. Service
+                      RouteReference can be used to reference one of the following resouces:
+                      - networking.k8s.io/Ingress
+                      - gateway.networking.k8s.io/HTTPRoute
+                      - gateway.networking.k8s.io/GRPCRoute
+                      - configuration.konghq.com/KongRoute
                     properties:
                       group:
                         enum:
                         - ""
                         - core
-                        - gateway.networking.k8s.io
                         - networking.k8s.io
+                        - gateway.networking.k8s.io
                         - configuration.konghq.com
                         type: string
                       kind:
                         enum:
+                        - Service
+                        - Ingress
+                        - HTTPRoute
+                        - GRPCRoute
                         - KongService
                         - KongRoute
-                        - Service
-                        - HTTPRoute
-                        - GCPRoute
-                        - Ingress
                         type: string
                       name:
                         description: Name is the name of the entity.
@@ -142,25 +154,29 @@ spec:
                       rule: (self.kind == 'KongRoute' && self.group == 'configuration.konghq.com')
                         || (self.kind == 'Ingress' && self.group == 'networking.k8s.io')
                         || (self.kind == 'HTTPRoute' && self.group == 'gateway.networking.k8s.io')
-                        || (self.kind == 'GCPRoute' && self.group == 'gateway.networking.k8s.io')
+                        || (self.kind == 'GRPCRoute' && self.group == 'gateway.networking.k8s.io')
                   serviceRef:
+                    description: |-
+                      ServiceReference can be used to reference one of the following resouces:
+                      - core/Service or /Service
+                      - configuration.konghq.com/KongService
                     properties:
                       group:
                         enum:
                         - ""
                         - core
-                        - gateway.networking.k8s.io
                         - networking.k8s.io
+                        - gateway.networking.k8s.io
                         - configuration.konghq.com
                         type: string
                       kind:
                         enum:
+                        - Service
+                        - Ingress
+                        - HTTPRoute
+                        - GRPCRoute
                         - KongService
                         - KongRoute
-                        - Service
-                        - HTTPRoute
-                        - GCPRoute
-                        - Ingress
                         type: string
                       name:
                         description: Name is the name of the entity.

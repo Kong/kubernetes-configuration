@@ -600,7 +600,7 @@ KongPluginBindingSpec defines specification of a KongPluginBinding.
 | --- | --- |
 | `pluginRef` _[PluginRef](#pluginref)_ | PluginReference is a reference to the KongPlugin or KongClusterPlugin resource. It is required |
 | `global` _boolean_ |  |
-| `targets` _[KongPluginBindingTargets](#kongpluginbindingtargets)_ |  |
+| `targets` _[KongPluginBindingTargets](#kongpluginbindingtargets)_ | Targets contains the targets references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br /> 1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service |
 
 
 _Appears in:_
@@ -611,16 +611,16 @@ _Appears in:_
 #### KongPluginBindingTargets
 
 
-
+KongPluginBindingTargets contains the targets references.
 
 
 
 | Field | Description |
 | --- | --- |
-| `routeRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ | Kong contains the Kong entity references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br /> 1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service |
-| `serviceRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ |  |
-| `consumerRef` _[TargetRef](#targetref)_ |  |
-| `consumerGroupRef` _[TargetRef](#targetref)_ |  |
+| `routeRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ | RouteReference can be used to reference one of the following resouces: - networking.k8s.io/Ingress - gateway.networking.k8s.io/HTTPRoute - gateway.networking.k8s.io/GRPCRoute - configuration.konghq.com/KongRoute |
+| `serviceRef` _[TargetRefWithGroupKind](#targetrefwithgroupkind)_ | ServiceReference can be used to reference one of the following resouces: - core/Service or /Service - configuration.konghq.com/KongService |
+| `consumerRef` _[TargetRef](#targetref)_ | ConsumerReference is used to reference a configuration.konghq.com/Consumer resource. The group/kind is fixed, therefore the reference is performed only by name. |
+| `consumerGroupRef` _[TargetRef](#targetref)_ | ConsumerGroupReference is used to reference a configuration.konghq.com/ConsumerGroup resource. The group/kind is fixed, therefore the reference is performed only by name. |
 
 
 _Appears in:_
@@ -854,14 +854,14 @@ _Appears in:_
 #### PluginRef
 
 
-
+PluginRef is a reference to a KongPlugin or KongClusterPlugin resource.
 
 
 
 | Field | Description |
 | --- | --- |
 | `name` _string_ | Name is the name of the KongPlugin or KongClusterPlugin resource. |
-| `kind` _string_ | kind can be KongPlugin or KongClusterPlugin. If not set, it is assumed to be KongPlugin. |
+| `kind` _string_ | Kind can be KongPlugin or KongClusterPlugin. If not set, it is assumed to be KongPlugin. |
 
 
 _Appears in:_
@@ -886,7 +886,7 @@ _Appears in:_
 #### TargetRef
 
 
-
+TargetRef is a reference based on the object's name.
 
 
 
@@ -901,7 +901,7 @@ _Appears in:_
 #### TargetRefWithGroupKind
 
 
-
+TargetRefWithGroupKind is a reference based on the object's group, kind, and name.
 
 
 
