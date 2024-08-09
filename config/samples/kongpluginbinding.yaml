@@ -33,13 +33,3 @@ spec:
       name: service-sample
       kind: KongService
       group: configuration.konghq.com
----
-apiVersion: configuration.konghq.com/v1alpha1
-kind: KongPluginBinding
-metadata:
-  generation: 1
-  name: global-binding
-spec:
-  pluginRef:
-    name: plugin-sample
-  global: true
