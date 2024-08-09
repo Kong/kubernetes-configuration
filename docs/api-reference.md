@@ -733,7 +733,6 @@ KongServiceSpec defines specification of a Kong Route.
 | Field | Description |
 | --- | --- |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this Route is associated with. |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration holds the Konnect configuration like authentication configuration. |
 | `url` _string_ | Helper field to set `protocol`, `host`, `port` and `path` using a URL. This field is write-only and is not returned in responses. |
 | `connect_timeout` _integer_ | The timeout in milliseconds for establishing a connection to the upstream server. |
 | `enabled` _boolean_ | Whether the Service is active. If set to `false`, the proxy behavior will be as if any routes attached to it do not exist (404). Default: `true`. |

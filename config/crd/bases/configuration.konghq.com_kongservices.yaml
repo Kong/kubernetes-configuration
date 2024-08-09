@@ -99,28 +99,6 @@ spec:
                 description: The host of the upstream server. Note that the host value
                   is case sensitive.
                 type: string
-              konnect:
-                description: KonnectConfiguration holds the Konnect configuration
-                  like authentication configuration.
-                properties:
-                  authRef:
-                    description: |-
-                      APIAuthConfigurationRef is the reference to the API Auth Configuration
-                      that should be used for this Konnect Configuration.
-                    properties:
-                      name:
-                        description: Name is the name of the KonnectAPIAuthConfiguration
-                          resource.
-                        type: string
-                    required:
-                    - name
-                    type: object
-                    x-kubernetes-validations:
-                    - message: authRef is immutable
-                      rule: self == oldSelf
-                required:
-                - authRef
-                type: object
               name:
                 description: The Service name.
                 type: string
@@ -282,9 +260,12 @@ spec:
         - spec
         type: object
         x-kubernetes-validations:
-        - message: Konnect Configuration's API auth ref reference is required once
-            set
-          rule: '!has(oldSelf.spec.konnect.authRef) || has(self.spec.konnect.authRef)'
+        - message: controlPlaneRef is required once set
+          rule: '!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)'
+        - message: spec.controlPlaneRef is immutable when entity is already Programmed.
+          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
+            ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.controlPlaneRef
+            == self.spec.controlPlaneRef'
     served: true
     storage: true
     subresources:
