@@ -37,8 +37,6 @@ type KongPluginBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	// +kubebuilder:validation:XValidation:message="When global is set, target refs cannot be used",rule="(has(self.global) && self.global == true) ? !has(self.targets) : true"
-	// +kubebuilder:validation:XValidation:message="When global is unset, target refs have to be used",rule="(!has(self.global) || self.global == false) ? has(self.targets) : true"
 	Spec   KongPluginBindingSpec   `json:"spec"`
 	Status KongPluginBindingStatus `json:"status,omitempty"`
 }
@@ -68,11 +66,6 @@ type KongPluginBindingSpec struct {
 	// PluginReference is a reference to the KongPlugin or KongClusterPlugin resource.
 	// +kubebuilder:validation:XValidation:message="pluginRef name must be set",rule="self.name != ''"
 	PluginReference PluginRef `json:"pluginRef"`
-
-	// Global can be set to automatically target all the entities in the Kong cluster. When set to true,
-	// all the services, routes and consumers in the Kong cluster are targeted by the plugin.
-	// +optional
-	Global *bool `json:"global,omitempty"`
 
 	// Targets contains the targets references. It is possible to set multiple combinations
 	// of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence
