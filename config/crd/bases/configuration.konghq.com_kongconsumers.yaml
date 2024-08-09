@@ -123,9 +123,6 @@ spec:
                     required:
                     - name
                     type: object
-                    x-kubernetes-validations:
-                    - message: authRef is immutable
-                      rule: self == oldSelf
                 required:
                 - authRef
                 type: object

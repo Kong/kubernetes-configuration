@@ -3,7 +3,7 @@ module github.com/kong/kubernetes-configuration
 go 1.22.4
 
 require (
-	github.com/Kong/sdk-konnect-go v0.0.0-20240723160412-999d9a987e1a
+	github.com/Kong/sdk-konnect-go v0.0.1
 	github.com/kong/go-kong v0.57.1
 	github.com/stretchr/testify v1.9.0
 	k8s.io/api v0.30.3
@@ -13,6 +13,8 @@ require (
 	sigs.k8s.io/controller-runtime v0.18.4
 	sigs.k8s.io/gateway-api v1.1.0
 )
+
+require github.com/evanphx/json-patch/v5 v5.9.0 // indirect
 
 require (
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
