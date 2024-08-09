@@ -84,12 +84,11 @@ type KongPluginBindingSpec struct {
 	// 10. Route
 	// 11. Service
 	//
-	// +optional
 	// +kubebuilder:validation:XValidation:message="Cannot set Consumer and ConsumerGroup at the same time",rule="(has(self.consumerRef) ? !has(self.consumerGroupRef) : true)"
 	// +kubebuilder:validation:XValidation:message="At least one entity reference must be set",rule="has(self.routeRef) || has(self.serviceRef) || has(self.consumerRef) || has(self.consumerGroupRef)"
 	// +kubebuilder:validation:XValidation:message="KongRoute can be used only when serviceRef is unset or set to KongService",rule="(has(self.routeRef) && self.routeRef.kind == 'KongRoute') ? (!has(self.serviceRef) || self.serviceRef.kind == 'KongService') : true"
 	// +kubebuilder:validation:XValidation:message="KongService can be used only when routeRef is unset or set to KongRoute",rule="(has(self.serviceRef) && self.serviceRef.kind == 'KongService') ? (!has(self.routeRef) || self.routeRef.kind == 'KongRoute') : true"
-	Targets *KongPluginBindingTargets `json:"targets,omitempty"`
+	Targets KongPluginBindingTargets `json:"targets"`
 
 	// ControlPlaneRef is a reference to a ControlPlane this KongPluginBinding is associated with.
 	ControlPlaneRef ControlPlaneRef `json:"controlPlaneRef,omitempty"`

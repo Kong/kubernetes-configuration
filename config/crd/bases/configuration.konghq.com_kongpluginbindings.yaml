@@ -248,6 +248,7 @@ spec:
                     : true'
             required:
             - pluginRef
+            - targets
             type: object
           status:
             description: KongPluginBindingStatus represents the current status of
