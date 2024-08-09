@@ -190,9 +190,10 @@ test.samples: kustomize
 GOTESTSUM_FORMAT ?= standard-verbose
 
 .PHONY: test
-test: test.unit
+test: test.unit test.crds-validation
 
-UNIT_TEST_PATHS := ./test/...
+UNIT_TEST_PATHS := ./test/unit/...
+CRDS_VALIDATION_TEST_PATHS := ./test/crdsvalidation/...
 
 .PHONY: _test.unit
 _test.unit: gotestsum
@@ -201,12 +202,29 @@ _test.unit: gotestsum
 		-race \
 		$(UNIT_TEST_PATHS)
 
+.PHONY: _test.crds-validation
+_test.crds-validation: gotestsum
+	GOTESTSUM_FORMAT=$(GOTESTSUM_FORMAT) \
+		$(GOTESTSUM) -- $(GOTESTFLAGS) \
+		-race \
+		$(CRDS_VALIDATION_TEST_PATHS)
+
 .PHONY: test.unit
 test.unit:
 	@$(MAKE) _test.unit GOTESTFLAGS="$(GOTESTFLAGS)"
 
+.PHONY: test.crds-validation
+test.crds-validation:
+	@$(MAKE) _test.crds-validation GOTESTFLAGS="$(GOTESTFLAGS)"
+
 .PHONY: test.unit.pretty
 test.unit.pretty:
 	@$(MAKE) _test.unit GOTESTSUM_FORMAT=testname \
+		GOTESTFLAGS="$(GOTESTFLAGS)" \
+		UNIT_TEST_PATHS="$(UNIT_TEST_PATHS)"
+
+.PHONY: test.crds-validation.pretty
+test.crds-validation.pretty:
+	@$(MAKE) _test.crds-validation GOTESTSUM_FORMAT=testname \
 		GOTESTFLAGS="$(GOTESTFLAGS)" \
 		UNIT_TEST_PATHS="$(UNIT_TEST_PATHS)"
