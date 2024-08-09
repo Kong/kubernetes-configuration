@@ -96,6 +96,13 @@ crd-ref-docs: ## Download crd-ref-docs locally if necessary.
 	GOBIN=$(PROJECT_DIR)/bin go install -v \
 		github.com/elastic/crd-ref-docs@v$(CRD_REF_DOCS_VERSION)
 
+GOTESTSUM_VERSION = $(shell $(YQ) -r '.gotestsum' < $(TOOLS_VERSIONS_FILE))
+GOTESTSUM = $(PROJECT_DIR)/bin/installs/gotestsum/$(GOTESTSUM_VERSION)/bin/gotestsum
+.PHONY: gotestsum
+gotestsum: mise yq ## Download gotestsum locally if necessary.
+	@$(MISE) plugin install --yes -q gotestsum https://github.com/pmalek/mise-gotestsum.git
+	@$(MISE) install -q gotestsum@$(GOTESTSUM_VERSION)
+
 # ------------------------------------------------------------------------------
 # Verify steps
 # ------------------------------------------------------------------------------
@@ -179,3 +186,27 @@ install: generate.crds kustomize
 .PHONY: test.samples
 test.samples: kustomize
 	find ./config/samples -not -name "kustomization.*" -type f | sort | xargs -I{} bash -c "kubectl apply -f {}; kubectl delete -f {}"
+
+GOTESTSUM_FORMAT ?= standard-verbose
+
+.PHONY: test
+test: test.unit
+
+UNIT_TEST_PATHS := ./test/...
+
+.PHONY: _test.unit
+_test.unit: gotestsum
+	GOTESTSUM_FORMAT=$(GOTESTSUM_FORMAT) \
+		$(GOTESTSUM) -- $(GOTESTFLAGS) \
+		-race \
+		$(UNIT_TEST_PATHS)
+
+.PHONY: test.unit
+test.unit:
+	@$(MAKE) _test.unit GOTESTFLAGS="$(GOTESTFLAGS)"
+
+.PHONY: test.unit.pretty
+test.unit.pretty:
+	@$(MAKE) _test.unit GOTESTSUM_FORMAT=testname \
+		GOTESTFLAGS="$(GOTESTFLAGS)" \
+		UNIT_TEST_PATHS="$(UNIT_TEST_PATHS)"
