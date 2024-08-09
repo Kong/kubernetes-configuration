@@ -37,8 +37,6 @@ import (
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec.konnect.authRef) || has(self.spec.konnect.authRef)", message="Konnect Configuration's API auth ref reference is required once set"
 // +kubebuilder:validation:XValidation:rule="self.spec.protocols.exists(p, p == 'http') ? (has(self.spec.hosts) || has(self.spec.methods) || has(self.spec.paths) || has(self.spec.paths) || has(self.spec.paths) || has(self.spec.headers) ) : true", message="If protocols has 'http', at least one of 'hosts', 'methods', 'paths' or 'headers' must be set"
-// +kubebuilder:validation:XValidation:rule="!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef", message="spec.konnect.authRef is immutable when entity is already Programmed."
-// +kubebuilder:validation:XValidation:rule="!self.status.conditions.exists(c, c.type == 'APIAuthValid' && c.status == 'True') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef", message="spec.konnect.authRef is immutable when entity refers to a Valid API Auth Configuration."
 type KongRoute struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

@@ -361,13 +361,6 @@ spec:
           rule: 'self.spec.protocols.exists(p, p == ''http'') ? (has(self.spec.hosts)
             || has(self.spec.methods) || has(self.spec.paths) || has(self.spec.paths)
             || has(self.spec.paths) || has(self.spec.headers) ) : true'
-        - message: spec.konnect.authRef is immutable when entity is already Programmed.
-          rule: '!self.status.conditions.exists(c, c.type == ''Programmed'' && c.status
-            == ''True'') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef'
-        - message: spec.konnect.authRef is immutable when entity refers to a Valid
-            API Auth Configuration.
-          rule: '!self.status.conditions.exists(c, c.type == ''APIAuthValid'' && c.status
-            == ''True'') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef'
     served: true
     storage: true
     subresources:
