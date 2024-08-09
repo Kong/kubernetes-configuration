@@ -28,7 +28,7 @@ func TestKongPluginBindings(t *testing.T) {
 				t.Run(tc.Name, func(t *testing.T) {
 					kpb, err := cl.KongPluginBindings(tc.KongPluginBinding.Namespace).Create(ctx, &tc.KongPluginBinding, metav1.CreateOptions{})
 					if tc.ExpectedErrorMessage == nil {
-						assert.NoError(t, err)
+						require.NoError(t, err)
 						assert.NoError(t, cl.KongPluginBindings(kpb.Namespace).Delete(ctx, kpb.Name, metav1.DeleteOptions{}))
 					} else {
 						require.NotNil(t, err)

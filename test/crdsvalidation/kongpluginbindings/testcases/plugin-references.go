@@ -14,7 +14,15 @@ var pluginRefTCs = kpbTestCasesGroup{
 			Name: "no plugin reference",
 			KongPluginBinding: configurationv1alpha1.KongPluginBinding{
 				ObjectMeta: commonObjectMeta,
-				Spec:       configurationv1alpha1.KongPluginBindingSpec{},
+				Spec: configurationv1alpha1.KongPluginBindingSpec{
+					Targets: configurationv1alpha1.KongPluginBindingTargets{
+						ServiceReference: &configurationv1alpha1.TargetRefWithGroupKind{
+							Name:  "test-service",
+							Kind:  "Service",
+							Group: "core",
+						},
+					},
+				},
 			},
 			ExpectedErrorMessage: lo.ToPtr("pluginRef name must be set"),
 		},
@@ -24,6 +32,13 @@ var pluginRefTCs = kpbTestCasesGroup{
 				ObjectMeta: commonObjectMeta,
 				Spec: configurationv1alpha1.KongPluginBindingSpec{
 					PluginReference: configurationv1alpha1.PluginRef{},
+					Targets: configurationv1alpha1.KongPluginBindingTargets{
+						ServiceReference: &configurationv1alpha1.TargetRefWithGroupKind{
+							Name:  "test-service",
+							Kind:  "Service",
+							Group: "core",
+						},
+					},
 				},
 			},
 			ExpectedErrorMessage: lo.ToPtr("pluginRef name must be set"),
@@ -37,6 +52,13 @@ var pluginRefTCs = kpbTestCasesGroup{
 						Kind: lo.ToPtr("KongPlugin"),
 						Name: "test-plugin",
 					},
+					Targets: configurationv1alpha1.KongPluginBindingTargets{
+						ServiceReference: &configurationv1alpha1.TargetRefWithGroupKind{
+							Name:  "test-service",
+							Kind:  "Service",
+							Group: "core",
+						},
+					},
 				},
 			},
 		},
@@ -49,6 +71,13 @@ var pluginRefTCs = kpbTestCasesGroup{
 						Kind: lo.ToPtr("KongPlugin"),
 						Name: "test-plugin",
 					},
+					Targets: configurationv1alpha1.KongPluginBindingTargets{
+						ServiceReference: &configurationv1alpha1.TargetRefWithGroupKind{
+							Name:  "test-service",
+							Kind:  "Service",
+							Group: "core",
+						},
+					},
 				},
 			},
 		},
@@ -60,6 +89,13 @@ var pluginRefTCs = kpbTestCasesGroup{
 					PluginReference: configurationv1alpha1.PluginRef{
 						Kind: lo.ToPtr("WrongPluginKind"),
 						Name: "test-plugin",
+					},
+					Targets: configurationv1alpha1.KongPluginBindingTargets{
+						ServiceReference: &configurationv1alpha1.TargetRefWithGroupKind{
+							Name:  "test-service",
+							Kind:  "Service",
+							Group: "core",
+						},
 					},
 				},
 			},
