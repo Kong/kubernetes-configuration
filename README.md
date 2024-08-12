@@ -16,7 +16,7 @@ This repository holds the API definitions for Kong's Kubernetes configuration.
   - [`config/crd`][crd]: Kubernetes CRDs for Kong configuration
 - [`test/`][test] directory contains Go tests
   - [`test/crdsvalidation`][testcrdsvalidation] directory contains Go tests which
-    perform operations aginst a live Kubernetes cluster, testing [CEL][cel] rules
+    perform operations against a live Kubernetes cluster, testing [CEL][cel] rules
     set on API types
   - [`test/unit`][testunit] directory contains Go unit tests for generated Go types
 - [`docs/`][docs] directory contains generated API reference markdown files
