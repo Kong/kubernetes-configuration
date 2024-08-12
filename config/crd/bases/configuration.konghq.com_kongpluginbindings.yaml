@@ -247,7 +247,6 @@ spec:
                     ? (!has(self.routeRef) || self.routeRef.kind == ''KongRoute'')
                     : true'
             required:
-            - controlPlaneRef
             - pluginRef
             type: object
             x-kubernetes-validations:
