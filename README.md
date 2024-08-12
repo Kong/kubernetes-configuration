@@ -11,12 +11,24 @@ This repository holds the API definitions for Kong's Kubernetes configuration.
 ## Repository structure
 
 - [`api/`][api] directory contains Go types that are the source for generating
-  - [`pkg/clientset`][clientset]: Go clientsets for users who want to interact with Kong's Kubernetes configuration in Go
+  - [`pkg/clientset`][clientset]: Go clientsets for users who want to interact
+    with Kong's Kubernetes configuration in Go
   - [`config/crd`][crd]: Kubernetes CRDs for Kong configuration
+- [`test/`][test] directory contains Go tests
+  - [`test/crdsvalidation`][testcrdsvalidation] directory contains Go tests which
+    perform operations aginst a live Kubernetes cluster, testing [CEL][cel] rules
+    set on API types
+  - [`test/unit`][testunit] directory contains Go unit tests for generated Go types
+- [`docs/`][docs] directory contains generated API reference markdown files
 
 [api]: ./api/
 [clientset]: ./pkg/clientset/
 [crd]: ./config/crd
+[docs]: ./docs/
+[test]: ./test/
+[testcrdsvalidation]: ./test/crdsvalidation
+[testunit]: ./test/unit
+[cel]: https://kubernetes.io/docs/reference/using-api/cel/
 
 ## Install CRDs
 
