@@ -85,11 +85,6 @@ spec:
                       - kic
                     type: string
                 type: object
-              global:
-                description: |-
-                  Global can be set to automatically target all the entities in the Kong cluster. When set to true,
-                  all the services, routes and consumers in the Kong cluster are targeted by the plugin.
-                type: boolean
               pluginRef:
                 description: PluginReference is a reference to the KongPlugin or KongClusterPlugin
                   resource.
@@ -248,14 +243,8 @@ spec:
                     : true'
             required:
             - pluginRef
+            - targets
             type: object
-            x-kubernetes-validations:
-            - message: When global is set, target refs cannot be used
-              rule: '(has(self.global) && self.global == true) ? !has(self.targets)
-                : true'
-            - message: When global is unset, target refs have to be used
-              rule: '(!has(self.global) || self.global == false) ? has(self.targets)
-                : true'
           status:
             description: KongPluginBindingStatus represents the current status of
               the KongBinding resource.
