@@ -99,7 +99,6 @@ type KongPluginBindingSpec struct {
 	Targets *KongPluginBindingTargets `json:"targets,omitempty"`
 
 	// ControlPlaneRef is a reference to a ControlPlane this KongPluginBinding is associated with.
-	// +kubebuilder:validation:Required
 	ControlPlaneRef ControlPlaneRef `json:"controlPlaneRef"`
 }
 
