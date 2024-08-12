@@ -29,7 +29,7 @@ func TestKonnectControlPlane(t *testing.T) {
 				t.Run(tc.Name, func(t *testing.T) {
 					cl := cl.KonnectControlPlanes(tc.KonnectControlPlane.Namespace)
 					kcp, err := cl.Create(ctx, &tc.KonnectControlPlane, metav1.CreateOptions{})
-					if err != nil {
+					if err == nil {
 						t.Cleanup(func() {
 							assert.NoError(t, client.IgnoreNotFound(cl.Delete(ctx, kcp.Name, metav1.DeleteOptions{})))
 						})
