@@ -53,6 +53,38 @@ spec:
           spec:
             description: KongPluginBindingSpec defines specification of a KongPluginBinding.
             properties:
+              controlPlaneRef:
+                description: ControlPlaneRef is a reference to a ControlPlane this
+                  KongPluginBinding is associated with.
+                properties:
+                  kic:
+                    description: TODO(pmalek)
+                    type: object
+                  konnectID:
+                    description: TODO(pmalek)
+                    type: string
+                  konnectNamespacedRef:
+                    description: |-
+                      KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster.
+                      It contains the name of the Konnect Control Plane and the namespace in which it exists.
+                      If the namespace is not provided, it is assumed that the Konnect Control Plane
+                      is in the same namespace as the resource that references it.
+                    properties:
+                      name:
+                        type: string
+                      namespace:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  type:
+                    description: |-
+                      Type can be one of:
+                      - konnectID
+                      - konnectNamespacedRef
+                      - kic
+                    type: string
+                type: object
               global:
                 description: |-
                   Global can be set to automatically target all the entities in the Kong cluster. When set to true,
@@ -215,6 +247,7 @@ spec:
                     ? (!has(self.routeRef) || self.routeRef.kind == ''KongRoute'')
                     : true'
             required:
+            - controlPlaneRef
             - pluginRef
             type: object
             x-kubernetes-validations:
