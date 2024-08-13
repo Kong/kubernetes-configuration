@@ -22,12 +22,14 @@ type ControlPlaneRef struct {
 
 	// KonnectID is the schema for the KonnectID type.
 	// This field is required when the Type is konnectID.
+	// +optional
 	KonnectID *string `json:"konnectID,omitempty"`
 
 	// KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster.
 	// It contains the name of the Konnect Control Plane.
 	// This field is required when the Type is konnectNamespacedRef.
 	KonnectNamespacedRef *KonnectNamespacedRef `json:"konnectNamespacedRef,omitempty"`
+	// +optional
 }
 
 // KonnectNamespacedRef is the schema for the KonnectNamespacedRef type.
