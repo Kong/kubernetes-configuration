@@ -51,7 +51,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: KonnectControlPlaneSpec defines the desired state of KonnectControlPlane.
+            description: Spec defines the desired state of KonnectControlPlane.
             properties:
               auth_type:
                 description: The auth type value of the cluster associated with the
@@ -123,7 +123,7 @@ spec:
             - name
             type: object
           status:
-            description: KonnectControlPlaneStatus defines the observed state of KonnectControlPlane.
+            description: Status defines the observed state of KonnectControlPlane.
             properties:
               conditions:
                 default:
