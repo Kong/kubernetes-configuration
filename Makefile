@@ -192,6 +192,9 @@ GOTESTSUM_FORMAT ?= standard-verbose
 .PHONY: test
 test: test.unit test.crds-validation
 
+.PHONY: test.pretty
+test.pretty: test.unit.pretty test.crds-validation.pretty
+
 UNIT_TEST_PATHS := ./test/unit/...
 CRDS_VALIDATION_TEST_PATHS := ./test/crdsvalidation/...
 

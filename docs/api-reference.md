@@ -457,16 +457,16 @@ In this section you will find types that the CRDs rely on.
 #### ControlPlaneRef
 
 
-
+ControlPlaneRef is the schema for the ControlPlaneRef type.
+It is used to reference a Control Plane entity.
 
 
 
 | Field | Description |
 | --- | --- |
-| `type` _string_ | Type can be one of: - konnectID - konnectNamespacedRef - kic |
-| `konnectID` _string_ | TODO(pmalek) |
-| `konnectNamespacedRef` _[KonnectNamespacedRef](#konnectnamespacedref)_ | KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster. It contains the name of the Konnect Control Plane and the namespace in which it exists. If the namespace is not provided, it is assumed that the Konnect Control Plane is in the same namespace as the resource that references it. |
-| `kic` _[KIC](#kic)_ | TODO(pmalek) |
+| `type` _string_ | Type can be one of: - konnectID - konnectNamespacedRef |
+| `konnectID` _string_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
+| `konnectNamespacedRef` _[KonnectNamespacedRef](#konnectnamespacedref)_ | KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster. It contains the name of the Konnect Control Plane. This field is required when the Type is konnectNamespacedRef. |
 
 
 _Appears in:_
@@ -521,18 +521,6 @@ _Appears in:_
 
 _Appears in:_
 - [IngressClassParameters](#ingressclassparameters)
-
-#### KIC
-
-
-TODO(pmalek)
-
-
-
-
-
-_Appears in:_
-- [ControlPlaneRef](#controlplaneref)
 
 #### Kind
 _Underlying type:_ `string`
@@ -733,7 +721,7 @@ KongServiceSpec defines specification of a Kong Route.
 
 | Field | Description |
 | --- | --- |
-| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this Route is associated with. |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this Service is associated with. |
 | `url` _string_ | Helper field to set `protocol`, `host`, `port` and `path` using a URL. This field is write-only and is not returned in responses. |
 | `connect_timeout` _integer_ | The timeout in milliseconds for establishing a connection to the upstream server. |
 | `enabled` _boolean_ | Whether the Service is active. If set to `false`, the proxy behavior will be as if any routes attached to it do not exist (404). Default: `true`. |
@@ -784,8 +772,7 @@ KonnectNamespacedRef is the schema for the KonnectNamespacedRef type.
 
 | Field | Description |
 | --- | --- |
-| `name` _string_ |  |
-| `namespace` _string_ |  |
+| `name` _string_ | Name is the name of the Konnect Control Plane. |
 
 
 _Appears in:_

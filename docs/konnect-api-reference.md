@@ -38,7 +38,7 @@ KonnectControlPlane is the Schema for the KonnectControlplanes API.
 | `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
 | `kind` _string_ | `KonnectControlPlane`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[KonnectControlPlaneSpec](#konnectcontrolplanespec)_ |  |
+| `spec` _[KonnectControlPlaneSpec](#konnectcontrolplanespec)_ | Spec defines the desired state of KonnectControlPlane. |
 
 
 
