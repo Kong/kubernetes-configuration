@@ -88,7 +88,7 @@ func (c *KongService) SetConditions(conditions []metav1.Condition) {
 
 // KongServiceSpec defines specification of a Kong Route.
 type KongServiceSpec struct {
-	// ControlPlaneRef is a reference to a ControlPlane this Service is associated with.
+	// ControlPlaneRef is a reference to a ControlPlane this KongService is associated with.
 	// +kubebuilder:validation:Optional
 	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 
