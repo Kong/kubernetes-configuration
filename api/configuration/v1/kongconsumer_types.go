@@ -88,8 +88,8 @@ func (c *KongConsumer) SetConditions(conditions []metav1.Condition) {
 }
 
 type KongConsumerSpec struct {
-	// ControlPlaneRef is a reference to a ControlPlane this Route is associated with.
-	// +kubebuilder:validation:Optional
+	// ControlPlaneRef is a reference to a ControlPlane this Consumer is associated with.
+	// +optional
 	ControlPlaneRef *configurationv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 
 	// KonnectConfiguration holds the Konnect configuration like authentication configuration.

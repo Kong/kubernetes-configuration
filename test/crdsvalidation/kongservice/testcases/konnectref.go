@@ -28,7 +28,7 @@ var cpRef = testCasesGroup{
 			},
 		},
 		{
-			Name: "konnectNamespacedRef is provided when type is konnectNamespacedRef",
+			Name: "not providing konnectNamespacedRef when type is konnectNamespacedRef yields an error",
 			KongService: configurationv1alpha1.KongService{
 				ObjectMeta: commonObjectMeta,
 				Spec: configurationv1alpha1.KongServiceSpec{
@@ -41,6 +41,21 @@ var cpRef = testCasesGroup{
 				},
 			},
 			ExpectedErrorMessage: lo.ToPtr("when type is konnectNamespacedRef, konnectNamespacedRef must be set"),
+		},
+		{
+			Name: "not providing konnectID when type is konnectID yields an error",
+			KongService: configurationv1alpha1.KongService{
+				ObjectMeta: commonObjectMeta,
+				Spec: configurationv1alpha1.KongServiceSpec{
+					ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						Type: configurationv1alpha1.ControlPlaneRefKonnectID,
+					},
+					KongServiceAPISpec: configurationv1alpha1.KongServiceAPISpec{
+						Host: "example.com",
+					},
+				},
+			},
+			ExpectedErrorMessage: lo.ToPtr("when type is konnectID, konnectID must be set"),
 		},
 		{
 			Name: "konnectNamespacedRef reference name cannot be changed when entity is Programmed",

@@ -13,6 +13,7 @@ const (
 // ControlPlaneRef is the schema for the ControlPlaneRef type.
 // It is used to reference a Control Plane entity.
 // +kubebuilder:validation:XValidation:rule="self.type == 'konnectNamespacedRef' ? has(self.konnectNamespacedRef) : true", message="when type is konnectNamespacedRef, konnectNamespacedRef must be set"
+// +kubebuilder:validation:XValidation:rule="self.type == 'konnectID' ? has(self.konnectID) : true", message="when type is konnectID, konnectID must be set"
 type ControlPlaneRef struct {
 	// Type can be one of:
 	// - konnectID
