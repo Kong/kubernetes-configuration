@@ -31,7 +31,6 @@ type ControlPlaneRef struct {
 	// This field is required when the Type is konnectNamespacedRef.
 	// +optional
 	KonnectNamespacedRef *KonnectNamespacedRef `json:"konnectNamespacedRef,omitempty"`
-	// +optional
 }
 
 // KonnectNamespacedRef is the schema for the KonnectNamespacedRef type.
