@@ -155,7 +155,6 @@ _Appears in:_
 | Field | Description |
 | --- | --- |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this Consumer is associated with. |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration holds the Konnect configuration like authentication configuration. |
 
 
 _Appears in:_

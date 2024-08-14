@@ -113,25 +113,6 @@ spec:
                     : true'
                 - message: when type is konnectID, konnectID must be set
                   rule: 'self.type == ''konnectID'' ? has(self.konnectID) : true'
-              konnect:
-                description: KonnectConfiguration holds the Konnect configuration
-                  like authentication configuration.
-                properties:
-                  authRef:
-                    description: |-
-                      APIAuthConfigurationRef is the reference to the API Auth Configuration
-                      that should be used for this Konnect Configuration.
-                    properties:
-                      name:
-                        description: Name is the name of the KonnectAPIAuthConfiguration
-                          resource.
-                        type: string
-                    required:
-                    - name
-                    type: object
-                required:
-                - authRef
-                type: object
             type: object
           status:
             description: Status represents the current status of the KongConsumer
@@ -253,6 +234,12 @@ spec:
         x-kubernetes-validations:
         - message: Need to provide either username or custom_id
           rule: has(self.username) || has(self.custom_id)
+        - message: controlPlaneRef is required once set
+          rule: '!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)'
+        - message: spec.controlPlaneRef is immutable when entity is already Programmed.
+          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
+            ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.controlPlaneRef
+            == self.spec.controlPlaneRef'
     served: true
     storage: true
     subresources:
