@@ -6,10 +6,10 @@ require (
 	github.com/Kong/sdk-konnect-go v0.0.1
 	github.com/kong/go-kong v0.57.1
 	github.com/stretchr/testify v1.9.0
-	k8s.io/api v0.30.3
-	k8s.io/apiextensions-apiserver v0.30.3
+	k8s.io/api v0.31.0
+	k8s.io/apiextensions-apiserver v0.31.0
 	k8s.io/apimachinery v0.31.0
-	k8s.io/client-go v0.30.3
+	k8s.io/client-go v0.31.0
 	sigs.k8s.io/controller-runtime v0.18.5
 	sigs.k8s.io/gateway-api v1.1.0
 )
@@ -17,7 +17,9 @@ require (
 require (
 	github.com/evanphx/json-patch/v5 v5.9.0 // indirect
 	github.com/fxamacker/cbor/v2 v2.7.0 // indirect
+	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
+	gopkg.in/evanphx/json-patch.v4 v4.12.0 // indirect
 )
 
 require (
