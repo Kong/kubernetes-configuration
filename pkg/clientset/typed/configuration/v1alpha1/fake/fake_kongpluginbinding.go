@@ -41,22 +41,24 @@ var kongpluginbindingsKind = v1alpha1.SchemeGroupVersion.WithKind("KongPluginBin
 
 // Get takes name of the kongPluginBinding, and returns the corresponding kongPluginBinding object, and an error if there is any.
 func (c *FakeKongPluginBindings) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongPluginBinding, err error) {
+	emptyResult := &v1alpha1.KongPluginBinding{}
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(kongpluginbindingsResource, c.ns, name), &v1alpha1.KongPluginBinding{})
+		Invokes(testing.NewGetActionWithOptions(kongpluginbindingsResource, c.ns, name, options), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongPluginBinding), err
 }
 
 // List takes label and field selectors, and returns the list of KongPluginBindings that match those selectors.
 func (c *FakeKongPluginBindings) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongPluginBindingList, err error) {
+	emptyResult := &v1alpha1.KongPluginBindingList{}
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(kongpluginbindingsResource, kongpluginbindingsKind, c.ns, opts), &v1alpha1.KongPluginBindingList{})
+		Invokes(testing.NewListActionWithOptions(kongpluginbindingsResource, kongpluginbindingsKind, c.ns, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 
 	label, _, _ := testing.ExtractFromListOptions(opts)
@@ -75,40 +77,43 @@ func (c *FakeKongPluginBindings) List(ctx context.Context, opts v1.ListOptions) 
 // Watch returns a watch.Interface that watches the requested kongPluginBindings.
 func (c *FakeKongPluginBindings) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
-		InvokesWatch(testing.NewWatchAction(kongpluginbindingsResource, c.ns, opts))
+		InvokesWatch(testing.NewWatchActionWithOptions(kongpluginbindingsResource, c.ns, opts))
 
 }
 
 // Create takes the representation of a kongPluginBinding and creates it.  Returns the server's representation of the kongPluginBinding, and an error, if there is any.
 func (c *FakeKongPluginBindings) Create(ctx context.Context, kongPluginBinding *v1alpha1.KongPluginBinding, opts v1.CreateOptions) (result *v1alpha1.KongPluginBinding, err error) {
+	emptyResult := &v1alpha1.KongPluginBinding{}
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(kongpluginbindingsResource, c.ns, kongPluginBinding), &v1alpha1.KongPluginBinding{})
+		Invokes(testing.NewCreateActionWithOptions(kongpluginbindingsResource, c.ns, kongPluginBinding, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongPluginBinding), err
 }
 
 // Update takes the representation of a kongPluginBinding and updates it. Returns the server's representation of the kongPluginBinding, and an error, if there is any.
 func (c *FakeKongPluginBindings) Update(ctx context.Context, kongPluginBinding *v1alpha1.KongPluginBinding, opts v1.UpdateOptions) (result *v1alpha1.KongPluginBinding, err error) {
+	emptyResult := &v1alpha1.KongPluginBinding{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(kongpluginbindingsResource, c.ns, kongPluginBinding), &v1alpha1.KongPluginBinding{})
+		Invokes(testing.NewUpdateActionWithOptions(kongpluginbindingsResource, c.ns, kongPluginBinding, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongPluginBinding), err
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongPluginBindings) UpdateStatus(ctx context.Context, kongPluginBinding *v1alpha1.KongPluginBinding, opts v1.UpdateOptions) (*v1alpha1.KongPluginBinding, error) {
+func (c *FakeKongPluginBindings) UpdateStatus(ctx context.Context, kongPluginBinding *v1alpha1.KongPluginBinding, opts v1.UpdateOptions) (result *v1alpha1.KongPluginBinding, err error) {
+	emptyResult := &v1alpha1.KongPluginBinding{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceAction(kongpluginbindingsResource, "status", c.ns, kongPluginBinding), &v1alpha1.KongPluginBinding{})
+		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongpluginbindingsResource, "status", c.ns, kongPluginBinding, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongPluginBinding), err
 }
@@ -123,7 +128,7 @@ func (c *FakeKongPluginBindings) Delete(ctx context.Context, name string, opts v
 
 // DeleteCollection deletes a collection of objects.
 func (c *FakeKongPluginBindings) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(kongpluginbindingsResource, c.ns, listOpts)
+	action := testing.NewDeleteCollectionActionWithOptions(kongpluginbindingsResource, c.ns, opts, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.KongPluginBindingList{})
 	return err
@@ -131,11 +136,12 @@ func (c *FakeKongPluginBindings) DeleteCollection(ctx context.Context, opts v1.D
 
 // Patch applies the patch and returns the patched kongPluginBinding.
 func (c *FakeKongPluginBindings) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongPluginBinding, err error) {
+	emptyResult := &v1alpha1.KongPluginBinding{}
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(kongpluginbindingsResource, c.ns, name, pt, data, subresources...), &v1alpha1.KongPluginBinding{})
+		Invokes(testing.NewPatchSubresourceActionWithOptions(kongpluginbindingsResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongPluginBinding), err
 }
