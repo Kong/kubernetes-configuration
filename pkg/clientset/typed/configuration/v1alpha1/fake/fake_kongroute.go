@@ -41,22 +41,24 @@ var kongroutesKind = v1alpha1.SchemeGroupVersion.WithKind("KongRoute")
 
 // Get takes name of the kongRoute, and returns the corresponding kongRoute object, and an error if there is any.
 func (c *FakeKongRoutes) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongRoute, err error) {
+	emptyResult := &v1alpha1.KongRoute{}
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(kongroutesResource, c.ns, name), &v1alpha1.KongRoute{})
+		Invokes(testing.NewGetActionWithOptions(kongroutesResource, c.ns, name, options), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongRoute), err
 }
 
 // List takes label and field selectors, and returns the list of KongRoutes that match those selectors.
 func (c *FakeKongRoutes) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongRouteList, err error) {
+	emptyResult := &v1alpha1.KongRouteList{}
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(kongroutesResource, kongroutesKind, c.ns, opts), &v1alpha1.KongRouteList{})
+		Invokes(testing.NewListActionWithOptions(kongroutesResource, kongroutesKind, c.ns, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 
 	label, _, _ := testing.ExtractFromListOptions(opts)
@@ -75,40 +77,43 @@ func (c *FakeKongRoutes) List(ctx context.Context, opts v1.ListOptions) (result 
 // Watch returns a watch.Interface that watches the requested kongRoutes.
 func (c *FakeKongRoutes) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
-		InvokesWatch(testing.NewWatchAction(kongroutesResource, c.ns, opts))
+		InvokesWatch(testing.NewWatchActionWithOptions(kongroutesResource, c.ns, opts))
 
 }
 
 // Create takes the representation of a kongRoute and creates it.  Returns the server's representation of the kongRoute, and an error, if there is any.
 func (c *FakeKongRoutes) Create(ctx context.Context, kongRoute *v1alpha1.KongRoute, opts v1.CreateOptions) (result *v1alpha1.KongRoute, err error) {
+	emptyResult := &v1alpha1.KongRoute{}
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(kongroutesResource, c.ns, kongRoute), &v1alpha1.KongRoute{})
+		Invokes(testing.NewCreateActionWithOptions(kongroutesResource, c.ns, kongRoute, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongRoute), err
 }
 
 // Update takes the representation of a kongRoute and updates it. Returns the server's representation of the kongRoute, and an error, if there is any.
 func (c *FakeKongRoutes) Update(ctx context.Context, kongRoute *v1alpha1.KongRoute, opts v1.UpdateOptions) (result *v1alpha1.KongRoute, err error) {
+	emptyResult := &v1alpha1.KongRoute{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(kongroutesResource, c.ns, kongRoute), &v1alpha1.KongRoute{})
+		Invokes(testing.NewUpdateActionWithOptions(kongroutesResource, c.ns, kongRoute, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongRoute), err
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongRoutes) UpdateStatus(ctx context.Context, kongRoute *v1alpha1.KongRoute, opts v1.UpdateOptions) (*v1alpha1.KongRoute, error) {
+func (c *FakeKongRoutes) UpdateStatus(ctx context.Context, kongRoute *v1alpha1.KongRoute, opts v1.UpdateOptions) (result *v1alpha1.KongRoute, err error) {
+	emptyResult := &v1alpha1.KongRoute{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceAction(kongroutesResource, "status", c.ns, kongRoute), &v1alpha1.KongRoute{})
+		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongroutesResource, "status", c.ns, kongRoute, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongRoute), err
 }
@@ -123,7 +128,7 @@ func (c *FakeKongRoutes) Delete(ctx context.Context, name string, opts v1.Delete
 
 // DeleteCollection deletes a collection of objects.
 func (c *FakeKongRoutes) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(kongroutesResource, c.ns, listOpts)
+	action := testing.NewDeleteCollectionActionWithOptions(kongroutesResource, c.ns, opts, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.KongRouteList{})
 	return err
@@ -131,11 +136,12 @@ func (c *FakeKongRoutes) DeleteCollection(ctx context.Context, opts v1.DeleteOpt
 
 // Patch applies the patch and returns the patched kongRoute.
 func (c *FakeKongRoutes) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongRoute, err error) {
+	emptyResult := &v1alpha1.KongRoute{}
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(kongroutesResource, c.ns, name, pt, data, subresources...), &v1alpha1.KongRoute{})
+		Invokes(testing.NewPatchSubresourceActionWithOptions(kongroutesResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongRoute), err
 }

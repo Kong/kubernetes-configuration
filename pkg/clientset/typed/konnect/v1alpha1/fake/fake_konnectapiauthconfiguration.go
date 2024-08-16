@@ -41,22 +41,24 @@ var konnectapiauthconfigurationsKind = v1alpha1.SchemeGroupVersion.WithKind("Kon
 
 // Get takes name of the konnectAPIAuthConfiguration, and returns the corresponding konnectAPIAuthConfiguration object, and an error if there is any.
 func (c *FakeKonnectAPIAuthConfigurations) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KonnectAPIAuthConfiguration, err error) {
+	emptyResult := &v1alpha1.KonnectAPIAuthConfiguration{}
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(konnectapiauthconfigurationsResource, c.ns, name), &v1alpha1.KonnectAPIAuthConfiguration{})
+		Invokes(testing.NewGetActionWithOptions(konnectapiauthconfigurationsResource, c.ns, name, options), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KonnectAPIAuthConfiguration), err
 }
 
 // List takes label and field selectors, and returns the list of KonnectAPIAuthConfigurations that match those selectors.
 func (c *FakeKonnectAPIAuthConfigurations) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KonnectAPIAuthConfigurationList, err error) {
+	emptyResult := &v1alpha1.KonnectAPIAuthConfigurationList{}
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(konnectapiauthconfigurationsResource, konnectapiauthconfigurationsKind, c.ns, opts), &v1alpha1.KonnectAPIAuthConfigurationList{})
+		Invokes(testing.NewListActionWithOptions(konnectapiauthconfigurationsResource, konnectapiauthconfigurationsKind, c.ns, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 
 	label, _, _ := testing.ExtractFromListOptions(opts)
@@ -75,40 +77,43 @@ func (c *FakeKonnectAPIAuthConfigurations) List(ctx context.Context, opts v1.Lis
 // Watch returns a watch.Interface that watches the requested konnectAPIAuthConfigurations.
 func (c *FakeKonnectAPIAuthConfigurations) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
-		InvokesWatch(testing.NewWatchAction(konnectapiauthconfigurationsResource, c.ns, opts))
+		InvokesWatch(testing.NewWatchActionWithOptions(konnectapiauthconfigurationsResource, c.ns, opts))
 
 }
 
 // Create takes the representation of a konnectAPIAuthConfiguration and creates it.  Returns the server's representation of the konnectAPIAuthConfiguration, and an error, if there is any.
 func (c *FakeKonnectAPIAuthConfigurations) Create(ctx context.Context, konnectAPIAuthConfiguration *v1alpha1.KonnectAPIAuthConfiguration, opts v1.CreateOptions) (result *v1alpha1.KonnectAPIAuthConfiguration, err error) {
+	emptyResult := &v1alpha1.KonnectAPIAuthConfiguration{}
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(konnectapiauthconfigurationsResource, c.ns, konnectAPIAuthConfiguration), &v1alpha1.KonnectAPIAuthConfiguration{})
+		Invokes(testing.NewCreateActionWithOptions(konnectapiauthconfigurationsResource, c.ns, konnectAPIAuthConfiguration, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KonnectAPIAuthConfiguration), err
 }
 
 // Update takes the representation of a konnectAPIAuthConfiguration and updates it. Returns the server's representation of the konnectAPIAuthConfiguration, and an error, if there is any.
 func (c *FakeKonnectAPIAuthConfigurations) Update(ctx context.Context, konnectAPIAuthConfiguration *v1alpha1.KonnectAPIAuthConfiguration, opts v1.UpdateOptions) (result *v1alpha1.KonnectAPIAuthConfiguration, err error) {
+	emptyResult := &v1alpha1.KonnectAPIAuthConfiguration{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(konnectapiauthconfigurationsResource, c.ns, konnectAPIAuthConfiguration), &v1alpha1.KonnectAPIAuthConfiguration{})
+		Invokes(testing.NewUpdateActionWithOptions(konnectapiauthconfigurationsResource, c.ns, konnectAPIAuthConfiguration, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KonnectAPIAuthConfiguration), err
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKonnectAPIAuthConfigurations) UpdateStatus(ctx context.Context, konnectAPIAuthConfiguration *v1alpha1.KonnectAPIAuthConfiguration, opts v1.UpdateOptions) (*v1alpha1.KonnectAPIAuthConfiguration, error) {
+func (c *FakeKonnectAPIAuthConfigurations) UpdateStatus(ctx context.Context, konnectAPIAuthConfiguration *v1alpha1.KonnectAPIAuthConfiguration, opts v1.UpdateOptions) (result *v1alpha1.KonnectAPIAuthConfiguration, err error) {
+	emptyResult := &v1alpha1.KonnectAPIAuthConfiguration{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceAction(konnectapiauthconfigurationsResource, "status", c.ns, konnectAPIAuthConfiguration), &v1alpha1.KonnectAPIAuthConfiguration{})
+		Invokes(testing.NewUpdateSubresourceActionWithOptions(konnectapiauthconfigurationsResource, "status", c.ns, konnectAPIAuthConfiguration, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KonnectAPIAuthConfiguration), err
 }
@@ -123,7 +128,7 @@ func (c *FakeKonnectAPIAuthConfigurations) Delete(ctx context.Context, name stri
 
 // DeleteCollection deletes a collection of objects.
 func (c *FakeKonnectAPIAuthConfigurations) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(konnectapiauthconfigurationsResource, c.ns, listOpts)
+	action := testing.NewDeleteCollectionActionWithOptions(konnectapiauthconfigurationsResource, c.ns, opts, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.KonnectAPIAuthConfigurationList{})
 	return err
@@ -131,11 +136,12 @@ func (c *FakeKonnectAPIAuthConfigurations) DeleteCollection(ctx context.Context,
 
 // Patch applies the patch and returns the patched konnectAPIAuthConfiguration.
 func (c *FakeKonnectAPIAuthConfigurations) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KonnectAPIAuthConfiguration, err error) {
+	emptyResult := &v1alpha1.KonnectAPIAuthConfiguration{}
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(konnectapiauthconfigurationsResource, c.ns, name, pt, data, subresources...), &v1alpha1.KonnectAPIAuthConfiguration{})
+		Invokes(testing.NewPatchSubresourceActionWithOptions(konnectapiauthconfigurationsResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KonnectAPIAuthConfiguration), err
 }

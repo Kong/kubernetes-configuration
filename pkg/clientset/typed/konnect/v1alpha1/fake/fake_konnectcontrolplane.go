@@ -41,22 +41,24 @@ var konnectcontrolplanesKind = v1alpha1.SchemeGroupVersion.WithKind("KonnectCont
 
 // Get takes name of the konnectControlPlane, and returns the corresponding konnectControlPlane object, and an error if there is any.
 func (c *FakeKonnectControlPlanes) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KonnectControlPlane, err error) {
+	emptyResult := &v1alpha1.KonnectControlPlane{}
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(konnectcontrolplanesResource, c.ns, name), &v1alpha1.KonnectControlPlane{})
+		Invokes(testing.NewGetActionWithOptions(konnectcontrolplanesResource, c.ns, name, options), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KonnectControlPlane), err
 }
 
 // List takes label and field selectors, and returns the list of KonnectControlPlanes that match those selectors.
 func (c *FakeKonnectControlPlanes) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KonnectControlPlaneList, err error) {
+	emptyResult := &v1alpha1.KonnectControlPlaneList{}
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(konnectcontrolplanesResource, konnectcontrolplanesKind, c.ns, opts), &v1alpha1.KonnectControlPlaneList{})
+		Invokes(testing.NewListActionWithOptions(konnectcontrolplanesResource, konnectcontrolplanesKind, c.ns, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 
 	label, _, _ := testing.ExtractFromListOptions(opts)
@@ -75,40 +77,43 @@ func (c *FakeKonnectControlPlanes) List(ctx context.Context, opts v1.ListOptions
 // Watch returns a watch.Interface that watches the requested konnectControlPlanes.
 func (c *FakeKonnectControlPlanes) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
-		InvokesWatch(testing.NewWatchAction(konnectcontrolplanesResource, c.ns, opts))
+		InvokesWatch(testing.NewWatchActionWithOptions(konnectcontrolplanesResource, c.ns, opts))
 
 }
 
 // Create takes the representation of a konnectControlPlane and creates it.  Returns the server's representation of the konnectControlPlane, and an error, if there is any.
 func (c *FakeKonnectControlPlanes) Create(ctx context.Context, konnectControlPlane *v1alpha1.KonnectControlPlane, opts v1.CreateOptions) (result *v1alpha1.KonnectControlPlane, err error) {
+	emptyResult := &v1alpha1.KonnectControlPlane{}
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(konnectcontrolplanesResource, c.ns, konnectControlPlane), &v1alpha1.KonnectControlPlane{})
+		Invokes(testing.NewCreateActionWithOptions(konnectcontrolplanesResource, c.ns, konnectControlPlane, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KonnectControlPlane), err
 }
 
 // Update takes the representation of a konnectControlPlane and updates it. Returns the server's representation of the konnectControlPlane, and an error, if there is any.
 func (c *FakeKonnectControlPlanes) Update(ctx context.Context, konnectControlPlane *v1alpha1.KonnectControlPlane, opts v1.UpdateOptions) (result *v1alpha1.KonnectControlPlane, err error) {
+	emptyResult := &v1alpha1.KonnectControlPlane{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(konnectcontrolplanesResource, c.ns, konnectControlPlane), &v1alpha1.KonnectControlPlane{})
+		Invokes(testing.NewUpdateActionWithOptions(konnectcontrolplanesResource, c.ns, konnectControlPlane, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KonnectControlPlane), err
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKonnectControlPlanes) UpdateStatus(ctx context.Context, konnectControlPlane *v1alpha1.KonnectControlPlane, opts v1.UpdateOptions) (*v1alpha1.KonnectControlPlane, error) {
+func (c *FakeKonnectControlPlanes) UpdateStatus(ctx context.Context, konnectControlPlane *v1alpha1.KonnectControlPlane, opts v1.UpdateOptions) (result *v1alpha1.KonnectControlPlane, err error) {
+	emptyResult := &v1alpha1.KonnectControlPlane{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceAction(konnectcontrolplanesResource, "status", c.ns, konnectControlPlane), &v1alpha1.KonnectControlPlane{})
+		Invokes(testing.NewUpdateSubresourceActionWithOptions(konnectcontrolplanesResource, "status", c.ns, konnectControlPlane, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KonnectControlPlane), err
 }
@@ -123,7 +128,7 @@ func (c *FakeKonnectControlPlanes) Delete(ctx context.Context, name string, opts
 
 // DeleteCollection deletes a collection of objects.
 func (c *FakeKonnectControlPlanes) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(konnectcontrolplanesResource, c.ns, listOpts)
+	action := testing.NewDeleteCollectionActionWithOptions(konnectcontrolplanesResource, c.ns, opts, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.KonnectControlPlaneList{})
 	return err
@@ -131,11 +136,12 @@ func (c *FakeKonnectControlPlanes) DeleteCollection(ctx context.Context, opts v1
 
 // Patch applies the patch and returns the patched konnectControlPlane.
 func (c *FakeKonnectControlPlanes) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KonnectControlPlane, err error) {
+	emptyResult := &v1alpha1.KonnectControlPlane{}
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(konnectcontrolplanesResource, c.ns, name, pt, data, subresources...), &v1alpha1.KonnectControlPlane{})
+		Invokes(testing.NewPatchSubresourceActionWithOptions(konnectcontrolplanesResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KonnectControlPlane), err
 }

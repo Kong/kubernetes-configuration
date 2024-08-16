@@ -41,22 +41,24 @@ var kongservicesKind = v1alpha1.SchemeGroupVersion.WithKind("KongService")
 
 // Get takes name of the kongService, and returns the corresponding kongService object, and an error if there is any.
 func (c *FakeKongServices) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongService, err error) {
+	emptyResult := &v1alpha1.KongService{}
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(kongservicesResource, c.ns, name), &v1alpha1.KongService{})
+		Invokes(testing.NewGetActionWithOptions(kongservicesResource, c.ns, name, options), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongService), err
 }
 
 // List takes label and field selectors, and returns the list of KongServices that match those selectors.
 func (c *FakeKongServices) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongServiceList, err error) {
+	emptyResult := &v1alpha1.KongServiceList{}
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(kongservicesResource, kongservicesKind, c.ns, opts), &v1alpha1.KongServiceList{})
+		Invokes(testing.NewListActionWithOptions(kongservicesResource, kongservicesKind, c.ns, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 
 	label, _, _ := testing.ExtractFromListOptions(opts)
@@ -75,40 +77,43 @@ func (c *FakeKongServices) List(ctx context.Context, opts v1.ListOptions) (resul
 // Watch returns a watch.Interface that watches the requested kongServices.
 func (c *FakeKongServices) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
-		InvokesWatch(testing.NewWatchAction(kongservicesResource, c.ns, opts))
+		InvokesWatch(testing.NewWatchActionWithOptions(kongservicesResource, c.ns, opts))
 
 }
 
 // Create takes the representation of a kongService and creates it.  Returns the server's representation of the kongService, and an error, if there is any.
 func (c *FakeKongServices) Create(ctx context.Context, kongService *v1alpha1.KongService, opts v1.CreateOptions) (result *v1alpha1.KongService, err error) {
+	emptyResult := &v1alpha1.KongService{}
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(kongservicesResource, c.ns, kongService), &v1alpha1.KongService{})
+		Invokes(testing.NewCreateActionWithOptions(kongservicesResource, c.ns, kongService, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongService), err
 }
 
 // Update takes the representation of a kongService and updates it. Returns the server's representation of the kongService, and an error, if there is any.
 func (c *FakeKongServices) Update(ctx context.Context, kongService *v1alpha1.KongService, opts v1.UpdateOptions) (result *v1alpha1.KongService, err error) {
+	emptyResult := &v1alpha1.KongService{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(kongservicesResource, c.ns, kongService), &v1alpha1.KongService{})
+		Invokes(testing.NewUpdateActionWithOptions(kongservicesResource, c.ns, kongService, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongService), err
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongServices) UpdateStatus(ctx context.Context, kongService *v1alpha1.KongService, opts v1.UpdateOptions) (*v1alpha1.KongService, error) {
+func (c *FakeKongServices) UpdateStatus(ctx context.Context, kongService *v1alpha1.KongService, opts v1.UpdateOptions) (result *v1alpha1.KongService, err error) {
+	emptyResult := &v1alpha1.KongService{}
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceAction(kongservicesResource, "status", c.ns, kongService), &v1alpha1.KongService{})
+		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongservicesResource, "status", c.ns, kongService, opts), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongService), err
 }
@@ -123,7 +128,7 @@ func (c *FakeKongServices) Delete(ctx context.Context, name string, opts v1.Dele
 
 // DeleteCollection deletes a collection of objects.
 func (c *FakeKongServices) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionAction(kongservicesResource, c.ns, listOpts)
+	action := testing.NewDeleteCollectionActionWithOptions(kongservicesResource, c.ns, opts, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.KongServiceList{})
 	return err
@@ -131,11 +136,12 @@ func (c *FakeKongServices) DeleteCollection(ctx context.Context, opts v1.DeleteO
 
 // Patch applies the patch and returns the patched kongService.
 func (c *FakeKongServices) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongService, err error) {
+	emptyResult := &v1alpha1.KongService{}
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(kongservicesResource, c.ns, name, pt, data, subresources...), &v1alpha1.KongService{})
+		Invokes(testing.NewPatchSubresourceActionWithOptions(kongservicesResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
 
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.KongService), err
 }
