@@ -164,7 +164,7 @@ generate.clientsets: client-gen
 		--output-pkg $(REPO_URL)/pkg/
 
 .PHONY: generate.docs
-generate.docs: generate.apidocs # generate.cli-arguments-docs
+generate.docs: generate.apidocs
 
 .PHONY: generate.apidocs
 generate.apidocs: crd-ref-docs

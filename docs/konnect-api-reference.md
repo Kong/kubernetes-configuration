@@ -21,7 +21,7 @@ KonnectAPIAuthConfiguration is the Schema for the Konnect configuration type.
 | --- | --- |
 | `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
 | `kind` _string_ | `KonnectAPIAuthConfiguration`
-| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KonnectAPIAuthConfigurationSpec](#konnectapiauthconfigurationspec)_ | Spec is the specification of the KonnectAPIAuthConfiguration resource. |
 
 
@@ -37,7 +37,7 @@ KonnectControlPlane is the Schema for the KonnectControlplanes API.
 | --- | --- |
 | `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
 | `kind` _string_ | `KonnectControlPlane`
-| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KonnectControlPlaneSpec](#konnectcontrolplanespec)_ | Spec defines the desired state of KonnectControlPlane. |
 
 
@@ -71,7 +71,7 @@ KonnectAPIAuthConfigurationSpec is the specification of the KonnectAPIAuthConfig
 | --- | --- |
 | `type` _[KonnectAPIAuthType](#konnectapiauthtype)_ |  |
 | `token` _string_ | Token is the Konnect token used to authenticate with the Konnect API. |
-| `secretRef` _[SecretReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#secretreference-v1-core)_ | SecretRef is a reference to a Kubernetes Secret containing the Konnect token. This secret is required to has the konghq.com/credential label set to "konnect". |
+| `secretRef` _[SecretReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#secretreference-v1-core)_ | SecretRef is a reference to a Kubernetes Secret containing the Konnect token. This secret is required to has the konghq.com/credential label set to "konnect". |
 | `serverURL` _string_ | ServerURL is the URL of the Konnect server. |
 
 
