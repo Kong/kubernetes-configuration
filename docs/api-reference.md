@@ -471,7 +471,6 @@ It is used to reference a Control Plane entity.
 _Appears in:_
 - [KongConsumerSpec](#kongconsumerspec)
 - [KongPluginBindingSpec](#kongpluginbindingspec)
-- [KongRouteSpec](#kongroutespec)
 - [KongServiceSpec](#kongservicespec)
 
 #### ControllerReference
@@ -656,9 +655,7 @@ KongRouteSpec defines specification of a Kong Route.
 
 | Field | Description |
 | --- | --- |
-| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this Route is associated with. |
 | `serviceRef` _[ServiceRef](#serviceref)_ | ServiceRef is a reference to a Service this Route is associated with. |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration holds the Konnect configuration like authentication configuration. |
 | `destinations` _Destinations array_ | A list of IP destinations of incoming connections that match this Route when using stream routing. Each entry is an object with fields "ip" (optionally in CIDR range notation) and/or "port". |
 | `headers` _object (keys:string, values:string)_ | One or more lists of values indexed by header name that will cause this Route to match if present in the request. The `Host` header cannot be used with this attribute: hosts should be specified using the `hosts` attribute. When `headers` contains only one value and that value starts with the special prefix `~*`, the value is interpreted as a regular expression. |
 | `hosts` _string array_ | A list of domain names that match this Route. Note that the hosts value is case sensitive. |
