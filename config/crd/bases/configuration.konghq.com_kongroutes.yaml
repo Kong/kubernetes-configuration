@@ -44,44 +44,6 @@ spec:
           spec:
             description: KongRouteSpec defines specification of a Kong Route.
             properties:
-              controlPlaneRef:
-                description: ControlPlaneRef is a reference to a ControlPlane this
-                  Route is associated with.
-                properties:
-                  konnectID:
-                    description: |-
-                      KonnectID is the schema for the KonnectID type.
-                      This field is required when the Type is konnectID.
-                    type: string
-                  konnectNamespacedRef:
-                    description: |-
-                      KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster.
-                      It contains the name of the Konnect Control Plane.
-                      This field is required when the Type is konnectNamespacedRef.
-                    properties:
-                      name:
-                        description: Name is the name of the Konnect Control Plane.
-                        type: string
-                    required:
-                    - name
-                    type: object
-                  type:
-                    description: |-
-                      Type can be one of:
-                      - konnectID
-                      - konnectNamespacedRef
-                    enum:
-                    - konnectID
-                    - konnectNamespacedRef
-                    type: string
-                type: object
-                x-kubernetes-validations:
-                - message: when type is konnectNamespacedRef, konnectNamespacedRef
-                    must be set
-                  rule: 'self.type == ''konnectNamespacedRef'' ? has(self.konnectNamespacedRef)
-                    : true'
-                - message: when type is konnectID, konnectID must be set
-                  rule: 'self.type == ''konnectID'' ? has(self.konnectID) : true'
               destinations:
                 description: A list of IP destinations of incoming connections that
                   match this Route when using stream routing. Each entry is an object
@@ -120,25 +82,6 @@ spec:
                   `https` protocol.'
                 format: int64
                 type: integer
-              konnect:
-                description: KonnectConfiguration holds the Konnect configuration
-                  like authentication configuration.
-                properties:
-                  authRef:
-                    description: |-
-                      APIAuthConfigurationRef is the reference to the API Auth Configuration
-                      that should be used for this Konnect Configuration.
-                    properties:
-                      name:
-                        description: Name is the name of the KonnectAPIAuthConfiguration
-                          resource.
-                        type: string
-                    required:
-                    - name
-                    type: object
-                required:
-                - authRef
-                type: object
               methods:
                 description: A list of HTTP methods that match this Route.
                 items:
@@ -241,9 +184,6 @@ spec:
                 items:
                   type: string
                 type: array
-            required:
-            - controlPlaneRef
-            - konnect
             type: object
           status:
             description: KongRouteStatus represents the current status of the Kong
@@ -347,9 +287,8 @@ spec:
         - spec
         type: object
         x-kubernetes-validations:
-        - message: Konnect Configuration's API auth ref reference is required once
-            set
-          rule: '!has(oldSelf.spec.konnect.authRef) || has(self.spec.konnect.authRef)'
+        - message: serviceRef is required once set
+          rule: '!has(oldSelf.spec.serviceRef) || has(self.spec.serviceRef)'
         - message: If protocols has 'http', at least one of 'hosts', 'methods', 'paths'
             or 'headers' must be set
           rule: 'self.spec.protocols.exists(p, p == ''http'') ? (has(self.spec.hosts)
