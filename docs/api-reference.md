@@ -469,6 +469,7 @@ It is used to reference a Control Plane entity.
 
 
 _Appears in:_
+- [KongConsumerGroupSpec](#kongconsumergroupspec)
 - [KongConsumerSpec](#kongconsumerspec)
 - [KongPluginBindingSpec](#kongpluginbindingspec)
 - [KongServiceSpec](#kongservicespec)
@@ -919,6 +920,7 @@ KongConsumerGroup is the Schema for the kongconsumergroups API.
 | `apiVersion` _string_ | `configuration.konghq.com/v1beta1`
 | `kind` _string_ | `KongConsumerGroup`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongConsumerGroupSpec](#kongconsumergroupspec)_ |  |
 
 
 
@@ -1061,6 +1063,22 @@ IngressTLS describes the transport layer security.
 
 _Appears in:_
 - [TCPIngressSpec](#tcpingressspec)
+
+#### KongConsumerGroupSpec
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the ConsumerGroup in Kong. |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this ConsumerGroup is associated with. |
+
+
+_Appears in:_
+- [KongConsumerGroup](#kongconsumergroup)
 
 
 
