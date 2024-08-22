@@ -54,7 +54,7 @@ type KongConsumerGroupSpec struct {
 	ControlPlaneRef *configurationv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 }
 
-func (c *KongConsumerGroup) InitKonnectStatus() {
+func (c *KongConsumerGroup) initKonnectStatus() {
 	c.Status.Konnect = &konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef{}
 }
 
@@ -67,7 +67,7 @@ func (c *KongConsumerGroup) GetControlPlaneID() string {
 
 func (c *KongConsumerGroup) SetControlPlaneID(id string) {
 	if c.Status.Konnect == nil {
-		c.InitKonnectStatus()
+		c.initKonnectStatus()
 	}
 	c.Status.Konnect.ControlPlaneID = id
 }
@@ -81,7 +81,7 @@ func (c *KongConsumerGroup) GetKonnectStatus() *konnectv1alpha1.KonnectEntitySta
 
 func (c *KongConsumerGroup) SetKonnectID(id string) {
 	if c.Status.Konnect == nil {
-		c.InitKonnectStatus()
+		c.initKonnectStatus()
 	}
 	c.Status.Konnect.ID = id
 }
