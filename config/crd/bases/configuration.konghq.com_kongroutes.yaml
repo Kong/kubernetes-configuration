@@ -186,16 +186,17 @@ spec:
                 type: array
             type: object
           status:
+            default:
+              conditions:
+              - lastTransitionTime: "1970-01-01T00:00:00Z"
+                message: Waiting for controller
+                reason: Pending
+                status: Unknown
+                type: Programmed
             description: KongRouteStatus represents the current status of the Kong
               Route resource.
             properties:
               conditions:
-                default:
-                - lastTransitionTime: "1970-01-01T00:00:00Z"
-                  message: Waiting for controller
-                  reason: Pending
-                  status: Unknown
-                  type: Programmed
                 description: Conditions describe the status of the Konnect entity.
                 items:
                   description: Condition contains details for one aspect of the current

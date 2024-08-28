@@ -251,16 +251,17 @@ spec:
             - targets
             type: object
           status:
+            default:
+              conditions:
+              - lastTransitionTime: "1970-01-01T00:00:00Z"
+                message: Waiting for controller
+                reason: Pending
+                status: Unknown
+                type: Programmed
             description: KongPluginBindingStatus represents the current status of
               the KongBinding resource.
             properties:
               conditions:
-                default:
-                - lastTransitionTime: "1970-01-01T00:00:00Z"
-                  message: Waiting for controller
-                  reason: Pending
-                  status: Unknown
-                  type: Programmed
                 description: Conditions describe the status of the Konnect entity.
                 items:
                   description: Condition contains details for one aspect of the current
@@ -347,6 +348,12 @@ spec:
         required:
         - spec
         type: object
+        x-kubernetes-validations:
+        - message: controlPlaneRef is required once set
+          rule: '!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)'
+        - message: spec.controlPlaneRef is immutable when entity is already Programmed.
+          rule: '(!self.status.conditions.exists(c, c.type == ''Programmed'' && c.status
+            == ''True'')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef'
     served: true
     storage: true
     subresources:
