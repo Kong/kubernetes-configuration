@@ -16,11 +16,11 @@ spec:
   versions:
   - additionalPrinterColumns:
     - description: Kind of the plugin
-      jsonPath: .spec.pluginReference.kind
+      jsonPath: .spec.pluginRef.kind
       name: Plugin-kind
       type: string
     - description: Name of the plugin
-      jsonPath: .spec.pluginReference.name
+      jsonPath: .spec.pluginRef.name
       name: Plugin-name
       type: string
     - description: The Resource is Programmed
