@@ -4,14 +4,14 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.2
-  name: konnectcontrolplanes.konnect.konghq.com
+  name: konnectgatewaycontrolplanes.konnect.konghq.com
 spec:
   group: konnect.konghq.com
   names:
-    kind: KonnectControlPlane
-    listKind: KonnectControlPlaneList
-    plural: konnectcontrolplanes
-    singular: konnectcontrolplane
+    kind: KonnectGatewayControlPlane
+    listKind: KonnectGatewayControlPlaneList
+    plural: konnectgatewaycontrolplanes
+    singular: konnectgatewaycontrolplane
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -30,7 +30,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: KonnectControlPlane is the Schema for the KonnectControlplanes
+        description: KonnectGatewayControlPlane is the Schema for the KonnectGatewayControlplanes
           API.
         properties:
           apiVersion:
@@ -51,7 +51,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: Spec defines the desired state of KonnectControlPlane.
+            description: Spec defines the desired state of KonnectGatewayControlPlane.
             properties:
               auth_type:
                 description: The auth type value of the cluster associated with the
@@ -122,7 +122,7 @@ spec:
             - name
             type: object
           status:
-            description: Status defines the observed state of KonnectControlPlane.
+            description: Status defines the observed state of KonnectGatewayControlPlane.
             properties:
               conditions:
                 default:
@@ -132,7 +132,7 @@ spec:
                   status: Unknown
                   type: Programmed
                 description: |-
-                  Conditions describe the current conditions of the KonnectControlPlane.
+                  Conditions describe the current conditions of the KonnectGatewayControlPlane.
 
                   Known condition types are:
 

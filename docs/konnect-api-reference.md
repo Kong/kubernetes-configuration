@@ -9,7 +9,7 @@
 Package v1alpha1 contains API Schema definitions for the konnect.konghq.com v1alpha1 API group.
 
 - [KonnectAPIAuthConfiguration](#konnectapiauthconfiguration)
-- [KonnectControlPlane](#konnectcontrolplane)
+- [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
 ### KonnectAPIAuthConfiguration
 
 
@@ -26,19 +26,19 @@ KonnectAPIAuthConfiguration is the Schema for the Konnect configuration type.
 
 
 
-### KonnectControlPlane
+### KonnectGatewayControlPlane
 
 
-KonnectControlPlane is the Schema for the KonnectControlplanes API.
+KonnectGatewayControlPlane is the Schema for the KonnectGatewayControlplanes API.
 
-<!-- konnect_control_plane description placeholder -->
+<!-- konnect_gateway_control_plane description placeholder -->
 
 | Field | Description |
 | --- | --- |
 | `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
-| `kind` _string_ | `KonnectControlPlane`
+| `kind` _string_ | `KonnectGatewayControlPlane`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[KonnectControlPlaneSpec](#konnectcontrolplanespec)_ | Spec defines the desired state of KonnectControlPlane. |
+| `spec` _[KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)_ | Spec defines the desired state of KonnectGatewayControlPlane. |
 
 
 
@@ -105,31 +105,7 @@ _Appears in:_
 
 
 _Appears in:_
-- [KonnectControlPlaneSpec](#konnectcontrolplanespec)
-
-#### KonnectControlPlaneSpec
-
-
-KonnectControlPlaneSpec defines the desired state of KonnectControlPlane.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | The name of the control plane. |
-| `description` _string_ | The description of the control plane in Konnect. |
-| `cluster_type` _[ClusterType](#clustertype)_ | The ClusterType value of the cluster associated with the Control Plane. |
-| `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
-| `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
-| `proxy_urls` _[ProxyURL](#proxyurl) array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
-| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
-
-
-_Appears in:_
-- [KonnectControlPlane](#konnectcontrolplane)
-
-
+- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### KonnectEntityStatus
 
@@ -146,11 +122,35 @@ _Appears in:_
 
 
 _Appears in:_
-- [KonnectControlPlaneStatus](#konnectcontrolplanestatus)
 - [KonnectEntityStatusWithControlPlaneAndServiceRefs](#konnectentitystatuswithcontrolplaneandservicerefs)
 - [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
+- [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 
 
+
+
+
+#### KonnectGatewayControlPlaneSpec
+
+
+KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayControlPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | The name of the control plane. |
+| `description` _string_ | The description of the control plane in Konnect. |
+| `cluster_type` _[ClusterType](#clustertype)_ | The ClusterType value of the cluster associated with the Control Plane. |
+| `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
+| `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
+| `proxy_urls` _[ProxyURL](#proxyurl) array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
+| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
+| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
+
+
+_Appears in:_
+- [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
 
 
 

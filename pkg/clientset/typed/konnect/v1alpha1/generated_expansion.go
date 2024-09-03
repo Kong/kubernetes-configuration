@@ -20,4 +20,4 @@ package v1alpha1
 
 type KonnectAPIAuthConfigurationExpansion interface{}
 
-type KonnectControlPlaneExpansion interface{}
+type KonnectGatewayControlPlaneExpansion interface{}

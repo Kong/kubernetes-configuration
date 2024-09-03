@@ -1,4 +1,4 @@
-kind: KonnectControlPlane
+kind: KonnectGatewayControlPlane
 apiVersion: konnect.konghq.com/v1alpha1
 metadata:
   name: group1
@@ -13,7 +13,7 @@ spec:
     authRef:
       name: konnect-api-auth-dev-1
 ---
-kind: KonnectControlPlane
+kind: KonnectGatewayControlPlane
 apiVersion: konnect.konghq.com/v1alpha1
 metadata:
   name: test1
