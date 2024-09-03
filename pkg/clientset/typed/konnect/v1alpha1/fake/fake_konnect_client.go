@@ -32,8 +32,8 @@ func (c *FakeKonnectV1alpha1) KonnectAPIAuthConfigurations(namespace string) v1a
 	return &FakeKonnectAPIAuthConfigurations{c, namespace}
 }
 
-func (c *FakeKonnectV1alpha1) KonnectControlPlanes(namespace string) v1alpha1.KonnectControlPlaneInterface {
-	return &FakeKonnectControlPlanes{c, namespace}
+func (c *FakeKonnectV1alpha1) KonnectGatewayControlPlanes(namespace string) v1alpha1.KonnectGatewayControlPlaneInterface {
+	return &FakeKonnectGatewayControlPlanes{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate
