@@ -57,6 +57,9 @@ type KonnectAPIAuthConfigurationSpec struct {
 	SecretRef *corev1.SecretReference `json:"secretRef,omitempty"`
 
 	// ServerURL is the URL of the Konnect server.
+	// This depends on the Konnect environment you want to authenticate with.
+	// For complete list of available hostnames see: https://docs.konghq.com/konnect/network/
+	// +kubebuilder:example:=us.api.konghq.com
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:XValidation:rule="self == oldSelf",message="Server URL is immutable"
 	ServerURL string `json:"serverURL"`
