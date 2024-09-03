@@ -854,14 +854,14 @@ _Appears in:_
 #### ServiceRef
 
 
-
+ServiceRef is a reference to a KongService.
 
 
 
 | Field | Description |
 | --- | --- |
 | `type` _string_ | Type can be one of: - namespacedRef |
-| `namespacedRef` _[NamespacedServiceRef](#namespacedserviceref)_ |  |
+| `namespacedRef` _[NamespacedServiceRef](#namespacedserviceref)_ | NamespacedRef is a reference to a KongService. |
 
 
 _Appears in:_
