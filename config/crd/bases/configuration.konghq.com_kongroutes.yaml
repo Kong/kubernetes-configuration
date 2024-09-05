@@ -141,6 +141,7 @@ spec:
                   associated with.
                 properties:
                   namespacedRef:
+                    description: NamespacedRef is a reference to a KongService.
                     properties:
                       name:
                         type: string
@@ -155,6 +156,10 @@ spec:
                       - namespacedRef
                     type: string
                 type: object
+                x-kubernetes-validations:
+                - message: when type is namespacedRef, namespacedRef must be set
+                  rule: 'self.type == ''namespacedRef'' ? has(self.namespacedRef)
+                    : true'
               snis:
                 description: A list of SNIs that match this Route when using stream
                   routing.
@@ -290,11 +295,15 @@ spec:
         x-kubernetes-validations:
         - message: serviceRef is required once set
           rule: '!has(oldSelf.spec.serviceRef) || has(self.spec.serviceRef)'
+        - message: spec.serviceRef is immutable when an entity is already Programmed
+          rule: '(!self.status.conditions.exists(c, c.type == ''Programmed'' && c.status
+            == ''True'')) ? true : oldSelf.spec.serviceRef == self.spec.serviceRef'
         - message: If protocols has 'http', at least one of 'hosts', 'methods', 'paths'
             or 'headers' must be set
-          rule: 'self.spec.protocols.exists(p, p == ''http'') ? (has(self.spec.hosts)
-            || has(self.spec.methods) || has(self.spec.paths) || has(self.spec.paths)
-            || has(self.spec.paths) || has(self.spec.headers) ) : true'
+          rule: 'has(self.spec.protocols) && self.spec.protocols.exists(p, p == ''http'')
+            ? (has(self.spec.hosts) || has(self.spec.methods) || has(self.spec.paths)
+            || has(self.spec.paths) || has(self.spec.paths) || has(self.spec.headers)
+            ) : true'
     served: true
     storage: true
     subresources:
