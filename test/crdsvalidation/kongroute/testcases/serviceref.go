@@ -42,7 +42,7 @@ var serviceRef = testCasesGroup{
 			ExpectedErrorMessage: lo.ToPtr("when type is namespacedRef, namespacedRef must be set"),
 		},
 		{
-			Name: "NamespacedRef reference name cannot be changed when entity is Programmed",
+			Name: "NamespacedRef reference name cannot be changed when an entity is Programmed",
 			KongRoute: configurationv1alpha1.KongRoute{
 				ObjectMeta: commonObjectMeta,
 				Spec: configurationv1alpha1.KongRouteSpec{
@@ -70,10 +70,10 @@ var serviceRef = testCasesGroup{
 			Update: func(ks *configurationv1alpha1.KongRoute) {
 				ks.Spec.ServiceRef.NamespacedRef.Name = "new-konnect-service"
 			},
-			ExpectedUpdateErrorMessage: lo.ToPtr("spec.serviceRef is immutable when entity is already Programmed."),
+			ExpectedUpdateErrorMessage: lo.ToPtr("spec.serviceRef is immutable when an entity is already Programmed"),
 		},
 		{
-			Name: "NamespacedRef reference type cannot be changed when entity is Programmed",
+			Name: "NamespacedRef reference type cannot be changed when an entity is Programmed",
 			KongRoute: configurationv1alpha1.KongRoute{
 				ObjectMeta: commonObjectMeta,
 				Spec: configurationv1alpha1.KongRouteSpec{
@@ -101,7 +101,7 @@ var serviceRef = testCasesGroup{
 			Update: func(ks *configurationv1alpha1.KongRoute) {
 				ks.Spec.ServiceRef.Type = "otherRef"
 			},
-			ExpectedUpdateErrorMessage: lo.ToPtr("spec.serviceRef is immutable when entity is already Programmed."),
+			ExpectedUpdateErrorMessage: lo.ToPtr("spec.serviceRef is immutable when an entity is already Programmed"),
 		},
 	},
 }
