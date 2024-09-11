@@ -334,6 +334,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [KongPluginBinding](#kongpluginbinding)
 - [KongRoute](#kongroute)
 - [KongService](#kongservice)
+- [KongUpstream](#kongupstream)
 - [KongVault](#kongvault)
 ### IngressClassParameters
 
@@ -432,6 +433,22 @@ KongService is the schema for Services API which defines a Kong Service.
 
 
 
+### KongUpstream
+
+
+KongUpstream is the schema for Upstream API which defines a Kong Upstream.
+
+<!-- kong_upstream description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongUpstream`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongUpstreamSpec](#kongupstreamspec)_ |  |
+
+
+
 ### KongVault
 
 
@@ -473,6 +490,7 @@ _Appears in:_
 - [KongConsumerSpec](#kongconsumerspec)
 - [KongPluginBindingSpec](#kongpluginbindingspec)
 - [KongServiceSpec](#kongservicespec)
+- [KongUpstreamSpec](#kongupstreamspec)
 
 #### ControllerReference
 
@@ -737,6 +755,73 @@ KongServiceSpec defines specification of a Kong Route.
 
 _Appears in:_
 - [KongService](#kongservice)
+
+
+
+#### KongUpstreamAPISpec
+
+
+KongUpstreamAPISpec defines specification of a Kong Service.
+
+
+
+| Field | Description |
+| --- | --- |
+| `algorithm` _[UpstreamAlgorithm](#upstreamalgorithm)_ | Which load balancing algorithm to use. |
+| `client_certificate` _[UpstreamClientCertificate](#upstreamclientcertificate)_ | If set, the certificate to be used as client certificate while TLS handshaking to the upstream server. |
+| `hash_fallback` _[HashFallback](#hashfallback)_ | What to use as hashing input if the primary `hash_on` does not return a hash (eg. header is missing, or no Consumer identified). Not available if `hash_on` is set to `cookie`. |
+| `hash_fallback_header` _string_ | The header name to take the value from as hash input. Only required when `hash_fallback` is set to `header`. |
+| `hash_fallback_query_arg` _string_ | The name of the query string argument to take the value from as hash input. Only required when `hash_fallback` is set to `query_arg`. |
+| `hash_fallback_uri_capture` _string_ | The name of the route URI capture to take the value from as hash input. Only required when `hash_fallback` is set to `uri_capture`. |
+| `hash_on` _[HashOn](#hashon)_ | What to use as hashing input. Using `none` results in a weighted-round-robin scheme with no hashing. |
+| `hash_on_cookie` _string_ | The cookie name to take the value from as hash input. Only required when `hash_on` or `hash_fallback` is set to `cookie`. If the specified cookie is not in the request, Kong will generate a value and set the cookie in the response. |
+| `hash_on_cookie_path` _string_ | The cookie path to set in the response headers. Only required when `hash_on` or `hash_fallback` is set to `cookie`. |
+| `hash_on_header` _string_ | The header name to take the value from as hash input. Only required when `hash_on` is set to `header`. |
+| `hash_on_query_arg` _string_ | The name of the query string argument to take the value from as hash input. Only required when `hash_on` is set to `query_arg`. |
+| `hash_on_uri_capture` _string_ | The name of the route URI capture to take the value from as hash input. Only required when `hash_on` is set to `uri_capture`. |
+| `healthchecks` _[Healthchecks](#healthchecks)_ |  |
+| `host_header` _string_ | The hostname to be used as `Host` header when proxying requests through Kong. |
+| `name` _string_ | This is a hostname, which must be equal to the `host` of a Service. |
+| `slots` _integer_ | The number of slots in the load balancer algorithm. If `algorithm` is set to `round-robin`, this setting determines the maximum number of slots. If `algorithm` is set to `consistent-hashing`, this setting determines the actual number of slots in the algorithm. Accepts an integer in the range `10`-`65536`. |
+| `tags` _string array_ | An optional set of strings associated with the Upstream for grouping and filtering. |
+| `use_srv_name` _boolean_ | If set, the balancer will use SRV hostname(if DNS Answer has SRV record) as the proxy upstream `Host`. |
+
+
+_Appears in:_
+- [KongUpstreamSpec](#kongupstreamspec)
+
+#### KongUpstreamSpec
+
+
+KongUpstreamSpec defines specification of a Kong Route.
+
+
+
+| Field | Description |
+| --- | --- |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this KongUpstream is associated with. |
+| `algorithm` _[UpstreamAlgorithm](#upstreamalgorithm)_ | Which load balancing algorithm to use. |
+| `client_certificate` _[UpstreamClientCertificate](#upstreamclientcertificate)_ | If set, the certificate to be used as client certificate while TLS handshaking to the upstream server. |
+| `hash_fallback` _[HashFallback](#hashfallback)_ | What to use as hashing input if the primary `hash_on` does not return a hash (eg. header is missing, or no Consumer identified). Not available if `hash_on` is set to `cookie`. |
+| `hash_fallback_header` _string_ | The header name to take the value from as hash input. Only required when `hash_fallback` is set to `header`. |
+| `hash_fallback_query_arg` _string_ | The name of the query string argument to take the value from as hash input. Only required when `hash_fallback` is set to `query_arg`. |
+| `hash_fallback_uri_capture` _string_ | The name of the route URI capture to take the value from as hash input. Only required when `hash_fallback` is set to `uri_capture`. |
+| `hash_on` _[HashOn](#hashon)_ | What to use as hashing input. Using `none` results in a weighted-round-robin scheme with no hashing. |
+| `hash_on_cookie` _string_ | The cookie name to take the value from as hash input. Only required when `hash_on` or `hash_fallback` is set to `cookie`. If the specified cookie is not in the request, Kong will generate a value and set the cookie in the response. |
+| `hash_on_cookie_path` _string_ | The cookie path to set in the response headers. Only required when `hash_on` or `hash_fallback` is set to `cookie`. |
+| `hash_on_header` _string_ | The header name to take the value from as hash input. Only required when `hash_on` is set to `header`. |
+| `hash_on_query_arg` _string_ | The name of the query string argument to take the value from as hash input. Only required when `hash_on` is set to `query_arg`. |
+| `hash_on_uri_capture` _string_ | The name of the route URI capture to take the value from as hash input. Only required when `hash_on` is set to `uri_capture`. |
+| `healthchecks` _[Healthchecks](#healthchecks)_ |  |
+| `host_header` _string_ | The hostname to be used as `Host` header when proxying requests through Kong. |
+| `name` _string_ | This is a hostname, which must be equal to the `host` of a Service. |
+| `slots` _integer_ | The number of slots in the load balancer algorithm. If `algorithm` is set to `round-robin`, this setting determines the maximum number of slots. If `algorithm` is set to `consistent-hashing`, this setting determines the actual number of slots in the algorithm. Accepts an integer in the range `10`-`65536`. |
+| `tags` _string array_ | An optional set of strings associated with the Upstream for grouping and filtering. |
+| `use_srv_name` _boolean_ | If set, the balancer will use SRV hostname(if DNS Answer has SRV record) as the proxy upstream `Host`. |
+
+
+_Appears in:_
+- [KongUpstream](#kongupstream)
 
 
 

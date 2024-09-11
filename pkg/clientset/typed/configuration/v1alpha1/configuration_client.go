@@ -34,6 +34,7 @@ type ConfigurationV1alpha1Interface interface {
 	KongPluginBindingsGetter
 	KongRoutesGetter
 	KongServicesGetter
+	KongUpstreamsGetter
 	KongVaultsGetter
 }
 
@@ -64,6 +65,10 @@ func (c *ConfigurationV1alpha1Client) KongRoutes(namespace string) KongRouteInte
 
 func (c *ConfigurationV1alpha1Client) KongServices(namespace string) KongServiceInterface {
 	return newKongServices(c, namespace)
+}
+
+func (c *ConfigurationV1alpha1Client) KongUpstreams(namespace string) KongUpstreamInterface {
+	return newKongUpstreams(c, namespace)
 }
 
 func (c *ConfigurationV1alpha1Client) KongVaults() KongVaultInterface {
