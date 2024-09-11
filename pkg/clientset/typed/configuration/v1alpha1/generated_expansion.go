@@ -30,4 +30,6 @@ type KongRouteExpansion interface{}
 
 type KongServiceExpansion interface{}
 
+type KongUpstreamExpansion interface{}
+
 type KongVaultExpansion interface{}
