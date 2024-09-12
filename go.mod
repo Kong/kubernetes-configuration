@@ -6,9 +6,9 @@ require (
 	github.com/Kong/sdk-konnect-go v0.0.12
 	github.com/kong/go-kong v0.59.0
 	github.com/stretchr/testify v1.9.0
-	k8s.io/api v0.31.0
+	k8s.io/api v0.31.1
 	k8s.io/apiextensions-apiserver v0.31.0
-	k8s.io/apimachinery v0.31.0
+	k8s.io/apimachinery v0.31.1
 	k8s.io/client-go v0.31.0
 	sigs.k8s.io/controller-runtime v0.19.0
 	sigs.k8s.io/gateway-api v1.1.0
