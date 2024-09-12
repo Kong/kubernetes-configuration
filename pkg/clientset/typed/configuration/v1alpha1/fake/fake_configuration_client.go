@@ -52,6 +52,10 @@ func (c *FakeConfigurationV1alpha1) KongServices(namespace string) v1alpha1.Kong
 	return &FakeKongServices{c, namespace}
 }
 
+func (c *FakeConfigurationV1alpha1) KongTargets(namespace string) v1alpha1.KongTargetInterface {
+	return &FakeKongTargets{c, namespace}
+}
+
 func (c *FakeConfigurationV1alpha1) KongUpstreams(namespace string) v1alpha1.KongUpstreamInterface {
 	return &FakeKongUpstreams{c, namespace}
 }

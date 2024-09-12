@@ -334,6 +334,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [KongPluginBinding](#kongpluginbinding)
 - [KongRoute](#kongroute)
 - [KongService](#kongservice)
+- [KongTarget](#kongtarget)
 - [KongUpstream](#kongupstream)
 - [KongVault](#kongvault)
 ### IngressClassParameters
@@ -433,6 +434,22 @@ KongService is the schema for Services API which defines a Kong Service.
 
 
 
+### KongTarget
+
+
+KongTarget is the schema for Target API which defines a Kong Target attached to a Kong Upstream.
+
+<!-- kong_target description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongTarget`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongTargetSpec](#kongtargetspec)_ |  |
+
+
+
 ### KongUpstream
 
 
@@ -490,6 +507,7 @@ _Appears in:_
 - [KongConsumerSpec](#kongconsumerspec)
 - [KongPluginBindingSpec](#kongpluginbindingspec)
 - [KongServiceSpec](#kongservicespec)
+- [KongTargetSpec](#kongtargetspec)
 - [KongUpstreamSpec](#kongupstreamspec)
 - [KongVaultSpec](#kongvaultspec)
 
@@ -759,10 +777,48 @@ _Appears in:_
 
 
 
+#### KongTargetAPISpec
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `target` _string_ | Target is the target address of the upstream. |
+| `weight` _integer_ | Weight is the weight this target gets within the upstream loadbalancer. |
+| `tags` _string array_ | Tags is an optional set of strings associated with the Target for grouping and filtering. |
+
+
+_Appears in:_
+- [KongTargetSpec](#kongtargetspec)
+
+#### KongTargetSpec
+
+
+
+
+
+
+| Field | Description |
+| --- | --- |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this KongTarget is associated with. |
+| `upstreamRef` _[TargetRef](#targetref)_ | UpstreamRef is a reference to a KongUpstream this KongTarget is attached to. |
+| `target` _string_ | Target is the target address of the upstream. |
+| `weight` _integer_ | Weight is the weight this target gets within the upstream loadbalancer. |
+| `tags` _string array_ | Tags is an optional set of strings associated with the Target for grouping and filtering. |
+
+
+_Appears in:_
+- [KongTarget](#kongtarget)
+
+
+
 #### KongUpstreamAPISpec
 
 
-KongUpstreamAPISpec defines specification of a Kong Service.
+KongUpstreamAPISpec defines specification of a Kong Upstream.
 
 
 
@@ -794,7 +850,7 @@ _Appears in:_
 #### KongUpstreamSpec
 
 
-KongUpstreamSpec defines specification of a Kong Route.
+KongUpstreamSpec defines specification of a Kong Upstream.
 
 
 
@@ -969,6 +1025,7 @@ TargetRef is a reference based on the object's name.
 
 _Appears in:_
 - [KongPluginBindingTargets](#kongpluginbindingtargets)
+- [KongTargetSpec](#kongtargetspec)
 
 #### TargetRefWithGroupKind
 
