@@ -47,5 +47,7 @@ In order to run code generation in this repo you can use `make generate`.
 When you add a new CRD make sure to
 
 - Add it to CRD [kustomization.yaml][crd_kustomization]
+- Add unit tests in [`test/unit`][testunit]
+- Add CRD validation tests in [`test/crdsvalidation`][testcrdsvalidation]
 
 [crd_kustomization]: ./config/crd/kustomization.yaml

@@ -266,6 +266,8 @@ spec:
                   this setting determines the actual number of slots in the algorithm.
                   Accepts an integer in the range `10`-`65536`.
                 format: int64
+                maximum: 65536
+                minimum: 10
                 type: integer
               tags:
                 description: An optional set of strings associated with the Upstream
@@ -277,14 +279,37 @@ spec:
                 description: If set, the balancer will use SRV hostname(if DNS Answer
                   has SRV record) as the proxy upstream `Host`.
                 type: boolean
-            required:
-            - algorithm
-            - hash_fallback
-            - hash_on
-            - hash_on_cookie_path
-            - slots
-            - use_srv_name
             type: object
+            x-kubernetes-validations:
+            - message: hash_fallback_header is required when `hash_fallback` is set
+                to `header`.
+              rule: '!has(self.hash_fallback) || (self.hash_fallback != ''header''
+                || has(self.hash_fallback_header))'
+            - message: hash_fallback_query_arg is required when `hash_fallback` is
+                set to `query_arg`.
+              rule: '!has(self.hash_fallback) || (self.hash_fallback != ''query_arg''
+                || has(self.hash_fallback_query_arg))'
+            - message: hash_fallback_uri_capture is required when `hash_fallback`
+                is set to `uri_capture`.
+              rule: '!has(self.hash_fallback) || (self.hash_fallback != ''uri_capture''
+                || has(self.hash_fallback_uri_capture))'
+            - message: hash_on_cookie is required when hash_fallback is set to `cookie`.
+              rule: '!has(self.hash_fallback) || (self.hash_fallback != ''cookie''
+                || has(self.hash_on_cookie))'
+            - message: hash_on_cookie is required when hash_on is set to `cookie`.
+              rule: '!has(self.hash_on) || (self.hash_on != ''cookie'' || has(self.hash_on_cookie))'
+            - message: hash_on_cookie_path is required when hash_fallback is set to
+                `cookie`.
+              rule: '!has(self.hash_fallback) || (self.hash_fallback != ''cookie''
+                || has(self.hash_on_cookie_path))'
+            - message: hash_on_cookie_path is required when hash_on is set to `cookie`.
+              rule: '!has(self.hash_on) || (self.hash_on != ''cookie'' || has(self.hash_on_cookie_path))'
+            - message: hash_on_header is required when hash_on is set to `header`.
+              rule: '!has(self.hash_on) || (self.hash_on != ''header'' || has(self.hash_on_header))'
+            - message: hash_on_query_arg is required when `hash_on` is set to `query_arg`.
+              rule: '!has(self.hash_on) || (self.hash_on != ''query_arg'' || has(self.hash_on_query_arg))'
+            - message: hash_on_uri_capture is required when `hash_on` is set to `uri_capture`.
+              rule: '!has(self.hash_on) || (self.hash_on != ''uri_capture'' || has(self.hash_on_uri_capture))'
           status:
             default:
               conditions:
