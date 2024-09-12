@@ -208,7 +208,6 @@ spec:
             type: object
         required:
         - spec
-        - status
         type: object
         x-kubernetes-validations:
         - message: controlPlaneRef is required once set
@@ -216,7 +215,7 @@ spec:
         - message: spec.controlPlaneRef is immutable when an entity is already Programmed
           rule: '(!self.status.conditions.exists(c, c.type == ''Programmed'' && c.status
             == ''True'')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef'
-        - message: upstreamRef is immutable
+        - message: spec.upstreamRef is immutable
           rule: oldSelf.spec.upstreamRef == self.spec.upstreamRef
     served: true
     storage: true
