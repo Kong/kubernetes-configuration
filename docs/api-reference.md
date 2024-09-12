@@ -491,6 +491,7 @@ _Appears in:_
 - [KongPluginBindingSpec](#kongpluginbindingspec)
 - [KongServiceSpec](#kongservicespec)
 - [KongUpstreamSpec](#kongupstreamspec)
+- [KongVaultSpec](#kongvaultspec)
 
 #### ControllerReference
 
@@ -838,6 +839,8 @@ KongVaultSpec defines specification of a custom Kong vault.
 | `prefix` _string_ | Prefix is the prefix of vault URI for referencing values in the vault. It is immutable after created. |
 | `description` _string_ | Description is the additional information about the vault. |
 | `config` _[JSON](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#json-v1-apiextensions-k8s-io)_ | Config is the configuration of the vault. Varies for different backends. |
+| `tags` _string array_ | Tags are the tags associated to the vault for grouping and filtering. |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KongVault is associated with. |
 
 
 _Appears in:_
