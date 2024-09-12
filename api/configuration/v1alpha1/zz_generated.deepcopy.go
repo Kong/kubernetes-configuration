@@ -994,11 +994,7 @@ func (in *KongTargetSpec) DeepCopyInto(out *KongTargetSpec) {
 		*out = new(ControlPlaneRef)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.UpstreamRef != nil {
-		in, out := &in.UpstreamRef, &out.UpstreamRef
-		*out = new(TargetRef)
-		**out = **in
-	}
+	out.UpstreamRef = in.UpstreamRef
 	in.KongTargetAPISpec.DeepCopyInto(&out.KongTargetAPISpec)
 }
 

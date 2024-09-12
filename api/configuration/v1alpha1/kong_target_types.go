@@ -106,8 +106,7 @@ type KongTargetSpec struct {
 	// +optional
 	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 	// UpstreamRef is a reference to a KongUpstream this KongTarget is attached to.
-	// +required
-	UpstreamRef *TargetRef `json:"upstreamRef"`
+	UpstreamRef TargetRef `json:"upstreamRef"`
 	// KongTargetAPISpec are the attributes of the Kong Target itself.
 	KongTargetAPISpec `json:",inline"`
 }
