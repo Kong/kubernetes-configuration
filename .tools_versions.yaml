@@ -10,3 +10,5 @@ crd-ref-docs: "0.1.0"
 yq: "4.44.3"
 # renovate: datasource=github-releases depName=gotestyourself/gotestsum
 gotestsum: "1.12.0"
+# renovate: datasource=github-releases depName=golangci/golangci-lint
+golangci-lint: "1.61.0"

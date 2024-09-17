@@ -103,6 +103,13 @@ gotestsum: mise yq ## Download gotestsum locally if necessary.
 	@$(MISE) plugin install --yes -q gotestsum https://github.com/pmalek/mise-gotestsum.git
 	@$(MISE) install -q gotestsum@$(GOTESTSUM_VERSION)
 
+GOLANGCI_LINT_VERSION = $(shell $(YQ) -r '.golangci-lint' < $(TOOLS_VERSIONS_FILE))
+GOLANGCI_LINT = $(PROJECT_DIR)/bin/installs/golangci-lint/$(GOLANGCI_LINT_VERSION)/bin/golangci-lint
+.PHONY: golangci-lint
+golangci-lint: mise yq ## Download golangci-lint locally if necessary.
+	@$(MISE) plugin install --yes -q golangci-lint
+	@$(MISE) install -q golangci-lint@$(GOLANGCI_LINT_VERSION)
+
 # ------------------------------------------------------------------------------
 # Verify steps
 # ------------------------------------------------------------------------------
@@ -182,6 +189,11 @@ generate.apidocs: crd-ref-docs
 .PHONY: install
 install: generate.crds kustomize
 	$(KUSTOMIZE) build config/crd | kubectl apply -f -
+
+GOLANGCI_LINT_CONFIG ?= $(PROJECT_DIR)/.golangci.yaml
+.PHONY: lint
+lint: golangci-lint
+	$(GOLANGCI_LINT) run -v --config $(GOLANGCI_LINT_CONFIG) $(GOLANGCI_LINT_FLAGS)
 
 .PHONY: test.samples
 test.samples: kustomize
