@@ -20,6 +20,8 @@ package v1alpha1
 
 type IngressClassParametersExpansion interface{}
 
+type KongCACertificateExpansion interface{}
+
 type KongCustomEntityExpansion interface{}
 
 type KongLicenseExpansion interface{}

@@ -126,9 +126,6 @@ verify.diff:
 verify.versions:
 	./scripts/verify-versions.sh $(TAG)
 
-.PHONY: verify.manifests
-verify.manifests: verify.repo manifests verify.diff
-
 .PHONY: verify.generators
 verify.generators: verify.repo generate verify.diff
 

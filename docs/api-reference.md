@@ -329,6 +329,7 @@ _Appears in:_
 Package v1alpha1 contains API Schema definitions for the configuration.konghq.com v1alpha1 API group.
 
 - [IngressClassParameters](#ingressclassparameters)
+- [KongCACertificate](#kongcacertificate)
 - [KongCustomEntity](#kongcustomentity)
 - [KongLicense](#konglicense)
 - [KongPluginBinding](#kongpluginbinding)
@@ -350,6 +351,22 @@ IngressClassParameters is the Schema for the IngressClassParameters API.
 | `kind` _string_ | `IngressClassParameters`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[IngressClassParametersSpec](#ingressclassparametersspec)_ | Spec is the IngressClassParameters specification. |
+
+
+
+### KongCACertificate
+
+
+KongCACertificate is the schema for CACertificate API which defines a Kong CA Certificate.
+
+<!-- kong_ca_certificate description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongCACertificate`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongCACertificateSpec](#kongcacertificatespec)_ |  |
 
 
 
@@ -503,6 +520,7 @@ It is used to reference a Control Plane entity.
 
 
 _Appears in:_
+- [KongCACertificateSpec](#kongcacertificatespec)
 - [KongConsumerGroupSpec](#kongconsumergroupspec)
 - [KongConsumerSpec](#kongconsumerspec)
 - [KongPluginBindingSpec](#kongpluginbindingspec)
@@ -569,6 +587,41 @@ Kind refers to a Kubernetes kind.
 
 _Appears in:_
 - [ControllerReference](#controllerreference)
+
+#### KongCACertificateAPISpec
+
+
+KongCACertificateAPISpec contains the API specification for the KongCACertificate.
+
+
+
+| Field | Description |
+| --- | --- |
+| `cert` _string_ | Cert is the PEM-encoded CA certificate. |
+| `tags` _string array_ | Tags is an optional set of tags applied to the certificate. |
+
+
+_Appears in:_
+- [KongCACertificateSpec](#kongcacertificatespec)
+
+#### KongCACertificateSpec
+
+
+KongCACertificateSpec contains the specification for the KongCACertificate.
+
+
+
+| Field | Description |
+| --- | --- |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef references the Konnect Control Plane that this KongCACertificate should be created in. |
+| `cert` _string_ | Cert is the PEM-encoded CA certificate. |
+| `tags` _string array_ | Tags is an optional set of tags applied to the certificate. |
+
+
+_Appears in:_
+- [KongCACertificate](#kongcacertificate)
+
+
 
 #### KongCustomEntitySpec
 
