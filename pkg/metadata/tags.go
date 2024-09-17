@@ -4,6 +4,7 @@ import (
 	"strings"
 )
 
+// ObjectWithAnnotations is an interface that provides a method to get annotations.
 type ObjectWithAnnotations interface {
 	GetAnnotations() map[string]string
 }

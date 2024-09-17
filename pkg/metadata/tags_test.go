@@ -3,9 +3,10 @@ package metadata
 import (
 	"testing"
 
-	configurationv1 "github.com/kong/kubernetes-configuration/api/configuration/v1"
 	"github.com/stretchr/testify/require"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	configurationv1 "github.com/kong/kubernetes-configuration/api/configuration/v1"
 )
 
 func TestExtractTags(t *testing.T) {

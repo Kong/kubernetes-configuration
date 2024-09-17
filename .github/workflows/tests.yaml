@@ -55,6 +55,21 @@ jobs:
     - name: Verify
       run: make verify.diff
 
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-go@v5
+      with:
+        go-version-file: go.mod
+
+    - uses: jdx/mise-action@v2
+      with:
+        install: false
+
+    - run: make lint
+
   apply:
     runs-on: ubuntu-latest
     steps:
@@ -108,6 +123,7 @@ jobs:
       - test-unit
       - generate
       - apply
+      - lint
       - CRDs-validation
     if: always()
     steps:

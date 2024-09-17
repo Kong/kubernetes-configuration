@@ -1,0 +1,124 @@
+run:
+  timeout: 5m
+linters:
+  enable:
+  - asciicheck
+  - bodyclose
+  - copyloopvar
+  - dogsled
+  - durationcheck
+  - errcheck
+  - errorlint
+  - exhaustive
+  - forbidigo
+  - gci
+  - gocritic
+  - gofmt
+  - goimports
+  - gomodguard
+  - gosec
+  - gosimple
+  - govet
+  - importas
+  - ineffassign
+  - misspell
+  - nakedret
+  - nilerr
+  - nolintlint
+  - predeclared
+  - revive
+  - staticcheck
+  - typecheck
+  - unconvert
+  - unparam
+  - unused
+  - wastedassign
+linters-settings:
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(github.com/Kong/sdk-konnect-go)
+      - prefix(github.com/kong/kubernetes-configuration)
+  importas:
+    no-unaliased: true
+    alias:
+      - pkg: k8s.io/api/core/v1
+        alias: corev1
+      - pkg: k8s.io/api/apps/v1
+        alias: appsv1
+      - pkg: k8s.io/api/admission/v1
+        alias: admissionv1
+      - pkg: k8s.io/api/certificates/v1
+        alias: certificatesv1
+
+      - pkg: k8s.io/apimachinery/pkg/apis/meta/v1
+        alias: metav1
+      - pkg: sigs.k8s.io/gateway-api/apis/(v[\w\d]+)
+        alias: gateway${1}
+
+      - pkg: sigs.k8s.io/controller-runtime/pkg/log
+        alias: ctrllog
+
+      - pkg: github.com/Kong/sdk-konnect-go/models/components
+        alias: sdkkonnectcomp
+      - pkg: github.com/Kong/sdk-konnect-go/models/operations
+        alias: sdkkonnectops
+      - pkg: github.com/Kong/sdk-konnect-go/models/sdkerrors
+        alias: sdkkonnecterrs
+  revive:
+    rules:
+      - name: errorf
+        severity: warning
+        disabled: false
+      - name: error-strings
+        severity: warning
+        disabled: false
+      - name: error-naming
+        severity: warning
+        disabled: false
+      - name: duplicated-imports
+        severity: warning
+        disabled: false
+      - name: empty-block
+        severity: warning
+        disabled: false
+      - name: exported
+        severity: warning
+        disabled: false
+        arguments:
+          - "checkPrivateReceivers"
+          # TODO: enable this when ready to refactor exported types that stutter at call site.
+          - "disableStutteringCheck"
+      - name: context-as-argument
+        # TODO: re-add this rule after https://github.com/golangci/golangci-lint/issues/3280
+        # is resolved and released.
+        # arguments:
+        #   - "allowTypesBefore": "*testing.T"
+        disabled: true
+  exhaustive:
+    default-signifies-exhaustive: true
+  gomodguard:
+    blocked:
+      modules:
+      - golang.org/x/exp:
+         recommendations:
+          - maps
+          - slices
+          - github.com/samber/lo
+      - github.com/pkg/errors:
+          recommendations:
+          - fmt
+          - errors
+      - github.com/sirupsen/logrus:
+          recommendations:
+          - sigs.k8s.io/controller-runtime/pkg/log
+          - go.uber.org/zap/zapcore
+issues:
+  max-same-issues: 0
+  fix: true
+  exclude-dirs:
+    - pkg/clientset
+    - api
+  include:
+    - EXC0012
