@@ -39,6 +39,7 @@ type KonnectNamespacedRef struct {
 	// +kubebuilder:validation:Required
 	Name string `json:"name"`
 
-	// TODO: Implement cross namespace references:
-	// https://github.com/Kong/kubernetes-configuration/issues/36
+	// Namespace is the namespace where the Konnect Control Plane is in.
+	// +optional
+	Namespace string `json:"namespace,omitempty"`
 }

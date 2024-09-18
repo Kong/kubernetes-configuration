@@ -1019,6 +1019,7 @@ KonnectNamespacedRef is the schema for the KonnectNamespacedRef type.
 | Field | Description |
 | --- | --- |
 | `name` _string_ | Name is the name of the Konnect Control Plane. |
+| `namespace` _string_ | Namespace is the namespace where the Konnect Control Plane is in. |
 
 
 _Appears in:_

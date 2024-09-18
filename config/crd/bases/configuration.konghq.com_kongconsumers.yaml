@@ -93,6 +93,10 @@ spec:
                       name:
                         description: Name is the name of the Konnect Control Plane.
                         type: string
+                      namespace:
+                        description: Namespace is the namespace where the Konnect
+                          Control Plane is in.
+                        type: string
                     required:
                     - name
                     type: object
