@@ -28,6 +28,7 @@ import (
 
 type ConfigurationV1alpha1Interface interface {
 	RESTClient() rest.Interface
+	CredentialBasicAuthsGetter
 	IngressClassParametersesGetter
 	KongCACertificatesGetter
 	KongCustomEntitiesGetter
@@ -43,6 +44,10 @@ type ConfigurationV1alpha1Interface interface {
 // ConfigurationV1alpha1Client is used to interact with features provided by the configuration.konghq.com group.
 type ConfigurationV1alpha1Client struct {
 	restClient rest.Interface
+}
+
+func (c *ConfigurationV1alpha1Client) CredentialBasicAuths(namespace string) CredentialBasicAuthInterface {
+	return newCredentialBasicAuths(c, namespace)
 }
 
 func (c *ConfigurationV1alpha1Client) IngressClassParameterses(namespace string) IngressClassParametersInterface {
