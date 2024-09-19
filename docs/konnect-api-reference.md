@@ -123,8 +123,11 @@ _Appears in:_
 
 _Appears in:_
 - [KonnectEntityStatusWithControlPlaneAndServiceRefs](#konnectentitystatuswithcontrolplaneandservicerefs)
+- [KonnectEntityStatusWithControlPlaneAndUpstreamRefs](#konnectentitystatuswithcontrolplaneandupstreamrefs)
 - [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
+
+
 
 
 
