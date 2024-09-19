@@ -28,6 +28,10 @@ type FakeConfigurationV1alpha1 struct {
 	*testing.Fake
 }
 
+func (c *FakeConfigurationV1alpha1) CredentialBasicAuths(namespace string) v1alpha1.CredentialBasicAuthInterface {
+	return &FakeCredentialBasicAuths{c, namespace}
+}
+
 func (c *FakeConfigurationV1alpha1) IngressClassParameterses(namespace string) v1alpha1.IngressClassParametersInterface {
 	return &FakeIngressClassParameterses{c, namespace}
 }
