@@ -48,7 +48,7 @@ type CredentialBasicAuth struct {
 }
 
 func (s *CredentialBasicAuth) initKonnectStatus() {
-	s.Status.Konnect = &konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef{}
+	s.Status.Konnect = &konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs{}
 }
 
 // GetKonnectStatus returns the Konnect status contained in the CredentialBasicAuth status.
@@ -136,7 +136,7 @@ type CredentialBasicAuthAPISpec struct {
 type CredentialBasicAuthStatus struct {
 	// Konnect contains the Konnect entity status.
 	// +optional
-	Konnect *konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef `json:"konnect,omitempty"`
+	Konnect *konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs `json:"konnect,omitempty"`
 
 	// Conditions describe the status of the Konnect entity.
 	// +listType=map

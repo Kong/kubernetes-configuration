@@ -183,7 +183,7 @@ func (in *CredentialBasicAuthStatus) DeepCopyInto(out *CredentialBasicAuthStatus
 	*out = *in
 	if in.Konnect != nil {
 		in, out := &in.Konnect, &out.Konnect
-		*out = new(konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef)
+		*out = new(konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs)
 		**out = **in
 	}
 	if in.Conditions != nil {

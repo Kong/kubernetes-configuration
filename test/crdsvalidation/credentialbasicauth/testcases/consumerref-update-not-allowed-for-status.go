@@ -29,7 +29,7 @@ var updatesNotAllowedForStatus = testCasesGroup{
 				},
 			},
 			CredentialBasicAuthStatus: &configurationv1alpha1.CredentialBasicAuthStatus{
-				Konnect: &konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef{},
+				Konnect: &konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs{},
 				Conditions: []metav1.Condition{
 					{
 						Type:               "Programmed",
@@ -59,7 +59,7 @@ var updatesNotAllowedForStatus = testCasesGroup{
 				},
 			},
 			CredentialBasicAuthStatus: &configurationv1alpha1.CredentialBasicAuthStatus{
-				Konnect: &konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef{},
+				Konnect: &konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs{},
 				Conditions: []metav1.Condition{
 					{
 						Type:               "Programmed",
