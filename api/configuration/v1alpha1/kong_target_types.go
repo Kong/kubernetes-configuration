@@ -41,7 +41,7 @@ type KongTarget struct {
 }
 
 func (t *KongTarget) initKonnectStatus() {
-	t.Status.Konnect = &konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef{}
+	t.Status.Konnect = &konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndUpstreamRefs{}
 }
 
 // GetKonnectStatus returns the Konnect status contained in the KongTarget status.
@@ -121,7 +121,7 @@ type KongTargetAPISpec struct {
 type KongTargetStatus struct {
 	// Konnect contains the Konnect entity status.
 	// +optional
-	Konnect *konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef `json:"konnect,omitempty"`
+	Konnect *konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndUpstreamRefs `json:"konnect,omitempty"`
 
 	// Conditions describe the status of the Konnect entity.
 	// +listType=map

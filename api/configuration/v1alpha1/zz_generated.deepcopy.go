@@ -1135,7 +1135,7 @@ func (in *KongTargetStatus) DeepCopyInto(out *KongTargetStatus) {
 	*out = *in
 	if in.Konnect != nil {
 		in, out := &in.Konnect, &out.Konnect
-		*out = new(konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef)
+		*out = new(konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndUpstreamRefs)
 		**out = **in
 	}
 	if in.Conditions != nil {

@@ -166,6 +166,10 @@ spec:
                     description: ServerURL is the URL of the Konnect server in which
                       the entity exists.
                     type: string
+                  upstreamID:
+                    description: UpstreamID is the Konnect ID of the Upstream this
+                      entity is associated with.
+                    type: string
                 type: object
             type: object
         required:
