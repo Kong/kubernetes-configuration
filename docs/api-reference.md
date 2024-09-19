@@ -590,7 +590,6 @@ CredentialBasicAuthSpec defines specification of a Kong Route.
 | Field | Description |
 | --- | --- |
 | `consumerRef` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core)_ | ConsumerRef is a reference to a Consumer this CredentialBasicAuth is associated with. |
-| `secretRef` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core)_ | SecretRef is a reference to a Secret this CredentialBasicAuth is associated with. |
 | `password` _string_ | Password is the password for the BasicAuth credential. |
 | `tags` _string array_ | Tags is a list of tags for the BasicAuth credential. |
 | `username` _string_ | Username is the username for the BasicAuth credential. |

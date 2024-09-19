@@ -22,12 +22,9 @@ var updatesNotAllowedForStatus = testCasesGroup{
 					ConsumerRef: corev1.LocalObjectReference{
 						Name: "test-kong-consumer",
 					},
-					SecretRef: corev1.LocalObjectReference{
-						Name: "test-secret",
-					},
 					CredentialBasicAuthAPISpec: configurationv1alpha1.CredentialBasicAuthAPISpec{
-						Password: lo.ToPtr("password"),
-						Username: lo.ToPtr("username"),
+						Password: "password",
+						Username: "username",
 					},
 				},
 			},
@@ -45,7 +42,7 @@ var updatesNotAllowedForStatus = testCasesGroup{
 			Update: func(c *configurationv1alpha1.CredentialBasicAuth) {
 				c.Spec.ConsumerRef.Name = "new-consumer"
 			},
-			ExpectedUpdateErrorMessage: lo.ToPtr("spec.consumerREf is immutable when an entity is already Programmed"),
+			ExpectedUpdateErrorMessage: lo.ToPtr("spec.consumerRef is immutable when an entity is already Programmed"),
 		},
 		{
 			Name: "consumerRef change is allowed when consumer is not Programmed=True nor APIAuthValid=True",
@@ -55,12 +52,9 @@ var updatesNotAllowedForStatus = testCasesGroup{
 					ConsumerRef: corev1.LocalObjectReference{
 						Name: "test-kong-consumer",
 					},
-					SecretRef: corev1.LocalObjectReference{
-						Name: "test-secret",
-					},
 					CredentialBasicAuthAPISpec: configurationv1alpha1.CredentialBasicAuthAPISpec{
-						Password: lo.ToPtr("password"),
-						Username: lo.ToPtr("username"),
+						Password: "password",
+						Username: "username",
 					},
 				},
 			},
@@ -77,38 +71,6 @@ var updatesNotAllowedForStatus = testCasesGroup{
 			},
 			Update: func(c *configurationv1alpha1.CredentialBasicAuth) {
 				c.Spec.ConsumerRef.Name = "new-consumer"
-			},
-		},
-		{
-			Name: "secretRef change is allowed when consumer is Programmed=True",
-			CredentialBasicAuth: configurationv1alpha1.CredentialBasicAuth{
-				ObjectMeta: commonObjectMeta,
-				Spec: configurationv1alpha1.CredentialBasicAuthSpec{
-					ConsumerRef: corev1.LocalObjectReference{
-						Name: "test-kong-consumer",
-					},
-					SecretRef: corev1.LocalObjectReference{
-						Name: "test-secret",
-					},
-					CredentialBasicAuthAPISpec: configurationv1alpha1.CredentialBasicAuthAPISpec{
-						Password: lo.ToPtr("password"),
-						Username: lo.ToPtr("username"),
-					},
-				},
-			},
-			CredentialBasicAuthStatus: &configurationv1alpha1.CredentialBasicAuthStatus{
-				Konnect: &konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef{},
-				Conditions: []metav1.Condition{
-					{
-						Type:               "Programmed",
-						Status:             metav1.ConditionTrue,
-						Reason:             "Valid",
-						LastTransitionTime: metav1.Now(),
-					},
-				},
-			},
-			Update: func(c *configurationv1alpha1.CredentialBasicAuth) {
-				c.Spec.SecretRef.Name = "new-secret"
 			},
 		},
 	},

@@ -22,28 +22,25 @@ spec:
     authRef:
       name: konnect-api-auth-dev-1
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: consumer1-basic-auth
-  namespace: default
-  labels:
-    konghq.com/credential: basic-auth
-type: Opaque
-stringData:
-  username: alex
-  password: secret123
----
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
   name: consumer1
   namespace: default
 username: consumer1
-credentials:
-- consumer1-basic-auth
 spec:
   controlPlaneRef:
     type: konnectNamespacedRef
     konnectNamespacedRef:
       name: test1
+---
+apiVersion: configuration.konghq.com/v1alpha1
+kind: CredentialBasicAuth
+metadata:
+  name: basic-auth-1
+  namespace: default
+spec:
+  consumerRef:
+    name: consumer1
+  password: pass
+  username: username

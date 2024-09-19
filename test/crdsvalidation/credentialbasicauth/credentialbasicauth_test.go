@@ -14,7 +14,7 @@ import (
 	"github.com/kong/kubernetes-configuration/test/crdsvalidation/credentialbasicauth/testcases"
 )
 
-func CredentialBasicAuth(t *testing.T) {
+func TestCredentialBasicAuth(t *testing.T) {
 	ctx := context.Background()
 	cfg, err := config.GetConfig()
 	require.NoError(t, err, "error loading Kubernetes config")

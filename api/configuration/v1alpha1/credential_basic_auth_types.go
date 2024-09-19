@@ -32,8 +32,8 @@ import (
 // +kubebuilder:storageversion
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
-// +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec.consumerRef) || has(self.spec.consumerRef)", message="consumerRef is required once set"
-// +kubebuilder:validation:XValidation:rule="(!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.consumerRef == self.spec.consumerRef", message="spec.consumerRef is immutable when an entity is already Programmed"
+// +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec.consumerRef) || has(self.spec.consumerRef)",message="consumerRef is required once set"
+// +kubebuilder:validation:XValidation:rule="(!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.consumerRef == self.spec.consumerRef",message="spec.consumerRef is immutable when an entity is already Programmed"
 type CredentialBasicAuth struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -113,22 +113,23 @@ type CredentialBasicAuthSpec struct {
 	// +kubebuilder:validation:Required
 	ConsumerRef corev1.LocalObjectReference `json:"consumerRef"`
 
-	// SecretRef is a reference to a Secret this CredentialBasicAuth is associated with.
-	//
-	// +kubebuilder:validation:Required
-	SecretRef corev1.LocalObjectReference `json:"secretRef"`
-
 	CredentialBasicAuthAPISpec `json:",inline"`
 }
 
 // CredentialBasicAuthAPISpec defines specification of a BasicAuth credential.
 type CredentialBasicAuthAPISpec struct {
 	// Password is the password for the BasicAuth credential.
-	Password *string `json:"password,omitempty"`
+	//
+	// +kubebuilder:validation:Required
+	Password string `json:"password"`
+
 	// Tags is a list of tags for the BasicAuth credential.
 	Tags []string `json:"tags,omitempty"`
+
 	// Username is the username for the BasicAuth credential.
-	Username *string `json:"username,omitempty"`
+	//
+	// +kubebuilder:validation:Required
+	Username string `json:"username"`
 }
 
 // CredentialBasicAuthStatus represents the current status of the BasicAuth credential resource.
