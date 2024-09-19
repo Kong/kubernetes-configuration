@@ -91,7 +91,7 @@ func (in *KonnectEntityStatusWithControlPlaneAndServiceRefs) GetControlPlaneID()
 type KonnectEntityStatusWithControlPlaneAndUpstreamRefs struct {
 	KonnectEntityStatus `json:",inline"`
 
-	// ControlPlaneID is the Konnect ID of the ControlPlane this Route is associated with.
+	// ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with.
 	ControlPlaneID string `json:"controlPlaneID,omitempty"`
 
 	// UpstreamID is the Konnect ID of the Upstream this entity is associated with.

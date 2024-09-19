@@ -151,7 +151,7 @@ spec:
                 properties:
                   controlPlaneID:
                     description: ControlPlaneID is the Konnect ID of the ControlPlane
-                      this Route is associated with.
+                      this entity is associated with.
                     type: string
                   id:
                     description: |-
