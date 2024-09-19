@@ -525,7 +525,6 @@ _Appears in:_
 - [KongConsumerSpec](#kongconsumerspec)
 - [KongPluginBindingSpec](#kongpluginbindingspec)
 - [KongServiceSpec](#kongservicespec)
-- [KongTargetSpec](#kongtargetspec)
 - [KongUpstreamSpec](#kongupstreamspec)
 - [KongVaultSpec](#kongvaultspec)
 
@@ -856,7 +855,6 @@ _Appears in:_
 
 | Field | Description |
 | --- | --- |
-| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this KongTarget is associated with. |
 | `upstreamRef` _[TargetRef](#targetref)_ | UpstreamRef is a reference to a KongUpstream this KongTarget is attached to. |
 | `target` _string_ | Target is the target address of the upstream. |
 | `weight` _integer_ | Weight is the weight this target gets within the upstream loadbalancer. |

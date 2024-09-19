@@ -30,8 +30,6 @@ import (
 // +kubebuilder:storageversion
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
-// +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)", message="controlPlaneRef is required once set"
-// +kubebuilder:validation:XValidation:rule="(!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef", message="spec.controlPlaneRef is immutable when an entity is already Programmed"
 // +kubebuilder:validation:XValidation:rule="oldSelf.spec.upstreamRef == self.spec.upstreamRef", message="spec.upstreamRef is immutable"
 type KongTarget struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -102,9 +100,6 @@ func (t *KongTarget) SetConditions(conditions []metav1.Condition) {
 }
 
 type KongTargetSpec struct {
-	// ControlPlaneRef is a reference to a ControlPlane this KongTarget is associated with.
-	// +optional
-	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 	// UpstreamRef is a reference to a KongUpstream this KongTarget is attached to.
 	UpstreamRef TargetRef `json:"upstreamRef"`
 	// KongTargetAPISpec are the attributes of the Kong Target itself.
