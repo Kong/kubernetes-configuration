@@ -26,6 +26,8 @@ type KongCredentialBasicAuthExpansion interface{}
 
 type KongCustomEntityExpansion interface{}
 
+type KongKeyExpansion interface{}
+
 type KongLicenseExpansion interface{}
 
 type KongPluginBindingExpansion interface{}

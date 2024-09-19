@@ -332,6 +332,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [KongCACertificate](#kongcacertificate)
 - [KongCredentialBasicAuth](#kongcredentialbasicauth)
 - [KongCustomEntity](#kongcustomentity)
+- [KongKey](#kongkey)
 - [KongLicense](#konglicense)
 - [KongPluginBinding](#kongpluginbinding)
 - [KongRoute](#kongroute)
@@ -400,6 +401,22 @@ KongCustomEntity defines a "custom" Kong entity that KIC cannot support the enti
 | `kind` _string_ | `KongCustomEntity`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongCustomEntitySpec](#kongcustomentityspec)_ |  |
+
+
+
+### KongKey
+
+
+KongKey is the schema for KongKey API which defines a KongKey entity.
+
+<!-- kong_key description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongKey`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongKeySpec](#kongkeyspec)_ |  |
 
 
 
@@ -540,6 +557,7 @@ _Appears in:_
 - [KongCACertificateSpec](#kongcacertificatespec)
 - [KongConsumerGroupSpec](#kongconsumergroupspec)
 - [KongConsumerSpec](#kongconsumerspec)
+- [KongKeySpec](#kongkeyspec)
 - [KongPluginBindingSpec](#kongpluginbindingspec)
 - [KongServiceSpec](#kongservicespec)
 - [KongUpstreamSpec](#kongupstreamspec)
@@ -591,6 +609,51 @@ _Appears in:_
 
 _Appears in:_
 - [IngressClassParameters](#ingressclassparameters)
+
+#### KeySetNamespacedRef
+
+
+KeySetNamespacedRef is the schema for the KeySetNamespacedRef type.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the KeySet object. |
+
+
+_Appears in:_
+- [KeySetRef](#keysetref)
+
+#### KeySetRef
+
+
+KeySetRef is the schema for the KeySetRef type.
+It is used to reference a KeySet entity.
+
+
+
+| Field | Description |
+| --- | --- |
+| `type` _[KeySetRefType](#keysetreftype)_ | Type defines type of the KeySet object reference. It can be one of: - konnectID - namespacedRef |
+| `konnectID` _string_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
+| `namespacedRef` _[KeySetNamespacedRef](#keysetnamespacedref)_ | NamespacedRef is a reference to a KeySet entity inside the cluster. This field is required when the Type is konnectNamespacedRef. |
+
+
+_Appears in:_
+- [KongKeySpec](#kongkeyspec)
+
+#### KeySetRefType
+_Underlying type:_ `string`
+
+KeySetRefType is the enum type for the KeySetRef.
+
+
+
+
+
+_Appears in:_
+- [KeySetRef](#keysetref)
 
 #### Kind
 _Underlying type:_ `string`
@@ -695,6 +758,48 @@ _Appears in:_
 - [KongCustomEntity](#kongcustomentity)
 
 
+
+
+
+#### KongKeyAPISpec
+
+
+KongKeyAPISpec defines the attributes of a Kong Key.
+
+
+
+| Field | Description |
+| --- | --- |
+| `kid` _string_ | KID is a unique identifier for a key. When JWK is provided, KID has to match the KID in the JWK. |
+| `name` _string_ | Name is an optional name to associate with the given key. |
+| `jwk` _string_ | JWK is a JSON Web Key represented as a string. The JWK must contain a KID field that matches the KID in the KongKey. Either JWK or PEM must be set. |
+| `pem` _[PEMKeyPair](#pemkeypair)_ | PEM is a keypair in PEM format. Either JWK or PEM must be set. |
+| `tags` _string array_ | Tags is an optional set of strings associated with the Key for grouping and filtering. |
+
+
+_Appears in:_
+- [KongKeySpec](#kongkeyspec)
+
+#### KongKeySpec
+
+
+KongKeySpec defines the spec for a KongKey.
+
+
+
+| Field | Description |
+| --- | --- |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KongKey is associated with. |
+| `keySetRef` _[KeySetRef](#keysetref)_ | KeySetRef is a reference to a KeySet this KongKey is attached to. |
+| `kid` _string_ | KID is a unique identifier for a key. When JWK is provided, KID has to match the KID in the JWK. |
+| `name` _string_ | Name is an optional name to associate with the given key. |
+| `jwk` _string_ | JWK is a JSON Web Key represented as a string. The JWK must contain a KID field that matches the KID in the KongKey. Either JWK or PEM must be set. |
+| `pem` _[PEMKeyPair](#pemkeypair)_ | PEM is a keypair in PEM format. Either JWK or PEM must be set. |
+| `tags` _string array_ | Tags is an optional set of strings associated with the Key for grouping and filtering. |
+
+
+_Appears in:_
+- [KongKey](#kongkey)
 
 
 
@@ -1084,6 +1189,23 @@ ObjectReference defines reference of a kubernetes object.
 
 _Appears in:_
 - [KongCustomEntitySpec](#kongcustomentityspec)
+
+#### PEMKeyPair
+
+
+PEMKeyPair defines a keypair in PEM format.
+
+
+
+| Field | Description |
+| --- | --- |
+| `private_key` _string_ | The private key in PEM format. |
+| `public_key` _string_ | The public key in PEM format. |
+
+
+_Appears in:_
+- [KongKeyAPISpec](#kongkeyapispec)
+- [KongKeySpec](#kongkeyspec)
 
 #### PluginRef
 
