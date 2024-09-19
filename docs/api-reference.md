@@ -1019,7 +1019,7 @@ KonnectNamespacedRef is the schema for the KonnectNamespacedRef type.
 | Field | Description |
 | --- | --- |
 | `name` _string_ | Name is the name of the Konnect Control Plane. |
-| `namespace` _string_ | Namespace is the namespace where the Konnect Control Plane is in. |
+| `namespace` _string_ | TODO: Implement cross namespace references: https://github.com/Kong/kubernetes-configuration/issues/36 Currently only cluster scoped resources (KongVault) are allowed to set `konnectNamespacedRef.namespace`. Namespace is the namespace where the Konnect Control Plane is in. |
 
 
 _Appears in:_

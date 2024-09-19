@@ -94,8 +94,10 @@ spec:
                         description: Name is the name of the Konnect Control Plane.
                         type: string
                       namespace:
-                        description: Namespace is the namespace where the Konnect
-                          Control Plane is in.
+                        description: |-
+                          https://github.com/Kong/kubernetes-configuration/issues/36
+                          Currently only cluster scoped resources (KongVault) are allowed to set `konnectNamespacedRef.namespace`.
+                          Namespace is the namespace where the Konnect Control Plane is in.
                         type: string
                     required:
                     - name
@@ -226,6 +228,8 @@ spec:
           rule: has(self.username) || has(self.custom_id)
         - message: controlPlaneRef is required once set
           rule: '!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)'
+        - message: spec.controlPlaneRef cannot specify namespace for namespaced resource
+          rule: '!has(self.spec.controlPlaneRef.konnectNamespacedRef) ? true : !has(self.spec.controlPlaneRef.konnectNamespacedRef.__namespace__)'
         - message: spec.controlPlaneRef is immutable when an entity is already Programmed
           rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
             ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.controlPlaneRef
