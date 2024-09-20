@@ -328,9 +328,9 @@ _Appears in:_
 
 Package v1alpha1 contains API Schema definitions for the configuration.konghq.com v1alpha1 API group.
 
-- [CredentialBasicAuth](#credentialbasicauth)
 - [IngressClassParameters](#ingressclassparameters)
 - [KongCACertificate](#kongcacertificate)
+- [KongCredentialBasicAuth](#kongcredentialbasicauth)
 - [KongCustomEntity](#kongcustomentity)
 - [KongLicense](#konglicense)
 - [KongPluginBinding](#kongpluginbinding)
@@ -339,22 +339,6 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [KongTarget](#kongtarget)
 - [KongUpstream](#kongupstream)
 - [KongVault](#kongvault)
-### CredentialBasicAuth
-
-
-CredentialBasicAuth is the schema for BasicAuth credentials API which defines a BasicAuth credential for consumers.
-
-<!-- credential_basic_auth description placeholder -->
-
-| Field | Description |
-| --- | --- |
-| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
-| `kind` _string_ | `CredentialBasicAuth`
-| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[CredentialBasicAuthSpec](#credentialbasicauthspec)_ | Spec contains the BasicAuth credential specification. |
-
-
-
 ### IngressClassParameters
 
 
@@ -384,6 +368,22 @@ KongCACertificate is the schema for CACertificate API which defines a Kong CA Ce
 | `kind` _string_ | `KongCACertificate`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongCACertificateSpec](#kongcacertificatespec)_ |  |
+
+
+
+### KongCredentialBasicAuth
+
+
+KongCredentialBasicAuth is the schema for BasicAuth credentials API which defines a BasicAuth credential for consumers.
+
+<!-- kong_credential_basic_auth description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongCredentialBasicAuth`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongCredentialBasicAuthSpec](#kongcredentialbasicauthspec)_ | Spec contains the BasicAuth credential specification. |
 
 
 
@@ -563,43 +563,6 @@ _Appears in:_
 _Appears in:_
 - [KongLicenseControllerStatus](#konglicensecontrollerstatus)
 
-#### CredentialBasicAuthAPISpec
-
-
-CredentialBasicAuthAPISpec defines specification of a BasicAuth credential.
-
-
-
-| Field | Description |
-| --- | --- |
-| `password` _string_ | Password is the password for the BasicAuth credential. |
-| `tags` _string array_ | Tags is a list of tags for the BasicAuth credential. |
-| `username` _string_ | Username is the username for the BasicAuth credential. |
-
-
-_Appears in:_
-- [CredentialBasicAuthSpec](#credentialbasicauthspec)
-
-#### CredentialBasicAuthSpec
-
-
-CredentialBasicAuthSpec defines specification of a Kong Route.
-
-
-
-| Field | Description |
-| --- | --- |
-| `consumerRef` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core)_ | ConsumerRef is a reference to a Consumer this CredentialBasicAuth is associated with. |
-| `password` _string_ | Password is the password for the BasicAuth credential. |
-| `tags` _string array_ | Tags is a list of tags for the BasicAuth credential. |
-| `username` _string_ | Username is the username for the BasicAuth credential. |
-
-
-_Appears in:_
-- [CredentialBasicAuth](#credentialbasicauth)
-
-
-
 #### Group
 _Underlying type:_ `string`
 
@@ -673,6 +636,43 @@ KongCACertificateSpec contains the specification for the KongCACertificate.
 
 _Appears in:_
 - [KongCACertificate](#kongcacertificate)
+
+
+
+#### KongCredentialBasicAuthAPISpec
+
+
+KongCredentialBasicAuthAPISpec defines specification of a BasicAuth credential.
+
+
+
+| Field | Description |
+| --- | --- |
+| `password` _string_ | Password is the password for the BasicAuth credential. |
+| `tags` _string array_ | Tags is a list of tags for the BasicAuth credential. |
+| `username` _string_ | Username is the username for the BasicAuth credential. |
+
+
+_Appears in:_
+- [KongCredentialBasicAuthSpec](#kongcredentialbasicauthspec)
+
+#### KongCredentialBasicAuthSpec
+
+
+KongCredentialBasicAuthSpec defines specification of a Kong Route.
+
+
+
+| Field | Description |
+| --- | --- |
+| `consumerRef` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core)_ | ConsumerRef is a reference to a Consumer this KongCredentialBasicAuth is associated with. |
+| `password` _string_ | Password is the password for the BasicAuth credential. |
+| `tags` _string array_ | Tags is a list of tags for the BasicAuth credential. |
+| `username` _string_ | Username is the username for the BasicAuth credential. |
+
+
+_Appears in:_
+- [KongCredentialBasicAuth](#kongcredentialbasicauth)
 
 
 
