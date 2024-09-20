@@ -43,65 +43,6 @@ type KongKey struct {
 	Status KongKeyStatus `json:"status,omitempty"`
 }
 
-// GetKonnectStatus returns the Konnect status contained in the KongKey status.
-func (t *KongKey) GetKonnectStatus() *konnectv1alpha1.KonnectEntityStatus {
-	if t.Status.Konnect == nil {
-		return nil
-	}
-	return &t.Status.Konnect.KonnectEntityStatus
-}
-
-// GetKonnectID returns the Konnect ID in the KongKey status.
-func (t *KongKey) GetKonnectID() string {
-	if t.Status.Konnect == nil {
-		return ""
-	}
-	return t.Status.Konnect.ID
-}
-
-// SetKonnectID sets the Konnect ID in the KongKey status.
-func (t *KongKey) SetKonnectID(id string) {
-	if t.Status.Konnect == nil {
-		t.initKonnectStatus()
-	}
-	t.Status.Konnect.ID = id
-}
-
-// GetControlPlaneID returns the ControlPlane ID in the KongKey status.
-func (t *KongKey) GetControlPlaneID() string {
-	if t.Status.Konnect == nil {
-		return ""
-	}
-	return t.Status.Konnect.ControlPlaneID
-}
-
-// SetControlPlaneID sets the ControlPlane ID in the KongKey status.
-func (t *KongKey) SetControlPlaneID(id string) {
-	if t.Status.Konnect == nil {
-		t.initKonnectStatus()
-	}
-	t.Status.Konnect.ControlPlaneID = id
-}
-
-// GetTypeName returns the KongKey Kind name.
-func (t KongKey) GetTypeName() string {
-	return "KongKey"
-}
-
-// GetConditions returns the Status Conditions.
-func (t *KongKey) GetConditions() []metav1.Condition {
-	return t.Status.Conditions
-}
-
-// SetConditions sets the Status Conditions.
-func (t *KongKey) SetConditions(conditions []metav1.Condition) {
-	t.Status.Conditions = conditions
-}
-
-func (t *KongKey) initKonnectStatus() {
-	t.Status.Konnect = &konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndKeySetRef{}
-}
-
 // KongKeySpec defines the spec for a KongKey.
 //
 type KongKeySpec struct {
