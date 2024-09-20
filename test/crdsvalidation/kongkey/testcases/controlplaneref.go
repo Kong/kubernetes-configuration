@@ -121,5 +121,24 @@ var cpRef = testCasesGroup{
 			},
 			ExpectedUpdateErrorMessage: lo.ToPtr("spec.controlPlaneRef is immutable when an entity is already Programmed"),
 		},
+		{
+			Name: "konnectNamespaced reference cannot set namespace as it's not supported yet",
+			KongKey: configurationv1alpha1.KongKey{
+				ObjectMeta: commonObjectMeta,
+				Spec: configurationv1alpha1.KongKeySpec{
+					ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+						KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+							Name:      "test-konnect-control-plane",
+							Namespace: "default",
+						},
+					},
+					KongKeyAPISpec: configurationv1alpha1.KongKeyAPISpec{
+						KID: "1",
+						JWK: lo.ToPtr("{}")},
+				},
+			},
+			ExpectedErrorMessage: lo.ToPtr("spec.controlPlaneRef cannot specify namespace for namespaced resource - it's not supported yet"),
+		},
 	},
 }
