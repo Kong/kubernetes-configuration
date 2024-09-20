@@ -18,11 +18,11 @@ limitations under the License.
 
 package v1alpha1
 
-type CredentialBasicAuthExpansion interface{}
-
 type IngressClassParametersExpansion interface{}
 
 type KongCACertificateExpansion interface{}
+
+type KongCredentialBasicAuthExpansion interface{}
 
 type KongCustomEntityExpansion interface{}
 
