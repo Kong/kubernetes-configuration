@@ -25,6 +25,11 @@ var supportedTypes = []supportedTypesT{
 		Package: "v1alpha1",
 		Types: []templateDataT{
 			{
+				Type:              "KongKey",
+				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndKeySetRef",
+				ReceiverName:      "k",
+			},
+			{
 				Type:              "KongCredentialBasicAuth",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
 				ReceiverName:      "c",
