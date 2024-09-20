@@ -330,6 +330,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 
 - [IngressClassParameters](#ingressclassparameters)
 - [KongCACertificate](#kongcacertificate)
+- [KongCredentialAPIKey](#kongcredentialapikey)
 - [KongCredentialBasicAuth](#kongcredentialbasicauth)
 - [KongCustomEntity](#kongcustomentity)
 - [KongKey](#kongkey)
@@ -369,6 +370,22 @@ KongCACertificate is the schema for CACertificate API which defines a Kong CA Ce
 | `kind` _string_ | `KongCACertificate`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongCACertificateSpec](#kongcacertificatespec)_ |  |
+
+
+
+### KongCredentialAPIKey
+
+
+KongCredentialAPIKey is the schema for API key credentials API which defines a API key credential for consumers.
+
+<!-- kong_credential_api_key description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongCredentialAPIKey`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongCredentialAPIKeySpec](#kongcredentialapikeyspec)_ | Spec contains the API Key credential specification. |
 
 
 
@@ -699,6 +716,41 @@ KongCACertificateSpec contains the specification for the KongCACertificate.
 
 _Appears in:_
 - [KongCACertificate](#kongcacertificate)
+
+
+
+#### KongCredentialAPIKeyAPISpec
+
+
+KongCredentialAPIKeyAPISpec defines specification of a API Key credential.
+
+
+
+| Field | Description |
+| --- | --- |
+| `username` _string_ | Key is the key for the API Key credential. |
+| `tags` _string array_ | Tags is a list of tags for the API Key credential. |
+
+
+_Appears in:_
+- [KongCredentialAPIKeySpec](#kongcredentialapikeyspec)
+
+#### KongCredentialAPIKeySpec
+
+
+KongCredentialAPIKeySpec defines specification of a Kong Route.
+
+
+
+| Field | Description |
+| --- | --- |
+| `consumerRef` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core)_ | ConsumerRef is a reference to a Consumer this KongCredentialAPIKey is associated with. |
+| `username` _string_ | Key is the key for the API Key credential. |
+| `tags` _string array_ | Tags is a list of tags for the API Key credential. |
+
+
+_Appears in:_
+- [KongCredentialAPIKey](#kongcredentialapikey)
 
 
 
