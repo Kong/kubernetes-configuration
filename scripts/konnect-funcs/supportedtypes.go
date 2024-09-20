@@ -7,7 +7,6 @@ var supportedTypes = []supportedTypesT{
 			{
 				Type:              "KongConsumer",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ReceiverName:      "c",
 			},
 		},
 	},
@@ -17,7 +16,6 @@ var supportedTypes = []supportedTypesT{
 			{
 				Type:              "KongConsumerGroup",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ReceiverName:      "g",
 			},
 		},
 	},
@@ -27,47 +25,42 @@ var supportedTypes = []supportedTypesT{
 			{
 				Type:              "KongKey",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndKeySetRef",
-				ReceiverName:      "k",
 			},
 			{
 				Type:              "KongCredentialBasicAuth",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
-				ReceiverName:      "c",
+			},
+			{
+				Type:              "KongCredentialAPIKey",
+				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
 			},
 			{
 				Type:              "KongCACertificate",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ReceiverName:      "c",
 			},
 			{
 				Type:              "KongPluginBinding",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ReceiverName:      "b",
 			},
 			{
 				Type:              "KongService",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ReceiverName:      "s",
 			},
 			{
 				Type:              "KongRoute",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndServiceRefs",
-				ReceiverName:      "r",
 			},
 			{
 				Type:              "KongUpstream",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ReceiverName:      "u",
 			},
 			{
 				Type:              "KongTarget",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndUpstreamRefs",
-				ReceiverName:      "t",
 			},
 			{
 				Type:              "KongVault",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ReceiverName:      "v",
 			},
 		},
 	},

@@ -20,8 +20,9 @@ resources:
 - bases/configuration.konghq.com_kongupstreams.yaml
 - bases/configuration.konghq.com_kongtargets.yaml
 - bases/configuration.konghq.com_kongcacertificates.yaml
-- bases/configuration.konghq.com_kongcredentialbasicauths.yaml
 - bases/configuration.konghq.com_kongkeys.yaml
+- bases/configuration.konghq.com_kongcredentialbasicauths.yaml
+- bases/configuration.konghq.com_kongcredentialapikeys.yaml
 
 - bases/konnect.konghq.com_konnectapiauthconfigurations.yaml
 - bases/konnect.konghq.com_konnectgatewaycontrolplanes.yaml

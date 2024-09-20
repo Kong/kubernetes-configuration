@@ -22,9 +22,6 @@ type templateDataT struct {
 
 	// KonnectStatusType is the name of the konnect status type (.status.konnect).
 	KonnectStatusType string
-
-	// ReceiverName is the name that is used in methods as the receiver.
-	ReceiverName string
 }
 
 const (
