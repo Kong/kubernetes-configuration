@@ -23,7 +23,7 @@ type KeySetRef struct {
 	// Type defines type of the KeySet object reference. It can be one of:
 	// - konnectID
 	// - namespacedRef
-	Type KeySetRefType `json:"type,omitempty"`
+	Type KeySetRefType `json:"type"`
 
 	// KonnectID is the schema for the KonnectID type.
 	// This field is required when the Type is konnectID.
@@ -31,7 +31,7 @@ type KeySetRef struct {
 	KonnectID *string `json:"konnectID,omitempty"`
 
 	// NamespacedRef is a reference to a KeySet entity inside the cluster.
-	// This field is required when the Type is konnectNamespacedRef.
+	// This field is required when the Type is namespacedRef.
 	// +optional
 	NamespacedRef *KeySetNamespacedRef `json:"namespacedRef,omitempty"`
 }
