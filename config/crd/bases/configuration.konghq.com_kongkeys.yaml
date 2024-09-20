@@ -95,8 +95,9 @@ spec:
                   Either JWK or PEM must be set.
                 type: string
               keySetRef:
-                description: KeySetRef is a reference to a KeySet this KongKey is
-                  attached to.
+                description: |-
+                  KeySetRef is a reference to a KongKeySet this KongKey is attached to.
+                  ControlPlane referenced by a KongKeySet must be the same as the ControlPlane referenced by the KongKey.
                 properties:
                   konnectID:
                     description: |-

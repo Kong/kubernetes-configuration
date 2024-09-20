@@ -790,7 +790,7 @@ KongKeySpec defines the spec for a KongKey.
 | Field | Description |
 | --- | --- |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KongKey is associated with. |
-| `keySetRef` _[KeySetRef](#keysetref)_ | KeySetRef is a reference to a KeySet this KongKey is attached to. |
+| `keySetRef` _[KeySetRef](#keysetref)_ | KeySetRef is a reference to a KongKeySet this KongKey is attached to. ControlPlane referenced by a KongKeySet must be the same as the ControlPlane referenced by the KongKey. |
 | `kid` _string_ | KID is a unique identifier for a key. When JWK is provided, KID has to match the KID in the JWK. |
 | `name` _string_ | Name is an optional name to associate with the given key. |
 | `jwk` _string_ | JWK is a JSON Web Key represented as a string. The JWK must contain a KID field that matches the KID in the KongKey. Either JWK or PEM must be set. |

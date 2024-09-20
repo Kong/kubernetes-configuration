@@ -109,7 +109,8 @@ type KongKeySpec struct {
 	// +optional
 	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 
-	// KeySetRef is a reference to a KeySet this KongKey is attached to.
+	// KeySetRef is a reference to a KongKeySet this KongKey is attached to.
+	// ControlPlane referenced by a KongKeySet must be the same as the ControlPlane referenced by the KongKey.
 	// +optional
 	KeySetRef *KeySetRef `json:"keySetRef,omitempty"`
 
