@@ -49,5 +49,8 @@ When you add a new CRD make sure to
 - Add it to CRD [kustomization.yaml][crd_kustomization]
 - Add unit tests in [`test/unit`][testunit]
 - Add CRD validation tests in [`test/crdsvalidation`][testcrdsvalidation]
+- If this CRD is meant to have Konnect helpers functions generated for it,
+  add it in [konnect-funcs supported type list][konnect_funcs_gen].
 
 [crd_kustomization]: ./config/crd/kustomization.yaml
+[konnect_funcs_gen]: ./scripts/konnect-funcs/supportedtypes.go
