@@ -36,6 +36,10 @@ func (c *FakeConfigurationV1alpha1) KongCACertificates(namespace string) v1alpha
 	return &FakeKongCACertificates{c, namespace}
 }
 
+func (c *FakeConfigurationV1alpha1) KongCertificates(namespace string) v1alpha1.KongCertificateInterface {
+	return &FakeKongCertificates{c, namespace}
+}
+
 func (c *FakeConfigurationV1alpha1) KongCredentialAPIKeys(namespace string) v1alpha1.KongCredentialAPIKeyInterface {
 	return &FakeKongCredentialAPIKeys{c, namespace}
 }

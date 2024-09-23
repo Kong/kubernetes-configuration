@@ -39,6 +39,10 @@ var supportedTypes = []supportedTypesT{
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
 			},
 			{
+				Type:              "KongCertificate",
+				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+			},
+			{
 				Type:              "KongPluginBinding",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
 			},
