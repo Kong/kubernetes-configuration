@@ -728,7 +728,7 @@ KongCredentialAPIKeyAPISpec defines specification of a API Key credential.
 
 | Field | Description |
 | --- | --- |
-| `username` _string_ | Key is the key for the API Key credential. |
+| `key` _string_ | Key is the key for the API Key credential. |
 | `tags` _string array_ | Tags is a list of tags for the API Key credential. |
 
 
@@ -745,7 +745,7 @@ KongCredentialAPIKeySpec defines specification of a Kong Route.
 | Field | Description |
 | --- | --- |
 | `consumerRef` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core)_ | ConsumerRef is a reference to a Consumer this KongCredentialAPIKey is associated with. |
-| `username` _string_ | Key is the key for the API Key credential. |
+| `key` _string_ | Key is the key for the API Key credential. |
 | `tags` _string array_ | Tags is a list of tags for the API Key credential. |
 
 
