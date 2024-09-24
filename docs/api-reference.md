@@ -330,6 +330,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 
 - [IngressClassParameters](#ingressclassparameters)
 - [KongCACertificate](#kongcacertificate)
+- [KongCertificate](#kongcertificate)
 - [KongCredentialAPIKey](#kongcredentialapikey)
 - [KongCredentialBasicAuth](#kongcredentialbasicauth)
 - [KongCustomEntity](#kongcustomentity)
@@ -370,6 +371,22 @@ KongCACertificate is the schema for CACertificate API which defines a Kong CA Ce
 | `kind` _string_ | `KongCACertificate`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongCACertificateSpec](#kongcacertificatespec)_ |  |
+
+
+
+### KongCertificate
+
+
+KongCertificate is the schema for Certificate API which defines a Kong Certificate.
+
+<!-- kong_certificate description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongCertificate`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongCertificateSpec](#kongcertificatespec)_ |  |
 
 
 
@@ -572,6 +589,7 @@ It is used to reference a Control Plane entity.
 
 _Appears in:_
 - [KongCACertificateSpec](#kongcacertificatespec)
+- [KongCertificateSpec](#kongcertificatespec)
 - [KongConsumerGroupSpec](#kongconsumergroupspec)
 - [KongConsumerSpec](#kongconsumerspec)
 - [KongKeySpec](#kongkeyspec)
@@ -716,6 +734,47 @@ KongCACertificateSpec contains the specification for the KongCACertificate.
 
 _Appears in:_
 - [KongCACertificate](#kongcacertificate)
+
+
+
+#### KongCertificateAPISpec
+
+
+KongCertificateAPISpec contains the API specification for the KongCertificate.
+
+
+
+| Field | Description |
+| --- | --- |
+| `cert` _string_ | Cert is the PEM-encoded certificate. |
+| `cert_alt` _string_ | CertAlt is the PEM-encoded certificate. This should only be set if you have both RSA and ECDSA types of certificate available and would like Kong to prefer serving using ECDSA certs when client advertises support for it. |
+| `key` _string_ | Key is the PEM-encoded private key. |
+| `key_alt` _string_ | KeyAlt is the PEM-encoded private key. This should only be set if you have both RSA and ECDSA types of certificate available and would like Kong to prefer serving using ECDSA certs when client advertises support for it. |
+| `tags` _string array_ | Tags is an optional set of tags applied to the certificate. |
+
+
+_Appears in:_
+- [KongCertificateSpec](#kongcertificatespec)
+
+#### KongCertificateSpec
+
+
+KongCertificateSpec contains the specification for the KongCertificate.
+
+
+
+| Field | Description |
+| --- | --- |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef references the Konnect Control Plane that this KongCertificate should be created in. |
+| `cert` _string_ | Cert is the PEM-encoded certificate. |
+| `cert_alt` _string_ | CertAlt is the PEM-encoded certificate. This should only be set if you have both RSA and ECDSA types of certificate available and would like Kong to prefer serving using ECDSA certs when client advertises support for it. |
+| `key` _string_ | Key is the PEM-encoded private key. |
+| `key_alt` _string_ | KeyAlt is the PEM-encoded private key. This should only be set if you have both RSA and ECDSA types of certificate available and would like Kong to prefer serving using ECDSA certs when client advertises support for it. |
+| `tags` _string array_ | Tags is an optional set of tags applied to the certificate. |
+
+
+_Appears in:_
+- [KongCertificate](#kongcertificate)
 
 
 

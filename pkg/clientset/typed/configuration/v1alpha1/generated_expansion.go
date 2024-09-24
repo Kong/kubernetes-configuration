@@ -22,6 +22,8 @@ type IngressClassParametersExpansion interface{}
 
 type KongCACertificateExpansion interface{}
 
+type KongCertificateExpansion interface{}
+
 type KongCredentialAPIKeyExpansion interface{}
 
 type KongCredentialBasicAuthExpansion interface{}

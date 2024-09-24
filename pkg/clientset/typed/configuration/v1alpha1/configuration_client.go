@@ -30,6 +30,7 @@ type ConfigurationV1alpha1Interface interface {
 	RESTClient() rest.Interface
 	IngressClassParametersesGetter
 	KongCACertificatesGetter
+	KongCertificatesGetter
 	KongCredentialAPIKeysGetter
 	KongCredentialBasicAuthsGetter
 	KongCustomEntitiesGetter
@@ -54,6 +55,10 @@ func (c *ConfigurationV1alpha1Client) IngressClassParameterses(namespace string)
 
 func (c *ConfigurationV1alpha1Client) KongCACertificates(namespace string) KongCACertificateInterface {
 	return newKongCACertificates(c, namespace)
+}
+
+func (c *ConfigurationV1alpha1Client) KongCertificates(namespace string) KongCertificateInterface {
+	return newKongCertificates(c, namespace)
 }
 
 func (c *ConfigurationV1alpha1Client) KongCredentialAPIKeys(namespace string) KongCredentialAPIKeyInterface {
