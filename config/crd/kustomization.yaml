@@ -24,6 +24,7 @@ resources:
 - bases/configuration.konghq.com_kongcredentialbasicauths.yaml
 - bases/configuration.konghq.com_kongcredentialapikeys.yaml
 - bases/configuration.konghq.com_kongcertificates.yaml
+- bases/configuration.konghq.com_kongsnis.yaml
 
 - bases/konnect.konghq.com_konnectapiauthconfigurations.yaml
 - bases/konnect.konghq.com_konnectgatewaycontrolplanes.yaml

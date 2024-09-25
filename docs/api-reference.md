@@ -338,6 +338,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [KongLicense](#konglicense)
 - [KongPluginBinding](#kongpluginbinding)
 - [KongRoute](#kongroute)
+- [KongSNI](#kongsni)
 - [KongService](#kongservice)
 - [KongTarget](#kongtarget)
 - [KongUpstream](#kongupstream)
@@ -500,6 +501,22 @@ KongRoute is the schema for Routes API which defines a Kong Route.
 | `kind` _string_ | `KongRoute`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongRouteSpec](#kongroutespec)_ |  |
+
+
+
+### KongSNI
+
+
+KongSNI is the schema for SNI API which defines a Kong SNI.
+
+<!-- kong_sni description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongSNI`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongSNISpec](#kongsnispec)_ |  |
 
 
 
@@ -1040,6 +1057,41 @@ _Appears in:_
 
 
 
+#### KongSNIAPISpec
+
+
+KongSNIAPISpec defines specification of an SNI.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the SNI. Required and must be a host or wildcard host. |
+| `tags` _string array_ | Tags is an optional set of strings associated with the SNI for grouping and filtering. |
+
+
+_Appears in:_
+- [KongSNISpec](#kongsnispec)
+
+#### KongSNISpec
+
+
+KongSNISpec defines specification of a Kong SNI.
+
+
+
+| Field | Description |
+| --- | --- |
+| `certificateRef` _[TargetRef](#targetref)_ | CertificateRef is the reference to the certificate to which the KongSNI is attached. |
+| `name` _string_ | Name is the name of the SNI. Required and must be a host or wildcard host. |
+| `tags` _string array_ | Tags is an optional set of strings associated with the SNI for grouping and filtering. |
+
+
+_Appears in:_
+- [KongSNI](#kongsni)
+
+
+
 #### KongServiceAPISpec
 
 
@@ -1364,6 +1416,7 @@ TargetRef is a reference based on the object's name.
 
 _Appears in:_
 - [KongPluginBindingTargets](#kongpluginbindingtargets)
+- [KongSNISpec](#kongsnispec)
 - [KongTargetSpec](#kongtargetspec)
 
 #### TargetRefWithGroupKind

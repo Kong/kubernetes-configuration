@@ -68,6 +68,10 @@ func (c *FakeConfigurationV1alpha1) KongRoutes(namespace string) v1alpha1.KongRo
 	return &FakeKongRoutes{c, namespace}
 }
 
+func (c *FakeConfigurationV1alpha1) KongSNIs(namespace string) v1alpha1.KongSNIInterface {
+	return &FakeKongSNIs{c, namespace}
+}
+
 func (c *FakeConfigurationV1alpha1) KongServices(namespace string) v1alpha1.KongServiceInterface {
 	return &FakeKongServices{c, namespace}
 }

@@ -38,6 +38,8 @@ type KongPluginBindingExpansion interface{}
 
 type KongRouteExpansion interface{}
 
+type KongSNIExpansion interface{}
+
 type KongServiceExpansion interface{}
 
 type KongTargetExpansion interface{}

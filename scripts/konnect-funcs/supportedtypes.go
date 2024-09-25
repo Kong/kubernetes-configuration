@@ -66,6 +66,10 @@ var supportedTypes = []supportedTypesT{
 				Type:              "KongVault",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
 			},
+			{
+				Type:              "KongSNI",
+				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndCertificateRefs",
+			},
 		},
 	},
 }
