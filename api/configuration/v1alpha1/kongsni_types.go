@@ -31,6 +31,7 @@ import (
 // +kubebuilder:storageversion
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
+// +kubebuilder:validation:XValidation:rule="size(self.spec.certificateRef.name) > 0", message="spec.certificateRef.name is required and cannot be empty"
 // +kubebuilder:validation:XValidation:rule="oldSelf.spec.certificateRef == self.spec.certificateRef", message="spec.certificateRef is immutable"
 type KongSNI struct {
 	metav1.TypeMeta   `json:",inline"`

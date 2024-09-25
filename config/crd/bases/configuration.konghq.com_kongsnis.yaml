@@ -171,6 +171,8 @@ spec:
         - spec
         type: object
         x-kubernetes-validations:
+        - message: spec.certificateRef.name is required and cannot be empty
+          rule: size(self.spec.certificateRef.name) > 0
         - message: spec.certificateRef is immutable
           rule: oldSelf.spec.certificateRef == self.spec.certificateRef
     served: true
