@@ -953,6 +953,22 @@ _Appears in:_
 
 
 
+#### KongObjectRef
+
+
+TODO: change other types to use the generic `KongObjectRef` and move it to a common package to prevent possible import cycles.<br /><br />
+KongObjectRef is a reference to another object representing a Kong entity with deterministic type.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | NOTE: the `Required` validation rule does not reject empty strings so we use `MinLength` to reject empty string here.<br /><br /> Name is the name of the entity. |
+
+
+_Appears in:_
+- [KongSNISpec](#kongsnispec)
+
 #### KongPluginBindingSpec
 
 
@@ -1082,7 +1098,7 @@ KongSNISpec defines specification of a Kong SNI.
 
 | Field | Description |
 | --- | --- |
-| `certificateRef` _[TargetRef](#targetref)_ | CertificateRef is the reference to the certificate to which the KongSNI is attached. |
+| `certificateRef` _[KongObjectRef](#kongobjectref)_ | CertificateRef is the reference to the certificate to which the KongSNI is attached. |
 | `name` _string_ | Name is the name of the SNI. Required and must be a host or wildcard host. |
 | `tags` _string array_ | Tags is an optional set of strings associated with the SNI for grouping and filtering. |
 
@@ -1416,7 +1432,6 @@ TargetRef is a reference based on the object's name.
 
 _Appears in:_
 - [KongPluginBindingTargets](#kongpluginbindingtargets)
-- [KongSNISpec](#kongsnispec)
 - [KongTargetSpec](#kongtargetspec)
 
 #### TargetRefWithGroupKind

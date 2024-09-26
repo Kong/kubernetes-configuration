@@ -31,8 +31,7 @@ import (
 // +kubebuilder:storageversion
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
-// +kubebuilder:validation:XValidation:rule="size(self.spec.certificateRef.name) > 0", message="spec.certificateRef.name is required and cannot be empty"
-// +kubebuilder:validation:XValidation:rule="oldSelf.spec.certificateRef == self.spec.certificateRef", message="spec.certificateRef is immutable"
+// +kubebuilder:validation:XValidation:rule="(!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.certificateRef == self.spec.certificateRef", message="spec.certificateRef is immutable when programmed"
 type KongSNI struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -56,7 +55,7 @@ type KongSNIAPISpec struct {
 // KongSNISpec defines specification of a Kong SNI.
 type KongSNISpec struct {
 	// CertificateRef is the reference to the certificate to which the KongSNI is attached.
-	CertificateRef TargetRef `json:"certificateRef"`
+	CertificateRef KongObjectRef `json:"certificateRef"`
 	// KongSNIAPISpec are the attributes of the Kong SNI itself.
 	KongSNIAPISpec `json:",inline"`
 }

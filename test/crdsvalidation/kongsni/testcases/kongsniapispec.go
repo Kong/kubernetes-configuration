@@ -9,11 +9,11 @@ var kongSNIAPISpec = testCasesGroup{
 	Name: "kongSNIAPISpec",
 	TestCases: []testCase{
 		{
-			Name: "weight must between 0 and 65535",
+			Name: "spec.name must not be empty",
 			KongSNI: configurationv1alpha1.KongSNI{
 				ObjectMeta: commonObjectMeta,
 				Spec: configurationv1alpha1.KongSNISpec{
-					CertificateRef: configurationv1alpha1.TargetRef{
+					CertificateRef: configurationv1alpha1.KongObjectRef{
 						Name: "cert1",
 					},
 				},
