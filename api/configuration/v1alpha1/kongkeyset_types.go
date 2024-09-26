@@ -45,7 +45,7 @@ type KongKeySet struct {
 
 // KongKeySetSpec defines the spec for a KongKeySet.
 type KongKeySetSpec struct {
-	// ControlPlaneRef is a reference to a Konnect ControlPlane this KongKeySet is associated with.
+	// ControlPlaneRef is a reference to a Konnect ControlPlane with which KongKeySet is associated.
 	// +optional
 	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 
