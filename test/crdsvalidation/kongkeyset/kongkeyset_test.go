@@ -36,7 +36,7 @@ func TestKongKeySet(t *testing.T) {
 					if tc.ExpectedErrorMessage == nil {
 						assert.NoError(t, err)
 
-						// if the status has to be updated, update it.
+						// If the status has to be updated, update it.
 						if tc.KongKeySetStatus != nil {
 							entity.Status = *tc.KongKeySetStatus
 							entity, err = cl.UpdateStatus(ctx, entity, metav1.UpdateOptions{})
