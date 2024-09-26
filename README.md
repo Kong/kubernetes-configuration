@@ -54,3 +54,8 @@ When you add a new CRD make sure to
 
 [crd_kustomization]: ./config/crd/kustomization.yaml
 [konnect_funcs_gen]: ./scripts/konnect-funcs/supportedtypes.go
+
+## How to release?
+
+Currently in order to make a new release/tag available for users to use is to
+create a new tag and push it to the repository.
