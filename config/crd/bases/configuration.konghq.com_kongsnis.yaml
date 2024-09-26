@@ -50,9 +50,9 @@ spec:
                 properties:
                   name:
                     description: |-
-                      NOTE: the `Required` validation rule does not reject empty strings so we use `MinLength` to reject empty string here.
-
                       Name is the name of the entity.
+
+                      NOTE: the `Required` validation rule does not reject empty strings so we use `MinLength` to reject empty string here.
                     minLength: 1
                     type: string
                 required:

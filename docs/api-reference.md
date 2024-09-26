@@ -956,14 +956,15 @@ _Appears in:_
 #### KongObjectRef
 
 
-TODO: change other types to use the generic `KongObjectRef` and move it to a common package to prevent possible import cycles.<br /><br />
-KongObjectRef is a reference to another object representing a Kong entity with deterministic type.
+KongObjectRef is a reference to another object representing a Kong entity with deterministic type.<br /><br />
+TODO: https://github.com/Kong/kubernetes-configuration/issues/96
+change other types to use the generic `KongObjectRef` and move it to a common package to prevent possible import cycles.
 
 
 
 | Field | Description |
 | --- | --- |
-| `name` _string_ | NOTE: the `Required` validation rule does not reject empty strings so we use `MinLength` to reject empty string here.<br /><br /> Name is the name of the entity. |
+| `name` _string_ | Name is the name of the entity.<br /><br /> NOTE: the `Required` validation rule does not reject empty strings so we use `MinLength` to reject empty string here. |
 
 
 _Appears in:_
