@@ -35,6 +35,7 @@ type ConfigurationV1alpha1Interface interface {
 	KongCredentialAPIKeysGetter
 	KongCredentialBasicAuthsGetter
 	KongCustomEntitiesGetter
+	KongDataplaneCertificatesGetter
 	KongKeysGetter
 	KongKeySetsGetter
 	KongLicensesGetter
@@ -78,6 +79,10 @@ func (c *ConfigurationV1alpha1Client) KongCredentialBasicAuths(namespace string)
 
 func (c *ConfigurationV1alpha1Client) KongCustomEntities(namespace string) KongCustomEntityInterface {
 	return newKongCustomEntities(c, namespace)
+}
+
+func (c *ConfigurationV1alpha1Client) KongDataplaneCertificates(namespace string) KongDataplaneCertificateInterface {
+	return newKongDataplaneCertificates(c, namespace)
 }
 
 func (c *ConfigurationV1alpha1Client) KongKeys(namespace string) KongKeyInterface {
