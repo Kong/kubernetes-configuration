@@ -24,6 +24,8 @@ type KongCACertificateExpansion interface{}
 
 type KongCertificateExpansion interface{}
 
+type KongCredentialACLExpansion interface{}
+
 type KongCredentialAPIKeyExpansion interface{}
 
 type KongCredentialBasicAuthExpansion interface{}

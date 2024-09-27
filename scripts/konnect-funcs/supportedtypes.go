@@ -35,6 +35,10 @@ var supportedTypes = []supportedTypesT{
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
 			},
 			{
+				Type:              "KongCredentialACL",
+				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+			},
+			{
 				Type:              "KongCACertificate",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
 			},

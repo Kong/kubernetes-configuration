@@ -331,6 +331,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [IngressClassParameters](#ingressclassparameters)
 - [KongCACertificate](#kongcacertificate)
 - [KongCertificate](#kongcertificate)
+- [KongCredentialACL](#kongcredentialacl)
 - [KongCredentialAPIKey](#kongcredentialapikey)
 - [KongCredentialBasicAuth](#kongcredentialbasicauth)
 - [KongCustomEntity](#kongcustomentity)
@@ -388,6 +389,22 @@ KongCertificate is the schema for Certificate API which defines a Kong Certifica
 | `kind` _string_ | `KongCertificate`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongCertificateSpec](#kongcertificatespec)_ |  |
+
+
+
+### KongCredentialACL
+
+
+KongCredentialACL is the schema for ACL credentials API which defines a ACL credential for consumers.
+
+<!-- kong_credential_acl description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongCredentialACL`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongCredentialACLSpec](#kongcredentialaclspec)_ | Spec contains the ACL credential specification. |
 
 
 
@@ -795,10 +812,45 @@ _Appears in:_
 
 
 
+#### KongCredentialACLAPISpec
+
+
+KongCredentialACLAPISpec defines specification of an ACL credential.
+
+
+
+| Field | Description |
+| --- | --- |
+| `group` _string_ | Group is the name for the ACL credential. |
+| `tags` _string array_ | Tags is a list of tags for the ACL credential. |
+
+
+_Appears in:_
+- [KongCredentialACLSpec](#kongcredentialaclspec)
+
+#### KongCredentialACLSpec
+
+
+KongCredentialACLSpec defines specification of Kong ACL.
+
+
+
+| Field | Description |
+| --- | --- |
+| `consumerRef` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core)_ | ConsumerRef is a reference to a Consumer this KongCredentialACL is associated with. |
+| `group` _string_ | Group is the name for the ACL credential. |
+| `tags` _string array_ | Tags is a list of tags for the ACL credential. |
+
+
+_Appears in:_
+- [KongCredentialACL](#kongcredentialacl)
+
+
+
 #### KongCredentialAPIKeyAPISpec
 
 
-KongCredentialAPIKeyAPISpec defines specification of a API Key credential.
+KongCredentialAPIKeyAPISpec defines specification of an API Key credential.
 
 
 
