@@ -11,6 +11,18 @@ var cpRef = testCasesGroup{
 	Name: "controlPlaneRef",
 	TestCases: []testCase{
 		{
+			Name: "controlPlaneRef is required",
+			KongKeySet: configurationv1alpha1.KongKeySet{
+				ObjectMeta: commonObjectMeta,
+				Spec: configurationv1alpha1.KongKeySetSpec{
+					KongKeySetAPISpec: configurationv1alpha1.KongKeySetAPISpec{
+						Name: "name",
+					},
+				},
+			},
+			ExpectedErrorMessage: lo.ToPtr("spec.controlPlaneRef: Required value"),
+		},
+		{
 			Name: "konnectNamespacedRef reference is valid",
 			KongKeySet: configurationv1alpha1.KongKeySet{
 				ObjectMeta: commonObjectMeta,

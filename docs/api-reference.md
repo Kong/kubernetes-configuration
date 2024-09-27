@@ -951,7 +951,7 @@ KongKeySetSpec defines the spec for a KongKeySet.
 
 | Field | Description |
 | --- | --- |
-| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KongKeySet is associated with. |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane with which KongKeySet is associated. |
 | `name` _string_ | Name is a name of the KeySet. |
 | `tags` _string array_ | Tags is an optional set of strings associated with the KeySet for grouping and filtering. |
 

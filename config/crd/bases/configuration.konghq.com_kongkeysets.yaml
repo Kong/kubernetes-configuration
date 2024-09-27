@@ -47,7 +47,7 @@ spec:
             properties:
               controlPlaneRef:
                 description: ControlPlaneRef is a reference to a Konnect ControlPlane
-                  this KongKeySet is associated with.
+                  with which KongKeySet is associated.
                 properties:
                   konnectID:
                     description: |-
@@ -80,6 +80,8 @@ spec:
                     - konnectID
                     - konnectNamespacedRef
                     type: string
+                required:
+                - type
                 type: object
                 x-kubernetes-validations:
                 - message: when type is konnectNamespacedRef, konnectNamespacedRef
@@ -99,6 +101,7 @@ spec:
                   type: string
                 type: array
             required:
+            - controlPlaneRef
             - name
             type: object
           status:
@@ -199,15 +202,12 @@ spec:
         - spec
         type: object
         x-kubernetes-validations:
-        - message: controlPlaneRef is required once set
-          rule: '!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)'
         - message: spec.controlPlaneRef is immutable when an entity is already Programmed
           rule: '(!self.status.conditions.exists(c, c.type == ''Programmed'' && c.status
             == ''True'')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef'
         - message: spec.controlPlaneRef cannot specify namespace for namespaced resource
             - it's not supported yet
-          rule: '!has(self.spec.controlPlaneRef) ? true : !has(self.spec.controlPlaneRef.konnectNamespacedRef)
-            ? true : !has(self.spec.controlPlaneRef.konnectNamespacedRef.__namespace__)'
+          rule: '!has(self.spec.controlPlaneRef.konnectNamespacedRef) ? true : !has(self.spec.controlPlaneRef.konnectNamespacedRef.__namespace__)'
     served: true
     storage: true
     subresources:
