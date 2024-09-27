@@ -32,6 +32,8 @@ type KongCustomEntityExpansion interface{}
 
 type KongKeyExpansion interface{}
 
+type KongKeySetExpansion interface{}
+
 type KongLicenseExpansion interface{}
 
 type KongPluginBindingExpansion interface{}

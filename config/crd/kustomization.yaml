@@ -21,6 +21,7 @@ resources:
 - bases/configuration.konghq.com_kongtargets.yaml
 - bases/configuration.konghq.com_kongcacertificates.yaml
 - bases/configuration.konghq.com_kongkeys.yaml
+- bases/configuration.konghq.com_kongkeysets.yaml
 - bases/configuration.konghq.com_kongcredentialbasicauths.yaml
 - bases/configuration.konghq.com_kongcredentialapikeys.yaml
 - bases/configuration.konghq.com_kongcertificates.yaml

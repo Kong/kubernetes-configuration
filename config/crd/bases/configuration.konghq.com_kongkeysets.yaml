@@ -4,36 +4,26 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.3
-  name: kongconsumers.configuration.konghq.com
+  name: kongkeysets.configuration.konghq.com
 spec:
   group: configuration.konghq.com
   names:
-    categories:
-    - kong-ingress-controller
-    kind: KongConsumer
-    listKind: KongConsumerList
-    plural: kongconsumers
-    shortNames:
-    - kc
-    singular: kongconsumer
+    kind: KongKeySet
+    listKind: KongKeySetList
+    plural: kongkeysets
+    singular: kongkeyset
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - description: Username of a Kong Consumer
-      jsonPath: .username
-      name: Username
-      type: string
-    - description: Age
-      jsonPath: .metadata.creationTimestamp
-      name: Age
-      type: date
-    - jsonPath: .status.conditions[?(@.type=="Programmed")].status
+    - description: The Resource is Programmed on Konnect
+      jsonPath: .status.conditions[?(@.type=='Programmed')].status
       name: Programmed
       type: string
-    name: v1
+    name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: KongConsumer is the Schema for the kongconsumers API.
+        description: KongKeySet is the schema for KongKeySet API which defines a KongKeySet
+          entity.
         properties:
           apiVersion:
             description: |-
@@ -41,27 +31,6 @@ spec:
               Servers should convert recognized schemas to the latest internal value, and
               may reject unrecognized values.
               More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-            type: string
-          consumerGroups:
-            description: |-
-              ConsumerGroups are references to consumer groups (that consumer wants to be part of)
-              provisioned in Kong.
-            items:
-              type: string
-            type: array
-            x-kubernetes-list-type: set
-          credentials:
-            description: |-
-              Credentials are references to secrets containing a credential to be
-              provisioned in Kong.
-            items:
-              type: string
-            type: array
-            x-kubernetes-list-type: set
-          custom_id:
-            description: |-
-              CustomID is a Kong cluster-unique existing ID for the consumer - useful for mapping
-              Kong with users in your existing database.
             type: string
           kind:
             description: |-
@@ -74,10 +43,11 @@ spec:
           metadata:
             type: object
           spec:
+            description: KongKeySetSpec defines the spec for a KongKeySet.
             properties:
               controlPlaneRef:
-                description: ControlPlaneRef is a reference to a ControlPlane this
-                  Consumer is associated with.
+                description: ControlPlaneRef is a reference to a Konnect ControlPlane
+                  with which KongKeySet is associated.
                 properties:
                   konnectID:
                     description: |-
@@ -120,6 +90,18 @@ spec:
                     : true'
                 - message: when type is konnectID, konnectID must be set
                   rule: 'self.type == ''konnectID'' ? has(self.konnectID) : true'
+              name:
+                description: Name is a name of the KeySet.
+                minLength: 1
+                type: string
+              tags:
+                description: Tags is an optional set of strings associated with the
+                  KeySet for grouping and filtering.
+                items:
+                  type: string
+                type: array
+            required:
+            - name
             type: object
           status:
             default:
@@ -129,16 +111,10 @@ spec:
                 reason: Pending
                 status: Unknown
                 type: Programmed
-            description: Status represents the current status of the KongConsumer
-              resource.
+            description: KongKeySetStatus defines the status for a KongKeySet.
             properties:
               conditions:
-                description: |-
-                  Conditions describe the current conditions of the KongConsumer.
-
-                  Known condition types are:
-
-                  * "Programmed"
+                description: Conditions describe the status of the Konnect entity.
                 items:
                   description: Condition contains details for one aspect of the current
                     state of this API Resource.
@@ -194,6 +170,7 @@ spec:
                   - type
                   type: object
                 maxItems: 8
+                minItems: 1
                 type: array
                 x-kubernetes-list-map-keys:
                 - type
@@ -220,21 +197,16 @@ spec:
                     type: string
                 type: object
             type: object
-          username:
-            description: Username is a Kong cluster-unique username of the consumer.
-            type: string
+        required:
+        - spec
         type: object
         x-kubernetes-validations:
-        - message: Need to provide either username or custom_id
-          rule: has(self.username) || has(self.custom_id)
-        - message: controlPlaneRef is required once set
-          rule: '!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)'
-        - message: spec.controlPlaneRef cannot specify namespace for namespaced resource
-          rule: '!has(self.spec.controlPlaneRef.konnectNamespacedRef) ? true : !has(self.spec.controlPlaneRef.konnectNamespacedRef.__namespace__)'
         - message: spec.controlPlaneRef is immutable when an entity is already Programmed
-          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
-            ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.controlPlaneRef
-            == self.spec.controlPlaneRef'
+          rule: '(!self.status.conditions.exists(c, c.type == ''Programmed'' && c.status
+            == ''True'')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef'
+        - message: spec.controlPlaneRef cannot specify namespace for namespaced resource
+            - it's not supported yet
+          rule: '!has(self.spec.controlPlaneRef.konnectNamespacedRef) ? true : !has(self.spec.controlPlaneRef.konnectNamespacedRef.__namespace__)'
     served: true
     storage: true
     subresources:
