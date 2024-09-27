@@ -60,6 +60,10 @@ func (c *FakeConfigurationV1alpha1) KongKeys(namespace string) v1alpha1.KongKeyI
 	return &FakeKongKeys{c, namespace}
 }
 
+func (c *FakeConfigurationV1alpha1) KongKeySets(namespace string) v1alpha1.KongKeySetInterface {
+	return &FakeKongKeySets{c, namespace}
+}
+
 func (c *FakeConfigurationV1alpha1) KongLicenses() v1alpha1.KongLicenseInterface {
 	return &FakeKongLicenses{c}
 }

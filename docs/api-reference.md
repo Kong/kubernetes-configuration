@@ -336,6 +336,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [KongCredentialBasicAuth](#kongcredentialbasicauth)
 - [KongCustomEntity](#kongcustomentity)
 - [KongKey](#kongkey)
+- [KongKeySet](#kongkeyset)
 - [KongLicense](#konglicense)
 - [KongPluginBinding](#kongpluginbinding)
 - [KongRoute](#kongroute)
@@ -469,6 +470,22 @@ KongKey is the schema for KongKey API which defines a KongKey entity.
 | `kind` _string_ | `KongKey`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongKeySpec](#kongkeyspec)_ |  |
+
+
+
+### KongKeySet
+
+
+KongKeySet is the schema for KongKeySet API which defines a KongKeySet entity.
+
+<!-- kong_key_set description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongKeySet`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongKeySetSpec](#kongkeysetspec)_ |  |
 
 
 
@@ -626,6 +643,7 @@ _Appears in:_
 - [KongCertificateSpec](#kongcertificatespec)
 - [KongConsumerGroupSpec](#kongconsumergroupspec)
 - [KongConsumerSpec](#kongconsumerspec)
+- [KongKeySetSpec](#kongkeysetspec)
 - [KongKeySpec](#kongkeyspec)
 - [KongPluginBindingSpec](#kongpluginbindingspec)
 - [KongServiceSpec](#kongservicespec)
@@ -959,6 +977,41 @@ KongKeyAPISpec defines the attributes of a Kong Key.
 
 _Appears in:_
 - [KongKeySpec](#kongkeyspec)
+
+#### KongKeySetAPISpec
+
+
+KongKeySetAPISpec defines the attributes of a Kong KeySet.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is a name of the KeySet. |
+| `tags` _string array_ | Tags is an optional set of strings associated with the KeySet for grouping and filtering. |
+
+
+_Appears in:_
+- [KongKeySetSpec](#kongkeysetspec)
+
+#### KongKeySetSpec
+
+
+KongKeySetSpec defines the spec for a KongKeySet.
+
+
+
+| Field | Description |
+| --- | --- |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane with which KongKeySet is associated. |
+| `name` _string_ | Name is a name of the KeySet. |
+| `tags` _string array_ | Tags is an optional set of strings associated with the KeySet for grouping and filtering. |
+
+
+_Appears in:_
+- [KongKeySet](#kongkeyset)
+
+
 
 #### KongKeySpec
 

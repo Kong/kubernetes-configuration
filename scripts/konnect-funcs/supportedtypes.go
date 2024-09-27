@@ -27,6 +27,10 @@ var supportedTypes = []supportedTypesT{
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndKeySetRef",
 			},
 			{
+				Type:              "KongKeySet",
+				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+			},
+			{
 				Type:              "KongCredentialBasicAuth",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
 			},
