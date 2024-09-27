@@ -31,6 +31,7 @@ type ConfigurationV1alpha1Interface interface {
 	IngressClassParametersesGetter
 	KongCACertificatesGetter
 	KongCertificatesGetter
+	KongCredentialACLsGetter
 	KongCredentialAPIKeysGetter
 	KongCredentialBasicAuthsGetter
 	KongCustomEntitiesGetter
@@ -61,6 +62,10 @@ func (c *ConfigurationV1alpha1Client) KongCACertificates(namespace string) KongC
 
 func (c *ConfigurationV1alpha1Client) KongCertificates(namespace string) KongCertificateInterface {
 	return newKongCertificates(c, namespace)
+}
+
+func (c *ConfigurationV1alpha1Client) KongCredentialACLs(namespace string) KongCredentialACLInterface {
+	return newKongCredentialACLs(c, namespace)
 }
 
 func (c *ConfigurationV1alpha1Client) KongCredentialAPIKeys(namespace string) KongCredentialAPIKeyInterface {
