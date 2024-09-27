@@ -101,7 +101,6 @@ spec:
                   type: string
                 type: array
             required:
-            - controlPlaneRef
             - name
             type: object
           status:

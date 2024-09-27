@@ -45,8 +45,8 @@ type KongKeySet struct {
 // KongKeySetSpec defines the spec for a KongKeySet.
 type KongKeySetSpec struct {
 	// ControlPlaneRef is a reference to a Konnect ControlPlane with which KongKeySet is associated.
-	// +kubebuilder:validation:Required
-	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef"`
+	// +optional
+	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 
 	// KongKeySetAPISpec are the attributes of the KongKeySet itself.
 	KongKeySetAPISpec `json:",inline"`
