@@ -646,6 +646,7 @@ _Appears in:_
 - [KongKeySetSpec](#kongkeysetspec)
 - [KongKeySpec](#kongkeyspec)
 - [KongPluginBindingSpec](#kongpluginbindingspec)
+- [KongRouteSpec](#kongroutespec)
 - [KongServiceSpec](#kongservicespec)
 - [KongUpstreamSpec](#kongupstreamspec)
 - [KongVaultSpec](#kongvaultspec)
@@ -1154,7 +1155,8 @@ KongRouteSpec defines specification of a Kong Route.
 
 | Field | Description |
 | --- | --- |
-| `serviceRef` _[ServiceRef](#serviceref)_ | ServiceRef is a reference to a Service this Route is associated with. |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this KongRoute is associated with. Route can either specify a ControlPlaneRef and be 'serviceless' route or specify a ServiceRef and be associated with a Service. |
+| `serviceRef` _[ServiceRef](#serviceref)_ | ServiceRef is a reference to a Service this KongRoute is associated with. Route can either specify a ControlPlaneRef and be 'serviceless' route or specify a ServiceRef and be associated with a Service. |
 | `destinations` _Destinations array_ | A list of IP destinations of incoming connections that match this Route when using stream routing. Each entry is an object with fields "ip" (optionally in CIDR range notation) and/or "port". |
 | `headers` _object (keys:string, values:string)_ | One or more lists of values indexed by header name that will cause this Route to match if present in the request. The `Host` header cannot be used with this attribute: hosts should be specified using the `hosts` attribute. When `headers` contains only one value and that value starts with the special prefix `~*`, the value is interpreted as a regular expression. |
 | `hosts` _string array_ | A list of domain names that match this Route. Note that the hosts value is case sensitive. |
