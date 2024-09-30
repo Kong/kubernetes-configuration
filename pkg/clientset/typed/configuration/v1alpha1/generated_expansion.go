@@ -32,6 +32,8 @@ type KongCredentialBasicAuthExpansion interface{}
 
 type KongCustomEntityExpansion interface{}
 
+type KongDataplaneCertificateExpansion interface{}
+
 type KongKeyExpansion interface{}
 
 type KongKeySetExpansion interface{}
