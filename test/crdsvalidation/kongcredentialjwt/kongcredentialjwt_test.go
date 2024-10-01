@@ -11,10 +11,10 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/config"
 
 	configurationv1alpha1client "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
-	"github.com/kong/kubernetes-configuration/test/crdsvalidation/kongcredentialapikey/testcases"
+	"github.com/kong/kubernetes-configuration/test/crdsvalidation/kongcredentialjwt/testcases"
 )
 
-func TestCredentialAPIKey(t *testing.T) {
+func TestCredentialJWT(t *testing.T) {
 	ctx := context.Background()
 	cfg, err := config.GetConfig()
 	require.NoError(t, err, "error loading Kubernetes config")
@@ -25,8 +25,8 @@ func TestCredentialAPIKey(t *testing.T) {
 		t.Run(tcsGroup.Name, func(t *testing.T) {
 			for _, tc := range tcsGroup.TestCases {
 				t.Run(tc.Name, func(t *testing.T) {
-					cl := cl.KongCredentialAPIKeys(tc.KongCredentialAPIKey.Namespace)
-					entity, err := cl.Create(ctx, &tc.KongCredentialAPIKey, metav1.CreateOptions{})
+					cl := cl.KongCredentialJWTs(tc.KongCredentialJWT.Namespace)
+					entity, err := cl.Create(ctx, &tc.KongCredentialJWT, metav1.CreateOptions{})
 					if err == nil {
 						t.Cleanup(func() {
 							assert.NoError(t, client.IgnoreNotFound(cl.Delete(ctx, entity.Name, metav1.DeleteOptions{})))
@@ -37,8 +37,8 @@ func TestCredentialAPIKey(t *testing.T) {
 						assert.NoError(t, err)
 
 						// if the status has to be updated, update it.
-						if tc.KongCredentialAPIKeyStatus != nil {
-							entity.Status = *tc.KongCredentialAPIKeyStatus
+						if tc.KongCredentialJWTStatus != nil {
+							entity.Status = *tc.KongCredentialJWTStatus
 							entity, err = cl.UpdateStatus(ctx, entity, metav1.UpdateOptions{})
 							assert.NoError(t, err)
 						}
