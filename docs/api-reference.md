@@ -334,6 +334,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [KongCredentialACL](#kongcredentialacl)
 - [KongCredentialAPIKey](#kongcredentialapikey)
 - [KongCredentialBasicAuth](#kongcredentialbasicauth)
+- [KongCredentialJWT](#kongcredentialjwt)
 - [KongCustomEntity](#kongcustomentity)
 - [KongDataplaneCertificate](#kongdataplanecertificate)
 - [KongKey](#kongkey)
@@ -439,6 +440,22 @@ KongCredentialBasicAuth is the schema for BasicAuth credentials API which define
 | `kind` _string_ | `KongCredentialBasicAuth`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongCredentialBasicAuthSpec](#kongcredentialbasicauthspec)_ | Spec contains the BasicAuth credential specification. |
+
+
+
+### KongCredentialJWT
+
+
+KongCredentialJWT is the schema for JWT credentials API which defines a JWT credential for consumers.
+
+<!-- kong_credential_jwt description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongCredentialJWT`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongCredentialJWTSpec](#kongcredentialjwtspec)_ | Spec contains the JWT credential specification. |
 
 
 
@@ -953,6 +970,49 @@ KongCredentialBasicAuthSpec defines specification of a Kong Route.
 
 _Appears in:_
 - [KongCredentialBasicAuth](#kongcredentialbasicauth)
+
+
+
+#### KongCredentialJWTAPISpec
+
+
+KongCredentialJWTAPISpec defines specification of an JWT credential.
+
+
+
+| Field | Description |
+| --- | --- |
+| `algorithm` _string_ | Algorithm is the algorithm used to sign the JWT token. |
+| `id` _string_ | ID is the unique identifier for the JWT credential. |
+| `key` _string_ | Key is the key for the JWT credential. |
+| `rsa_public_key` _string_ | RSA PublicKey is the RSA public key for the JWT credential. |
+| `secret` _string_ | Secret is the secret for the JWT credential. |
+| `tags` _string array_ | Tags is a list of tags for the JWT credential. |
+
+
+_Appears in:_
+- [KongCredentialJWTSpec](#kongcredentialjwtspec)
+
+#### KongCredentialJWTSpec
+
+
+KongCredentialJWTSpec defines specification of a Kong Route.
+
+
+
+| Field | Description |
+| --- | --- |
+| `consumerRef` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core)_ | ConsumerRef is a reference to a Consumer this KongCredentialJWT is associated with. |
+| `algorithm` _string_ | Algorithm is the algorithm used to sign the JWT token. |
+| `id` _string_ | ID is the unique identifier for the JWT credential. |
+| `key` _string_ | Key is the key for the JWT credential. |
+| `rsa_public_key` _string_ | RSA PublicKey is the RSA public key for the JWT credential. |
+| `secret` _string_ | Secret is the secret for the JWT credential. |
+| `tags` _string array_ | Tags is a list of tags for the JWT credential. |
+
+
+_Appears in:_
+- [KongCredentialJWT](#kongcredentialjwt)
 
 
 

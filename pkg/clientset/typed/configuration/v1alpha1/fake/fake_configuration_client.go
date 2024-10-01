@@ -52,6 +52,10 @@ func (c *FakeConfigurationV1alpha1) KongCredentialBasicAuths(namespace string) v
 	return &FakeKongCredentialBasicAuths{c, namespace}
 }
 
+func (c *FakeConfigurationV1alpha1) KongCredentialJWTs(namespace string) v1alpha1.KongCredentialJWTInterface {
+	return &FakeKongCredentialJWTs{c, namespace}
+}
+
 func (c *FakeConfigurationV1alpha1) KongCustomEntities(namespace string) v1alpha1.KongCustomEntityInterface {
 	return &FakeKongCustomEntities{c, namespace}
 }
