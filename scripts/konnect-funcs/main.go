@@ -22,27 +22,39 @@ type templateDataT struct {
 
 	// KonnectStatusType is the name of the konnect status type (.status.konnect).
 	KonnectStatusType string
+
+	// HasKonnectStatus is true if the type has a Konnect status field.
+	HasKonnectStatus bool
 }
 
 const (
 	apiPackageName           = "api"
 	configurationPackageName = "configuration"
+	konnectPackageName       = "konnect"
 )
 
 func main() {
-	if err := renderTemplate(konnectFuncTemplate, konnectFuncOutputFileName); err != nil {
+	if err := renderTemplate(konnectFuncTemplate, konnectFuncOutputFileName, supportedTypesControlPlaneConfig, configurationPackageName); err != nil {
+		panic(err)
+	}
+	if err := renderTemplate(konnectFuncStandaloneTemplate, konnectFuncOutputFileName, supportedTypesStandalone, konnectPackageName); err != nil {
 		panic(err)
 	}
 }
 
-func renderTemplate(templateContent string, outputFile string) error {
+func renderTemplate(
+	templateContent string,
+	outputFile string,
+	supportedTypes []supportedTypesT,
+	packagename string,
+) error {
 	tpl, err := template.New("tpl").Funcs(sprig.TxtFuncMap()).Parse(templateContent)
 	if err != nil {
 		return fmt.Errorf("failed to parse template for %s: %w", outputFile, err)
 	}
 	for _, st := range supportedTypes {
 		contents := &bytes.Buffer{}
-		path := filepath.Join(apiPackageName, configurationPackageName, st.Package, outputFile)
+		path := filepath.Join(apiPackageName, packagename, st.Package, outputFile)
 		if err := tpl.Execute(contents, st); err != nil {
 			return fmt.Errorf("%s: failed to execute template for %s: %w", path, outputFile, err)
 		}
