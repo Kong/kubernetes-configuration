@@ -1543,14 +1543,14 @@ _Appears in:_
 #### NamespacedServiceRef
 
 
-
+NamespacedServiceRef is a namespaced reference to a KongService.<br /><br />
+NOTE: currently cross namespace references are not supported.
 
 
 
 | Field | Description |
 | --- | --- |
 | `name` _string_ |  |
-| `namespace` _string_ |  |
 
 
 _Appears in:_
