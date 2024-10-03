@@ -1,7 +1,7 @@
 package v1alpha1
 
 // KonnectEntityStatus represents the status of a Konnect entity.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectEntityStatus struct {
 	// ID is the unique identifier of the Konnect entity as assigned by Konnect API.
 	// If it's unset (empty string), it means the Konnect entity hasn't been created yet.
@@ -54,7 +54,7 @@ func (in *KonnectEntityStatus) SetServerURL(s string) {
 }
 
 // KonnectEntityStatusWithControlPlaneRef represents the status of a Konnect entity with a reference to a ControlPlane.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectEntityStatusWithControlPlaneRef struct {
 	KonnectEntityStatus `json:",inline"`
 
@@ -73,7 +73,7 @@ func (in *KonnectEntityStatusWithControlPlaneRef) GetControlPlaneID() string {
 }
 
 // KonnectEntityStatusWithControlPlaneAndConsumerRefs represents the status of a Konnect entity with references to a ControlPlane and a Consumer.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectEntityStatusWithControlPlaneAndConsumerRefs struct {
 	KonnectEntityStatus `json:",inline"`
 
@@ -105,7 +105,7 @@ func (in *KonnectEntityStatusWithControlPlaneAndConsumerRefs) GetConsumerID() st
 }
 
 // KonnectEntityStatusWithControlPlaneAndServiceRefs represents the status of a Konnect entity with references to a ControlPlane and a Service.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectEntityStatusWithControlPlaneAndServiceRefs struct {
 	KonnectEntityStatus `json:",inline"`
 
@@ -127,7 +127,7 @@ func (in *KonnectEntityStatusWithControlPlaneAndServiceRefs) GetControlPlaneID()
 }
 
 // KonnectEntityStatusWithControlPlaneAndUpstreamRefs represents the status of a Konnect entity with references to a ControlPlane and an Upstream.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectEntityStatusWithControlPlaneAndUpstreamRefs struct {
 	KonnectEntityStatus `json:",inline"`
 
@@ -139,7 +139,7 @@ type KonnectEntityStatusWithControlPlaneAndUpstreamRefs struct {
 }
 
 // KonnectEntityStatusWithControlPlaneAndKeySetRef represents the status of a Konnect entity with references to a ControlPlane and a KeySet.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectEntityStatusWithControlPlaneAndKeySetRef struct {
 	KonnectEntityStatus `json:",inline"`
 
@@ -171,7 +171,7 @@ func (in *KonnectEntityStatusWithControlPlaneAndKeySetRef) GetKeySetID() string 
 }
 
 // KonnectEntityStatusWithControlPlaneAndCertificateRefs represents the status of a Konnect entity with references to a ControlPlane and a Certificate.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectEntityStatusWithControlPlaneAndCertificateRefs struct {
 	KonnectEntityStatus `json:",inline"`
 

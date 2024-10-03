@@ -23,7 +23,7 @@ func init() {
 // +kubebuilder:validation:XValidation:rule="self.spec.type != 'token' || (self.spec.token.startsWith('spat_') || self.spec.token.startsWith('kpat_'))", message="Konnect tokens have to start with spat_ or kpat_"
 // +kubebuilder:validation:XValidation:rule="self.spec.type != 'token' || (!has(oldSelf.spec.token) || has(self.spec.token))", message="Token is required once set"
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec.serverURL) || has(self.spec.serverURL)", message="Server URL is required once set"
-// +kgosupported
+// +apireference:kgo:include
 type KonnectAPIAuthConfiguration struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -36,7 +36,7 @@ type KonnectAPIAuthConfiguration struct {
 }
 
 // KonnectAPIAuthType is the type of authentication used to authenticate with the Konnect API.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectAPIAuthType string
 
 const (
@@ -50,7 +50,7 @@ const (
 // KonnectAPIAuthConfigurationSpec is the specification of the KonnectAPIAuthConfiguration resource.
 //
 // +kubebuilder:validation:XValidation:rule="(self.type == 'token' && has(self.token)) || (self.type == 'secretRef' && has(self.secretRef))", message="Token is required if auth type is set to token or secretRef is required if auth type is set to secretRef"
-// +kgosupported
+// +apireference:kgo:include
 type KonnectAPIAuthConfigurationSpec struct {
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:Enum=token;secretRef
@@ -70,7 +70,7 @@ type KonnectAPIAuthConfigurationSpec struct {
 }
 
 // KonnectAPIAuthConfigurationStatus is the status of the KonnectAPIAuthConfiguration resource.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectAPIAuthConfigurationStatus struct {
 	// OrganizationID is the unique identifier of the organization in Konnect.
 	OrganizationID string `json:"organizationID,omitempty"`
@@ -88,7 +88,7 @@ type KonnectAPIAuthConfigurationStatus struct {
 }
 
 // KonnectAPIAuthConfigurationRef is a reference to a KonnectAPIAuthConfiguration resource.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectAPIAuthConfigurationRef struct {
 	// Name is the name of the KonnectAPIAuthConfiguration resource.
 	// +kubebuilder:validation:Required
@@ -100,7 +100,7 @@ type KonnectAPIAuthConfigurationRef struct {
 
 // KonnectAPIAuthConfigurationList contains a list of KonnectAPIAuthConfiguration resources.
 // +kubebuilder:object:root=true
-// +kgosupported
+// +apireference:kgo:include
 type KonnectAPIAuthConfigurationList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`

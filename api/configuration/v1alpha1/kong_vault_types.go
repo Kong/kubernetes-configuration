@@ -47,7 +47,7 @@ const (
 // +kubebuilder:validation:XValidation:rule="self.spec.prefix == oldSelf.spec.prefix", message="The spec.prefix field is immutable"
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)", message="controlPlaneRef is required once set"
 // +kubebuilder:validation:XValidation:rule="(!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef", message="spec.controlPlaneRef is immutable when an entity is already Programmed"
-// +kgosupported
+// +apireference:kgo:include
 type KongVault struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -56,7 +56,7 @@ type KongVault struct {
 }
 
 // KongVaultSpec defines specification of a custom Kong vault.
-// +kgosupported
+// +apireference:kgo:include
 type KongVaultSpec struct {
 	// Backend is the type of the backend storing the secrets in the vault.
 	// The supported backends of Kong is listed here:
@@ -79,7 +79,7 @@ type KongVaultSpec struct {
 }
 
 // KongVaultStatus represents the current status of the KongVault resource.
-// +kgosupported
+// +apireference:kgo:include
 type KongVaultStatus struct {
 	// Konnect contains the Konnect entity status.
 	// +optional
@@ -100,7 +100,7 @@ type KongVaultStatus struct {
 
 // KongVaultList contains a list of KongVault.
 // +kubebuilder:object:root=true
-// +kgosupported
+// +apireference:kgo:include
 type KongVaultList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`

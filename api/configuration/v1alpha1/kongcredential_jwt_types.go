@@ -34,7 +34,7 @@ import (
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
 // +kubebuilder:validation:XValidation:rule="(!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.consumerRef == self.spec.consumerRef",message="spec.consumerRef is immutable when an entity is already Programmed"
 // +kubebuilder:validation:XValidation:rule="self.spec.algorithm in [ 'RS256','RS384','RS512','ES256','ES384','ES512','PS256','PS384','PS512','EdDSA', ] ? has(self.spec.rsa_public_key) : true",message="spec.rsa_public_key is required when algorithm is RS*, ES*, PS* or EdDSA*"
-// +kgosupported
+// +apireference:kgo:include
 type KongCredentialJWT struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -49,7 +49,7 @@ type KongCredentialJWT struct {
 }
 
 // KongCredentialJWTSpec defines specification of a Kong Route.
-// +kgosupported
+// +apireference:kgo:include
 type KongCredentialJWTSpec struct {
 	// ConsumerRef is a reference to a Consumer this KongCredentialJWT is associated with.
 	//
@@ -60,7 +60,7 @@ type KongCredentialJWTSpec struct {
 }
 
 // KongCredentialJWTAPISpec defines specification of an JWT credential.
-// +kgosupported
+// +apireference:kgo:include
 type KongCredentialJWTAPISpec struct {
 	// Algorithm is the algorithm used to sign the JWT token.
 	// +kubebuilder:default=HS256
@@ -79,7 +79,7 @@ type KongCredentialJWTAPISpec struct {
 }
 
 // KongCredentialJWTStatus represents the current status of the JWT credential resource.
-// +kgosupported
+// +apireference:kgo:include
 type KongCredentialJWTStatus struct {
 	// Konnect contains the Konnect entity status.
 	// +optional
@@ -95,7 +95,7 @@ type KongCredentialJWTStatus struct {
 
 // KongCredentialJWTList contains a list of JWT credentials.
 // +kubebuilder:object:root=true
-// +kgosupported
+// +apireference:kgo:include
 type KongCredentialJWTList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
