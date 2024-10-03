@@ -33,7 +33,7 @@ import (
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
 // +kubebuilder:validation:XValidation:rule="(!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.consumerRef == self.spec.consumerRef",message="spec.consumerRef is immutable when an entity is already Programmed"
-// +kgosupported
+// +apireference:kgo:include
 type KongCredentialHMAC struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -48,7 +48,7 @@ type KongCredentialHMAC struct {
 }
 
 // KongCredentialHMACSpec defines specification of a Kong Route.
-// +kgosupported
+// +apireference:kgo:include
 type KongCredentialHMACSpec struct {
 	// ConsumerRef is a reference to a Consumer this KongCredentialHMAC is associated with.
 	//
@@ -59,7 +59,7 @@ type KongCredentialHMACSpec struct {
 }
 
 // KongCredentialHMACAPISpec defines specification of an HMAC credential.
-// +kgosupported
+// +apireference:kgo:include
 type KongCredentialHMACAPISpec struct {
 	// ID is the unique identifier for the HMAC credential.
 	ID *string `json:"id,omitempty"`
@@ -73,7 +73,7 @@ type KongCredentialHMACAPISpec struct {
 }
 
 // KongCredentialHMACStatus represents the current status of the HMAC credential resource.
-// +kgosupported
+// +apireference:kgo:include
 type KongCredentialHMACStatus struct {
 	// Konnect contains the Konnect entity status.
 	// +optional
@@ -89,7 +89,7 @@ type KongCredentialHMACStatus struct {
 
 // KongCredentialHMACList contains a list of HMAC credentials.
 // +kubebuilder:object:root=true
-// +kgosupported
+// +apireference:kgo:include
 type KongCredentialHMACList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`

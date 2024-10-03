@@ -16,7 +16,7 @@ import (
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)", message="controlPlaneRef is required once set"
 // +kubebuilder:validation:XValidation:rule="(!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef", message="spec.controlPlaneRef is immutable when an entity is already Programmed"
-// +kgosupported
+// +apireference:kgo:include
 type KongCertificate struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -28,7 +28,7 @@ type KongCertificate struct {
 }
 
 // KongCertificateSpec contains the specification for the KongCertificate.
-// +kgosupported
+// +apireference:kgo:include
 type KongCertificateSpec struct {
 	// ControlPlaneRef references the Konnect Control Plane that this KongCertificate should be created in.
 	ControlPlaneRef        *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
@@ -36,7 +36,7 @@ type KongCertificateSpec struct {
 }
 
 // KongCertificateAPISpec contains the API specification for the KongCertificate.
-// +kgosupported
+// +apireference:kgo:include
 type KongCertificateAPISpec struct {
 	// Cert is the PEM-encoded certificate.
 	// +kubebuilder:validation:Required
@@ -60,7 +60,7 @@ type KongCertificateAPISpec struct {
 }
 
 // KongCertificateStatus defines the status for a KongCertificate.
-// +kgosupported
+// +apireference:kgo:include
 type KongCertificateStatus struct {
 	// Konnect contains the Konnect entity status.
 	// +optional
@@ -76,7 +76,7 @@ type KongCertificateStatus struct {
 
 // KongCertificateList contains a list of KongCertificates.
 // +kubebuilder:object:root=true
-// +kgosupported
+// +apireference:kgo:include
 type KongCertificateList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`

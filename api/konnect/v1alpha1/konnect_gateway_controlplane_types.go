@@ -21,7 +21,7 @@ func init() {
 // +kubebuilder:printcolumn:name="OrgID",description="Konnect Organization ID this resource belongs to.",type=string,JSONPath=`.status.organizationID`
 // +kubebuilder:validation:XValidation:rule="!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef", message="spec.konnect.authRef is immutable when an entity is already Programmed"
 // +kubebuilder:validation:XValidation:rule="!self.status.conditions.exists(c, c.type == 'APIAuthValid' && c.status == 'True') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef", message="spec.konnect.authRef is immutable when an entity refers to a Valid API Auth Configuration"
-// +kgosupported
+// +apireference:kgo:include
 type KonnectGatewayControlPlane struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -34,7 +34,7 @@ type KonnectGatewayControlPlane struct {
 }
 
 // KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayControlPlane.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectGatewayControlPlaneSpec struct {
 	sdkkonnectgocomp.CreateControlPlaneRequest `json:",inline"`
 
@@ -42,7 +42,7 @@ type KonnectGatewayControlPlaneSpec struct {
 }
 
 // KonnectGatewayControlPlaneStatus defines the observed state of KonnectGatewayControlPlane.
-// +kgosupported
+// +apireference:kgo:include
 type KonnectGatewayControlPlaneStatus struct {
 	KonnectEntityStatus `json:",inline"`
 
@@ -76,7 +76,7 @@ func (c *KonnectGatewayControlPlane) GetKonnectAPIAuthConfigurationRef() Konnect
 
 // KonnectGatewayControlPlaneList contains a list of KonnectGatewayControlPlane.
 // +kubebuilder:object:root=true
-// +kgosupported
+// +apireference:kgo:include
 type KonnectGatewayControlPlaneList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
