@@ -1,6 +1,6 @@
 package main
 
-var supportedTypes = []supportedTypesT{
+var supportedTypesControlPlaneConfig = []supportedTypesT{
 	{
 		Package: "v1",
 		Types: []templateDataT{
@@ -81,6 +81,21 @@ var supportedTypes = []supportedTypesT{
 			{
 				Type:              "KongSNI",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndCertificateRefs",
+			},
+		},
+	},
+}
+
+var supportedTypesStandalone = []supportedTypesT{
+	{
+		Package: "v1alpha1",
+		Types: []templateDataT{
+			{
+				Type:              "KonnectGatewayControlPlane",
+				KonnectStatusType: "*KonnectEntityStatus",
+			},
+			{
+				Type: "KonnectAPIAuthConfiguration",
 			},
 		},
 	},
