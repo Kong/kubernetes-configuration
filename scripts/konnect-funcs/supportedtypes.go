@@ -86,6 +86,10 @@ var supportedTypesControlPlaneConfig = []supportedTypesT{
 				Type:              "KongSNI",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndCertificateRefs",
 			},
+			{
+				Type:              "KongDataPlaneClientCertificate",
+				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+			},
 		},
 	},
 }

@@ -36,7 +36,7 @@ type KongCredentialJWTExpansion interface{}
 
 type KongCustomEntityExpansion interface{}
 
-type KongDataplaneCertificateExpansion interface{}
+type KongDataPlaneClientCertificateExpansion interface{}
 
 type KongKeyExpansion interface{}
 
