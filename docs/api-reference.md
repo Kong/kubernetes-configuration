@@ -148,7 +148,7 @@ _Appears in:_
 #### KongConsumerSpec
 
 
-
+KongConsumerSpec defines the desired state of KongConsumer.
 
 
 
@@ -706,7 +706,7 @@ _Appears in:_
 #### ControllerReference
 
 
-
+ControllerReference defines the reference of a controller that reconciles a KongLicense.
 
 
 
@@ -1224,8 +1224,6 @@ _Appears in:_
 
 
 
-
-
 #### KongObjectRef
 
 
@@ -1445,7 +1443,7 @@ _Appears in:_
 #### KongTargetAPISpec
 
 
-
+KongTargetAPISpec defines the attributes of a Kong Target.
 
 
 
@@ -1462,7 +1460,7 @@ _Appears in:_
 #### KongTargetSpec
 
 
-
+KongTargetSpec defines the specification of a Kong Target.
 
 
 

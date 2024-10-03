@@ -81,6 +81,8 @@ spec:
                   the Konnect API.
                 type: string
               type:
+                description: KonnectAPIAuthType is the type of authentication used
+                  to authenticate with the Konnect API.
                 enum:
                 - token
                 - secretRef

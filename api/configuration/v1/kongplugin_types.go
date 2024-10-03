@@ -22,6 +22,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+// KongPlugin is the Schema for the kongplugins API.
+//
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
@@ -36,8 +38,7 @@ import (
 // +kubebuilder:validation:XValidation:rule="!(has(self.config) && has(self.configFrom))", message="Using both config and configFrom fields is not allowed."
 // +kubebuilder:validation:XValidation:rule="!(has(self.configFrom) && has(self.configPatches))", message="Using both configFrom and configPatches fields is not allowed."
 // +kubebuilder:validation:XValidation:rule="self.plugin == oldSelf.plugin", message="The plugin field is immutable"
-
-// KongPlugin is the Schema for the kongplugins API.
+// +kgosupported
 type KongPlugin struct {
 	metav1.TypeMeta `json:",inline"`
 	// Setting a `global` label to `true` will apply the plugin to every request proxied by the Kong.
@@ -100,9 +101,9 @@ type KongPlugin struct {
 	Status KongPluginStatus `json:"status,omitempty"`
 }
 
-// +kubebuilder:object:root=true
-
 // KongPluginList contains a list of KongPlugin.
+// +kubebuilder:object:root=true
+// +kgosupported
 type KongPluginList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
@@ -110,6 +111,7 @@ type KongPluginList struct {
 }
 
 // KongPluginStatus represents the current status of the KongPlugin resource.
+// +kgosupported
 type KongPluginStatus struct {
 	// Conditions describe the current conditions of the KongPluginStatus.
 	//

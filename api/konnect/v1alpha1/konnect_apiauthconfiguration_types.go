@@ -23,6 +23,7 @@ func init() {
 // +kubebuilder:validation:XValidation:rule="self.spec.type != 'token' || (self.spec.token.startsWith('spat_') || self.spec.token.startsWith('kpat_'))", message="Konnect tokens have to start with spat_ or kpat_"
 // +kubebuilder:validation:XValidation:rule="self.spec.type != 'token' || (!has(oldSelf.spec.token) || has(self.spec.token))", message="Token is required once set"
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec.serverURL) || has(self.spec.serverURL)", message="Server URL is required once set"
+// +kgosupported
 type KonnectAPIAuthConfiguration struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -34,6 +35,8 @@ type KonnectAPIAuthConfiguration struct {
 	Status KonnectAPIAuthConfigurationStatus `json:"status,omitempty"`
 }
 
+// KonnectAPIAuthType is the type of authentication used to authenticate with the Konnect API.
+// +kgosupported
 type KonnectAPIAuthType string
 
 const (
@@ -44,6 +47,7 @@ const (
 // KonnectAPIAuthConfigurationSpec is the specification of the KonnectAPIAuthConfiguration resource.
 //
 // +kubebuilder:validation:XValidation:rule="(self.type == 'token' && has(self.token)) || (self.type == 'secretRef' && has(self.secretRef))", message="Token is required if auth type is set to token or secretRef is required if auth type is set to secretRef"
+// +kgosupported
 type KonnectAPIAuthConfigurationSpec struct {
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:Enum=token;secretRef
@@ -62,6 +66,8 @@ type KonnectAPIAuthConfigurationSpec struct {
 	ServerURL string `json:"serverURL"`
 }
 
+// KonnectAPIAuthConfigurationStatus is the status of the KonnectAPIAuthConfiguration resource.
+// +kgosupported
 type KonnectAPIAuthConfigurationStatus struct {
 	// OrganizationID is the unique identifier of the organization in Konnect.
 	OrganizationID string `json:"organizationID,omitempty"`
@@ -78,6 +84,8 @@ type KonnectAPIAuthConfigurationStatus struct {
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
+// KonnectAPIAuthConfigurationRef is a reference to a KonnectAPIAuthConfiguration resource.
+// +kgosupported
 type KonnectAPIAuthConfigurationRef struct {
 	// Name is the name of the KonnectAPIAuthConfiguration resource.
 	// +kubebuilder:validation:Required
@@ -87,7 +95,9 @@ type KonnectAPIAuthConfigurationRef struct {
 	// Namespace string `json:"namespace,omitempty"`
 }
 
+// KonnectAPIAuthConfigurationList contains a list of KonnectAPIAuthConfiguration.
 // +kubebuilder:object:root=true
+// +kgosupported
 type KonnectAPIAuthConfigurationList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
