@@ -21,10 +21,8 @@ type templateDataT struct {
 	Type string
 
 	// KonnectStatusType is the name of the konnect status type (.status.konnect).
+	// If it's not provided Konnect status functions will not be generated.
 	KonnectStatusType string
-
-	// HasKonnectStatus is true if the type has a Konnect status field.
-	HasKonnectStatus bool
 }
 
 const (
