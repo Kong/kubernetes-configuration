@@ -73,7 +73,19 @@ func (obj *{{ .Type }}) SetControlPlaneID(id string) {
 	}
 	obj.Status.Konnect.ControlPlaneID = id
 }
+{{- if hasSuffix "KonnectEntityStatusWithControlPlaneAndConsumerRefs" .KonnectStatusType }}
 
+func (obj *{{ .Type }}) SetKonnectConsumerIDInStatus(id string) {
+	if obj.Status.Konnect == nil {
+		obj.initKonnectStatus()
+	}
+	obj.Status.Konnect.ConsumerID = id
+}
+
+func (obj *{{ .Type }}) GetConsumerRefName() string {
+	return obj.Spec.ConsumerRef.Name
+}
+{{- end }}
 {{- end }}
 `
 
