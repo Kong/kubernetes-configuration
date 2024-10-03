@@ -74,6 +74,7 @@ spec:
           metadata:
             type: object
           spec:
+            description: KongConsumerSpec defines the specification of the KongConsumer.
             properties:
               controlPlaneRef:
                 description: ControlPlaneRef is a reference to a ControlPlane this

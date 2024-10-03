@@ -127,6 +127,7 @@ spec:
                 reason: Pending
                 status: Unknown
                 type: Programmed
+            description: KongCertificateStatus defines the observed state of KongCertificate.
             properties:
               conditions:
                 description: Conditions describe the status of the Konnect entity.

@@ -49,6 +49,7 @@ spec:
           metadata:
             type: object
           spec:
+            description: KongConsumerGroupSpec defines the desired state of KongConsumerGroup.
             properties:
               controlPlaneRef:
                 description: ControlPlaneRef is a reference to a ControlPlane this

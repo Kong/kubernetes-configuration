@@ -48,7 +48,7 @@ In this section you will find types that the CRDs rely on.
 #### KonnectAPIAuthConfigurationRef
 
 
-
+KonnectAPIAuthConfigurationRef is a reference to a KonnectAPIAuthConfiguration resource.
 
 
 
@@ -83,7 +83,7 @@ _Appears in:_
 #### KonnectAPIAuthType
 _Underlying type:_ `string`
 
-
+KonnectAPIAuthType is the type of authentication used to authenticate with the Konnect API.
 
 
 
@@ -95,7 +95,7 @@ _Appears in:_
 #### KonnectConfiguration
 
 
-
+KonnectConfiguration is the Schema for the KonnectConfiguration API.
 
 
 
@@ -110,7 +110,7 @@ _Appears in:_
 #### KonnectEntityStatus
 
 
-
+KonnectEntityStatus represents the status of a Konnect entity.
 
 
 

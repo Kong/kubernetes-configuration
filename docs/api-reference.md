@@ -148,7 +148,7 @@ _Appears in:_
 #### KongConsumerSpec
 
 
-
+KongConsumerSpec defines the specification of the KongConsumer.
 
 
 
@@ -706,7 +706,7 @@ _Appears in:_
 #### ControllerReference
 
 
-
+ControllerReference is a reference to a controller that reconciles the KongLicense.
 
 
 
@@ -737,7 +737,7 @@ _Appears in:_
 #### IngressClassParametersSpec
 
 
-
+IngressClassParametersSpec defines the desired state of IngressClassParameters.
 
 
 
@@ -1075,7 +1075,7 @@ _Appears in:_
 #### KongCustomEntitySpec
 
 
-
+KongCustomEntitySpec defines the specification of the KongCustomEntity.
 
 
 
@@ -1445,7 +1445,7 @@ _Appears in:_
 #### KongTargetAPISpec
 
 
-
+KongTargetAPISpec are the attributes of the Kong Target itself.
 
 
 
@@ -1462,7 +1462,7 @@ _Appears in:_
 #### KongTargetSpec
 
 
-
+KongTargetSpec defines the desired state of KongTarget.
 
 
 
@@ -1894,7 +1894,7 @@ _Appears in:_
 #### KongConsumerGroupSpec
 
 
-
+KongConsumerGroupSpec defines the desired state of KongConsumerGroup.
 
 
 
