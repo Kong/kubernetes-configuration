@@ -334,6 +334,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [KongCredentialACL](#kongcredentialacl)
 - [KongCredentialAPIKey](#kongcredentialapikey)
 - [KongCredentialBasicAuth](#kongcredentialbasicauth)
+- [KongCredentialHMAC](#kongcredentialhmac)
 - [KongCredentialJWT](#kongcredentialjwt)
 - [KongCustomEntity](#kongcustomentity)
 - [KongDataplaneCertificate](#kongdataplanecertificate)
@@ -440,6 +441,22 @@ KongCredentialBasicAuth is the schema for BasicAuth credentials API which define
 | `kind` _string_ | `KongCredentialBasicAuth`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongCredentialBasicAuthSpec](#kongcredentialbasicauthspec)_ | Spec contains the BasicAuth credential specification. |
+
+
+
+### KongCredentialHMAC
+
+
+KongCredentialHMAC is the schema for HMAC credentials API which defines a HMAC credential for consumers.
+
+<!-- kong_credential_hmac description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
+| `kind` _string_ | `KongCredentialHMAC`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KongCredentialHMACSpec](#kongcredentialhmacspec)_ | Spec contains the HMAC credential specification. |
 
 
 
@@ -970,6 +987,45 @@ KongCredentialBasicAuthSpec defines specification of a Kong Route.
 
 _Appears in:_
 - [KongCredentialBasicAuth](#kongcredentialbasicauth)
+
+
+
+#### KongCredentialHMACAPISpec
+
+
+KongCredentialHMACAPISpec defines specification of an HMAC credential.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier for the HMAC credential. |
+| `secret` _string_ | Secret is the secret for the HMAC credential. |
+| `tags` _string array_ | Tags is a list of tags for the HMAC credential. |
+| `username` _string_ | Username is the username for the HMAC credential. |
+
+
+_Appears in:_
+- [KongCredentialHMACSpec](#kongcredentialhmacspec)
+
+#### KongCredentialHMACSpec
+
+
+KongCredentialHMACSpec defines specification of a Kong Route.
+
+
+
+| Field | Description |
+| --- | --- |
+| `consumerRef` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core)_ | ConsumerRef is a reference to a Consumer this KongCredentialHMAC is associated with. |
+| `id` _string_ | ID is the unique identifier for the HMAC credential. |
+| `secret` _string_ | Secret is the secret for the HMAC credential. |
+| `tags` _string array_ | Tags is a list of tags for the HMAC credential. |
+| `username` _string_ | Username is the username for the HMAC credential. |
+
+
+_Appears in:_
+- [KongCredentialHMAC](#kongcredentialhmac)
 
 
 
