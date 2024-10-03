@@ -47,6 +47,10 @@ var supportedTypesControlPlaneConfig = []supportedTypesT{
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
 			},
 			{
+				Type:              "KongCredentialHMAC",
+				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+			},
+			{
 				Type:              "KongCACertificate",
 				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
 			},
