@@ -29,7 +29,7 @@ resources:
 - bases/configuration.konghq.com_kongcredentialhmacs.yaml
 - bases/configuration.konghq.com_kongcertificates.yaml
 - bases/configuration.konghq.com_kongsnis.yaml
-- bases/configuration.konghq.com_kongdataplanecertificates.yaml
+- bases/configuration.konghq.com_kongdataplaneclientcertificates.yaml
 
 - bases/konnect.konghq.com_konnectapiauthconfigurations.yaml
 - bases/konnect.konghq.com_konnectgatewaycontrolplanes.yaml

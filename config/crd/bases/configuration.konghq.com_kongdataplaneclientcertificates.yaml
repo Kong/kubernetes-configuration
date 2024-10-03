@@ -4,14 +4,14 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.3
-  name: kongdataplanecertificates.configuration.konghq.com
+  name: kongdataplaneclientcertificates.configuration.konghq.com
 spec:
   group: configuration.konghq.com
   names:
-    kind: KongDataplaneCertificate
-    listKind: KongDataplaneCertificateList
-    plural: kongdataplanecertificates
-    singular: kongdataplanecertificate
+    kind: KongDataPlaneClientCertificate
+    listKind: KongDataPlaneClientCertificateList
+    plural: kongdataplaneclientcertificates
+    singular: kongdataplaneclientcertificate
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -22,8 +22,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: KongDataplaneCertificate is the schema for KongDataplaneCertificate
-          API which defines a KongDataplaneCertificate entity.
+        description: KongDataPlaneClientCertificate is the schema for KongDataPlaneClientCertificate
+          API which defines a KongDataPlaneClientCertificate entity.
         properties:
           apiVersion:
             description: |-
@@ -43,7 +43,8 @@ spec:
           metadata:
             type: object
           spec:
-            description: KongDataplaneCertificateSpec defines the spec for a KongDataplaneCertificate.
+            description: KongDataPlaneClientCertificateSpec defines the spec for a
+              KongDataPlaneClientCertificate.
             properties:
               cert:
                 description: Cert is the certificate in PEM format. Once the certificate
@@ -52,7 +53,7 @@ spec:
                 type: string
               controlPlaneRef:
                 description: ControlPlaneRef is a reference to a Konnect ControlPlane
-                  this KongDataplaneCertificate is associated with.
+                  this KongDataPlaneClientCertificate is associated with.
                 properties:
                   konnectID:
                     description: |-
@@ -106,7 +107,8 @@ spec:
                 reason: Pending
                 status: Unknown
                 type: Programmed
-            description: KongDataplaneCertificateStatus defines the status for a KongDataplaneCertificate.
+            description: KongDataPlaneClientCertificateStatus defines the status for
+              a KongDataPlaneClientCertificate.
             properties:
               conditions:
                 description: Conditions describe the status of the Konnect entity.

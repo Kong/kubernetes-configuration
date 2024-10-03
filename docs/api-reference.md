@@ -337,7 +337,7 @@ Package v1alpha1 contains API Schema definitions for the configuration.konghq.co
 - [KongCredentialHMAC](#kongcredentialhmac)
 - [KongCredentialJWT](#kongcredentialjwt)
 - [KongCustomEntity](#kongcustomentity)
-- [KongDataplaneCertificate](#kongdataplanecertificate)
+- [KongDataPlaneClientCertificate](#kongdataplaneclientcertificate)
 - [KongKey](#kongkey)
 - [KongKeySet](#kongkeyset)
 - [KongLicense](#konglicense)
@@ -492,19 +492,19 @@ KongCustomEntity defines a "custom" Kong entity that KIC cannot support the enti
 
 
 
-### KongDataplaneCertificate
+### KongDataPlaneClientCertificate
 
 
-KongDataplaneCertificate is the schema for KongDataplaneCertificate API which defines a KongDataplaneCertificate entity.
+KongDataPlaneClientCertificate is the schema for KongDataPlaneClientCertificate API which defines a KongDataPlaneClientCertificate entity.
 
-<!-- kong_dataplane_certificate description placeholder -->
+<!-- kong_data_plane_client_certificate description placeholder -->
 
 | Field | Description |
 | --- | --- |
 | `apiVersion` _string_ | `configuration.konghq.com/v1alpha1`
-| `kind` _string_ | `KongDataplaneCertificate`
+| `kind` _string_ | `KongDataPlaneClientCertificate`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[KongDataplaneCertificateSpec](#kongdataplanecertificatespec)_ |  |
+| `spec` _[KongDataPlaneClientCertificateSpec](#kongdataplaneclientcertificatespec)_ |  |
 
 
 
@@ -694,7 +694,7 @@ _Appears in:_
 - [KongCertificateSpec](#kongcertificatespec)
 - [KongConsumerGroupSpec](#kongconsumergroupspec)
 - [KongConsumerSpec](#kongconsumerspec)
-- [KongDataplaneCertificateSpec](#kongdataplanecertificatespec)
+- [KongDataPlaneClientCertificateSpec](#kongdataplaneclientcertificatespec)
 - [KongKeySetSpec](#kongkeysetspec)
 - [KongKeySpec](#kongkeyspec)
 - [KongPluginBindingSpec](#kongpluginbindingspec)
@@ -1092,10 +1092,10 @@ _Appears in:_
 
 
 
-#### KongDataplaneCertificateAPISpec
+#### KongDataPlaneClientCertificateAPISpec
 
 
-KongDataplaneCertificateAPISpec defines the attributes of a Kong DP certificate.
+KongDataPlaneClientCertificateAPISpec defines the attributes of a Kong DP certificate.
 
 
 
@@ -1105,23 +1105,23 @@ KongDataplaneCertificateAPISpec defines the attributes of a Kong DP certificate.
 
 
 _Appears in:_
-- [KongDataplaneCertificateSpec](#kongdataplanecertificatespec)
+- [KongDataPlaneClientCertificateSpec](#kongdataplaneclientcertificatespec)
 
-#### KongDataplaneCertificateSpec
+#### KongDataPlaneClientCertificateSpec
 
 
-KongDataplaneCertificateSpec defines the spec for a KongDataplaneCertificate.
+KongDataPlaneClientCertificateSpec defines the spec for a KongDataPlaneClientCertificate.
 
 
 
 | Field | Description |
 | --- | --- |
-| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KongDataplaneCertificate is associated with. |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KongDataPlaneClientCertificate is associated with. |
 | `cert` _string_ | Cert is the certificate in PEM format. Once the certificate gets programmed this field becomes immutable. |
 
 
 _Appears in:_
-- [KongDataplaneCertificate](#kongdataplanecertificate)
+- [KongDataPlaneClientCertificate](#kongdataplaneclientcertificate)
 
 
 
