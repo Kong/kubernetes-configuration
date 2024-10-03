@@ -64,7 +64,7 @@ type KongPlugin struct {
 	// such as AWS credentials in the Lambda plugin or the client secret in the OIDC plugin.
 	// Only one of `config` or `configFrom` may be used in a KongPlugin, not both at once.
 	//
-	// +apireference:kgo:exclude // KGO does not support this field.
+	// +apireference:kgo:exclude
 	ConfigFrom *ConfigSource `json:"configFrom,omitempty"`
 
 	// ConfigPatches represents JSON patches to the configuration of the plugin.
@@ -74,7 +74,7 @@ type KongPlugin struct {
 	// When Config is specified, patches will be applied to the configuration in Config.
 	// Otherwise, patches will be applied to an empty object.
 	//
-	// +apireference:kgo:exclude // KGO does not support this field.
+	// +apireference:kgo:exclude
 	ConfigPatches []ConfigPatch `json:"configPatches,omitempty"`
 
 	// PluginName is the name of the plugin to which to apply the config.
