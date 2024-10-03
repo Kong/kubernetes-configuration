@@ -54,6 +54,7 @@ spec:
           metadata:
             type: object
           spec:
+            description: KongCustomEntitySpec defines the specification of the KongCustomEntity.
             properties:
               controllerName:
                 description: ControllerName specifies the controller that should reconcile

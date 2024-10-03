@@ -117,8 +117,12 @@ linters-settings:
 issues:
   max-same-issues: 0
   fix: true
+  exclude-files:
+    - zz_generated.+.go
   exclude-dirs:
     - pkg/clientset
-    - api
   include:
     - EXC0012
+    - EXC0013
+    - EXC0014
+    - EXC0015
