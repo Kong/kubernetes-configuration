@@ -1224,8 +1224,6 @@ _Appears in:_
 
 
 
-
-
 #### KongObjectRef
 
 
@@ -1462,6 +1460,7 @@ _Appears in:_
 #### KongTargetSpec
 
 
+KongTargetSpec defines the specification of a Kong Target.
 KongTargetSpec defines the desired state of KongTarget.
 
 

@@ -43,7 +43,9 @@ spec:
           metadata:
             type: object
           spec:
-            description: KongTargetSpec defines the desired state of KongTarget.
+            description: |-
+              KongTargetSpec defines the specification of a Kong Target.
+              KongTargetSpec defines the desired state of KongTarget.
             properties:
               tags:
                 description: Tags is an optional set of strings associated with the
