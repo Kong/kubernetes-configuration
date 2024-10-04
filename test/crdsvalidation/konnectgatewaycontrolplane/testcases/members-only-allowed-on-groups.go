@@ -13,7 +13,7 @@ var membersCanOnlyBeSetForControlPlaneGroups = testCasesGroup{
 	Name: "members can only be set on groups",
 	TestCases: []testCase{
 		{
-			Name: "members can be set on a control-plane group",
+			Name: "members can be set on control-plane group",
 			KonnectGatewayControlPlane: konnectv1alpha1.KonnectGatewayControlPlane{
 				ObjectMeta: commonObjectMeta,
 				Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
@@ -35,7 +35,7 @@ var membersCanOnlyBeSetForControlPlaneGroups = testCasesGroup{
 			},
 		},
 		{
-			Name: "members cannot be set on a regular control-planes",
+			Name: "members cannot be set on regular control-planes",
 			KonnectGatewayControlPlane: konnectv1alpha1.KonnectGatewayControlPlane{
 				ObjectMeta: commonObjectMeta,
 				Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
@@ -81,7 +81,7 @@ var membersCanOnlyBeSetForControlPlaneGroups = testCasesGroup{
 			ExpectedErrorMessage: lo.ToPtr("spec.members is only applicable for ControlPlanes that are created as groups"),
 		},
 		{
-			Name: "members cannot be set on a hybrid control-planes",
+			Name: "members cannot be set on hybrid control-planes",
 			KonnectGatewayControlPlane: konnectv1alpha1.KonnectGatewayControlPlane{
 				ObjectMeta: commonObjectMeta,
 				Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
@@ -104,7 +104,7 @@ var membersCanOnlyBeSetForControlPlaneGroups = testCasesGroup{
 			ExpectedErrorMessage: lo.ToPtr("spec.members is only applicable for ControlPlanes that are created as groups"),
 		},
 		{
-			Name: "members cannot be set on a hybrid control-planes",
+			Name: "members cannot be set on serverless control-planes",
 			KonnectGatewayControlPlane: konnectv1alpha1.KonnectGatewayControlPlane{
 				ObjectMeta: commonObjectMeta,
 				Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
