@@ -94,6 +94,27 @@ spec:
 
                   Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_".
                 type: object
+              members:
+                description: |-
+                  Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group.
+                  Only applicable for ControlPlanes that are created as groups.
+                items:
+                  description: |-
+                    LocalObjectReference contains enough information to let you locate the
+                    referenced object inside the same namespace.
+                  properties:
+                    name:
+                      default: ""
+                      description: |-
+                        Name of the referent.
+                        This field is effectively required, but due to backwards compatibility is
+                        allowed to be empty. Instances of this type with an empty value here are
+                        almost certainly wrong.
+                        More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                      type: string
+                  type: object
+                  x-kubernetes-map-type: atomic
+                type: array
               name:
                 description: The name of the control plane.
                 type: string
@@ -221,6 +242,10 @@ spec:
             API Auth Configuration
           rule: '!self.status.conditions.exists(c, c.type == ''APIAuthValid'' && c.status
             == ''True'') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef'
+        - message: spec.members is only applicable for ControlPlanes that are created
+            as groups
+          rule: '(has(self.spec.cluster_type) && self.spec.cluster_type != ''CLUSTER_TYPE_CONTROL_PLANE_GROUP'')
+            ? !has(self.spec.members) : true'
     served: true
     storage: true
     subresources:
