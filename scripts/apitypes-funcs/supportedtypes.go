@@ -1,8 +1,8 @@
 package main
 
-var supportedTypesControlPlaneConfig = []supportedTypesT{
+var supportedKonnectTypesControlPlaneConfig = []supportedTypesT{
 	{
-		Package: "v1",
+		PackageVersion: "v1",
 		Types: []templateDataT{
 			{
 				Type:              "KongConsumer",
@@ -11,7 +11,7 @@ var supportedTypesControlPlaneConfig = []supportedTypesT{
 		},
 	},
 	{
-		Package: "v1beta1",
+		PackageVersion: "v1beta1",
 		Types: []templateDataT{
 			{
 				Type:              "KongConsumerGroup",
@@ -20,7 +20,7 @@ var supportedTypesControlPlaneConfig = []supportedTypesT{
 		},
 	},
 	{
-		Package: "v1alpha1",
+		PackageVersion: "v1alpha1",
 		Types: []templateDataT{
 			{
 				Type:              "KongKey",
@@ -94,9 +94,9 @@ var supportedTypesControlPlaneConfig = []supportedTypesT{
 	},
 }
 
-var supportedTypesStandalone = []supportedTypesT{
+var supportedKonnectTypesStandalone = []supportedTypesT{
 	{
-		Package: "v1alpha1",
+		PackageVersion: "v1alpha1",
 		Types: []templateDataT{
 			{
 				Type:              "KonnectGatewayControlPlane",
@@ -108,3 +108,7 @@ var supportedTypesStandalone = []supportedTypesT{
 		},
 	},
 }
+
+var supportedConfigurationPackageTypesWithList = supportedKonnectTypesControlPlaneConfig
+
+var supportedKonnectPackageTypesWithList = supportedKonnectTypesStandalone
