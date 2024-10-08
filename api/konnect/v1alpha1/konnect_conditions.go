@@ -1,7 +1,7 @@
 package v1alpha1
 
 const (
-	// KonnectEntityProgrammedConditionType is the type of the condition that
+	// KonnectEntityProgrammedConditionType is the condition that
 	// indicates whether the entity has been programmed in Konnect.
 	KonnectEntityProgrammedConditionType = "Programmed"
 
