@@ -68,5 +68,8 @@ create a new tag and push it to the repository.
 |-----------------------------|------------|---------------------------------------------------------------------------------------------------------------|
 | `+apireference:kgo:exclude` | Fields     | Any field annotated with this marker will be excluded from the [KGO's generated CRDs reference][kgo-crd-ref]. |
 | `+apireference:kgo:include` | Types      | Any type annotated with this marker will be included in the [KGO's generated CRDs reference][kgo-crd-ref].    |
+| `+apireference:kic:exclude` | Fields     | Any type annotated with this marker will be excluded from the [KIC's generated CRDs reference][kic-crd-ref].  |
+| `+apireference:kic:include` | Types      | Any type annotated with this marker will be included in the [KIC's generated CRDs reference][kic-crd-ref].    |
 
 [kgo-crd-ref]: https://github.com/Kong/gateway-operator/blob/main/docs/api-reference.md
+[kic-crd-ref]: https://github.com/kong/kubernetes-ingress-controller/blob/main/docs/api-reference.md
