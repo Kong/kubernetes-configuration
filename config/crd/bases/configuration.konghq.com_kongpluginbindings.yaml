@@ -104,7 +104,8 @@ spec:
                     : true'
                 - message: when type is konnectID, konnectID must be set
                   rule: 'self.type == ''konnectID'' ? has(self.konnectID) : true'
-                - message: when type is konnectID, konnectNamespacedRef must be set
+                - message: when type is konnectID, konnectNamespacedRef must not be
+                    set
                   rule: 'self.type == ''konnectID'' ? !has(self.konnectNamespacedRef)
                     : true'
                 - message: when type is kic, konnectID must not be set

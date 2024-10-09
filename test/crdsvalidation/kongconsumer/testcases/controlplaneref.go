@@ -78,7 +78,7 @@ var controlPlaneRef = testCasesGroup{
 					},
 				},
 			},
-			ExpectedErrorMessage: lo.ToPtr("when type is konnectID, konnectNamespacedRef must be set"),
+			ExpectedErrorMessage: lo.ToPtr("when type is konnectID, konnectNamespacedRef must not be set"),
 		},
 		{
 			Name: "providing konnectID and konnectNamespacedRef when type is konnectNamespacedRef yields an error",

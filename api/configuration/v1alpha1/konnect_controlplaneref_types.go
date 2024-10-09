@@ -18,7 +18,7 @@ const (
 // +kubebuilder:validation:XValidation:rule="self.type == 'konnectNamespacedRef' ? has(self.konnectNamespacedRef) : true", message="when type is konnectNamespacedRef, konnectNamespacedRef must be set"
 // +kubebuilder:validation:XValidation:rule="self.type == 'konnectNamespacedRef' ? !has(self.konnectID) : true", message="when type is konnectNamespacedRef, konnectID must not be set"
 // +kubebuilder:validation:XValidation:rule="self.type == 'konnectID' ? has(self.konnectID) : true", message="when type is konnectID, konnectID must be set"
-// +kubebuilder:validation:XValidation:rule="self.type == 'konnectID' ? !has(self.konnectNamespacedRef) : true", message="when type is konnectID, konnectNamespacedRef must be set"
+// +kubebuilder:validation:XValidation:rule="self.type == 'konnectID' ? !has(self.konnectNamespacedRef) : true", message="when type is konnectID, konnectNamespacedRef must not be set"
 // +kubebuilder:validation:XValidation:rule="self.type == 'kic' ? !has(self.konnectID) : true", message="when type is kic, konnectID must not be set"
 // +kubebuilder:validation:XValidation:rule="self.type == 'kic' ? !has(self.konnectNamespacedRef) : true", message="when type is kic, konnectNamespacedRef must not be set"
 // +apireference:kgo:include
