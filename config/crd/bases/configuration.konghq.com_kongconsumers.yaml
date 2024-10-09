@@ -229,14 +229,14 @@ spec:
         - message: Need to provide either username or custom_id
           rule: has(self.username) || has(self.custom_id)
         - message: controlPlaneRef is required once set
-          rule: '!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)'
+          rule: (!has(oldSelf.spec) || !has(oldSelf.spec.controlPlaneRef)) || has(self.spec.controlPlaneRef)
         - message: spec.controlPlaneRef cannot specify namespace for namespaced resource
           rule: '(!has(self.spec) || !has(self.spec.controlPlaneRef) || !has(self.spec.controlPlaneRef.konnectNamespacedRef))
             ? true : !has(self.spec.controlPlaneRef.konnectNamespacedRef.__namespace__)'
         - message: spec.controlPlaneRef is immutable when an entity is already Programmed
-          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
-            ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.controlPlaneRef
-            == self.spec.controlPlaneRef'
+          rule: '(!has(self.spec) || !has(self.spec.controlPlaneRef)) ? true : (!has(self.status)
+            || !self.status.conditions.exists(c, c.type == ''Programmed'' && c.status
+            == ''True'')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef'
     served: true
     storage: true
     subresources:
