@@ -35,6 +35,7 @@ func (obj *KongConsumer) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongConsumer Kind name
 func (obj KongConsumer) GetTypeName() string {
 	return "KongConsumer"

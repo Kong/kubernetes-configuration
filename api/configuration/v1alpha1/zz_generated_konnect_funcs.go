@@ -35,6 +35,7 @@ func (obj *KongKey) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongKey Kind name
 func (obj KongKey) GetTypeName() string {
 	return "KongKey"
@@ -93,6 +94,7 @@ func (obj *KongKeySet) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongKeySet Kind name
 func (obj KongKeySet) GetTypeName() string {
 	return "KongKeySet"
@@ -151,6 +153,7 @@ func (obj *KongCredentialBasicAuth) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongCredentialBasicAuth Kind name
 func (obj KongCredentialBasicAuth) GetTypeName() string {
 	return "KongCredentialBasicAuth"
@@ -220,6 +223,7 @@ func (obj *KongCredentialAPIKey) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongCredentialAPIKey Kind name
 func (obj KongCredentialAPIKey) GetTypeName() string {
 	return "KongCredentialAPIKey"
@@ -289,6 +293,7 @@ func (obj *KongCredentialJWT) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongCredentialJWT Kind name
 func (obj KongCredentialJWT) GetTypeName() string {
 	return "KongCredentialJWT"
@@ -358,6 +363,7 @@ func (obj *KongCredentialACL) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongCredentialACL Kind name
 func (obj KongCredentialACL) GetTypeName() string {
 	return "KongCredentialACL"
@@ -427,6 +433,7 @@ func (obj *KongCredentialHMAC) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongCredentialHMAC Kind name
 func (obj KongCredentialHMAC) GetTypeName() string {
 	return "KongCredentialHMAC"
@@ -496,6 +503,7 @@ func (obj *KongCACertificate) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongCACertificate Kind name
 func (obj KongCACertificate) GetTypeName() string {
 	return "KongCACertificate"
@@ -554,6 +562,7 @@ func (obj *KongCertificate) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongCertificate Kind name
 func (obj KongCertificate) GetTypeName() string {
 	return "KongCertificate"
@@ -612,6 +621,7 @@ func (obj *KongPluginBinding) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongPluginBinding Kind name
 func (obj KongPluginBinding) GetTypeName() string {
 	return "KongPluginBinding"
@@ -670,6 +680,7 @@ func (obj *KongService) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongService Kind name
 func (obj KongService) GetTypeName() string {
 	return "KongService"
@@ -728,6 +739,7 @@ func (obj *KongRoute) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongRoute Kind name
 func (obj KongRoute) GetTypeName() string {
 	return "KongRoute"
@@ -786,6 +798,7 @@ func (obj *KongUpstream) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongUpstream Kind name
 func (obj KongUpstream) GetTypeName() string {
 	return "KongUpstream"
@@ -844,6 +857,7 @@ func (obj *KongTarget) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongTarget Kind name
 func (obj KongTarget) GetTypeName() string {
 	return "KongTarget"
@@ -902,6 +916,7 @@ func (obj *KongVault) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongVault Kind name
 func (obj KongVault) GetTypeName() string {
 	return "KongVault"
@@ -960,6 +975,7 @@ func (obj *KongSNI) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongSNI Kind name
 func (obj KongSNI) GetTypeName() string {
 	return "KongSNI"
@@ -1018,6 +1034,7 @@ func (obj *KongDataPlaneClientCertificate) SetKonnectID(id string) {
 	}
 	obj.Status.Konnect.ID = id
 }
+
 // GetTypeName returns the KongDataPlaneClientCertificate Kind name
 func (obj KongDataPlaneClientCertificate) GetTypeName() string {
 	return "KongDataPlaneClientCertificate"
