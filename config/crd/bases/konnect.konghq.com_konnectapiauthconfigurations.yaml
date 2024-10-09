@@ -58,7 +58,7 @@ spec:
               secretRef:
                 description: |-
                   SecretRef is a reference to a Kubernetes Secret containing the Konnect token.
-                  This secret is required to has the konghq.com/credential label set to "konnect".
+                  This secret is required to have the konghq.com/credential label set to "konnect".
                 properties:
                   name:
                     description: name is unique within a namespace to reference a
@@ -71,11 +71,22 @@ spec:
                 type: object
                 x-kubernetes-map-type: atomic
               serverURL:
-                description: ServerURL is the URL of the Konnect server.
+                description: |-
+                  ServerURL is the URL of the Konnect server.
+                  It can be either a full URL with an HTTPs scheme or just a hostname.
+                  Please refer to https://docs.konghq.com/konnect/network/ for the list of supported hostnames.
                 type: string
                 x-kubernetes-validations:
+                - message: Server URL is required
+                  rule: size(self) > 0
                 - message: Server URL is immutable
                   rule: self == oldSelf
+                - message: Server URL must use HTTPs if specifying scheme
+                  rule: 'isURL(self) ? url(self).getScheme() == ''https'' : true'
+                - message: Server URL must satisfy hostname (RFC 1123) regex if not
+                    a valid absolute URL
+                  rule: 'size(self) > 0 && !isURL(self) ? self.matches(''^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$'')
+                    : true'
               token:
                 description: Token is the Konnect token used to authenticate with
                   the Konnect API.
@@ -92,10 +103,12 @@ spec:
             - type
             type: object
             x-kubernetes-validations:
-            - message: Token is required if auth type is set to token or secretRef
-                is required if auth type is set to secretRef
-              rule: (self.type == 'token' && has(self.token)) || (self.type == 'secretRef'
-                && has(self.secretRef))
+            - message: spec.token is required if auth type is set to token
+              rule: 'self.type == ''token'' ? size(self.token) > 0 : true'
+            - message: spec.secretRef is required if auth type is set to secretRef
+              rule: 'self.type == ''secretRef'' ? has(self.secretRef) : true'
+            - message: spec.token and spec.secretRef cannot be set at the same time
+              rule: '!(has(self.token) && has(self.secretRef))'
           status:
             description: Status is the status of the KonnectAPIAuthConfiguration resource.
             properties:
@@ -182,8 +195,6 @@ spec:
             || self.spec.token.startsWith('kpat_'))
         - message: Token is required once set
           rule: self.spec.type != 'token' || (!has(oldSelf.spec.token) || has(self.spec.token))
-        - message: Server URL is required once set
-          rule: '!has(oldSelf.spec.serverURL) || has(self.spec.serverURL)'
     served: true
     storage: true
     subresources:
