@@ -140,11 +140,11 @@ CRD_OPTIONS ?= "+crd:allowDangerousTypes=true"
 API_DIR ?= api
 
 .PHONY: generate
-generate: generate.crds generate.deepcopy generate.clientsets generate.docs generate.konnect-funcs
+generate: generate.crds generate.deepcopy generate.clientsets generate.docs generate.apitypes-funcs
 
-.PHONY: generate.konnect-funcs
-generate.konnect-funcs:
-	go run ./scripts/konnect-funcs
+.PHONY: generate.apitypes-funcs
+generate.apitypes-funcs:
+	go run ./scripts/apitypes-funcs
 
 .PHONY: generate.crds
 generate.crds: controller-gen ## Generate WebhookConfiguration and CustomResourceDefinition objects.

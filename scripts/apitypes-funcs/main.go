@@ -11,7 +11,7 @@ import (
 )
 
 type supportedTypesT struct {
-	Package string
+	PackageVersion string
 
 	Types []templateDataT
 }
@@ -32,10 +32,16 @@ const (
 )
 
 func main() {
-	if err := renderTemplate(konnectFuncTemplate, konnectFuncOutputFileName, supportedTypesControlPlaneConfig, configurationPackageName); err != nil {
+	if err := renderTemplate(konnectFuncTemplate, konnectFuncOutputFileName, supportedKonnectTypesControlPlaneConfig, configurationPackageName); err != nil {
 		panic(err)
 	}
-	if err := renderTemplate(konnectFuncStandaloneTemplate, konnectFuncOutputFileName, supportedTypesStandalone, konnectPackageName); err != nil {
+	if err := renderTemplate(konnectFuncStandaloneTemplate, konnectFuncOutputFileName, supportedKonnectTypesStandalone, konnectPackageName); err != nil {
+		panic(err)
+	}
+	if err := renderTemplate(listFuncTemplate, listFuncOutputFileNamme, supportedKonnectPackageTypesWithList, konnectPackageName); err != nil {
+		panic(err)
+	}
+	if err := renderTemplate(listFuncTemplate, listFuncOutputFileNamme, supportedConfigurationPackageTypesWithList, configurationPackageName); err != nil {
 		panic(err)
 	}
 }
@@ -52,7 +58,7 @@ func renderTemplate(
 	}
 	for _, st := range supportedTypes {
 		contents := &bytes.Buffer{}
-		path := filepath.Join(apiPackageName, packagename, st.Package, outputFile)
+		path := filepath.Join(apiPackageName, packagename, st.PackageVersion, outputFile)
 		if err := tpl.Execute(contents, st); err != nil {
 			return fmt.Errorf("%s: failed to execute template for %s: %w", path, outputFile, err)
 		}
