@@ -42,27 +42,19 @@ type CRDValidationTestCase[T client.Object] struct {
 	Update func(T)
 }
 
-// testClient is a global client.Client used in every CRDValidationTestCase.
-// It's to avoid creating a new client.Client for each test case.
-var testClient = func() client.Client {
-	cfg, err := config.GetConfig()
-	if err != nil {
-		panic(err)
-	}
-	cl, err := client.New(cfg, client.Options{
-		Scheme: scheme.Scheme,
-	})
-	if err != nil {
-		panic(err)
-	}
-	return cl
-}()
-
 func (tc *CRDValidationTestCase[T]) Run(t *testing.T) {
 	// Run the test case.
 	t.Run(tc.Name, func(t *testing.T) {
 		t.Parallel()
 		ctx := context.Background()
+
+		// Create a new controller-runtime client.Client.
+		cfg, err := config.GetConfig()
+		require.NoError(t, err)
+		cl, err := client.New(cfg, client.Options{
+			Scheme: scheme.Scheme,
+		})
+		require.NoError(t, err)
 
 		// Take a copy so that we can update the status field if needed. Without copying, the Create call
 		// overwrites the status field in tc.TestObject with the default server returns, and we lose the status
@@ -70,10 +62,10 @@ func (tc *CRDValidationTestCase[T]) Run(t *testing.T) {
 		desiredObj := tc.TestObject.DeepCopyObject().(T)
 
 		// Create the object and set a cleanup function to delete it after the test if created successfully.
-		err := testClient.Create(ctx, tc.TestObject)
+		err = cl.Create(ctx, tc.TestObject)
 		if err == nil {
 			t.Cleanup(func() {
-				assert.NoError(t, client.IgnoreNotFound(testClient.Delete(ctx, tc.TestObject)))
+				assert.NoError(t, client.IgnoreNotFound(cl.Delete(ctx, tc.TestObject)))
 			})
 		}
 
@@ -94,10 +86,10 @@ func (tc *CRDValidationTestCase[T]) Run(t *testing.T) {
 			desiredObj.SetName(tc.TestObject.GetName())
 			desiredObj.SetResourceVersion(tc.TestObject.GetResourceVersion())
 
-			err = testClient.Status().Update(ctx, desiredObj)
+			err = cl.Status().Update(ctx, desiredObj)
 			require.NoError(t, err)
 
-			err = testClient.Get(ctx, client.ObjectKeyFromObject(tc.TestObject), tc.TestObject)
+			err = cl.Get(ctx, client.ObjectKeyFromObject(tc.TestObject), tc.TestObject)
 			require.NoError(t, err)
 		}
 
@@ -105,7 +97,7 @@ func (tc *CRDValidationTestCase[T]) Run(t *testing.T) {
 		if tc.Update != nil {
 			// Update the object state and push the update to the server.
 			tc.Update(tc.TestObject)
-			err := testClient.Update(ctx, tc.TestObject)
+			err := cl.Update(ctx, tc.TestObject)
 
 			// If the expected update error message is defined, check if the error message contains the expected message
 			// and return. Otherwise, expect no error.
