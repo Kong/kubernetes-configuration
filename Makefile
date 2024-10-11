@@ -114,20 +114,12 @@ golangci-lint: mise yq ## Download golangci-lint locally if necessary.
 # Verify steps
 # ------------------------------------------------------------------------------
 
-.PHONY: verify.repo
-verify.repo:
-	./scripts/verify-repo.sh
-
 .PHONY: verify.diff
 verify.diff:
 	@$(PROJECT_DIR)/scripts/verify-diff.sh $(PROJECT_DIR)
 
-.PHONY: verify.versions
-verify.versions:
-	./scripts/verify-versions.sh $(TAG)
-
 .PHONY: verify.generators
-verify.generators: verify.repo generate verify.diff
+verify.generators: generate verify.diff
 
 # ------------------------------------------------------------------------------
 # Build - Generators
