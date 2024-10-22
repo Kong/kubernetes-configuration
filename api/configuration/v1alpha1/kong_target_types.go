@@ -63,7 +63,7 @@ type KongTargetAPISpec struct {
 	// +kubebuilder:default=100
 	Weight int `json:"weight"`
 	// Tags is an optional set of strings associated with the Target for grouping and filtering.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 }
 
 // KongTargetStatus defines the observed state of KongTarget.

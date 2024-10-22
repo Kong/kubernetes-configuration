@@ -96,7 +96,7 @@ type KongServiceAPISpec struct {
 	// The number of retries to execute upon failure to proxy.
 	Retries *int64 `json:"retries,omitempty"`
 	// An optional set of strings associated with the Service for grouping and filtering.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 	// Whether to enable verification of upstream server TLS certificate. If set to `null`, then the Nginx default is respected.
 	TLSVerify *bool `json:"tls_verify,omitempty"`
 	// Maximum depth of chain while verifying Upstream server's TLS certificate. If set to `null`, then the Nginx default is respected.

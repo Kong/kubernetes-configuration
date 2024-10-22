@@ -66,7 +66,7 @@ type KongCredentialHMACAPISpec struct {
 	// Secret is the secret for the HMAC credential.
 	Secret *string `json:"secret,omitempty"`
 	// Tags is a list of tags for the HMAC credential.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 	// Username is the username for the HMAC credential.
 	// +kubernetes:validation:Required
 	Username *string `json:"username"`

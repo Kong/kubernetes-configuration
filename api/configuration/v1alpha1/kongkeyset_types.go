@@ -64,7 +64,7 @@ type KongKeySetAPISpec struct {
 
 	// Tags is an optional set of strings associated with the KeySet for grouping and filtering.
 	// +optional
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 }
 
 // KongKeySetStatus defines the status for a KongKeySet.

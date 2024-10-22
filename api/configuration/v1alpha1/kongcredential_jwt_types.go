@@ -75,7 +75,7 @@ type KongCredentialJWTAPISpec struct {
 	// Secret is the secret for the JWT credential.
 	Secret *string `json:"secret,omitempty"`
 	// Tags is a list of tags for the JWT credential.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 }
 
 // KongCredentialJWTStatus represents the current status of the JWT credential resource.

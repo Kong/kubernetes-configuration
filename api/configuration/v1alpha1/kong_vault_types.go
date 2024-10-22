@@ -74,7 +74,7 @@ type KongVaultSpec struct {
 	// Config is the configuration of the vault. Varies for different backends.
 	Config apiextensionsv1.JSON `json:"config,omitempty"`
 	// Tags are the tags associated to the vault for grouping and filtering.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 	// ControlPlaneRef is a reference to a Konnect ControlPlane this KongVault is associated with.
 	// +optional
 	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`

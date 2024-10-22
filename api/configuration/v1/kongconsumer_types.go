@@ -75,6 +75,9 @@ type KongConsumerSpec struct {
 	// ControlPlaneRef is a reference to a ControlPlane this Consumer is associated with.
 	// +optional
 	ControlPlaneRef *configurationv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
+
+	// Tags is an optional set of tags applied to the consumer.
+	Tags configurationv1alpha1.Tags `json:"tags,omitempty"`
 }
 
 // KongConsumerList contains a list of KongConsumer.

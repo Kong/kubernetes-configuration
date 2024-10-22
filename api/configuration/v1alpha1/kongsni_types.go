@@ -51,7 +51,7 @@ type KongSNIAPISpec struct {
 	Name string `json:"name"`
 
 	// Tags is an optional set of strings associated with the SNI for grouping and filtering.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 }
 
 // KongSNISpec defines specification of a Kong SNI.

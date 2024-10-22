@@ -87,7 +87,7 @@ type KongKeyAPISpec struct {
 
 	// Tags is an optional set of strings associated with the Key for grouping and filtering.
 	// +optional
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 }
 
 // PEMKeyPair defines a keypair in PEM format.

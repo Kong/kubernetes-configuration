@@ -43,8 +43,9 @@ type KongCACertificateAPISpec struct {
 	// Cert is the PEM-encoded CA certificate.
 	// +kubebuilder:validation:Required
 	Cert string `json:"cert,omitempty"`
+
 	// Tags is an optional set of tags applied to the certificate.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 }
 
 // KongCACertificateStatus defines the observed state of KongCACertificate.

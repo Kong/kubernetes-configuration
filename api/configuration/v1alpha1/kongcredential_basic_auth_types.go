@@ -67,7 +67,7 @@ type KongCredentialBasicAuthAPISpec struct {
 	Password string `json:"password"`
 
 	// Tags is a list of tags for the BasicAuth credential.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 
 	// Username is the username for the BasicAuth credential.
 	//

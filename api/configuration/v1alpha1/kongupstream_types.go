@@ -105,7 +105,7 @@ type KongUpstreamAPISpec struct {
 	// +kubebuilder:validation:Maximum=65536
 	Slots *int64 `default:"10000" json:"slots,omitempty"`
 	// An optional set of strings associated with the Upstream for grouping and filtering.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 	// If set, the balancer will use SRV hostname(if DNS Answer has SRV record) as the proxy upstream `Host`.
 	UseSrvName *bool `default:"false" json:"use_srv_name,omitempty"`
 }

@@ -58,6 +58,9 @@ type KongConsumerGroupSpec struct {
 	// ControlPlaneRef is a reference to a ControlPlane this ConsumerGroup is associated with.
 	// +optional
 	ControlPlaneRef *configurationv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
+
+	// Tags is an optional set of tags applied to the ConsumerGroup.
+	Tags configurationv1alpha1.Tags `json:"tags,omitempty"`
 }
 
 // KongConsumerGroupList contains a list of KongConsumerGroups.

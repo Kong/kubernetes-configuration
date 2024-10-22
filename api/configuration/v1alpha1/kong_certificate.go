@@ -57,7 +57,7 @@ type KongCertificateAPISpec struct {
 	KeyAlt string `json:"key_alt,omitempty"`
 
 	// Tags is an optional set of tags applied to the certificate.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 }
 
 // KongCertificateStatus defines the observed state of KongCertificate.

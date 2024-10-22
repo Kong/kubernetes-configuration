@@ -152,7 +152,11 @@ spec:
                   and filtering.
                 items:
                   type: string
+                maxItems: 20
                 type: array
+                x-kubernetes-validations:
+                - message: tags entries must not be longer than 128 characters
+                  rule: self.all(tag, size(tag) >= 1 && size(tag) <= 128)
             required:
             - backend
             - prefix

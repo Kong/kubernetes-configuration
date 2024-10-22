@@ -67,7 +67,7 @@ type KongCredentialAPIKeyAPISpec struct {
 	Key string `json:"key"`
 
 	// Tags is a list of tags for the API Key credential.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 }
 
 // KongCredentialAPIKeyStatus represents the current status of the API Key credential resource.

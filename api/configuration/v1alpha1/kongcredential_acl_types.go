@@ -67,7 +67,7 @@ type KongCredentialACLAPISpec struct {
 	Group string `json:"group"`
 
 	// Tags is a list of tags for the ACL credential.
-	Tags []string `json:"tags,omitempty"`
+	Tags Tags `json:"tags,omitempty"`
 }
 
 // KongCredentialACLStatus represents the current status of the ACL credential resource.
