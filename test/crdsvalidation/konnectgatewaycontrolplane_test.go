@@ -373,6 +373,27 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				ExpectedErrorMessage: lo.ToPtr("spec.labels values must be of length 1-63 characters"),
 			},
 			{
+				Name: "spec.labels keys must not start with k8s",
+				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
+						CreateControlPlaneRequest: sdkkonnectcomp.CreateControlPlaneRequest{
+							Name:        "cp-1",
+							ClusterType: lo.ToPtr(sdkkonnectcomp.ClusterTypeClusterTypeControlPlane),
+							Labels: map[string]string{
+								"k8s_key": "value",
+							},
+						},
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "name-1",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'k8s', 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
+			},
+			{
 				Name: "spec.labels keys must not start with kong",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: commonObjectMeta,
@@ -391,7 +412,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
+				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'k8s', 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
 			},
 			{
 				Name: "spec.labels keys must not start with konnect",
@@ -412,7 +433,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
+				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'k8s', 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
 			},
 			{
 				Name: "spec.labels keys must not start with mesh",
@@ -433,7 +454,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
+				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'k8s', 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
 			},
 			{
 				Name: "spec.labels keys must not start with kic",
@@ -454,7 +475,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
+				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'k8s', 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
 			},
 			{
 				Name: "spec.labels keys must not start with insomnia",
@@ -475,7 +496,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
+				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'k8s', 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
 			},
 			{
 				Name: "spec.labels keys must not start with underscore",
@@ -496,7 +517,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
+				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must not start with 'k8s', 'kong', 'konnect', 'mesh', 'kic', 'insomnia' or '_'"),
 			},
 			{
 				Name: "spec.labels keys must satisfy the '^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$' pattern",
