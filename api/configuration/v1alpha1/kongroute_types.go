@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"github.com/kong/kubernetes-configuration/api/configuration/common"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	sdkkonnectcomp "github.com/Kong/sdk-konnect-go/models/components"
@@ -109,7 +110,7 @@ type KongRouteAPISpec struct {
 	// When matching a Route via one of the `paths`, strip the matching prefix from the upstream request URL.
 	StripPath *bool `json:"strip_path,omitempty"`
 	// An optional set of strings associated with the Route for grouping and filtering.
-	Tags Tags `json:"tags,omitempty"`
+	Tags common.Tags `json:"tags,omitempty"`
 }
 
 // KongRouteStatus represents the current status of the Kong Route resource.

@@ -17,6 +17,7 @@ limitations under the License.
 package v1
 
 import (
+	"github.com/kong/kubernetes-configuration/api/configuration/common"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
@@ -77,7 +78,7 @@ type KongConsumerSpec struct {
 	ControlPlaneRef *configurationv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 
 	// Tags is an optional set of tags applied to the consumer.
-	Tags configurationv1alpha1.Tags `json:"tags,omitempty"`
+	Tags common.Tags `json:"tags,omitempty"`
 }
 
 // KongConsumerList contains a list of KongConsumer.

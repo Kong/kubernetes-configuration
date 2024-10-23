@@ -1,4 +1,4 @@
-package v1alpha1
+package common
 
 // Tags is a type for a list of tags applied to a Kong entity.
 // +kubebuilder:validation:MaxItems=20

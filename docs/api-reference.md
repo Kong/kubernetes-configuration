@@ -1693,48 +1693,6 @@ ServiceRef is a reference to a KongService.
 _Appears in:_
 - [KongRouteSpec](#kongroutespec)
 
-#### Tags
-_Underlying type:_ `string array`
-
-Tags is a type for a list of tags applied to a Kong entity.
-
-
-
-
-
-_Appears in:_
-- [KongCACertificateAPISpec](#kongcacertificateapispec)
-- [KongCACertificateSpec](#kongcacertificatespec)
-- [KongCertificateAPISpec](#kongcertificateapispec)
-- [KongCertificateSpec](#kongcertificatespec)
-- [KongConsumerGroupSpec](#kongconsumergroupspec)
-- [KongConsumerSpec](#kongconsumerspec)
-- [KongCredentialACLAPISpec](#kongcredentialaclapispec)
-- [KongCredentialACLSpec](#kongcredentialaclspec)
-- [KongCredentialAPIKeyAPISpec](#kongcredentialapikeyapispec)
-- [KongCredentialAPIKeySpec](#kongcredentialapikeyspec)
-- [KongCredentialBasicAuthAPISpec](#kongcredentialbasicauthapispec)
-- [KongCredentialBasicAuthSpec](#kongcredentialbasicauthspec)
-- [KongCredentialHMACAPISpec](#kongcredentialhmacapispec)
-- [KongCredentialHMACSpec](#kongcredentialhmacspec)
-- [KongCredentialJWTAPISpec](#kongcredentialjwtapispec)
-- [KongCredentialJWTSpec](#kongcredentialjwtspec)
-- [KongKeyAPISpec](#kongkeyapispec)
-- [KongKeySetAPISpec](#kongkeysetapispec)
-- [KongKeySetSpec](#kongkeysetspec)
-- [KongKeySpec](#kongkeyspec)
-- [KongRouteAPISpec](#kongrouteapispec)
-- [KongRouteSpec](#kongroutespec)
-- [KongSNIAPISpec](#kongsniapispec)
-- [KongSNISpec](#kongsnispec)
-- [KongServiceAPISpec](#kongserviceapispec)
-- [KongServiceSpec](#kongservicespec)
-- [KongTargetAPISpec](#kongtargetapispec)
-- [KongTargetSpec](#kongtargetspec)
-- [KongUpstreamAPISpec](#kongupstreamapispec)
-- [KongUpstreamSpec](#kongupstreamspec)
-- [KongVaultSpec](#kongvaultspec)
-
 #### TargetRef
 
 
