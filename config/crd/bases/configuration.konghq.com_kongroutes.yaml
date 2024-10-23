@@ -172,10 +172,9 @@ spec:
                 type: boolean
               protocols:
                 description: An array of the protocols this Route should allow. See
-                  the [Route Object](#route-object) section for a list of accepted
-                  protocols. When set to only `"https"`, HTTP requests are answered
-                  with an upgrade error. When set to only `"http"`, HTTPS requests
-                  are answered with an error.
+                  KongRoute for a list of accepted protocols. When set to only `"https"`,
+                  HTTP requests are answered with an upgrade error. When set to only
+                  `"http"`, HTTPS requests are answered with an error.
                 items:
                   type: string
                 type: array
@@ -250,7 +249,11 @@ spec:
                   for grouping and filtering.
                 items:
                   type: string
+                maxItems: 20
                 type: array
+                x-kubernetes-validations:
+                - message: tags entries must not be longer than 128 characters
+                  rule: self.all(tag, size(tag) >= 1 && size(tag) <= 128)
             type: object
           status:
             default:
