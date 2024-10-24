@@ -172,6 +172,9 @@ spec:
                 created as groups
               rule: '(has(self.cluster_type) && self.cluster_type != ''CLUSTER_TYPE_CONTROL_PLANE_GROUP'')
                 ? !has(self.members) : true'
+            - message: spec.cluster_type is immutable
+              rule: '!has(self.cluster_type) ? !has(oldSelf.cluster_type) : self.cluster_type
+                == oldSelf.cluster_type'
           status:
             description: Status defines the observed state of KonnectGatewayControlPlane.
             properties:
@@ -270,8 +273,6 @@ spec:
             API Auth Configuration
           rule: '!self.status.conditions.exists(c, c.type == ''APIAuthValid'' && c.status
             == ''True'') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef'
-        - message: spec.cluster_type is immutable
-          rule: self.spec.cluster_type == oldSelf.spec.cluster_type
     served: true
     storage: true
     subresources:
