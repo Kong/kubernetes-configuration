@@ -574,7 +574,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				},
 			},
 			{
-				Name: "CLUSTR_TYPE_CONTROL_PLANE is supported",
+				Name: "CLUSTER_TYPE_CONTROL_PLANE is supported",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: commonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
@@ -658,7 +658,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.cluster_type must be one of 'CLUSTER_TYPE_CONTROL_PLANE_GROUP', 'CLUSTER_TYPE_CONTROL_PLANE' or 'CLUSTER_TYPE_K8S_INGRESS_CONTROLLER'"),
+				ExpectedErrorMessage: lo.ToPtr("spec.cluster_type must be one of 'CLUSTER_TYPE_CONTROL_PLANE_GROUP', 'CLUSTER_TYPE_CONTROL_PLANE' or 'CLUSTER_TYPE_K8S_INGRESS_CONTROLLER' or 'CLUSTER_TYPE_HYBRID'"),
 			},
 		}.Run(t)
 	})
