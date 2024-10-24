@@ -163,6 +163,13 @@ spec:
                 pattern
               rule: 'has(self.labels) ? self.labels.all(key, key.matches(''^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$''))
                 : true'
+            - message: when specified spec.cluster_type must be one of 'CLUSTER_TYPE_CONTROL_PLANE_GROUP',
+                'CLUSTER_TYPE_CONTROL_PLANE' or 'CLUSTER_TYPE_K8S_INGRESS_CONTROLLER'
+                or 'CLUSTER_TYPE_HYBRID'
+              rule: '!has(self.cluster_type) ? true : self.cluster_type == ''CLUSTER_TYPE_CONTROL_PLANE_GROUP''
+                || self.cluster_type == ''CLUSTER_TYPE_CONTROL_PLANE'' || self.cluster_type
+                == ''CLUSTER_TYPE_K8S_INGRESS_CONTROLLER'' || self.cluster_type ==
+                ''CLUSTER_TYPE_HYBRID'''
           status:
             description: Status defines the observed state of KonnectGatewayControlPlane.
             properties:
