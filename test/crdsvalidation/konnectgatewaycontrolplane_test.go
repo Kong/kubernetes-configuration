@@ -350,7 +350,6 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				},
 				ExpectedErrorMessage: lo.ToPtr("spec.labels keys must be of length 1-63 characters"),
 			},
-			//
 			{
 				Name: "spec.labels values' length must not be greater than 63",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
