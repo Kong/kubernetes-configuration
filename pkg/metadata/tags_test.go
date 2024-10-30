@@ -20,7 +20,7 @@ func TestExtractTags(t *testing.T) {
 			obj: &configurationv1.KongConsumer{
 				ObjectMeta: metav1.ObjectMeta{
 					Annotations: map[string]string{
-						annotationPrefix + tagsKey: "tag1",
+						AnnotationKeyTags: "tag1",
 					},
 				},
 			},
@@ -31,7 +31,7 @@ func TestExtractTags(t *testing.T) {
 			obj: &configurationv1.KongConsumer{
 				ObjectMeta: metav1.ObjectMeta{
 					Annotations: map[string]string{
-						annotationPrefix + tagsKey: "tag1,tag2,tag3,tag-dummy-5",
+						AnnotationKeyTags: "tag1,tag2,tag3,tag-dummy-5",
 					},
 				},
 			},

@@ -4,6 +4,9 @@ const (
 	// annotationPrefix is the prefix for Kong annotations.
 	annotationPrefix = "konghq.com"
 
-	// tagsKey is the key for the tags annotation.
-	tagsKey = "/tags"
+	// AnnotationKeyTags is the annotation key used to set tags on resources.
+	AnnotationKeyTags = annotationPrefix + "/tags"
+
+	// AnnotationKeyPlugins is the annotation key used to attach KongPlugins to resources.
+	AnnotationKeyPlugins = annotationPrefix + "/plugins"
 )
