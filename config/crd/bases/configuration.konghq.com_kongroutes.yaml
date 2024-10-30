@@ -207,6 +207,8 @@ spec:
                     description: NamespacedRef is a reference to a KongService.
                     properties:
                       name:
+                        description: Name is the name of the entity.
+                        minLength: 1
                         type: string
                     required:
                     - name
@@ -215,6 +217,8 @@ spec:
                     description: |-
                       Type can be one of:
                       - namespacedRef
+                    enum:
+                    - namespacedRef
                     type: string
                 type: object
                 x-kubernetes-validations:
