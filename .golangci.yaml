@@ -88,8 +88,6 @@ linters-settings:
         disabled: false
         arguments:
           - "checkPrivateReceivers"
-          # TODO: enable this when ready to refactor exported types that stutter at call site.
-          - "disableStutteringCheck"
       - name: context-as-argument
         # TODO: re-add this rule after https://github.com/golangci/golangci-lint/issues/3280
         # is resolved and released.
