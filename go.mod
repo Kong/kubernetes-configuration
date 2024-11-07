@@ -11,6 +11,7 @@ require (
 	k8s.io/apimachinery v0.31.2
 	k8s.io/client-go v0.31.2
 	sigs.k8s.io/controller-runtime v0.19.1
+	sigs.k8s.io/controller-tools v0.16.3
 	sigs.k8s.io/gateway-api v1.2.0
 )
 
@@ -19,12 +20,16 @@ require (
 	github.com/Masterminds/semver v1.5.0 // indirect
 	github.com/evanphx/json-patch/v5 v5.9.0 // indirect
 	github.com/fxamacker/cbor/v2 v2.7.0 // indirect
+	github.com/gobuffalo/flect v1.0.2 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/huandu/xstrings v1.5.0 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	golang.org/x/crypto v0.26.0 // indirect
+	golang.org/x/mod v0.20.0 // indirect
+	golang.org/x/sync v0.8.0 // indirect
+	golang.org/x/tools v0.24.0 // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.12.0 // indirect
 )
 
