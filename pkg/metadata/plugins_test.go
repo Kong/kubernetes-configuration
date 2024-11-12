@@ -2,14 +2,11 @@ package metadata
 
 import (
 	"fmt"
-	"iter"
-	"slices"
 	"strconv"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"k8s.io/apimachinery/pkg/types"
 )
 
@@ -124,110 +121,6 @@ func TestExtractPluginsWithNamespace(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			result := ExtractPluginsWithNamespaces(tt.obj)
 			assert.Equal(t, tt.expected, result)
-		})
-	}
-}
-
-func TestExtractPluginsWithNamespaceIter(t *testing.T) {
-	tests := []struct {
-		name     string
-		obj      *mockObject
-		expected []string
-	}{
-		{
-			name: "nil annotations",
-			obj: &mockObject{
-				annotations: nil,
-				namespace:   "default",
-			},
-			expected: nil,
-		},
-		{
-			name: "no annotations",
-			obj: &mockObject{
-				annotations: map[string]string{},
-				namespace:   "default",
-			},
-			expected: nil,
-		},
-		{
-			name: "single plugin",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1",
-				},
-				namespace: "default",
-			},
-			expected: []string{"default/plugin1"},
-		},
-		{
-			name: "multiple plugins",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1,plugin2,plugin3",
-				},
-				namespace: "default",
-			},
-			expected: []string{"default/plugin1", "default/plugin2", "default/plugin3"},
-		},
-		{
-			name: "empty plugin name gets filtered out",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1,,plugin3",
-				},
-				namespace: "default",
-			},
-			expected: []string{"default/plugin1", "default/plugin3"},
-		},
-		{
-			name: "plugins with spaces",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: " plugin1 , plugin2 , plugin3 ",
-				},
-				namespace: "default",
-			},
-			expected: []string{"default/plugin1", "default/plugin2", "default/plugin3"},
-		},
-		{
-			name: "different namespace",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1,plugin2",
-				},
-				namespace: "custom",
-			},
-			expected: []string{"custom/plugin1", "custom/plugin2"},
-		},
-		{
-			name: "empty names are ignored",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1,",
-				},
-				namespace: "custom",
-			},
-			expected: []string{"custom/plugin1"},
-		},
-		{
-			name: "whitespaces are ignored",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1, ",
-				},
-				namespace: "custom",
-			},
-			expected: []string{"custom/plugin1"},
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			result := ExtractPluginsWithNamespacesIter(tt.obj)
-
-			require.NotNil(t, result)
-			assert.Equal(t, tt.expected, slices.Collect(result))
 		})
 	}
 }
@@ -414,196 +307,6 @@ func TestExtractPluginsNamespacedNames(t *testing.T) {
 	}
 }
 
-func TestExtractPluginsNamespacedNamesIter(t *testing.T) {
-	tests := []struct {
-		name     string
-		obj      *mockObject
-		expected []types.NamespacedName
-	}{
-		{
-			name: "nil annotations",
-			obj: &mockObject{
-				annotations: map[string]string{},
-			},
-			expected: nil,
-		},
-		{
-			name:     "no annotations",
-			obj:      &mockObject{},
-			expected: nil,
-		},
-		{
-			name: "single plugin",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1",
-				},
-			},
-			expected: []types.NamespacedName{
-				{
-					Name: "plugin1",
-				},
-			},
-		},
-		{
-			name: "multiple plugins",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1,plugin2,plugin3",
-				},
-			},
-			expected: []types.NamespacedName{
-				{
-					Name: "plugin1",
-				},
-				{
-					Name: "plugin2",
-				},
-				{
-					Name: "plugin3",
-				},
-			},
-		},
-		{
-			name: "empty plugin name gets filtered out",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1,,plugin3",
-				},
-			},
-			expected: []types.NamespacedName{
-				{
-					Name: "plugin1",
-				},
-				{
-					Name: "plugin3",
-				},
-			},
-		},
-		{
-			name: "plugins with spaces",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: " plugin1 , plugin2 , plugin3 ",
-				},
-			},
-			expected: []types.NamespacedName{
-				{
-					Name: "plugin1",
-				},
-				{
-					Name: "plugin2",
-				},
-				{
-					Name: "plugin3",
-				},
-			},
-		},
-		{
-			name: "different namespace",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "custom:plugin1,plugin2",
-				},
-			},
-			expected: []types.NamespacedName{
-				{
-					Namespace: "custom",
-					Name:      "plugin1",
-				},
-				{
-					Name: "plugin2",
-				},
-			},
-		},
-		{
-			name: "empty names are ignored",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1,",
-				},
-			},
-			expected: []types.NamespacedName{
-				{
-					Name: "plugin1",
-				},
-			},
-		},
-		{
-			name: "empty names are ignored",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "kong:plugin1,",
-				},
-			},
-			expected: []types.NamespacedName{
-				{
-					Namespace: "kong",
-					Name:      "plugin1",
-				},
-			},
-		},
-		{
-			name: "whitespaces are ignored",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "plugin1, ",
-				},
-			},
-			expected: []types.NamespacedName{
-				{
-					Name: "plugin1",
-				},
-			},
-		},
-		{
-			name: "mixed",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "kong:plugin1,plugin2",
-				},
-				namespace: "custom",
-			},
-			expected: []types.NamespacedName{
-				{
-					Namespace: "kong",
-					Name:      "plugin1",
-				},
-				{
-					Name: "plugin2",
-				},
-			},
-		},
-		{
-			name: "invalid namespaced plugin",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: "kong:",
-				},
-			},
-			expected: nil,
-		},
-		{
-			name: "invalid namespaced plugin",
-			obj: &mockObject{
-				annotations: map[string]string{
-					AnnotationKeyPlugins: ":plugin1",
-				},
-			},
-			expected: nil,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			result := ExtractPluginsNamespacedNamesIter(tt.obj)
-
-			require.NotNil(t, result)
-			assert.Equal(t, tt.expected, slices.Collect(result))
-		})
-	}
-}
-
 func TestExtractPlugins(t *testing.T) {
 	tests := []struct {
 		name     string
@@ -720,17 +423,6 @@ func objectWithNPluginsForBenchmark(n int) ObjectWithAnnotationsAndNamespace {
 	return obj
 }
 
-func consumeIter[
-	T iter.Seq[R],
-	R any,
-](
-	t T,
-) {
-	for v := range t {
-		_ = v
-	}
-}
-
 func consumeSlice[
 	T ~[]R,
 	R any,
@@ -742,28 +434,16 @@ func consumeSlice[
 	}
 }
 
-func BenchmarkTestExtractPlugins(b *testing.B) {
+func BenchmarkExtractPlugins(b *testing.B) {
 	benchmarkSlice(b, ExtractPlugins)
 }
 
-func BenchmarkTestExtractPluginsIter(b *testing.B) {
-	benchmarkIter(b, ExtractPluginsIter)
-}
-
-func BenchmarkTestExtractPluginsWithNamespaces(b *testing.B) {
+func BenchmarkExtractPluginsWithNamespaces(b *testing.B) {
 	benchmarkSlice(b, ExtractPluginsWithNamespaces)
 }
 
-func BenchmarkTestExtractPluginsWithNamespacesIter(b *testing.B) {
-	benchmarkIter(b, ExtractPluginsWithNamespacesIter)
-}
-
-func BenchmarkTestExtractPluginsNamespacedNames(b *testing.B) {
+func BenchmarkExtractPluginsNamespacedNames(b *testing.B) {
 	benchmarkSlice(b, ExtractPluginsNamespacedNames)
-}
-
-func BenchmarkTestExtractPluginsNamespacedNamesIter(b *testing.B) {
-	benchmarkIter(b, ExtractPluginsNamespacedNamesIter)
 }
 
 func benchmarkPluginCountTestcases() []int {
@@ -780,21 +460,6 @@ func benchmarkSlice[
 			for i := 0; i < b.N; i++ {
 				ret := f(obj)
 				consumeSlice(ret)
-			}
-		})
-	}
-}
-
-func benchmarkIter[
-	T any,
-](b *testing.B, f func(ObjectWithAnnotationsAndNamespace) iter.Seq[T]) {
-	for _, tc := range benchmarkPluginCountTestcases() {
-		obj := objectWithNPluginsForBenchmark(tc)
-
-		b.Run(fmt.Sprintf("%04d", tc), func(b *testing.B) {
-			for i := 0; i < b.N; i++ {
-				ret := f(obj)
-				consumeIter(ret)
 			}
 		})
 	}
