@@ -23,6 +23,7 @@ func init() {
 // +kubebuilder:printcolumn:name="OrgID",description="Konnect Organization ID this resource belongs to.",type=string,JSONPath=`.status.organizationID`
 // +kubebuilder:validation:XValidation:message="spec.konnect.authRef is immutable when an entity is already Programmed", rule="!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef"
 // +kubebuilder:validation:XValidation:message="spec.konnect.authRef is immutable when an entity refers to a Valid API Auth Configuration", rule="!self.status.conditions.exists(c, c.type == 'APIAuthValid' && c.status == 'True') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef"
+// +kubebuilder:validation:XValidation:message="status.members is only applicable for ControlPlanes that are created as groups", rule="(has(self.spec.cluster_type) && self.spec.cluster_type != 'CLUSTER_TYPE_CONTROL_PLANE_GROUP') ? (!has(self.status) || !has(self.status.members)) : true"
 // +apireference:kgo:include
 type KonnectGatewayControlPlane struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -71,6 +72,10 @@ type KonnectGatewayControlPlaneStatus struct {
 	// +kubebuilder:validation:MaxItems=8
 	// +kubebuilder:default={{type: "Programmed", status: "Unknown", reason:"Pending", message:"Waiting for controller", lastTransitionTime: "1970-01-01T00:00:00Z"}}
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
+
+	// MemberStatus is the status of each member in the control plane group.
+	// This field is only applicable for control planes with spec.cluster_type = CLUSTER_TYPE_CONTROL_PLANE_GROUP.
+	MemberStatus map[string][]metav1.Condition `json:"members,omitempty"`
 }
 
 // GetKonnectLabels gets the Konnect Labels from object's spec.
@@ -86,6 +91,18 @@ func (c *KonnectGatewayControlPlane) SetKonnectLabels(labels map[string]string) 
 // GetKonnectAPIAuthConfigurationRef returns the Konnect API Auth Configuration Ref.
 func (c *KonnectGatewayControlPlane) GetKonnectAPIAuthConfigurationRef() KonnectAPIAuthConfigurationRef {
 	return c.Spec.KonnectConfiguration.APIAuthConfigurationRef
+}
+
+// SetMemberStatus sets conditions of a member of the control plane group in status.
+// REVIEW: is it better to replace it with `SetMemberCondition` to set a single condition of a member?
+func (c *KonnectGatewayControlPlane) SetMemberStatus(name string, conditions []metav1.Condition) {
+	if c.Status.MemberStatus == nil {
+		c.Status.MemberStatus = map[string][]metav1.Condition{
+			name: conditions,
+		}
+	}
+
+	c.Status.MemberStatus[name] = conditions
 }
 
 // KonnectGatewayControlPlaneList contains a list of KonnectGatewayControlPlane.
