@@ -140,8 +140,8 @@ generate.apitypes-funcs:
 
 .PHONY: generate.crds
 generate.crds: controller-gen ## Generate WebhookConfiguration and CustomResourceDefinition objects.
-	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=kong-ingress webhook paths="$(CRD_INCUBATOR_GEN_PATHS)" output:crd:artifacts:config=config/crd/incubator
-	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=kong-ingress webhook paths="$(CRD_GEN_PATHS)" output:crd:artifacts:config=config/crd/bases
+	# Use gotypesalias=0 as a workaround for https://github.com/kubernetes-sigs/controller-tools/issues/1088.
+	GODEBUG=gotypesalias=0 go run ./scripts/crds-generator
 
 .PHONY: generate.deepcopy
 generate.deepcopy: controller-gen
@@ -178,10 +178,15 @@ generate.apidocs: crd-ref-docs
 # generate.cli-arguments-docs:
 # 	go run ./scripts/cli-arguments-docs-gen/main.go > ./docs/cli-arguments.md
 
-# Install CRDs into the K8s cluster specified in ~/.kube/config.
+# Define a constant list of channels
+CHANNELS := ingress-controller ingress-controller-incubator gateway-operator
+
+# Install all CRDs into the K8s cluster specified in ~/.kube/config.
 .PHONY: install
 install: generate.crds kustomize
-	$(KUSTOMIZE) build config/crd | kubectl apply -f -
+	@for channel in $(CHANNELS); do \
+		$(KUSTOMIZE) build config/crd/$$channel | kubectl apply -f -; \
+	done
 
 GOLANGCI_LINT_CONFIG ?= $(PROJECT_DIR)/.golangci.yaml
 .PHONY: lint
