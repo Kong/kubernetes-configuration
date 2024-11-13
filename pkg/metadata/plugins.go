@@ -44,21 +44,36 @@ func ExtractPluginsNamespacedNames(obj ObjectWithAnnotationsAndNamespace) []type
 		return nil
 	}
 
-	split := strings.Split(ann, ",")
-	plugins := make([]types.NamespacedName, 0, len(split))
-	for _, s := range split {
-		if strings.TrimSpace(s) == "" {
-			continue
+	ann = strings.Trim(ann, ",")
+	commas := strings.Count(ann, ",")
+	plugins := make([]types.NamespacedName, 0, commas+1)
+
+	for i, idx := 0, 0; i < commas+1; i++ {
+		idx = strings.IndexByte(ann, ',')
+		if idx == -1 {
+			idx = len(ann)
 		}
 
-		plugin := types.NamespacedName{}
+		s := strings.TrimSpace(ann[:idx])
+		if s == "" {
+			if idx == len(ann) {
+				break
+			}
+			ann = ann[idx+1:]
+			continue
+		}
 
 		idxColon := strings.Index(s, ":")
 		if idxColon == len(s)-1 || idxColon == 0 {
 			// invalid plugin name or namespace
+			if idx >= len(ann) {
+				break
+			}
+			ann = ann[idx+1:]
 			continue
 		}
 
+		plugin := types.NamespacedName{}
 		if idxColon != -1 {
 			plugin.Namespace = strings.TrimSpace(s[0:idxColon])
 			plugin.Name = strings.TrimSpace(s[idxColon+1:])
@@ -66,6 +81,10 @@ func ExtractPluginsNamespacedNames(obj ObjectWithAnnotationsAndNamespace) []type
 			plugin.Name = strings.TrimSpace(s)
 		}
 		plugins = append(plugins, plugin)
+		if idx >= len(ann) {
+			break
+		}
+		ann = ann[idx+1:]
 	}
 	return plugins
 }
@@ -88,20 +107,35 @@ func extractPlugins(obj ObjectWithAnnotationsAndNamespace, nsOpt extractPluginsN
 	}
 
 	namespace := obj.GetNamespace()
+	ann = strings.Trim(ann, ",")
+	commas := strings.Count(ann, ",")
+	plugins := make([]string, 0, commas+1)
 
-	split := strings.Split(ann, ",")
-	ret := make([]string, 0, len(split))
-	for _, p := range split {
-		trimmed := strings.TrimSpace(p)
-		if trimmed == "" {
+	for i, idx := 0, 0; i < commas+1 && idx <= len(ann); i++ {
+		idx = strings.IndexByte(ann, ',')
+		if idx == -1 {
+			idx = len(ann)
+		}
+
+		s := strings.TrimSpace(ann[:idx])
+		if s == "" {
+			if idx == len(ann) {
+				break
+			}
+			ann = ann[idx+1:]
 			continue
 		}
 
-		v := trimmed
+		v := s
 		if nsOpt == nsOptWithNamespace {
-			v = namespace + "/" + trimmed
+			v = namespace + "/" + s
 		}
-		ret = append(ret, v)
+		plugins = append(plugins, v)
+		if idx >= len(ann) {
+			break
+		}
+		ann = ann[idx+1:]
 	}
-	return ret
+
+	return plugins
 }
