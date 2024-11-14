@@ -182,9 +182,6 @@ spec:
                           successes:
                             format: int64
                             type: integer
-                        required:
-                        - interval
-                        - successes
                         type: object
                       http_path:
                         type: string
@@ -214,18 +211,7 @@ spec:
                           timeouts:
                             format: int64
                             type: integer
-                        required:
-                        - http_failures
-                        - interval
-                        - tcp_failures
-                        - timeouts
                         type: object
-                    required:
-                    - concurrency
-                    - http_path
-                    - https_verify_certificate
-                    - timeout
-                    - type
                     type: object
                   passive:
                     properties:
@@ -239,8 +225,6 @@ spec:
                           successes:
                             format: int64
                             type: integer
-                        required:
-                        - successes
                         type: object
                       type:
                         type: string
@@ -260,18 +244,10 @@ spec:
                           timeouts:
                             format: int64
                             type: integer
-                        required:
-                        - http_failures
-                        - tcp_failures
-                        - timeouts
                         type: object
-                    required:
-                    - type
                     type: object
                   threshold:
                     type: number
-                required:
-                - threshold
                 type: object
               host_header:
                 description: The hostname to be used as `Host` header when proxying
