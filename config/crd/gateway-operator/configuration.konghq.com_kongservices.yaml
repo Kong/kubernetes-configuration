@@ -20,7 +20,7 @@ spec:
       name: Host
       type: string
     - description: Protocol of the service
-      jsonPath: .spec.procol
+      jsonPath: .spec.protocol
       name: Protocol
       type: string
     - description: The Resource is Programmed on Konnect
