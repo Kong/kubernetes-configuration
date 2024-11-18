@@ -1,7 +1,7 @@
 package main
 
 const (
-	konnectFuncOutputFileName = "zz_generated_konnect_funcs.go"
+	konnectFuncOutputFileName = "zz_generated_funcs.go"
 	konnectFuncTemplate       = `package {{ .PackageVersion }}
 
 import (
