@@ -13,6 +13,8 @@ import (
 type supportedTypesT struct {
 	PackageVersion string
 
+	AdditionalImports []string
+
 	Types []templateDataT
 }
 
@@ -23,6 +25,8 @@ type templateDataT struct {
 	// KonnectStatusType is the name of the konnect status type (.status.konnect).
 	// If it's not provided Konnect status functions will not be generated.
 	KonnectStatusType string
+
+	ControlPlaneRefType string
 }
 
 const (
