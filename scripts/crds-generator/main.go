@@ -162,7 +162,7 @@ type ChannelsMarker []string
 
 // ApplyToCRD applies the channels marker to the given CRD by adding the channels annotation.
 // It implements the Marker interface.
-func (m ChannelsMarker) ApplyToCRD(crd *apiext.CustomResourceDefinition, _ string) error { // nolint:unparam
+func (m ChannelsMarker) ApplyToCRD(crd *apiext.CustomResourceDefinition, _ string) error { //nolint:unparam
 	if crd.Annotations == nil {
 		crd.Annotations = map[string]string{}
 	}

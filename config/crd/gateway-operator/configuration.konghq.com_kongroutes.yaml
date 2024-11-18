@@ -42,7 +42,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: KongRouteSpec defines specification of a Kong Route.
+            description: KongRouteSpec defines spec of a Kong Route.
             properties:
               controlPlaneRef:
                 description: |-
@@ -266,6 +266,10 @@ spec:
                 - message: tags entries must not be longer than 128 characters
                   rule: self.all(tag, size(tag) >= 1 && size(tag) <= 128)
             type: object
+            x-kubernetes-validations:
+            - message: KIC is not supported as control plane
+              rule: '!has(self.controlPlaneRef) ? true : self.controlPlaneRef.type
+                != ''kic'''
           status:
             default:
               conditions:
@@ -377,10 +381,9 @@ spec:
             ? (has(self.spec.hosts) || has(self.spec.methods) || has(self.spec.paths)
             || has(self.spec.paths) || has(self.spec.paths) || has(self.spec.headers)
             ) : true'
-        - message: Cannot set both controlPlaneRef or serviceRef at the same time
-          rule: '!has(self.spec.controlPlaneRef) && !has(self.spec.serviceRef) ||
-            has(self.spec.controlPlaneRef) && !has(self.spec.serviceRef) || !has(self.spec.controlPlaneRef)
-            && has(self.spec.serviceRef)'
+        - message: Has to set either controlPlaneRef or serviceRef
+          rule: has(self.spec.controlPlaneRef) && !has(self.spec.serviceRef) || !has(self.spec.controlPlaneRef)
+            && has(self.spec.serviceRef)
         - message: spec.controlPlaneRef cannot specify namespace for namespaced resource
           rule: '(!has(self.spec.controlPlaneRef) || !has(self.spec.controlPlaneRef.konnectNamespacedRef))
             ? true : !has(self.spec.controlPlaneRef.konnectNamespacedRef.__namespace__)'

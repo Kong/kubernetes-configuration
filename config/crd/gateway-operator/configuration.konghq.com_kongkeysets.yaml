@@ -127,8 +127,13 @@ spec:
                 - message: tags entries must not be longer than 128 characters
                   rule: self.all(tag, size(tag) >= 1 && size(tag) <= 128)
             required:
+            - controlPlaneRef
             - name
             type: object
+            x-kubernetes-validations:
+            - message: KIC is not supported as control plane
+              rule: '!has(self.controlPlaneRef) ? true : self.controlPlaneRef.type
+                != ''kic'''
           status:
             default:
               conditions:
