@@ -83,6 +83,23 @@ func TestKongRoute(t *testing.T) {
 		}.Run(t)
 	})
 
+	t.Run("no service ref and no cp ref provided", func(t *testing.T) {
+		CRDValidationTestCasesGroup[*configurationv1alpha1.KongRoute]{
+			{
+				Name: "have to provide either controlPlaneRef or serviceRef",
+				TestObject: &configurationv1alpha1.KongRoute{
+					ObjectMeta: commonObjectMeta,
+					Spec: configurationv1alpha1.KongRouteSpec{
+						KongRouteAPISpec: configurationv1alpha1.KongRouteAPISpec{
+							Paths: []string{"/"},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("Has to set either controlPlaneRef or serviceRef"),
+			},
+		}.Run(t)
+	})
+
 	t.Run("service ref", func(t *testing.T) {
 		CRDValidationTestCasesGroup[*configurationv1alpha1.KongRoute]{
 			{
