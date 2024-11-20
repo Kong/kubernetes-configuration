@@ -120,7 +120,12 @@ spec:
                   rule: '!has(self.type) ? !has(self.konnectNamespacedRef) : true'
             required:
             - cert
+            - controlPlaneRef
             type: object
+            x-kubernetes-validations:
+            - message: KIC is not supported as control plane
+              rule: '!has(self.controlPlaneRef) ? true : self.controlPlaneRef.type
+                != ''kic'''
           status:
             default:
               conditions:

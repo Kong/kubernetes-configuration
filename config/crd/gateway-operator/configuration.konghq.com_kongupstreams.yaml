@@ -43,7 +43,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: KongUpstreamSpec defines specification of a Kong Upstream.
+            description: KongUpstreamSpec defines the spec of Kong Upstream.
             properties:
               algorithm:
                 description: Which load balancing algorithm to use.
@@ -288,8 +288,13 @@ spec:
                 description: If set, the balancer will use SRV hostname(if DNS Answer
                   has SRV record) as the proxy upstream `Host`.
                 type: boolean
+            required:
+            - controlPlaneRef
             type: object
             x-kubernetes-validations:
+            - message: KIC is not supported as control plane
+              rule: '!has(self.controlPlaneRef) ? true : self.controlPlaneRef.type
+                != ''kic'''
             - message: hash_fallback_header is required when `hash_fallback` is set
                 to `header`.
               rule: '!has(self.hash_fallback) || (self.hash_fallback != ''header''

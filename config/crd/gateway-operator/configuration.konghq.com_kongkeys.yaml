@@ -199,6 +199,9 @@ spec:
             - kid
             type: object
             x-kubernetes-validations:
+            - message: KIC is not supported as control plane
+              rule: '!has(self.controlPlaneRef) ? true : self.controlPlaneRef.type
+                != ''kic'''
             - message: Either 'jwk' or 'pem' must be set
               rule: has(self.jwk) || has(self.pem)
           status:

@@ -185,8 +185,13 @@ spec:
                 format: int64
                 type: integer
             required:
+            - controlPlaneRef
             - host
             type: object
+            x-kubernetes-validations:
+            - message: KIC is not supported as control plane
+              rule: '!has(self.controlPlaneRef) ? true : self.controlPlaneRef.type
+                != ''kic'''
           status:
             default:
               conditions:
