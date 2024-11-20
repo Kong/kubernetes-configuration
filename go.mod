@@ -4,7 +4,7 @@ go 1.23.2
 
 require (
 	github.com/Kong/sdk-konnect-go v0.1.6
-	github.com/kong/go-kong v0.59.1
+	github.com/kong/go-kong v0.60.0
 	github.com/stretchr/testify v1.9.0
 	k8s.io/api v0.31.3
 	k8s.io/apiextensions-apiserver v0.31.3
@@ -62,7 +62,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/samber/lo v1.47.0
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/tidwall/gjson v1.17.3 // indirect
+	github.com/tidwall/gjson v1.18.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	golang.org/x/net v0.30.0 // indirect
