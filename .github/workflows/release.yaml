@@ -59,9 +59,9 @@ jobs:
             
             #### Install CRDs from all channels
             ```shell
-            kustomize build github.com/kong/kubernetes-configuration/config/crd/gateway-operator?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
-            kustomize build github.com/kong/kubernetes-configuration/config/crd/ingress-controller?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
-            kustomize build github.com/kong/kubernetes-configuration/config/crd/ingress-controller-incubator?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
+            kustomize build https://github.com/kong/kubernetes-configuration/config/crd/gateway-operator?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
+            kustomize build https://github.com/kong/kubernetes-configuration/config/crd/ingress-controller?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
+            kustomize build https://github.com/kong/kubernetes-configuration/config/crd/ingress-controller-incubator?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
             ```
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.tag }}
