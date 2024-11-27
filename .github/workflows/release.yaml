@@ -21,6 +21,9 @@ jobs:
   verify-tag:
     name: Verify tag
     runs-on: ubuntu-latest
+    outputs:
+      # The prerelease part of the semver tag, if any. To be used in the release job.
+      prerelease: ${{ steps.parse-semver.outputs.prerelease }}
     steps:
       - uses: mukunku/tag-exists-action@v1.6.0
         id: check-tag
@@ -45,12 +48,6 @@ jobs:
       - tests
       - verify-tag
     steps:
-      - name: Parse semver string
-        id: parse-semver
-        uses: booxmedialtd/ws-action-parse-semver@v1.4.7
-        with:
-          input_string: ${{ github.event.inputs.tag }}
-          version_extractor_regex: 'v(.*)$'
       - uses: ncipollo/release-action@v1
         with:
           body: |
@@ -59,7 +56,7 @@ jobs:
             See [changelog] for a complete list of changes. 
             
             [changelog]: https://github.com/kong/kubernetes-configuration/blob/main/CHANGELOG.md#${{ github.event.inputs.tag }}
-             
+            
             #### Install CRDs from all channels
             ```shell
             kustomize build github.com/kong/kubernetes-configuration/config/crd/gateway-operator?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
@@ -69,5 +66,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.event.inputs.tag }}
           commit: ${{ github.sha }}
-          prerelease: ${{ steps.parse-semver.outputs.prerelease != '' }}
+          prerelease: ${{ needs.verify-tag.outputs.prerelease != '' }}
           makeLatest: ${{ github.event.inputs.latest == 'true' }}
