@@ -1,0 +1,70 @@
+name: Create release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (e.g. v1.0.0)"
+        required: true
+        type: string
+      latest:
+        description: "Whether to tag this release latest"
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  tests:
+    name: Run tests
+    uses: ./.github/workflows/tests.yaml
+
+  verify-tag:
+    name: Verify tag
+    runs-on: ubuntu-latest
+    outputs:
+      # The prerelease part of the semver tag, if any. To be used in the release job.
+      prerelease: ${{ steps.parse-semver.outputs.prerelease }}
+    steps:
+      - uses: mukunku/tag-exists-action@v1.6.0
+        id: check-tag
+        with:
+          tag: ${{ github.event.inputs.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: fail if tag already exists
+        if: ${{ steps.check-tag.outputs.exists == 'true' }}
+        run: exit 1
+      - name: Validate semver
+        id: parse-semver
+        uses: booxmedialtd/ws-action-parse-semver@v1.4.7
+        with:
+          input_string: ${{ github.event.inputs.tag }}
+          version_extractor_regex: 'v(.*)$'
+
+  release:
+    name: Create a GH release
+    runs-on: ubuntu-latest
+    needs:
+      - tests
+      - verify-tag
+    steps:
+      - uses: ncipollo/release-action@v1
+        with:
+          body: |
+            #### Changes
+
+            See [changelog] for a complete list of changes. 
+            
+            [changelog]: https://github.com/kong/kubernetes-configuration/blob/main/CHANGELOG.md#${{ github.event.inputs.tag }}
+            
+            #### Install CRDs from all channels
+            ```shell
+            kustomize build github.com/kong/kubernetes-configuration/config/crd/gateway-operator?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
+            kustomize build github.com/kong/kubernetes-configuration/config/crd/ingress-controller?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
+            kustomize build github.com/kong/kubernetes-configuration/config/crd/ingress-controller-incubator?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
+            ```
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.event.inputs.tag }}
+          commit: ${{ github.sha }}
+          prerelease: ${{ needs.verify-tag.outputs.prerelease != '' }}
+          makeLatest: ${{ github.event.inputs.latest == 'true' }}

@@ -2,12 +2,6 @@
 
 This repository holds the API definitions for Kong's Kubernetes configuration.
 
-> 👷 🚧 This is currently a work in progress which is heavily based on [Kong's Ingress Controller][kic] CRDs
-> Before KIC starts using these CRDs this repo should contain only additive,
-> non-breaking changes on top of KIC's types.
-
-[kic]: https://github.com/Kong/kubernetes-ingress-controller
-
 ## Repository structure
 
 - [`api/`][api] directory contains Go types that are the source for generating
@@ -86,8 +80,10 @@ When you add a new CRD make sure to
 
 ## How to release?
 
-Currently, in order to make a new release/tag available for users to use is to
-create a new tag and push it to the repository.
+- Make sure a changelog is updated with the new version, the release date, and all the changes.
+- Trigger a [release workflow]. This will create a tag a release in GitHub.
+
+[release workflow]: ./.github/workflows/release.yaml
 
 ## Available custom markers
 
