@@ -83,7 +83,7 @@ When you add a new CRD make sure to
 - Make sure a changelog is updated with the new version, the release date, and all the changes.
 - Trigger a [release workflow]. This will create a tag a release in GitHub.
 
-[release workflow]: ./.github/workflows/release.yaml
+[release workflow]: https://github.com/Kong/kubernetes-configuration/actions/workflows/release.yaml
 
 ## Available custom markers
 
