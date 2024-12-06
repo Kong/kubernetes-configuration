@@ -70,10 +70,16 @@ spec:
                   to the entity(service/route/consumer) where the plugin is attached.
                 properties:
                   group:
+                    description: Group defines the API group of the referred object.
                     type: string
                   kind:
+                    description: Kind defines the kind of the referred object.
+                    enum:
+                    - KongPlugin
+                    - KongClusterPlugin
                     type: string
                   name:
+                    description: Name defines the name of the referred object.
                     type: string
                   namespace:
                     description: Empty namespace means the same namespace of the owning
@@ -91,6 +97,9 @@ spec:
             - fields
             - type
             type: object
+            x-kubernetes-validations:
+            - message: The type field cannot be one of the known Kong entity types
+              rule: '!(self.type in [''services'',''routes'',''upstreams'',''targets'',''plugins'',''consumers'',''consumer_groups''])'
           status:
             description: Status stores the reconciling status of the resource.
             properties:
@@ -175,8 +184,6 @@ spec:
         x-kubernetes-validations:
         - message: The spec.type field is immutable
           rule: self.spec.type == oldSelf.spec.type
-        - message: The spec.type field cannot be known Kong entity types
-          rule: '!(self.spec.type in [''services'',''routes'',''upstreams'',''targets'',''plugins'',''consumers'',''consumer_groups''])'
     served: true
     storage: true
     subresources:
