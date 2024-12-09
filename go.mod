@@ -4,7 +4,7 @@ go 1.23.2
 
 require (
 	github.com/Kong/sdk-konnect-go v0.1.11
-	github.com/kong/go-kong v0.60.0
+	github.com/kong/go-kong v0.61.0
 	github.com/stretchr/testify v1.10.0
 	k8s.io/api v0.31.3
 	k8s.io/apiextensions-apiserver v0.31.3
