@@ -16,7 +16,7 @@ Adding a new version? You'll need three changes:
 
 [v1.0.0]: https://github.com/kong/kubernetes-configuration/compare/ecf9b7bd62bfb92327a6ddd9aeaec9f73fc13a72...v1.0.0
 
-> Release date: 2024-12-06
+> Release date: 2024-12-12
 
 This is an initial stable release of the Kong Kubernetes configuration module.
 It includes CRDs for the Kong Ingress Controller and the Kong Gateway Operator
