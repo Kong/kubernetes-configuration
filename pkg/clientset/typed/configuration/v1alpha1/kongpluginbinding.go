@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,36 @@ type KongPluginBindingsGetter interface {
 
 // KongPluginBindingInterface has methods to work with KongPluginBinding resources.
 type KongPluginBindingInterface interface {
-	Create(ctx context.Context, kongPluginBinding *v1alpha1.KongPluginBinding, opts v1.CreateOptions) (*v1alpha1.KongPluginBinding, error)
-	Update(ctx context.Context, kongPluginBinding *v1alpha1.KongPluginBinding, opts v1.UpdateOptions) (*v1alpha1.KongPluginBinding, error)
+	Create(ctx context.Context, kongPluginBinding *configurationv1alpha1.KongPluginBinding, opts v1.CreateOptions) (*configurationv1alpha1.KongPluginBinding, error)
+	Update(ctx context.Context, kongPluginBinding *configurationv1alpha1.KongPluginBinding, opts v1.UpdateOptions) (*configurationv1alpha1.KongPluginBinding, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongPluginBinding *v1alpha1.KongPluginBinding, opts v1.UpdateOptions) (*v1alpha1.KongPluginBinding, error)
+	UpdateStatus(ctx context.Context, kongPluginBinding *configurationv1alpha1.KongPluginBinding, opts v1.UpdateOptions) (*configurationv1alpha1.KongPluginBinding, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongPluginBinding, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongPluginBindingList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongPluginBinding, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongPluginBindingList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongPluginBinding, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongPluginBinding, err error)
 	KongPluginBindingExpansion
 }
 
 // kongPluginBindings implements KongPluginBindingInterface
 type kongPluginBindings struct {
-	*gentype.ClientWithList[*v1alpha1.KongPluginBinding, *v1alpha1.KongPluginBindingList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongPluginBinding, *configurationv1alpha1.KongPluginBindingList]
 }
 
 // newKongPluginBindings returns a KongPluginBindings
 func newKongPluginBindings(c *ConfigurationV1alpha1Client, namespace string) *kongPluginBindings {
 	return &kongPluginBindings{
-		gentype.NewClientWithList[*v1alpha1.KongPluginBinding, *v1alpha1.KongPluginBindingList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongPluginBinding, *configurationv1alpha1.KongPluginBindingList](
 			"kongpluginbindings",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongPluginBinding { return &v1alpha1.KongPluginBinding{} },
-			func() *v1alpha1.KongPluginBindingList { return &v1alpha1.KongPluginBindingList{} }),
+			func() *configurationv1alpha1.KongPluginBinding { return &configurationv1alpha1.KongPluginBinding{} },
+			func() *configurationv1alpha1.KongPluginBindingList {
+				return &configurationv1alpha1.KongPluginBindingList{}
+			},
+		),
 	}
 }

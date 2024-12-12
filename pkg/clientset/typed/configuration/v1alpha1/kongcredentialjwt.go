@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,36 @@ type KongCredentialJWTsGetter interface {
 
 // KongCredentialJWTInterface has methods to work with KongCredentialJWT resources.
 type KongCredentialJWTInterface interface {
-	Create(ctx context.Context, kongCredentialJWT *v1alpha1.KongCredentialJWT, opts v1.CreateOptions) (*v1alpha1.KongCredentialJWT, error)
-	Update(ctx context.Context, kongCredentialJWT *v1alpha1.KongCredentialJWT, opts v1.UpdateOptions) (*v1alpha1.KongCredentialJWT, error)
+	Create(ctx context.Context, kongCredentialJWT *configurationv1alpha1.KongCredentialJWT, opts v1.CreateOptions) (*configurationv1alpha1.KongCredentialJWT, error)
+	Update(ctx context.Context, kongCredentialJWT *configurationv1alpha1.KongCredentialJWT, opts v1.UpdateOptions) (*configurationv1alpha1.KongCredentialJWT, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongCredentialJWT *v1alpha1.KongCredentialJWT, opts v1.UpdateOptions) (*v1alpha1.KongCredentialJWT, error)
+	UpdateStatus(ctx context.Context, kongCredentialJWT *configurationv1alpha1.KongCredentialJWT, opts v1.UpdateOptions) (*configurationv1alpha1.KongCredentialJWT, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongCredentialJWT, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongCredentialJWTList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongCredentialJWT, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongCredentialJWTList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCredentialJWT, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongCredentialJWT, err error)
 	KongCredentialJWTExpansion
 }
 
 // kongCredentialJWTs implements KongCredentialJWTInterface
 type kongCredentialJWTs struct {
-	*gentype.ClientWithList[*v1alpha1.KongCredentialJWT, *v1alpha1.KongCredentialJWTList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongCredentialJWT, *configurationv1alpha1.KongCredentialJWTList]
 }
 
 // newKongCredentialJWTs returns a KongCredentialJWTs
 func newKongCredentialJWTs(c *ConfigurationV1alpha1Client, namespace string) *kongCredentialJWTs {
 	return &kongCredentialJWTs{
-		gentype.NewClientWithList[*v1alpha1.KongCredentialJWT, *v1alpha1.KongCredentialJWTList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongCredentialJWT, *configurationv1alpha1.KongCredentialJWTList](
 			"kongcredentialjwts",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongCredentialJWT { return &v1alpha1.KongCredentialJWT{} },
-			func() *v1alpha1.KongCredentialJWTList { return &v1alpha1.KongCredentialJWTList{} }),
+			func() *configurationv1alpha1.KongCredentialJWT { return &configurationv1alpha1.KongCredentialJWT{} },
+			func() *configurationv1alpha1.KongCredentialJWTList {
+				return &configurationv1alpha1.KongCredentialJWTList{}
+			},
+		),
 	}
 }

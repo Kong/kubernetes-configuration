@@ -19,9 +19,9 @@ limitations under the License.
 package v1beta1
 
 import (
-	"context"
+	context "context"
 
-	v1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
+	configurationv1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type TCPIngressesGetter interface {
 
 // TCPIngressInterface has methods to work with TCPIngress resources.
 type TCPIngressInterface interface {
-	Create(ctx context.Context, tCPIngress *v1beta1.TCPIngress, opts v1.CreateOptions) (*v1beta1.TCPIngress, error)
-	Update(ctx context.Context, tCPIngress *v1beta1.TCPIngress, opts v1.UpdateOptions) (*v1beta1.TCPIngress, error)
+	Create(ctx context.Context, tCPIngress *configurationv1beta1.TCPIngress, opts v1.CreateOptions) (*configurationv1beta1.TCPIngress, error)
+	Update(ctx context.Context, tCPIngress *configurationv1beta1.TCPIngress, opts v1.UpdateOptions) (*configurationv1beta1.TCPIngress, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, tCPIngress *v1beta1.TCPIngress, opts v1.UpdateOptions) (*v1beta1.TCPIngress, error)
+	UpdateStatus(ctx context.Context, tCPIngress *configurationv1beta1.TCPIngress, opts v1.UpdateOptions) (*configurationv1beta1.TCPIngress, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1beta1.TCPIngress, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1beta1.TCPIngressList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1beta1.TCPIngress, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1beta1.TCPIngressList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1beta1.TCPIngress, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1beta1.TCPIngress, err error)
 	TCPIngressExpansion
 }
 
 // tCPIngresses implements TCPIngressInterface
 type tCPIngresses struct {
-	*gentype.ClientWithList[*v1beta1.TCPIngress, *v1beta1.TCPIngressList]
+	*gentype.ClientWithList[*configurationv1beta1.TCPIngress, *configurationv1beta1.TCPIngressList]
 }
 
 // newTCPIngresses returns a TCPIngresses
 func newTCPIngresses(c *ConfigurationV1beta1Client, namespace string) *tCPIngresses {
 	return &tCPIngresses{
-		gentype.NewClientWithList[*v1beta1.TCPIngress, *v1beta1.TCPIngressList](
+		gentype.NewClientWithList[*configurationv1beta1.TCPIngress, *configurationv1beta1.TCPIngressList](
 			"tcpingresses",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1beta1.TCPIngress { return &v1beta1.TCPIngress{} },
-			func() *v1beta1.TCPIngressList { return &v1beta1.TCPIngressList{} }),
+			func() *configurationv1beta1.TCPIngress { return &configurationv1beta1.TCPIngress{} },
+			func() *configurationv1beta1.TCPIngressList { return &configurationv1beta1.TCPIngressList{} },
+		),
 	}
 }

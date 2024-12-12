@@ -19,129 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongCredentialAPIKeys implements KongCredentialAPIKeyInterface
-type FakeKongCredentialAPIKeys struct {
+// fakeKongCredentialAPIKeys implements KongCredentialAPIKeyInterface
+type fakeKongCredentialAPIKeys struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongCredentialAPIKey, *v1alpha1.KongCredentialAPIKeyList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongcredentialapikeysResource = v1alpha1.SchemeGroupVersion.WithResource("kongcredentialapikeys")
-
-var kongcredentialapikeysKind = v1alpha1.SchemeGroupVersion.WithKind("KongCredentialAPIKey")
-
-// Get takes name of the kongCredentialAPIKey, and returns the corresponding kongCredentialAPIKey object, and an error if there is any.
-func (c *FakeKongCredentialAPIKeys) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongCredentialAPIKey, err error) {
-	emptyResult := &v1alpha1.KongCredentialAPIKey{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongcredentialapikeysResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongCredentialAPIKeys(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongCredentialAPIKeyInterface {
+	return &fakeKongCredentialAPIKeys{
+		gentype.NewFakeClientWithList[*v1alpha1.KongCredentialAPIKey, *v1alpha1.KongCredentialAPIKeyList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongcredentialapikeys"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongCredentialAPIKey"),
+			func() *v1alpha1.KongCredentialAPIKey { return &v1alpha1.KongCredentialAPIKey{} },
+			func() *v1alpha1.KongCredentialAPIKeyList { return &v1alpha1.KongCredentialAPIKeyList{} },
+			func(dst, src *v1alpha1.KongCredentialAPIKeyList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongCredentialAPIKeyList) []*v1alpha1.KongCredentialAPIKey {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KongCredentialAPIKeyList, items []*v1alpha1.KongCredentialAPIKey) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongCredentialAPIKey), err
-}
-
-// List takes label and field selectors, and returns the list of KongCredentialAPIKeys that match those selectors.
-func (c *FakeKongCredentialAPIKeys) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongCredentialAPIKeyList, err error) {
-	emptyResult := &v1alpha1.KongCredentialAPIKeyList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongcredentialapikeysResource, kongcredentialapikeysKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongCredentialAPIKeyList{ListMeta: obj.(*v1alpha1.KongCredentialAPIKeyList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongCredentialAPIKeyList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongCredentialAPIKeys.
-func (c *FakeKongCredentialAPIKeys) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongcredentialapikeysResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongCredentialAPIKey and creates it.  Returns the server's representation of the kongCredentialAPIKey, and an error, if there is any.
-func (c *FakeKongCredentialAPIKeys) Create(ctx context.Context, kongCredentialAPIKey *v1alpha1.KongCredentialAPIKey, opts v1.CreateOptions) (result *v1alpha1.KongCredentialAPIKey, err error) {
-	emptyResult := &v1alpha1.KongCredentialAPIKey{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongcredentialapikeysResource, c.ns, kongCredentialAPIKey, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialAPIKey), err
-}
-
-// Update takes the representation of a kongCredentialAPIKey and updates it. Returns the server's representation of the kongCredentialAPIKey, and an error, if there is any.
-func (c *FakeKongCredentialAPIKeys) Update(ctx context.Context, kongCredentialAPIKey *v1alpha1.KongCredentialAPIKey, opts v1.UpdateOptions) (result *v1alpha1.KongCredentialAPIKey, err error) {
-	emptyResult := &v1alpha1.KongCredentialAPIKey{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongcredentialapikeysResource, c.ns, kongCredentialAPIKey, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialAPIKey), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongCredentialAPIKeys) UpdateStatus(ctx context.Context, kongCredentialAPIKey *v1alpha1.KongCredentialAPIKey, opts v1.UpdateOptions) (result *v1alpha1.KongCredentialAPIKey, err error) {
-	emptyResult := &v1alpha1.KongCredentialAPIKey{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongcredentialapikeysResource, "status", c.ns, kongCredentialAPIKey, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialAPIKey), err
-}
-
-// Delete takes name of the kongCredentialAPIKey and deletes it. Returns an error if one occurs.
-func (c *FakeKongCredentialAPIKeys) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongcredentialapikeysResource, c.ns, name, opts), &v1alpha1.KongCredentialAPIKey{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongCredentialAPIKeys) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongcredentialapikeysResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongCredentialAPIKeyList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongCredentialAPIKey.
-func (c *FakeKongCredentialAPIKeys) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCredentialAPIKey, err error) {
-	emptyResult := &v1alpha1.KongCredentialAPIKey{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongcredentialapikeysResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialAPIKey), err
 }

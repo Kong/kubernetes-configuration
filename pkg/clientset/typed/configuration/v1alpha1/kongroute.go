@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type KongRoutesGetter interface {
 
 // KongRouteInterface has methods to work with KongRoute resources.
 type KongRouteInterface interface {
-	Create(ctx context.Context, kongRoute *v1alpha1.KongRoute, opts v1.CreateOptions) (*v1alpha1.KongRoute, error)
-	Update(ctx context.Context, kongRoute *v1alpha1.KongRoute, opts v1.UpdateOptions) (*v1alpha1.KongRoute, error)
+	Create(ctx context.Context, kongRoute *configurationv1alpha1.KongRoute, opts v1.CreateOptions) (*configurationv1alpha1.KongRoute, error)
+	Update(ctx context.Context, kongRoute *configurationv1alpha1.KongRoute, opts v1.UpdateOptions) (*configurationv1alpha1.KongRoute, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongRoute *v1alpha1.KongRoute, opts v1.UpdateOptions) (*v1alpha1.KongRoute, error)
+	UpdateStatus(ctx context.Context, kongRoute *configurationv1alpha1.KongRoute, opts v1.UpdateOptions) (*configurationv1alpha1.KongRoute, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongRoute, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongRouteList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongRoute, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongRouteList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongRoute, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongRoute, err error)
 	KongRouteExpansion
 }
 
 // kongRoutes implements KongRouteInterface
 type kongRoutes struct {
-	*gentype.ClientWithList[*v1alpha1.KongRoute, *v1alpha1.KongRouteList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongRoute, *configurationv1alpha1.KongRouteList]
 }
 
 // newKongRoutes returns a KongRoutes
 func newKongRoutes(c *ConfigurationV1alpha1Client, namespace string) *kongRoutes {
 	return &kongRoutes{
-		gentype.NewClientWithList[*v1alpha1.KongRoute, *v1alpha1.KongRouteList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongRoute, *configurationv1alpha1.KongRouteList](
 			"kongroutes",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongRoute { return &v1alpha1.KongRoute{} },
-			func() *v1alpha1.KongRouteList { return &v1alpha1.KongRouteList{} }),
+			func() *configurationv1alpha1.KongRoute { return &configurationv1alpha1.KongRoute{} },
+			func() *configurationv1alpha1.KongRouteList { return &configurationv1alpha1.KongRouteList{} },
+		),
 	}
 }

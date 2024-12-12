@@ -19,129 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongCustomEntities implements KongCustomEntityInterface
-type FakeKongCustomEntities struct {
+// fakeKongCustomEntities implements KongCustomEntityInterface
+type fakeKongCustomEntities struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongCustomEntity, *v1alpha1.KongCustomEntityList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongcustomentitiesResource = v1alpha1.SchemeGroupVersion.WithResource("kongcustomentities")
-
-var kongcustomentitiesKind = v1alpha1.SchemeGroupVersion.WithKind("KongCustomEntity")
-
-// Get takes name of the kongCustomEntity, and returns the corresponding kongCustomEntity object, and an error if there is any.
-func (c *FakeKongCustomEntities) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongCustomEntity, err error) {
-	emptyResult := &v1alpha1.KongCustomEntity{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongcustomentitiesResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongCustomEntities(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongCustomEntityInterface {
+	return &fakeKongCustomEntities{
+		gentype.NewFakeClientWithList[*v1alpha1.KongCustomEntity, *v1alpha1.KongCustomEntityList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongcustomentities"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongCustomEntity"),
+			func() *v1alpha1.KongCustomEntity { return &v1alpha1.KongCustomEntity{} },
+			func() *v1alpha1.KongCustomEntityList { return &v1alpha1.KongCustomEntityList{} },
+			func(dst, src *v1alpha1.KongCustomEntityList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongCustomEntityList) []*v1alpha1.KongCustomEntity {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KongCustomEntityList, items []*v1alpha1.KongCustomEntity) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongCustomEntity), err
-}
-
-// List takes label and field selectors, and returns the list of KongCustomEntities that match those selectors.
-func (c *FakeKongCustomEntities) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongCustomEntityList, err error) {
-	emptyResult := &v1alpha1.KongCustomEntityList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongcustomentitiesResource, kongcustomentitiesKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongCustomEntityList{ListMeta: obj.(*v1alpha1.KongCustomEntityList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongCustomEntityList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongCustomEntities.
-func (c *FakeKongCustomEntities) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongcustomentitiesResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongCustomEntity and creates it.  Returns the server's representation of the kongCustomEntity, and an error, if there is any.
-func (c *FakeKongCustomEntities) Create(ctx context.Context, kongCustomEntity *v1alpha1.KongCustomEntity, opts v1.CreateOptions) (result *v1alpha1.KongCustomEntity, err error) {
-	emptyResult := &v1alpha1.KongCustomEntity{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongcustomentitiesResource, c.ns, kongCustomEntity, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCustomEntity), err
-}
-
-// Update takes the representation of a kongCustomEntity and updates it. Returns the server's representation of the kongCustomEntity, and an error, if there is any.
-func (c *FakeKongCustomEntities) Update(ctx context.Context, kongCustomEntity *v1alpha1.KongCustomEntity, opts v1.UpdateOptions) (result *v1alpha1.KongCustomEntity, err error) {
-	emptyResult := &v1alpha1.KongCustomEntity{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongcustomentitiesResource, c.ns, kongCustomEntity, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCustomEntity), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongCustomEntities) UpdateStatus(ctx context.Context, kongCustomEntity *v1alpha1.KongCustomEntity, opts v1.UpdateOptions) (result *v1alpha1.KongCustomEntity, err error) {
-	emptyResult := &v1alpha1.KongCustomEntity{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongcustomentitiesResource, "status", c.ns, kongCustomEntity, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCustomEntity), err
-}
-
-// Delete takes name of the kongCustomEntity and deletes it. Returns an error if one occurs.
-func (c *FakeKongCustomEntities) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongcustomentitiesResource, c.ns, name, opts), &v1alpha1.KongCustomEntity{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongCustomEntities) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongcustomentitiesResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongCustomEntityList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongCustomEntity.
-func (c *FakeKongCustomEntities) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCustomEntity, err error) {
-	emptyResult := &v1alpha1.KongCustomEntity{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongcustomentitiesResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCustomEntity), err
 }

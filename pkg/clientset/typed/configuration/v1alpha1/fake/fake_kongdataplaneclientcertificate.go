@@ -19,129 +19,36 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongDataPlaneClientCertificates implements KongDataPlaneClientCertificateInterface
-type FakeKongDataPlaneClientCertificates struct {
+// fakeKongDataPlaneClientCertificates implements KongDataPlaneClientCertificateInterface
+type fakeKongDataPlaneClientCertificates struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongDataPlaneClientCertificate, *v1alpha1.KongDataPlaneClientCertificateList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongdataplaneclientcertificatesResource = v1alpha1.SchemeGroupVersion.WithResource("kongdataplaneclientcertificates")
-
-var kongdataplaneclientcertificatesKind = v1alpha1.SchemeGroupVersion.WithKind("KongDataPlaneClientCertificate")
-
-// Get takes name of the kongDataPlaneClientCertificate, and returns the corresponding kongDataPlaneClientCertificate object, and an error if there is any.
-func (c *FakeKongDataPlaneClientCertificates) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongDataPlaneClientCertificate, err error) {
-	emptyResult := &v1alpha1.KongDataPlaneClientCertificate{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongdataplaneclientcertificatesResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongDataPlaneClientCertificates(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongDataPlaneClientCertificateInterface {
+	return &fakeKongDataPlaneClientCertificates{
+		gentype.NewFakeClientWithList[*v1alpha1.KongDataPlaneClientCertificate, *v1alpha1.KongDataPlaneClientCertificateList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongdataplaneclientcertificates"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongDataPlaneClientCertificate"),
+			func() *v1alpha1.KongDataPlaneClientCertificate { return &v1alpha1.KongDataPlaneClientCertificate{} },
+			func() *v1alpha1.KongDataPlaneClientCertificateList {
+				return &v1alpha1.KongDataPlaneClientCertificateList{}
+			},
+			func(dst, src *v1alpha1.KongDataPlaneClientCertificateList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongDataPlaneClientCertificateList) []*v1alpha1.KongDataPlaneClientCertificate {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KongDataPlaneClientCertificateList, items []*v1alpha1.KongDataPlaneClientCertificate) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongDataPlaneClientCertificate), err
-}
-
-// List takes label and field selectors, and returns the list of KongDataPlaneClientCertificates that match those selectors.
-func (c *FakeKongDataPlaneClientCertificates) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongDataPlaneClientCertificateList, err error) {
-	emptyResult := &v1alpha1.KongDataPlaneClientCertificateList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongdataplaneclientcertificatesResource, kongdataplaneclientcertificatesKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongDataPlaneClientCertificateList{ListMeta: obj.(*v1alpha1.KongDataPlaneClientCertificateList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongDataPlaneClientCertificateList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongDataPlaneClientCertificates.
-func (c *FakeKongDataPlaneClientCertificates) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongdataplaneclientcertificatesResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongDataPlaneClientCertificate and creates it.  Returns the server's representation of the kongDataPlaneClientCertificate, and an error, if there is any.
-func (c *FakeKongDataPlaneClientCertificates) Create(ctx context.Context, kongDataPlaneClientCertificate *v1alpha1.KongDataPlaneClientCertificate, opts v1.CreateOptions) (result *v1alpha1.KongDataPlaneClientCertificate, err error) {
-	emptyResult := &v1alpha1.KongDataPlaneClientCertificate{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongdataplaneclientcertificatesResource, c.ns, kongDataPlaneClientCertificate, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongDataPlaneClientCertificate), err
-}
-
-// Update takes the representation of a kongDataPlaneClientCertificate and updates it. Returns the server's representation of the kongDataPlaneClientCertificate, and an error, if there is any.
-func (c *FakeKongDataPlaneClientCertificates) Update(ctx context.Context, kongDataPlaneClientCertificate *v1alpha1.KongDataPlaneClientCertificate, opts v1.UpdateOptions) (result *v1alpha1.KongDataPlaneClientCertificate, err error) {
-	emptyResult := &v1alpha1.KongDataPlaneClientCertificate{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongdataplaneclientcertificatesResource, c.ns, kongDataPlaneClientCertificate, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongDataPlaneClientCertificate), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongDataPlaneClientCertificates) UpdateStatus(ctx context.Context, kongDataPlaneClientCertificate *v1alpha1.KongDataPlaneClientCertificate, opts v1.UpdateOptions) (result *v1alpha1.KongDataPlaneClientCertificate, err error) {
-	emptyResult := &v1alpha1.KongDataPlaneClientCertificate{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongdataplaneclientcertificatesResource, "status", c.ns, kongDataPlaneClientCertificate, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongDataPlaneClientCertificate), err
-}
-
-// Delete takes name of the kongDataPlaneClientCertificate and deletes it. Returns an error if one occurs.
-func (c *FakeKongDataPlaneClientCertificates) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongdataplaneclientcertificatesResource, c.ns, name, opts), &v1alpha1.KongDataPlaneClientCertificate{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongDataPlaneClientCertificates) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongdataplaneclientcertificatesResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongDataPlaneClientCertificateList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongDataPlaneClientCertificate.
-func (c *FakeKongDataPlaneClientCertificates) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongDataPlaneClientCertificate, err error) {
-	emptyResult := &v1alpha1.KongDataPlaneClientCertificate{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongdataplaneclientcertificatesResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongDataPlaneClientCertificate), err
 }

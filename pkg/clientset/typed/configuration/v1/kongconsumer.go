@@ -19,9 +19,9 @@ limitations under the License.
 package v1
 
 import (
-	"context"
+	context "context"
 
-	v1 "github.com/kong/kubernetes-configuration/api/configuration/v1"
+	configurationv1 "github.com/kong/kubernetes-configuration/api/configuration/v1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type KongConsumersGetter interface {
 
 // KongConsumerInterface has methods to work with KongConsumer resources.
 type KongConsumerInterface interface {
-	Create(ctx context.Context, kongConsumer *v1.KongConsumer, opts metav1.CreateOptions) (*v1.KongConsumer, error)
-	Update(ctx context.Context, kongConsumer *v1.KongConsumer, opts metav1.UpdateOptions) (*v1.KongConsumer, error)
+	Create(ctx context.Context, kongConsumer *configurationv1.KongConsumer, opts metav1.CreateOptions) (*configurationv1.KongConsumer, error)
+	Update(ctx context.Context, kongConsumer *configurationv1.KongConsumer, opts metav1.UpdateOptions) (*configurationv1.KongConsumer, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongConsumer *v1.KongConsumer, opts metav1.UpdateOptions) (*v1.KongConsumer, error)
+	UpdateStatus(ctx context.Context, kongConsumer *configurationv1.KongConsumer, opts metav1.UpdateOptions) (*configurationv1.KongConsumer, error)
 	Delete(ctx context.Context, name string, opts metav1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts metav1.DeleteOptions, listOpts metav1.ListOptions) error
-	Get(ctx context.Context, name string, opts metav1.GetOptions) (*v1.KongConsumer, error)
-	List(ctx context.Context, opts metav1.ListOptions) (*v1.KongConsumerList, error)
+	Get(ctx context.Context, name string, opts metav1.GetOptions) (*configurationv1.KongConsumer, error)
+	List(ctx context.Context, opts metav1.ListOptions) (*configurationv1.KongConsumerList, error)
 	Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *v1.KongConsumer, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *configurationv1.KongConsumer, err error)
 	KongConsumerExpansion
 }
 
 // kongConsumers implements KongConsumerInterface
 type kongConsumers struct {
-	*gentype.ClientWithList[*v1.KongConsumer, *v1.KongConsumerList]
+	*gentype.ClientWithList[*configurationv1.KongConsumer, *configurationv1.KongConsumerList]
 }
 
 // newKongConsumers returns a KongConsumers
 func newKongConsumers(c *ConfigurationV1Client, namespace string) *kongConsumers {
 	return &kongConsumers{
-		gentype.NewClientWithList[*v1.KongConsumer, *v1.KongConsumerList](
+		gentype.NewClientWithList[*configurationv1.KongConsumer, *configurationv1.KongConsumerList](
 			"kongconsumers",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1.KongConsumer { return &v1.KongConsumer{} },
-			func() *v1.KongConsumerList { return &v1.KongConsumerList{} }),
+			func() *configurationv1.KongConsumer { return &configurationv1.KongConsumer{} },
+			func() *configurationv1.KongConsumerList { return &configurationv1.KongConsumerList{} },
+		),
 	}
 }

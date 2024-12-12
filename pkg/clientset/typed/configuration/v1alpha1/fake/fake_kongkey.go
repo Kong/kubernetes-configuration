@@ -19,129 +19,32 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongKeys implements KongKeyInterface
-type FakeKongKeys struct {
+// fakeKongKeys implements KongKeyInterface
+type fakeKongKeys struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongKey, *v1alpha1.KongKeyList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongkeysResource = v1alpha1.SchemeGroupVersion.WithResource("kongkeys")
-
-var kongkeysKind = v1alpha1.SchemeGroupVersion.WithKind("KongKey")
-
-// Get takes name of the kongKey, and returns the corresponding kongKey object, and an error if there is any.
-func (c *FakeKongKeys) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongKey, err error) {
-	emptyResult := &v1alpha1.KongKey{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongkeysResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongKeys(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongKeyInterface {
+	return &fakeKongKeys{
+		gentype.NewFakeClientWithList[*v1alpha1.KongKey, *v1alpha1.KongKeyList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongkeys"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongKey"),
+			func() *v1alpha1.KongKey { return &v1alpha1.KongKey{} },
+			func() *v1alpha1.KongKeyList { return &v1alpha1.KongKeyList{} },
+			func(dst, src *v1alpha1.KongKeyList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongKeyList) []*v1alpha1.KongKey { return gentype.ToPointerSlice(list.Items) },
+			func(list *v1alpha1.KongKeyList, items []*v1alpha1.KongKey) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongKey), err
-}
-
-// List takes label and field selectors, and returns the list of KongKeys that match those selectors.
-func (c *FakeKongKeys) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongKeyList, err error) {
-	emptyResult := &v1alpha1.KongKeyList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongkeysResource, kongkeysKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongKeyList{ListMeta: obj.(*v1alpha1.KongKeyList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongKeyList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongKeys.
-func (c *FakeKongKeys) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongkeysResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongKey and creates it.  Returns the server's representation of the kongKey, and an error, if there is any.
-func (c *FakeKongKeys) Create(ctx context.Context, kongKey *v1alpha1.KongKey, opts v1.CreateOptions) (result *v1alpha1.KongKey, err error) {
-	emptyResult := &v1alpha1.KongKey{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongkeysResource, c.ns, kongKey, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongKey), err
-}
-
-// Update takes the representation of a kongKey and updates it. Returns the server's representation of the kongKey, and an error, if there is any.
-func (c *FakeKongKeys) Update(ctx context.Context, kongKey *v1alpha1.KongKey, opts v1.UpdateOptions) (result *v1alpha1.KongKey, err error) {
-	emptyResult := &v1alpha1.KongKey{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongkeysResource, c.ns, kongKey, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongKey), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongKeys) UpdateStatus(ctx context.Context, kongKey *v1alpha1.KongKey, opts v1.UpdateOptions) (result *v1alpha1.KongKey, err error) {
-	emptyResult := &v1alpha1.KongKey{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongkeysResource, "status", c.ns, kongKey, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongKey), err
-}
-
-// Delete takes name of the kongKey and deletes it. Returns an error if one occurs.
-func (c *FakeKongKeys) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongkeysResource, c.ns, name, opts), &v1alpha1.KongKey{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongKeys) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongkeysResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongKeyList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongKey.
-func (c *FakeKongKeys) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongKey, err error) {
-	emptyResult := &v1alpha1.KongKey{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongkeysResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongKey), err
 }

@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type KongVaultsGetter interface {
 
 // KongVaultInterface has methods to work with KongVault resources.
 type KongVaultInterface interface {
-	Create(ctx context.Context, kongVault *v1alpha1.KongVault, opts v1.CreateOptions) (*v1alpha1.KongVault, error)
-	Update(ctx context.Context, kongVault *v1alpha1.KongVault, opts v1.UpdateOptions) (*v1alpha1.KongVault, error)
+	Create(ctx context.Context, kongVault *configurationv1alpha1.KongVault, opts v1.CreateOptions) (*configurationv1alpha1.KongVault, error)
+	Update(ctx context.Context, kongVault *configurationv1alpha1.KongVault, opts v1.UpdateOptions) (*configurationv1alpha1.KongVault, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongVault *v1alpha1.KongVault, opts v1.UpdateOptions) (*v1alpha1.KongVault, error)
+	UpdateStatus(ctx context.Context, kongVault *configurationv1alpha1.KongVault, opts v1.UpdateOptions) (*configurationv1alpha1.KongVault, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongVault, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongVaultList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongVault, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongVaultList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongVault, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongVault, err error)
 	KongVaultExpansion
 }
 
 // kongVaults implements KongVaultInterface
 type kongVaults struct {
-	*gentype.ClientWithList[*v1alpha1.KongVault, *v1alpha1.KongVaultList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongVault, *configurationv1alpha1.KongVaultList]
 }
 
 // newKongVaults returns a KongVaults
 func newKongVaults(c *ConfigurationV1alpha1Client) *kongVaults {
 	return &kongVaults{
-		gentype.NewClientWithList[*v1alpha1.KongVault, *v1alpha1.KongVaultList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongVault, *configurationv1alpha1.KongVaultList](
 			"kongvaults",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			"",
-			func() *v1alpha1.KongVault { return &v1alpha1.KongVault{} },
-			func() *v1alpha1.KongVaultList { return &v1alpha1.KongVaultList{} }),
+			func() *configurationv1alpha1.KongVault { return &configurationv1alpha1.KongVault{} },
+			func() *configurationv1alpha1.KongVaultList { return &configurationv1alpha1.KongVaultList{} },
+		),
 	}
 }

@@ -19,129 +19,32 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1 "github.com/kong/kubernetes-configuration/api/configuration/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongConsumers implements KongConsumerInterface
-type FakeKongConsumers struct {
+// fakeKongConsumers implements KongConsumerInterface
+type fakeKongConsumers struct {
+	*gentype.FakeClientWithList[*v1.KongConsumer, *v1.KongConsumerList]
 	Fake *FakeConfigurationV1
-	ns   string
 }
 
-var kongconsumersResource = v1.SchemeGroupVersion.WithResource("kongconsumers")
-
-var kongconsumersKind = v1.SchemeGroupVersion.WithKind("KongConsumer")
-
-// Get takes name of the kongConsumer, and returns the corresponding kongConsumer object, and an error if there is any.
-func (c *FakeKongConsumers) Get(ctx context.Context, name string, options metav1.GetOptions) (result *v1.KongConsumer, err error) {
-	emptyResult := &v1.KongConsumer{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongconsumersResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongConsumers(fake *FakeConfigurationV1, namespace string) configurationv1.KongConsumerInterface {
+	return &fakeKongConsumers{
+		gentype.NewFakeClientWithList[*v1.KongConsumer, *v1.KongConsumerList](
+			fake.Fake,
+			namespace,
+			v1.SchemeGroupVersion.WithResource("kongconsumers"),
+			v1.SchemeGroupVersion.WithKind("KongConsumer"),
+			func() *v1.KongConsumer { return &v1.KongConsumer{} },
+			func() *v1.KongConsumerList { return &v1.KongConsumerList{} },
+			func(dst, src *v1.KongConsumerList) { dst.ListMeta = src.ListMeta },
+			func(list *v1.KongConsumerList) []*v1.KongConsumer { return gentype.ToPointerSlice(list.Items) },
+			func(list *v1.KongConsumerList, items []*v1.KongConsumer) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1.KongConsumer), err
-}
-
-// List takes label and field selectors, and returns the list of KongConsumers that match those selectors.
-func (c *FakeKongConsumers) List(ctx context.Context, opts metav1.ListOptions) (result *v1.KongConsumerList, err error) {
-	emptyResult := &v1.KongConsumerList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongconsumersResource, kongconsumersKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1.KongConsumerList{ListMeta: obj.(*v1.KongConsumerList).ListMeta}
-	for _, item := range obj.(*v1.KongConsumerList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongConsumers.
-func (c *FakeKongConsumers) Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongconsumersResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongConsumer and creates it.  Returns the server's representation of the kongConsumer, and an error, if there is any.
-func (c *FakeKongConsumers) Create(ctx context.Context, kongConsumer *v1.KongConsumer, opts metav1.CreateOptions) (result *v1.KongConsumer, err error) {
-	emptyResult := &v1.KongConsumer{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongconsumersResource, c.ns, kongConsumer, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1.KongConsumer), err
-}
-
-// Update takes the representation of a kongConsumer and updates it. Returns the server's representation of the kongConsumer, and an error, if there is any.
-func (c *FakeKongConsumers) Update(ctx context.Context, kongConsumer *v1.KongConsumer, opts metav1.UpdateOptions) (result *v1.KongConsumer, err error) {
-	emptyResult := &v1.KongConsumer{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongconsumersResource, c.ns, kongConsumer, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1.KongConsumer), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongConsumers) UpdateStatus(ctx context.Context, kongConsumer *v1.KongConsumer, opts metav1.UpdateOptions) (result *v1.KongConsumer, err error) {
-	emptyResult := &v1.KongConsumer{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongconsumersResource, "status", c.ns, kongConsumer, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1.KongConsumer), err
-}
-
-// Delete takes name of the kongConsumer and deletes it. Returns an error if one occurs.
-func (c *FakeKongConsumers) Delete(ctx context.Context, name string, opts metav1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongconsumersResource, c.ns, name, opts), &v1.KongConsumer{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongConsumers) DeleteCollection(ctx context.Context, opts metav1.DeleteOptions, listOpts metav1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongconsumersResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1.KongConsumerList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongConsumer.
-func (c *FakeKongConsumers) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *v1.KongConsumer, err error) {
-	emptyResult := &v1.KongConsumer{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongconsumersResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1.KongConsumer), err
 }

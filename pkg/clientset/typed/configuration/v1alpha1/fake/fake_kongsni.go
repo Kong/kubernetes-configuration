@@ -19,129 +19,32 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongSNIs implements KongSNIInterface
-type FakeKongSNIs struct {
+// fakeKongSNIs implements KongSNIInterface
+type fakeKongSNIs struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongSNI, *v1alpha1.KongSNIList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongsnisResource = v1alpha1.SchemeGroupVersion.WithResource("kongsnis")
-
-var kongsnisKind = v1alpha1.SchemeGroupVersion.WithKind("KongSNI")
-
-// Get takes name of the kongSNI, and returns the corresponding kongSNI object, and an error if there is any.
-func (c *FakeKongSNIs) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongSNI, err error) {
-	emptyResult := &v1alpha1.KongSNI{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongsnisResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongSNIs(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongSNIInterface {
+	return &fakeKongSNIs{
+		gentype.NewFakeClientWithList[*v1alpha1.KongSNI, *v1alpha1.KongSNIList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongsnis"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongSNI"),
+			func() *v1alpha1.KongSNI { return &v1alpha1.KongSNI{} },
+			func() *v1alpha1.KongSNIList { return &v1alpha1.KongSNIList{} },
+			func(dst, src *v1alpha1.KongSNIList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongSNIList) []*v1alpha1.KongSNI { return gentype.ToPointerSlice(list.Items) },
+			func(list *v1alpha1.KongSNIList, items []*v1alpha1.KongSNI) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongSNI), err
-}
-
-// List takes label and field selectors, and returns the list of KongSNIs that match those selectors.
-func (c *FakeKongSNIs) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongSNIList, err error) {
-	emptyResult := &v1alpha1.KongSNIList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongsnisResource, kongsnisKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongSNIList{ListMeta: obj.(*v1alpha1.KongSNIList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongSNIList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongSNIs.
-func (c *FakeKongSNIs) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongsnisResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongSNI and creates it.  Returns the server's representation of the kongSNI, and an error, if there is any.
-func (c *FakeKongSNIs) Create(ctx context.Context, kongSNI *v1alpha1.KongSNI, opts v1.CreateOptions) (result *v1alpha1.KongSNI, err error) {
-	emptyResult := &v1alpha1.KongSNI{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongsnisResource, c.ns, kongSNI, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongSNI), err
-}
-
-// Update takes the representation of a kongSNI and updates it. Returns the server's representation of the kongSNI, and an error, if there is any.
-func (c *FakeKongSNIs) Update(ctx context.Context, kongSNI *v1alpha1.KongSNI, opts v1.UpdateOptions) (result *v1alpha1.KongSNI, err error) {
-	emptyResult := &v1alpha1.KongSNI{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongsnisResource, c.ns, kongSNI, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongSNI), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongSNIs) UpdateStatus(ctx context.Context, kongSNI *v1alpha1.KongSNI, opts v1.UpdateOptions) (result *v1alpha1.KongSNI, err error) {
-	emptyResult := &v1alpha1.KongSNI{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongsnisResource, "status", c.ns, kongSNI, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongSNI), err
-}
-
-// Delete takes name of the kongSNI and deletes it. Returns an error if one occurs.
-func (c *FakeKongSNIs) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongsnisResource, c.ns, name, opts), &v1alpha1.KongSNI{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongSNIs) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongsnisResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongSNIList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongSNI.
-func (c *FakeKongSNIs) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongSNI, err error) {
-	emptyResult := &v1alpha1.KongSNI{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongsnisResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongSNI), err
 }

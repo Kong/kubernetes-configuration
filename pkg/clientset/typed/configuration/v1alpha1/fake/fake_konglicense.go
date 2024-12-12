@@ -19,120 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongLicenses implements KongLicenseInterface
-type FakeKongLicenses struct {
+// fakeKongLicenses implements KongLicenseInterface
+type fakeKongLicenses struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongLicense, *v1alpha1.KongLicenseList]
 	Fake *FakeConfigurationV1alpha1
 }
 
-var konglicensesResource = v1alpha1.SchemeGroupVersion.WithResource("konglicenses")
-
-var konglicensesKind = v1alpha1.SchemeGroupVersion.WithKind("KongLicense")
-
-// Get takes name of the kongLicense, and returns the corresponding kongLicense object, and an error if there is any.
-func (c *FakeKongLicenses) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongLicense, err error) {
-	emptyResult := &v1alpha1.KongLicense{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootGetActionWithOptions(konglicensesResource, name, options), emptyResult)
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongLicenses(fake *FakeConfigurationV1alpha1) configurationv1alpha1.KongLicenseInterface {
+	return &fakeKongLicenses{
+		gentype.NewFakeClientWithList[*v1alpha1.KongLicense, *v1alpha1.KongLicenseList](
+			fake.Fake,
+			"",
+			v1alpha1.SchemeGroupVersion.WithResource("konglicenses"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongLicense"),
+			func() *v1alpha1.KongLicense { return &v1alpha1.KongLicense{} },
+			func() *v1alpha1.KongLicenseList { return &v1alpha1.KongLicenseList{} },
+			func(dst, src *v1alpha1.KongLicenseList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongLicenseList) []*v1alpha1.KongLicense {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KongLicenseList, items []*v1alpha1.KongLicense) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongLicense), err
-}
-
-// List takes label and field selectors, and returns the list of KongLicenses that match those selectors.
-func (c *FakeKongLicenses) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongLicenseList, err error) {
-	emptyResult := &v1alpha1.KongLicenseList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootListActionWithOptions(konglicensesResource, konglicensesKind, opts), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongLicenseList{ListMeta: obj.(*v1alpha1.KongLicenseList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongLicenseList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongLicenses.
-func (c *FakeKongLicenses) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewRootWatchActionWithOptions(konglicensesResource, opts))
-}
-
-// Create takes the representation of a kongLicense and creates it.  Returns the server's representation of the kongLicense, and an error, if there is any.
-func (c *FakeKongLicenses) Create(ctx context.Context, kongLicense *v1alpha1.KongLicense, opts v1.CreateOptions) (result *v1alpha1.KongLicense, err error) {
-	emptyResult := &v1alpha1.KongLicense{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootCreateActionWithOptions(konglicensesResource, kongLicense, opts), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongLicense), err
-}
-
-// Update takes the representation of a kongLicense and updates it. Returns the server's representation of the kongLicense, and an error, if there is any.
-func (c *FakeKongLicenses) Update(ctx context.Context, kongLicense *v1alpha1.KongLicense, opts v1.UpdateOptions) (result *v1alpha1.KongLicense, err error) {
-	emptyResult := &v1alpha1.KongLicense{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootUpdateActionWithOptions(konglicensesResource, kongLicense, opts), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongLicense), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongLicenses) UpdateStatus(ctx context.Context, kongLicense *v1alpha1.KongLicense, opts v1.UpdateOptions) (result *v1alpha1.KongLicense, err error) {
-	emptyResult := &v1alpha1.KongLicense{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootUpdateSubresourceActionWithOptions(konglicensesResource, "status", kongLicense, opts), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongLicense), err
-}
-
-// Delete takes name of the kongLicense and deletes it. Returns an error if one occurs.
-func (c *FakeKongLicenses) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewRootDeleteActionWithOptions(konglicensesResource, name, opts), &v1alpha1.KongLicense{})
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongLicenses) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewRootDeleteCollectionActionWithOptions(konglicensesResource, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongLicenseList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongLicense.
-func (c *FakeKongLicenses) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongLicense, err error) {
-	emptyResult := &v1alpha1.KongLicense{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootPatchSubresourceActionWithOptions(konglicensesResource, name, pt, data, opts, subresources...), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongLicense), err
 }

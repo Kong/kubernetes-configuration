@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type KongSNIsGetter interface {
 
 // KongSNIInterface has methods to work with KongSNI resources.
 type KongSNIInterface interface {
-	Create(ctx context.Context, kongSNI *v1alpha1.KongSNI, opts v1.CreateOptions) (*v1alpha1.KongSNI, error)
-	Update(ctx context.Context, kongSNI *v1alpha1.KongSNI, opts v1.UpdateOptions) (*v1alpha1.KongSNI, error)
+	Create(ctx context.Context, kongSNI *configurationv1alpha1.KongSNI, opts v1.CreateOptions) (*configurationv1alpha1.KongSNI, error)
+	Update(ctx context.Context, kongSNI *configurationv1alpha1.KongSNI, opts v1.UpdateOptions) (*configurationv1alpha1.KongSNI, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongSNI *v1alpha1.KongSNI, opts v1.UpdateOptions) (*v1alpha1.KongSNI, error)
+	UpdateStatus(ctx context.Context, kongSNI *configurationv1alpha1.KongSNI, opts v1.UpdateOptions) (*configurationv1alpha1.KongSNI, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongSNI, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongSNIList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongSNI, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongSNIList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongSNI, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongSNI, err error)
 	KongSNIExpansion
 }
 
 // kongSNIs implements KongSNIInterface
 type kongSNIs struct {
-	*gentype.ClientWithList[*v1alpha1.KongSNI, *v1alpha1.KongSNIList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongSNI, *configurationv1alpha1.KongSNIList]
 }
 
 // newKongSNIs returns a KongSNIs
 func newKongSNIs(c *ConfigurationV1alpha1Client, namespace string) *kongSNIs {
 	return &kongSNIs{
-		gentype.NewClientWithList[*v1alpha1.KongSNI, *v1alpha1.KongSNIList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongSNI, *configurationv1alpha1.KongSNIList](
 			"kongsnis",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongSNI { return &v1alpha1.KongSNI{} },
-			func() *v1alpha1.KongSNIList { return &v1alpha1.KongSNIList{} }),
+			func() *configurationv1alpha1.KongSNI { return &configurationv1alpha1.KongSNI{} },
+			func() *configurationv1alpha1.KongSNIList { return &configurationv1alpha1.KongSNIList{} },
+		),
 	}
 }

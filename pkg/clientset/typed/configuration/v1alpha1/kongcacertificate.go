@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,36 @@ type KongCACertificatesGetter interface {
 
 // KongCACertificateInterface has methods to work with KongCACertificate resources.
 type KongCACertificateInterface interface {
-	Create(ctx context.Context, kongCACertificate *v1alpha1.KongCACertificate, opts v1.CreateOptions) (*v1alpha1.KongCACertificate, error)
-	Update(ctx context.Context, kongCACertificate *v1alpha1.KongCACertificate, opts v1.UpdateOptions) (*v1alpha1.KongCACertificate, error)
+	Create(ctx context.Context, kongCACertificate *configurationv1alpha1.KongCACertificate, opts v1.CreateOptions) (*configurationv1alpha1.KongCACertificate, error)
+	Update(ctx context.Context, kongCACertificate *configurationv1alpha1.KongCACertificate, opts v1.UpdateOptions) (*configurationv1alpha1.KongCACertificate, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongCACertificate *v1alpha1.KongCACertificate, opts v1.UpdateOptions) (*v1alpha1.KongCACertificate, error)
+	UpdateStatus(ctx context.Context, kongCACertificate *configurationv1alpha1.KongCACertificate, opts v1.UpdateOptions) (*configurationv1alpha1.KongCACertificate, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongCACertificate, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongCACertificateList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongCACertificate, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongCACertificateList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCACertificate, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongCACertificate, err error)
 	KongCACertificateExpansion
 }
 
 // kongCACertificates implements KongCACertificateInterface
 type kongCACertificates struct {
-	*gentype.ClientWithList[*v1alpha1.KongCACertificate, *v1alpha1.KongCACertificateList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongCACertificate, *configurationv1alpha1.KongCACertificateList]
 }
 
 // newKongCACertificates returns a KongCACertificates
 func newKongCACertificates(c *ConfigurationV1alpha1Client, namespace string) *kongCACertificates {
 	return &kongCACertificates{
-		gentype.NewClientWithList[*v1alpha1.KongCACertificate, *v1alpha1.KongCACertificateList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongCACertificate, *configurationv1alpha1.KongCACertificateList](
 			"kongcacertificates",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongCACertificate { return &v1alpha1.KongCACertificate{} },
-			func() *v1alpha1.KongCACertificateList { return &v1alpha1.KongCACertificateList{} }),
+			func() *configurationv1alpha1.KongCACertificate { return &configurationv1alpha1.KongCACertificate{} },
+			func() *configurationv1alpha1.KongCACertificateList {
+				return &configurationv1alpha1.KongCACertificateList{}
+			},
+		),
 	}
 }

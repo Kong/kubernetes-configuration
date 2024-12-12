@@ -19,129 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongCertificates implements KongCertificateInterface
-type FakeKongCertificates struct {
+// fakeKongCertificates implements KongCertificateInterface
+type fakeKongCertificates struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongCertificate, *v1alpha1.KongCertificateList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongcertificatesResource = v1alpha1.SchemeGroupVersion.WithResource("kongcertificates")
-
-var kongcertificatesKind = v1alpha1.SchemeGroupVersion.WithKind("KongCertificate")
-
-// Get takes name of the kongCertificate, and returns the corresponding kongCertificate object, and an error if there is any.
-func (c *FakeKongCertificates) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongCertificate, err error) {
-	emptyResult := &v1alpha1.KongCertificate{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongcertificatesResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongCertificates(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongCertificateInterface {
+	return &fakeKongCertificates{
+		gentype.NewFakeClientWithList[*v1alpha1.KongCertificate, *v1alpha1.KongCertificateList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongcertificates"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongCertificate"),
+			func() *v1alpha1.KongCertificate { return &v1alpha1.KongCertificate{} },
+			func() *v1alpha1.KongCertificateList { return &v1alpha1.KongCertificateList{} },
+			func(dst, src *v1alpha1.KongCertificateList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongCertificateList) []*v1alpha1.KongCertificate {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KongCertificateList, items []*v1alpha1.KongCertificate) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongCertificate), err
-}
-
-// List takes label and field selectors, and returns the list of KongCertificates that match those selectors.
-func (c *FakeKongCertificates) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongCertificateList, err error) {
-	emptyResult := &v1alpha1.KongCertificateList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongcertificatesResource, kongcertificatesKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongCertificateList{ListMeta: obj.(*v1alpha1.KongCertificateList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongCertificateList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongCertificates.
-func (c *FakeKongCertificates) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongcertificatesResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongCertificate and creates it.  Returns the server's representation of the kongCertificate, and an error, if there is any.
-func (c *FakeKongCertificates) Create(ctx context.Context, kongCertificate *v1alpha1.KongCertificate, opts v1.CreateOptions) (result *v1alpha1.KongCertificate, err error) {
-	emptyResult := &v1alpha1.KongCertificate{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongcertificatesResource, c.ns, kongCertificate, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCertificate), err
-}
-
-// Update takes the representation of a kongCertificate and updates it. Returns the server's representation of the kongCertificate, and an error, if there is any.
-func (c *FakeKongCertificates) Update(ctx context.Context, kongCertificate *v1alpha1.KongCertificate, opts v1.UpdateOptions) (result *v1alpha1.KongCertificate, err error) {
-	emptyResult := &v1alpha1.KongCertificate{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongcertificatesResource, c.ns, kongCertificate, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCertificate), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongCertificates) UpdateStatus(ctx context.Context, kongCertificate *v1alpha1.KongCertificate, opts v1.UpdateOptions) (result *v1alpha1.KongCertificate, err error) {
-	emptyResult := &v1alpha1.KongCertificate{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongcertificatesResource, "status", c.ns, kongCertificate, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCertificate), err
-}
-
-// Delete takes name of the kongCertificate and deletes it. Returns an error if one occurs.
-func (c *FakeKongCertificates) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongcertificatesResource, c.ns, name, opts), &v1alpha1.KongCertificate{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongCertificates) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongcertificatesResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongCertificateList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongCertificate.
-func (c *FakeKongCertificates) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCertificate, err error) {
-	emptyResult := &v1alpha1.KongCertificate{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongcertificatesResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCertificate), err
 }

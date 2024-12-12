@@ -19,129 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/incubator/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	incubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongServiceFacades implements KongServiceFacadeInterface
-type FakeKongServiceFacades struct {
+// fakeKongServiceFacades implements KongServiceFacadeInterface
+type fakeKongServiceFacades struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongServiceFacade, *v1alpha1.KongServiceFacadeList]
 	Fake *FakeIncubatorV1alpha1
-	ns   string
 }
 
-var kongservicefacadesResource = v1alpha1.SchemeGroupVersion.WithResource("kongservicefacades")
-
-var kongservicefacadesKind = v1alpha1.SchemeGroupVersion.WithKind("KongServiceFacade")
-
-// Get takes name of the kongServiceFacade, and returns the corresponding kongServiceFacade object, and an error if there is any.
-func (c *FakeKongServiceFacades) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongServiceFacade, err error) {
-	emptyResult := &v1alpha1.KongServiceFacade{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongservicefacadesResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongServiceFacades(fake *FakeIncubatorV1alpha1, namespace string) incubatorv1alpha1.KongServiceFacadeInterface {
+	return &fakeKongServiceFacades{
+		gentype.NewFakeClientWithList[*v1alpha1.KongServiceFacade, *v1alpha1.KongServiceFacadeList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongservicefacades"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongServiceFacade"),
+			func() *v1alpha1.KongServiceFacade { return &v1alpha1.KongServiceFacade{} },
+			func() *v1alpha1.KongServiceFacadeList { return &v1alpha1.KongServiceFacadeList{} },
+			func(dst, src *v1alpha1.KongServiceFacadeList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongServiceFacadeList) []*v1alpha1.KongServiceFacade {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KongServiceFacadeList, items []*v1alpha1.KongServiceFacade) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongServiceFacade), err
-}
-
-// List takes label and field selectors, and returns the list of KongServiceFacades that match those selectors.
-func (c *FakeKongServiceFacades) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongServiceFacadeList, err error) {
-	emptyResult := &v1alpha1.KongServiceFacadeList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongservicefacadesResource, kongservicefacadesKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongServiceFacadeList{ListMeta: obj.(*v1alpha1.KongServiceFacadeList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongServiceFacadeList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongServiceFacades.
-func (c *FakeKongServiceFacades) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongservicefacadesResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongServiceFacade and creates it.  Returns the server's representation of the kongServiceFacade, and an error, if there is any.
-func (c *FakeKongServiceFacades) Create(ctx context.Context, kongServiceFacade *v1alpha1.KongServiceFacade, opts v1.CreateOptions) (result *v1alpha1.KongServiceFacade, err error) {
-	emptyResult := &v1alpha1.KongServiceFacade{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongservicefacadesResource, c.ns, kongServiceFacade, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongServiceFacade), err
-}
-
-// Update takes the representation of a kongServiceFacade and updates it. Returns the server's representation of the kongServiceFacade, and an error, if there is any.
-func (c *FakeKongServiceFacades) Update(ctx context.Context, kongServiceFacade *v1alpha1.KongServiceFacade, opts v1.UpdateOptions) (result *v1alpha1.KongServiceFacade, err error) {
-	emptyResult := &v1alpha1.KongServiceFacade{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongservicefacadesResource, c.ns, kongServiceFacade, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongServiceFacade), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongServiceFacades) UpdateStatus(ctx context.Context, kongServiceFacade *v1alpha1.KongServiceFacade, opts v1.UpdateOptions) (result *v1alpha1.KongServiceFacade, err error) {
-	emptyResult := &v1alpha1.KongServiceFacade{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongservicefacadesResource, "status", c.ns, kongServiceFacade, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongServiceFacade), err
-}
-
-// Delete takes name of the kongServiceFacade and deletes it. Returns an error if one occurs.
-func (c *FakeKongServiceFacades) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongservicefacadesResource, c.ns, name, opts), &v1alpha1.KongServiceFacade{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongServiceFacades) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongservicefacadesResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongServiceFacadeList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongServiceFacade.
-func (c *FakeKongServiceFacades) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongServiceFacade, err error) {
-	emptyResult := &v1alpha1.KongServiceFacade{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongservicefacadesResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongServiceFacade), err
 }

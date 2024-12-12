@@ -29,19 +29,19 @@ type FakeConfigurationV1 struct {
 }
 
 func (c *FakeConfigurationV1) KongClusterPlugins() v1.KongClusterPluginInterface {
-	return &FakeKongClusterPlugins{c}
+	return newFakeKongClusterPlugins(c)
 }
 
 func (c *FakeConfigurationV1) KongConsumers(namespace string) v1.KongConsumerInterface {
-	return &FakeKongConsumers{c, namespace}
+	return newFakeKongConsumers(c, namespace)
 }
 
 func (c *FakeConfigurationV1) KongIngresses(namespace string) v1.KongIngressInterface {
-	return &FakeKongIngresses{c, namespace}
+	return newFakeKongIngresses(c, namespace)
 }
 
 func (c *FakeConfigurationV1) KongPlugins(namespace string) v1.KongPluginInterface {
-	return &FakeKongPlugins{c, namespace}
+	return newFakeKongPlugins(c, namespace)
 }
 
 // RESTClient returns a RESTClient that is used to communicate

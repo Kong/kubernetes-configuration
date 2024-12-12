@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
+	konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,38 @@ type KonnectGatewayControlPlanesGetter interface {
 
 // KonnectGatewayControlPlaneInterface has methods to work with KonnectGatewayControlPlane resources.
 type KonnectGatewayControlPlaneInterface interface {
-	Create(ctx context.Context, konnectGatewayControlPlane *v1alpha1.KonnectGatewayControlPlane, opts v1.CreateOptions) (*v1alpha1.KonnectGatewayControlPlane, error)
-	Update(ctx context.Context, konnectGatewayControlPlane *v1alpha1.KonnectGatewayControlPlane, opts v1.UpdateOptions) (*v1alpha1.KonnectGatewayControlPlane, error)
+	Create(ctx context.Context, konnectGatewayControlPlane *konnectv1alpha1.KonnectGatewayControlPlane, opts v1.CreateOptions) (*konnectv1alpha1.KonnectGatewayControlPlane, error)
+	Update(ctx context.Context, konnectGatewayControlPlane *konnectv1alpha1.KonnectGatewayControlPlane, opts v1.UpdateOptions) (*konnectv1alpha1.KonnectGatewayControlPlane, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, konnectGatewayControlPlane *v1alpha1.KonnectGatewayControlPlane, opts v1.UpdateOptions) (*v1alpha1.KonnectGatewayControlPlane, error)
+	UpdateStatus(ctx context.Context, konnectGatewayControlPlane *konnectv1alpha1.KonnectGatewayControlPlane, opts v1.UpdateOptions) (*konnectv1alpha1.KonnectGatewayControlPlane, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KonnectGatewayControlPlane, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KonnectGatewayControlPlaneList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*konnectv1alpha1.KonnectGatewayControlPlane, error)
+	List(ctx context.Context, opts v1.ListOptions) (*konnectv1alpha1.KonnectGatewayControlPlaneList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KonnectGatewayControlPlane, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *konnectv1alpha1.KonnectGatewayControlPlane, err error)
 	KonnectGatewayControlPlaneExpansion
 }
 
 // konnectGatewayControlPlanes implements KonnectGatewayControlPlaneInterface
 type konnectGatewayControlPlanes struct {
-	*gentype.ClientWithList[*v1alpha1.KonnectGatewayControlPlane, *v1alpha1.KonnectGatewayControlPlaneList]
+	*gentype.ClientWithList[*konnectv1alpha1.KonnectGatewayControlPlane, *konnectv1alpha1.KonnectGatewayControlPlaneList]
 }
 
 // newKonnectGatewayControlPlanes returns a KonnectGatewayControlPlanes
 func newKonnectGatewayControlPlanes(c *KonnectV1alpha1Client, namespace string) *konnectGatewayControlPlanes {
 	return &konnectGatewayControlPlanes{
-		gentype.NewClientWithList[*v1alpha1.KonnectGatewayControlPlane, *v1alpha1.KonnectGatewayControlPlaneList](
+		gentype.NewClientWithList[*konnectv1alpha1.KonnectGatewayControlPlane, *konnectv1alpha1.KonnectGatewayControlPlaneList](
 			"konnectgatewaycontrolplanes",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KonnectGatewayControlPlane { return &v1alpha1.KonnectGatewayControlPlane{} },
-			func() *v1alpha1.KonnectGatewayControlPlaneList { return &v1alpha1.KonnectGatewayControlPlaneList{} }),
+			func() *konnectv1alpha1.KonnectGatewayControlPlane {
+				return &konnectv1alpha1.KonnectGatewayControlPlane{}
+			},
+			func() *konnectv1alpha1.KonnectGatewayControlPlaneList {
+				return &konnectv1alpha1.KonnectGatewayControlPlaneList{}
+			},
+		),
 	}
 }

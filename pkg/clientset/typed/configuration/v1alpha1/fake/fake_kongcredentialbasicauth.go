@@ -19,129 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongCredentialBasicAuths implements KongCredentialBasicAuthInterface
-type FakeKongCredentialBasicAuths struct {
+// fakeKongCredentialBasicAuths implements KongCredentialBasicAuthInterface
+type fakeKongCredentialBasicAuths struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongCredentialBasicAuth, *v1alpha1.KongCredentialBasicAuthList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongcredentialbasicauthsResource = v1alpha1.SchemeGroupVersion.WithResource("kongcredentialbasicauths")
-
-var kongcredentialbasicauthsKind = v1alpha1.SchemeGroupVersion.WithKind("KongCredentialBasicAuth")
-
-// Get takes name of the kongCredentialBasicAuth, and returns the corresponding kongCredentialBasicAuth object, and an error if there is any.
-func (c *FakeKongCredentialBasicAuths) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongCredentialBasicAuth, err error) {
-	emptyResult := &v1alpha1.KongCredentialBasicAuth{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongcredentialbasicauthsResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongCredentialBasicAuths(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongCredentialBasicAuthInterface {
+	return &fakeKongCredentialBasicAuths{
+		gentype.NewFakeClientWithList[*v1alpha1.KongCredentialBasicAuth, *v1alpha1.KongCredentialBasicAuthList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongcredentialbasicauths"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongCredentialBasicAuth"),
+			func() *v1alpha1.KongCredentialBasicAuth { return &v1alpha1.KongCredentialBasicAuth{} },
+			func() *v1alpha1.KongCredentialBasicAuthList { return &v1alpha1.KongCredentialBasicAuthList{} },
+			func(dst, src *v1alpha1.KongCredentialBasicAuthList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongCredentialBasicAuthList) []*v1alpha1.KongCredentialBasicAuth {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KongCredentialBasicAuthList, items []*v1alpha1.KongCredentialBasicAuth) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongCredentialBasicAuth), err
-}
-
-// List takes label and field selectors, and returns the list of KongCredentialBasicAuths that match those selectors.
-func (c *FakeKongCredentialBasicAuths) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongCredentialBasicAuthList, err error) {
-	emptyResult := &v1alpha1.KongCredentialBasicAuthList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongcredentialbasicauthsResource, kongcredentialbasicauthsKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongCredentialBasicAuthList{ListMeta: obj.(*v1alpha1.KongCredentialBasicAuthList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongCredentialBasicAuthList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongCredentialBasicAuths.
-func (c *FakeKongCredentialBasicAuths) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongcredentialbasicauthsResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongCredentialBasicAuth and creates it.  Returns the server's representation of the kongCredentialBasicAuth, and an error, if there is any.
-func (c *FakeKongCredentialBasicAuths) Create(ctx context.Context, kongCredentialBasicAuth *v1alpha1.KongCredentialBasicAuth, opts v1.CreateOptions) (result *v1alpha1.KongCredentialBasicAuth, err error) {
-	emptyResult := &v1alpha1.KongCredentialBasicAuth{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongcredentialbasicauthsResource, c.ns, kongCredentialBasicAuth, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialBasicAuth), err
-}
-
-// Update takes the representation of a kongCredentialBasicAuth and updates it. Returns the server's representation of the kongCredentialBasicAuth, and an error, if there is any.
-func (c *FakeKongCredentialBasicAuths) Update(ctx context.Context, kongCredentialBasicAuth *v1alpha1.KongCredentialBasicAuth, opts v1.UpdateOptions) (result *v1alpha1.KongCredentialBasicAuth, err error) {
-	emptyResult := &v1alpha1.KongCredentialBasicAuth{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongcredentialbasicauthsResource, c.ns, kongCredentialBasicAuth, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialBasicAuth), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongCredentialBasicAuths) UpdateStatus(ctx context.Context, kongCredentialBasicAuth *v1alpha1.KongCredentialBasicAuth, opts v1.UpdateOptions) (result *v1alpha1.KongCredentialBasicAuth, err error) {
-	emptyResult := &v1alpha1.KongCredentialBasicAuth{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongcredentialbasicauthsResource, "status", c.ns, kongCredentialBasicAuth, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialBasicAuth), err
-}
-
-// Delete takes name of the kongCredentialBasicAuth and deletes it. Returns an error if one occurs.
-func (c *FakeKongCredentialBasicAuths) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongcredentialbasicauthsResource, c.ns, name, opts), &v1alpha1.KongCredentialBasicAuth{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongCredentialBasicAuths) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongcredentialbasicauthsResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongCredentialBasicAuthList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongCredentialBasicAuth.
-func (c *FakeKongCredentialBasicAuths) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCredentialBasicAuth, err error) {
-	emptyResult := &v1alpha1.KongCredentialBasicAuth{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongcredentialbasicauthsResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialBasicAuth), err
 }

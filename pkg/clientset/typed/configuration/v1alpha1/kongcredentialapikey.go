@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,38 @@ type KongCredentialAPIKeysGetter interface {
 
 // KongCredentialAPIKeyInterface has methods to work with KongCredentialAPIKey resources.
 type KongCredentialAPIKeyInterface interface {
-	Create(ctx context.Context, kongCredentialAPIKey *v1alpha1.KongCredentialAPIKey, opts v1.CreateOptions) (*v1alpha1.KongCredentialAPIKey, error)
-	Update(ctx context.Context, kongCredentialAPIKey *v1alpha1.KongCredentialAPIKey, opts v1.UpdateOptions) (*v1alpha1.KongCredentialAPIKey, error)
+	Create(ctx context.Context, kongCredentialAPIKey *configurationv1alpha1.KongCredentialAPIKey, opts v1.CreateOptions) (*configurationv1alpha1.KongCredentialAPIKey, error)
+	Update(ctx context.Context, kongCredentialAPIKey *configurationv1alpha1.KongCredentialAPIKey, opts v1.UpdateOptions) (*configurationv1alpha1.KongCredentialAPIKey, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongCredentialAPIKey *v1alpha1.KongCredentialAPIKey, opts v1.UpdateOptions) (*v1alpha1.KongCredentialAPIKey, error)
+	UpdateStatus(ctx context.Context, kongCredentialAPIKey *configurationv1alpha1.KongCredentialAPIKey, opts v1.UpdateOptions) (*configurationv1alpha1.KongCredentialAPIKey, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongCredentialAPIKey, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongCredentialAPIKeyList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongCredentialAPIKey, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongCredentialAPIKeyList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCredentialAPIKey, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongCredentialAPIKey, err error)
 	KongCredentialAPIKeyExpansion
 }
 
 // kongCredentialAPIKeys implements KongCredentialAPIKeyInterface
 type kongCredentialAPIKeys struct {
-	*gentype.ClientWithList[*v1alpha1.KongCredentialAPIKey, *v1alpha1.KongCredentialAPIKeyList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongCredentialAPIKey, *configurationv1alpha1.KongCredentialAPIKeyList]
 }
 
 // newKongCredentialAPIKeys returns a KongCredentialAPIKeys
 func newKongCredentialAPIKeys(c *ConfigurationV1alpha1Client, namespace string) *kongCredentialAPIKeys {
 	return &kongCredentialAPIKeys{
-		gentype.NewClientWithList[*v1alpha1.KongCredentialAPIKey, *v1alpha1.KongCredentialAPIKeyList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongCredentialAPIKey, *configurationv1alpha1.KongCredentialAPIKeyList](
 			"kongcredentialapikeys",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongCredentialAPIKey { return &v1alpha1.KongCredentialAPIKey{} },
-			func() *v1alpha1.KongCredentialAPIKeyList { return &v1alpha1.KongCredentialAPIKeyList{} }),
+			func() *configurationv1alpha1.KongCredentialAPIKey {
+				return &configurationv1alpha1.KongCredentialAPIKey{}
+			},
+			func() *configurationv1alpha1.KongCredentialAPIKeyList {
+				return &configurationv1alpha1.KongCredentialAPIKeyList{}
+			},
+		),
 	}
 }

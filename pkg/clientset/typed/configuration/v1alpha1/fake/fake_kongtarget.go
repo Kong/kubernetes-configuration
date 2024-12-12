@@ -19,129 +19,32 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongTargets implements KongTargetInterface
-type FakeKongTargets struct {
+// fakeKongTargets implements KongTargetInterface
+type fakeKongTargets struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongTarget, *v1alpha1.KongTargetList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongtargetsResource = v1alpha1.SchemeGroupVersion.WithResource("kongtargets")
-
-var kongtargetsKind = v1alpha1.SchemeGroupVersion.WithKind("KongTarget")
-
-// Get takes name of the kongTarget, and returns the corresponding kongTarget object, and an error if there is any.
-func (c *FakeKongTargets) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongTarget, err error) {
-	emptyResult := &v1alpha1.KongTarget{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongtargetsResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongTargets(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongTargetInterface {
+	return &fakeKongTargets{
+		gentype.NewFakeClientWithList[*v1alpha1.KongTarget, *v1alpha1.KongTargetList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongtargets"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongTarget"),
+			func() *v1alpha1.KongTarget { return &v1alpha1.KongTarget{} },
+			func() *v1alpha1.KongTargetList { return &v1alpha1.KongTargetList{} },
+			func(dst, src *v1alpha1.KongTargetList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongTargetList) []*v1alpha1.KongTarget { return gentype.ToPointerSlice(list.Items) },
+			func(list *v1alpha1.KongTargetList, items []*v1alpha1.KongTarget) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongTarget), err
-}
-
-// List takes label and field selectors, and returns the list of KongTargets that match those selectors.
-func (c *FakeKongTargets) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongTargetList, err error) {
-	emptyResult := &v1alpha1.KongTargetList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongtargetsResource, kongtargetsKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongTargetList{ListMeta: obj.(*v1alpha1.KongTargetList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongTargetList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongTargets.
-func (c *FakeKongTargets) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongtargetsResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongTarget and creates it.  Returns the server's representation of the kongTarget, and an error, if there is any.
-func (c *FakeKongTargets) Create(ctx context.Context, kongTarget *v1alpha1.KongTarget, opts v1.CreateOptions) (result *v1alpha1.KongTarget, err error) {
-	emptyResult := &v1alpha1.KongTarget{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongtargetsResource, c.ns, kongTarget, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongTarget), err
-}
-
-// Update takes the representation of a kongTarget and updates it. Returns the server's representation of the kongTarget, and an error, if there is any.
-func (c *FakeKongTargets) Update(ctx context.Context, kongTarget *v1alpha1.KongTarget, opts v1.UpdateOptions) (result *v1alpha1.KongTarget, err error) {
-	emptyResult := &v1alpha1.KongTarget{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongtargetsResource, c.ns, kongTarget, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongTarget), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongTargets) UpdateStatus(ctx context.Context, kongTarget *v1alpha1.KongTarget, opts v1.UpdateOptions) (result *v1alpha1.KongTarget, err error) {
-	emptyResult := &v1alpha1.KongTarget{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongtargetsResource, "status", c.ns, kongTarget, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongTarget), err
-}
-
-// Delete takes name of the kongTarget and deletes it. Returns an error if one occurs.
-func (c *FakeKongTargets) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongtargetsResource, c.ns, name, opts), &v1alpha1.KongTarget{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongTargets) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongtargetsResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongTargetList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongTarget.
-func (c *FakeKongTargets) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongTarget, err error) {
-	emptyResult := &v1alpha1.KongTarget{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongtargetsResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongTarget), err
 }
