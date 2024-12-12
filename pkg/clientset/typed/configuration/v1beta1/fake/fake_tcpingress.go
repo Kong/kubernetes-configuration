@@ -19,129 +19,32 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1beta1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeTCPIngresses implements TCPIngressInterface
-type FakeTCPIngresses struct {
+// fakeTCPIngresses implements TCPIngressInterface
+type fakeTCPIngresses struct {
+	*gentype.FakeClientWithList[*v1beta1.TCPIngress, *v1beta1.TCPIngressList]
 	Fake *FakeConfigurationV1beta1
-	ns   string
 }
 
-var tcpingressesResource = v1beta1.SchemeGroupVersion.WithResource("tcpingresses")
-
-var tcpingressesKind = v1beta1.SchemeGroupVersion.WithKind("TCPIngress")
-
-// Get takes name of the tCPIngress, and returns the corresponding tCPIngress object, and an error if there is any.
-func (c *FakeTCPIngresses) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1beta1.TCPIngress, err error) {
-	emptyResult := &v1beta1.TCPIngress{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(tcpingressesResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeTCPIngresses(fake *FakeConfigurationV1beta1, namespace string) configurationv1beta1.TCPIngressInterface {
+	return &fakeTCPIngresses{
+		gentype.NewFakeClientWithList[*v1beta1.TCPIngress, *v1beta1.TCPIngressList](
+			fake.Fake,
+			namespace,
+			v1beta1.SchemeGroupVersion.WithResource("tcpingresses"),
+			v1beta1.SchemeGroupVersion.WithKind("TCPIngress"),
+			func() *v1beta1.TCPIngress { return &v1beta1.TCPIngress{} },
+			func() *v1beta1.TCPIngressList { return &v1beta1.TCPIngressList{} },
+			func(dst, src *v1beta1.TCPIngressList) { dst.ListMeta = src.ListMeta },
+			func(list *v1beta1.TCPIngressList) []*v1beta1.TCPIngress { return gentype.ToPointerSlice(list.Items) },
+			func(list *v1beta1.TCPIngressList, items []*v1beta1.TCPIngress) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1beta1.TCPIngress), err
-}
-
-// List takes label and field selectors, and returns the list of TCPIngresses that match those selectors.
-func (c *FakeTCPIngresses) List(ctx context.Context, opts v1.ListOptions) (result *v1beta1.TCPIngressList, err error) {
-	emptyResult := &v1beta1.TCPIngressList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(tcpingressesResource, tcpingressesKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1beta1.TCPIngressList{ListMeta: obj.(*v1beta1.TCPIngressList).ListMeta}
-	for _, item := range obj.(*v1beta1.TCPIngressList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested tCPIngresses.
-func (c *FakeTCPIngresses) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(tcpingressesResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a tCPIngress and creates it.  Returns the server's representation of the tCPIngress, and an error, if there is any.
-func (c *FakeTCPIngresses) Create(ctx context.Context, tCPIngress *v1beta1.TCPIngress, opts v1.CreateOptions) (result *v1beta1.TCPIngress, err error) {
-	emptyResult := &v1beta1.TCPIngress{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(tcpingressesResource, c.ns, tCPIngress, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.TCPIngress), err
-}
-
-// Update takes the representation of a tCPIngress and updates it. Returns the server's representation of the tCPIngress, and an error, if there is any.
-func (c *FakeTCPIngresses) Update(ctx context.Context, tCPIngress *v1beta1.TCPIngress, opts v1.UpdateOptions) (result *v1beta1.TCPIngress, err error) {
-	emptyResult := &v1beta1.TCPIngress{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(tcpingressesResource, c.ns, tCPIngress, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.TCPIngress), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeTCPIngresses) UpdateStatus(ctx context.Context, tCPIngress *v1beta1.TCPIngress, opts v1.UpdateOptions) (result *v1beta1.TCPIngress, err error) {
-	emptyResult := &v1beta1.TCPIngress{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(tcpingressesResource, "status", c.ns, tCPIngress, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.TCPIngress), err
-}
-
-// Delete takes name of the tCPIngress and deletes it. Returns an error if one occurs.
-func (c *FakeTCPIngresses) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(tcpingressesResource, c.ns, name, opts), &v1beta1.TCPIngress{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeTCPIngresses) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(tcpingressesResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1beta1.TCPIngressList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched tCPIngress.
-func (c *FakeTCPIngresses) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1beta1.TCPIngress, err error) {
-	emptyResult := &v1beta1.TCPIngress{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(tcpingressesResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.TCPIngress), err
 }

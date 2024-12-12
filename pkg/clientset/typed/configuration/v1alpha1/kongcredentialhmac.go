@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,36 @@ type KongCredentialHMACsGetter interface {
 
 // KongCredentialHMACInterface has methods to work with KongCredentialHMAC resources.
 type KongCredentialHMACInterface interface {
-	Create(ctx context.Context, kongCredentialHMAC *v1alpha1.KongCredentialHMAC, opts v1.CreateOptions) (*v1alpha1.KongCredentialHMAC, error)
-	Update(ctx context.Context, kongCredentialHMAC *v1alpha1.KongCredentialHMAC, opts v1.UpdateOptions) (*v1alpha1.KongCredentialHMAC, error)
+	Create(ctx context.Context, kongCredentialHMAC *configurationv1alpha1.KongCredentialHMAC, opts v1.CreateOptions) (*configurationv1alpha1.KongCredentialHMAC, error)
+	Update(ctx context.Context, kongCredentialHMAC *configurationv1alpha1.KongCredentialHMAC, opts v1.UpdateOptions) (*configurationv1alpha1.KongCredentialHMAC, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongCredentialHMAC *v1alpha1.KongCredentialHMAC, opts v1.UpdateOptions) (*v1alpha1.KongCredentialHMAC, error)
+	UpdateStatus(ctx context.Context, kongCredentialHMAC *configurationv1alpha1.KongCredentialHMAC, opts v1.UpdateOptions) (*configurationv1alpha1.KongCredentialHMAC, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongCredentialHMAC, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongCredentialHMACList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongCredentialHMAC, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongCredentialHMACList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCredentialHMAC, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongCredentialHMAC, err error)
 	KongCredentialHMACExpansion
 }
 
 // kongCredentialHMACs implements KongCredentialHMACInterface
 type kongCredentialHMACs struct {
-	*gentype.ClientWithList[*v1alpha1.KongCredentialHMAC, *v1alpha1.KongCredentialHMACList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongCredentialHMAC, *configurationv1alpha1.KongCredentialHMACList]
 }
 
 // newKongCredentialHMACs returns a KongCredentialHMACs
 func newKongCredentialHMACs(c *ConfigurationV1alpha1Client, namespace string) *kongCredentialHMACs {
 	return &kongCredentialHMACs{
-		gentype.NewClientWithList[*v1alpha1.KongCredentialHMAC, *v1alpha1.KongCredentialHMACList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongCredentialHMAC, *configurationv1alpha1.KongCredentialHMACList](
 			"kongcredentialhmacs",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongCredentialHMAC { return &v1alpha1.KongCredentialHMAC{} },
-			func() *v1alpha1.KongCredentialHMACList { return &v1alpha1.KongCredentialHMACList{} }),
+			func() *configurationv1alpha1.KongCredentialHMAC { return &configurationv1alpha1.KongCredentialHMAC{} },
+			func() *configurationv1alpha1.KongCredentialHMACList {
+				return &configurationv1alpha1.KongCredentialHMACList{}
+			},
+		),
 	}
 }

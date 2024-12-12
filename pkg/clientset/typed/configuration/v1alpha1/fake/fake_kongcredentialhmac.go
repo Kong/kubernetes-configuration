@@ -19,129 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongCredentialHMACs implements KongCredentialHMACInterface
-type FakeKongCredentialHMACs struct {
+// fakeKongCredentialHMACs implements KongCredentialHMACInterface
+type fakeKongCredentialHMACs struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongCredentialHMAC, *v1alpha1.KongCredentialHMACList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongcredentialhmacsResource = v1alpha1.SchemeGroupVersion.WithResource("kongcredentialhmacs")
-
-var kongcredentialhmacsKind = v1alpha1.SchemeGroupVersion.WithKind("KongCredentialHMAC")
-
-// Get takes name of the kongCredentialHMAC, and returns the corresponding kongCredentialHMAC object, and an error if there is any.
-func (c *FakeKongCredentialHMACs) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongCredentialHMAC, err error) {
-	emptyResult := &v1alpha1.KongCredentialHMAC{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongcredentialhmacsResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongCredentialHMACs(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongCredentialHMACInterface {
+	return &fakeKongCredentialHMACs{
+		gentype.NewFakeClientWithList[*v1alpha1.KongCredentialHMAC, *v1alpha1.KongCredentialHMACList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongcredentialhmacs"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongCredentialHMAC"),
+			func() *v1alpha1.KongCredentialHMAC { return &v1alpha1.KongCredentialHMAC{} },
+			func() *v1alpha1.KongCredentialHMACList { return &v1alpha1.KongCredentialHMACList{} },
+			func(dst, src *v1alpha1.KongCredentialHMACList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongCredentialHMACList) []*v1alpha1.KongCredentialHMAC {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KongCredentialHMACList, items []*v1alpha1.KongCredentialHMAC) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongCredentialHMAC), err
-}
-
-// List takes label and field selectors, and returns the list of KongCredentialHMACs that match those selectors.
-func (c *FakeKongCredentialHMACs) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongCredentialHMACList, err error) {
-	emptyResult := &v1alpha1.KongCredentialHMACList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongcredentialhmacsResource, kongcredentialhmacsKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongCredentialHMACList{ListMeta: obj.(*v1alpha1.KongCredentialHMACList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongCredentialHMACList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongCredentialHMACs.
-func (c *FakeKongCredentialHMACs) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongcredentialhmacsResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongCredentialHMAC and creates it.  Returns the server's representation of the kongCredentialHMAC, and an error, if there is any.
-func (c *FakeKongCredentialHMACs) Create(ctx context.Context, kongCredentialHMAC *v1alpha1.KongCredentialHMAC, opts v1.CreateOptions) (result *v1alpha1.KongCredentialHMAC, err error) {
-	emptyResult := &v1alpha1.KongCredentialHMAC{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongcredentialhmacsResource, c.ns, kongCredentialHMAC, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialHMAC), err
-}
-
-// Update takes the representation of a kongCredentialHMAC and updates it. Returns the server's representation of the kongCredentialHMAC, and an error, if there is any.
-func (c *FakeKongCredentialHMACs) Update(ctx context.Context, kongCredentialHMAC *v1alpha1.KongCredentialHMAC, opts v1.UpdateOptions) (result *v1alpha1.KongCredentialHMAC, err error) {
-	emptyResult := &v1alpha1.KongCredentialHMAC{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongcredentialhmacsResource, c.ns, kongCredentialHMAC, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialHMAC), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongCredentialHMACs) UpdateStatus(ctx context.Context, kongCredentialHMAC *v1alpha1.KongCredentialHMAC, opts v1.UpdateOptions) (result *v1alpha1.KongCredentialHMAC, err error) {
-	emptyResult := &v1alpha1.KongCredentialHMAC{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongcredentialhmacsResource, "status", c.ns, kongCredentialHMAC, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialHMAC), err
-}
-
-// Delete takes name of the kongCredentialHMAC and deletes it. Returns an error if one occurs.
-func (c *FakeKongCredentialHMACs) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongcredentialhmacsResource, c.ns, name, opts), &v1alpha1.KongCredentialHMAC{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongCredentialHMACs) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongcredentialhmacsResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongCredentialHMACList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongCredentialHMAC.
-func (c *FakeKongCredentialHMACs) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCredentialHMAC, err error) {
-	emptyResult := &v1alpha1.KongCredentialHMAC{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongcredentialhmacsResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialHMAC), err
 }

@@ -19,9 +19,9 @@ limitations under the License.
 package v1beta1
 
 import (
-	"context"
+	context "context"
 
-	v1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
+	configurationv1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,36 @@ type KongUpstreamPoliciesGetter interface {
 
 // KongUpstreamPolicyInterface has methods to work with KongUpstreamPolicy resources.
 type KongUpstreamPolicyInterface interface {
-	Create(ctx context.Context, kongUpstreamPolicy *v1beta1.KongUpstreamPolicy, opts v1.CreateOptions) (*v1beta1.KongUpstreamPolicy, error)
-	Update(ctx context.Context, kongUpstreamPolicy *v1beta1.KongUpstreamPolicy, opts v1.UpdateOptions) (*v1beta1.KongUpstreamPolicy, error)
+	Create(ctx context.Context, kongUpstreamPolicy *configurationv1beta1.KongUpstreamPolicy, opts v1.CreateOptions) (*configurationv1beta1.KongUpstreamPolicy, error)
+	Update(ctx context.Context, kongUpstreamPolicy *configurationv1beta1.KongUpstreamPolicy, opts v1.UpdateOptions) (*configurationv1beta1.KongUpstreamPolicy, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongUpstreamPolicy *v1beta1.KongUpstreamPolicy, opts v1.UpdateOptions) (*v1beta1.KongUpstreamPolicy, error)
+	UpdateStatus(ctx context.Context, kongUpstreamPolicy *configurationv1beta1.KongUpstreamPolicy, opts v1.UpdateOptions) (*configurationv1beta1.KongUpstreamPolicy, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1beta1.KongUpstreamPolicy, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1beta1.KongUpstreamPolicyList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1beta1.KongUpstreamPolicy, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1beta1.KongUpstreamPolicyList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1beta1.KongUpstreamPolicy, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1beta1.KongUpstreamPolicy, err error)
 	KongUpstreamPolicyExpansion
 }
 
 // kongUpstreamPolicies implements KongUpstreamPolicyInterface
 type kongUpstreamPolicies struct {
-	*gentype.ClientWithList[*v1beta1.KongUpstreamPolicy, *v1beta1.KongUpstreamPolicyList]
+	*gentype.ClientWithList[*configurationv1beta1.KongUpstreamPolicy, *configurationv1beta1.KongUpstreamPolicyList]
 }
 
 // newKongUpstreamPolicies returns a KongUpstreamPolicies
 func newKongUpstreamPolicies(c *ConfigurationV1beta1Client, namespace string) *kongUpstreamPolicies {
 	return &kongUpstreamPolicies{
-		gentype.NewClientWithList[*v1beta1.KongUpstreamPolicy, *v1beta1.KongUpstreamPolicyList](
+		gentype.NewClientWithList[*configurationv1beta1.KongUpstreamPolicy, *configurationv1beta1.KongUpstreamPolicyList](
 			"kongupstreampolicies",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1beta1.KongUpstreamPolicy { return &v1beta1.KongUpstreamPolicy{} },
-			func() *v1beta1.KongUpstreamPolicyList { return &v1beta1.KongUpstreamPolicyList{} }),
+			func() *configurationv1beta1.KongUpstreamPolicy { return &configurationv1beta1.KongUpstreamPolicy{} },
+			func() *configurationv1beta1.KongUpstreamPolicyList {
+				return &configurationv1beta1.KongUpstreamPolicyList{}
+			},
+		),
 	}
 }

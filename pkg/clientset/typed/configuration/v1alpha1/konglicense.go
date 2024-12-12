@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type KongLicensesGetter interface {
 
 // KongLicenseInterface has methods to work with KongLicense resources.
 type KongLicenseInterface interface {
-	Create(ctx context.Context, kongLicense *v1alpha1.KongLicense, opts v1.CreateOptions) (*v1alpha1.KongLicense, error)
-	Update(ctx context.Context, kongLicense *v1alpha1.KongLicense, opts v1.UpdateOptions) (*v1alpha1.KongLicense, error)
+	Create(ctx context.Context, kongLicense *configurationv1alpha1.KongLicense, opts v1.CreateOptions) (*configurationv1alpha1.KongLicense, error)
+	Update(ctx context.Context, kongLicense *configurationv1alpha1.KongLicense, opts v1.UpdateOptions) (*configurationv1alpha1.KongLicense, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongLicense *v1alpha1.KongLicense, opts v1.UpdateOptions) (*v1alpha1.KongLicense, error)
+	UpdateStatus(ctx context.Context, kongLicense *configurationv1alpha1.KongLicense, opts v1.UpdateOptions) (*configurationv1alpha1.KongLicense, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongLicense, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongLicenseList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongLicense, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongLicenseList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongLicense, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongLicense, err error)
 	KongLicenseExpansion
 }
 
 // kongLicenses implements KongLicenseInterface
 type kongLicenses struct {
-	*gentype.ClientWithList[*v1alpha1.KongLicense, *v1alpha1.KongLicenseList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongLicense, *configurationv1alpha1.KongLicenseList]
 }
 
 // newKongLicenses returns a KongLicenses
 func newKongLicenses(c *ConfigurationV1alpha1Client) *kongLicenses {
 	return &kongLicenses{
-		gentype.NewClientWithList[*v1alpha1.KongLicense, *v1alpha1.KongLicenseList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongLicense, *configurationv1alpha1.KongLicenseList](
 			"konglicenses",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			"",
-			func() *v1alpha1.KongLicense { return &v1alpha1.KongLicense{} },
-			func() *v1alpha1.KongLicenseList { return &v1alpha1.KongLicenseList{} }),
+			func() *configurationv1alpha1.KongLicense { return &configurationv1alpha1.KongLicense{} },
+			func() *configurationv1alpha1.KongLicenseList { return &configurationv1alpha1.KongLicenseList{} },
+		),
 	}
 }

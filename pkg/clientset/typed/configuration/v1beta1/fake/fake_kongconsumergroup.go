@@ -19,129 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1beta1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongConsumerGroups implements KongConsumerGroupInterface
-type FakeKongConsumerGroups struct {
+// fakeKongConsumerGroups implements KongConsumerGroupInterface
+type fakeKongConsumerGroups struct {
+	*gentype.FakeClientWithList[*v1beta1.KongConsumerGroup, *v1beta1.KongConsumerGroupList]
 	Fake *FakeConfigurationV1beta1
-	ns   string
 }
 
-var kongconsumergroupsResource = v1beta1.SchemeGroupVersion.WithResource("kongconsumergroups")
-
-var kongconsumergroupsKind = v1beta1.SchemeGroupVersion.WithKind("KongConsumerGroup")
-
-// Get takes name of the kongConsumerGroup, and returns the corresponding kongConsumerGroup object, and an error if there is any.
-func (c *FakeKongConsumerGroups) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1beta1.KongConsumerGroup, err error) {
-	emptyResult := &v1beta1.KongConsumerGroup{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongconsumergroupsResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongConsumerGroups(fake *FakeConfigurationV1beta1, namespace string) configurationv1beta1.KongConsumerGroupInterface {
+	return &fakeKongConsumerGroups{
+		gentype.NewFakeClientWithList[*v1beta1.KongConsumerGroup, *v1beta1.KongConsumerGroupList](
+			fake.Fake,
+			namespace,
+			v1beta1.SchemeGroupVersion.WithResource("kongconsumergroups"),
+			v1beta1.SchemeGroupVersion.WithKind("KongConsumerGroup"),
+			func() *v1beta1.KongConsumerGroup { return &v1beta1.KongConsumerGroup{} },
+			func() *v1beta1.KongConsumerGroupList { return &v1beta1.KongConsumerGroupList{} },
+			func(dst, src *v1beta1.KongConsumerGroupList) { dst.ListMeta = src.ListMeta },
+			func(list *v1beta1.KongConsumerGroupList) []*v1beta1.KongConsumerGroup {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1beta1.KongConsumerGroupList, items []*v1beta1.KongConsumerGroup) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1beta1.KongConsumerGroup), err
-}
-
-// List takes label and field selectors, and returns the list of KongConsumerGroups that match those selectors.
-func (c *FakeKongConsumerGroups) List(ctx context.Context, opts v1.ListOptions) (result *v1beta1.KongConsumerGroupList, err error) {
-	emptyResult := &v1beta1.KongConsumerGroupList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongconsumergroupsResource, kongconsumergroupsKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1beta1.KongConsumerGroupList{ListMeta: obj.(*v1beta1.KongConsumerGroupList).ListMeta}
-	for _, item := range obj.(*v1beta1.KongConsumerGroupList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongConsumerGroups.
-func (c *FakeKongConsumerGroups) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongconsumergroupsResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongConsumerGroup and creates it.  Returns the server's representation of the kongConsumerGroup, and an error, if there is any.
-func (c *FakeKongConsumerGroups) Create(ctx context.Context, kongConsumerGroup *v1beta1.KongConsumerGroup, opts v1.CreateOptions) (result *v1beta1.KongConsumerGroup, err error) {
-	emptyResult := &v1beta1.KongConsumerGroup{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongconsumergroupsResource, c.ns, kongConsumerGroup, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.KongConsumerGroup), err
-}
-
-// Update takes the representation of a kongConsumerGroup and updates it. Returns the server's representation of the kongConsumerGroup, and an error, if there is any.
-func (c *FakeKongConsumerGroups) Update(ctx context.Context, kongConsumerGroup *v1beta1.KongConsumerGroup, opts v1.UpdateOptions) (result *v1beta1.KongConsumerGroup, err error) {
-	emptyResult := &v1beta1.KongConsumerGroup{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongconsumergroupsResource, c.ns, kongConsumerGroup, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.KongConsumerGroup), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongConsumerGroups) UpdateStatus(ctx context.Context, kongConsumerGroup *v1beta1.KongConsumerGroup, opts v1.UpdateOptions) (result *v1beta1.KongConsumerGroup, err error) {
-	emptyResult := &v1beta1.KongConsumerGroup{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongconsumergroupsResource, "status", c.ns, kongConsumerGroup, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.KongConsumerGroup), err
-}
-
-// Delete takes name of the kongConsumerGroup and deletes it. Returns an error if one occurs.
-func (c *FakeKongConsumerGroups) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongconsumergroupsResource, c.ns, name, opts), &v1beta1.KongConsumerGroup{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongConsumerGroups) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongconsumergroupsResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1beta1.KongConsumerGroupList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongConsumerGroup.
-func (c *FakeKongConsumerGroups) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1beta1.KongConsumerGroup, err error) {
-	emptyResult := &v1beta1.KongConsumerGroup{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongconsumergroupsResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.KongConsumerGroup), err
 }

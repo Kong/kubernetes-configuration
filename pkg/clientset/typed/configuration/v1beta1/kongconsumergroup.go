@@ -19,9 +19,9 @@ limitations under the License.
 package v1beta1
 
 import (
-	"context"
+	context "context"
 
-	v1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
+	configurationv1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,36 @@ type KongConsumerGroupsGetter interface {
 
 // KongConsumerGroupInterface has methods to work with KongConsumerGroup resources.
 type KongConsumerGroupInterface interface {
-	Create(ctx context.Context, kongConsumerGroup *v1beta1.KongConsumerGroup, opts v1.CreateOptions) (*v1beta1.KongConsumerGroup, error)
-	Update(ctx context.Context, kongConsumerGroup *v1beta1.KongConsumerGroup, opts v1.UpdateOptions) (*v1beta1.KongConsumerGroup, error)
+	Create(ctx context.Context, kongConsumerGroup *configurationv1beta1.KongConsumerGroup, opts v1.CreateOptions) (*configurationv1beta1.KongConsumerGroup, error)
+	Update(ctx context.Context, kongConsumerGroup *configurationv1beta1.KongConsumerGroup, opts v1.UpdateOptions) (*configurationv1beta1.KongConsumerGroup, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongConsumerGroup *v1beta1.KongConsumerGroup, opts v1.UpdateOptions) (*v1beta1.KongConsumerGroup, error)
+	UpdateStatus(ctx context.Context, kongConsumerGroup *configurationv1beta1.KongConsumerGroup, opts v1.UpdateOptions) (*configurationv1beta1.KongConsumerGroup, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1beta1.KongConsumerGroup, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1beta1.KongConsumerGroupList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1beta1.KongConsumerGroup, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1beta1.KongConsumerGroupList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1beta1.KongConsumerGroup, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1beta1.KongConsumerGroup, err error)
 	KongConsumerGroupExpansion
 }
 
 // kongConsumerGroups implements KongConsumerGroupInterface
 type kongConsumerGroups struct {
-	*gentype.ClientWithList[*v1beta1.KongConsumerGroup, *v1beta1.KongConsumerGroupList]
+	*gentype.ClientWithList[*configurationv1beta1.KongConsumerGroup, *configurationv1beta1.KongConsumerGroupList]
 }
 
 // newKongConsumerGroups returns a KongConsumerGroups
 func newKongConsumerGroups(c *ConfigurationV1beta1Client, namespace string) *kongConsumerGroups {
 	return &kongConsumerGroups{
-		gentype.NewClientWithList[*v1beta1.KongConsumerGroup, *v1beta1.KongConsumerGroupList](
+		gentype.NewClientWithList[*configurationv1beta1.KongConsumerGroup, *configurationv1beta1.KongConsumerGroupList](
 			"kongconsumergroups",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1beta1.KongConsumerGroup { return &v1beta1.KongConsumerGroup{} },
-			func() *v1beta1.KongConsumerGroupList { return &v1beta1.KongConsumerGroupList{} }),
+			func() *configurationv1beta1.KongConsumerGroup { return &configurationv1beta1.KongConsumerGroup{} },
+			func() *configurationv1beta1.KongConsumerGroupList {
+				return &configurationv1beta1.KongConsumerGroupList{}
+			},
+		),
 	}
 }

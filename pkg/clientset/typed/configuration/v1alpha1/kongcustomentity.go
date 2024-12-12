@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,36 @@ type KongCustomEntitiesGetter interface {
 
 // KongCustomEntityInterface has methods to work with KongCustomEntity resources.
 type KongCustomEntityInterface interface {
-	Create(ctx context.Context, kongCustomEntity *v1alpha1.KongCustomEntity, opts v1.CreateOptions) (*v1alpha1.KongCustomEntity, error)
-	Update(ctx context.Context, kongCustomEntity *v1alpha1.KongCustomEntity, opts v1.UpdateOptions) (*v1alpha1.KongCustomEntity, error)
+	Create(ctx context.Context, kongCustomEntity *configurationv1alpha1.KongCustomEntity, opts v1.CreateOptions) (*configurationv1alpha1.KongCustomEntity, error)
+	Update(ctx context.Context, kongCustomEntity *configurationv1alpha1.KongCustomEntity, opts v1.UpdateOptions) (*configurationv1alpha1.KongCustomEntity, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongCustomEntity *v1alpha1.KongCustomEntity, opts v1.UpdateOptions) (*v1alpha1.KongCustomEntity, error)
+	UpdateStatus(ctx context.Context, kongCustomEntity *configurationv1alpha1.KongCustomEntity, opts v1.UpdateOptions) (*configurationv1alpha1.KongCustomEntity, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongCustomEntity, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongCustomEntityList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongCustomEntity, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongCustomEntityList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCustomEntity, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongCustomEntity, err error)
 	KongCustomEntityExpansion
 }
 
 // kongCustomEntities implements KongCustomEntityInterface
 type kongCustomEntities struct {
-	*gentype.ClientWithList[*v1alpha1.KongCustomEntity, *v1alpha1.KongCustomEntityList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongCustomEntity, *configurationv1alpha1.KongCustomEntityList]
 }
 
 // newKongCustomEntities returns a KongCustomEntities
 func newKongCustomEntities(c *ConfigurationV1alpha1Client, namespace string) *kongCustomEntities {
 	return &kongCustomEntities{
-		gentype.NewClientWithList[*v1alpha1.KongCustomEntity, *v1alpha1.KongCustomEntityList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongCustomEntity, *configurationv1alpha1.KongCustomEntityList](
 			"kongcustomentities",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongCustomEntity { return &v1alpha1.KongCustomEntity{} },
-			func() *v1alpha1.KongCustomEntityList { return &v1alpha1.KongCustomEntityList{} }),
+			func() *configurationv1alpha1.KongCustomEntity { return &configurationv1alpha1.KongCustomEntity{} },
+			func() *configurationv1alpha1.KongCustomEntityList {
+				return &configurationv1alpha1.KongCustomEntityList{}
+			},
+		),
 	}
 }

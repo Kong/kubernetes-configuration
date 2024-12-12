@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type KongTargetsGetter interface {
 
 // KongTargetInterface has methods to work with KongTarget resources.
 type KongTargetInterface interface {
-	Create(ctx context.Context, kongTarget *v1alpha1.KongTarget, opts v1.CreateOptions) (*v1alpha1.KongTarget, error)
-	Update(ctx context.Context, kongTarget *v1alpha1.KongTarget, opts v1.UpdateOptions) (*v1alpha1.KongTarget, error)
+	Create(ctx context.Context, kongTarget *configurationv1alpha1.KongTarget, opts v1.CreateOptions) (*configurationv1alpha1.KongTarget, error)
+	Update(ctx context.Context, kongTarget *configurationv1alpha1.KongTarget, opts v1.UpdateOptions) (*configurationv1alpha1.KongTarget, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongTarget *v1alpha1.KongTarget, opts v1.UpdateOptions) (*v1alpha1.KongTarget, error)
+	UpdateStatus(ctx context.Context, kongTarget *configurationv1alpha1.KongTarget, opts v1.UpdateOptions) (*configurationv1alpha1.KongTarget, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongTarget, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongTargetList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongTarget, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongTargetList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongTarget, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongTarget, err error)
 	KongTargetExpansion
 }
 
 // kongTargets implements KongTargetInterface
 type kongTargets struct {
-	*gentype.ClientWithList[*v1alpha1.KongTarget, *v1alpha1.KongTargetList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongTarget, *configurationv1alpha1.KongTargetList]
 }
 
 // newKongTargets returns a KongTargets
 func newKongTargets(c *ConfigurationV1alpha1Client, namespace string) *kongTargets {
 	return &kongTargets{
-		gentype.NewClientWithList[*v1alpha1.KongTarget, *v1alpha1.KongTargetList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongTarget, *configurationv1alpha1.KongTargetList](
 			"kongtargets",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongTarget { return &v1alpha1.KongTarget{} },
-			func() *v1alpha1.KongTargetList { return &v1alpha1.KongTargetList{} }),
+			func() *configurationv1alpha1.KongTarget { return &configurationv1alpha1.KongTarget{} },
+			func() *configurationv1alpha1.KongTargetList { return &configurationv1alpha1.KongTargetList{} },
+		),
 	}
 }

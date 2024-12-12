@@ -19,9 +19,9 @@ limitations under the License.
 package v1beta1
 
 import (
-	"context"
+	context "context"
 
-	v1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
+	configurationv1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type UDPIngressesGetter interface {
 
 // UDPIngressInterface has methods to work with UDPIngress resources.
 type UDPIngressInterface interface {
-	Create(ctx context.Context, uDPIngress *v1beta1.UDPIngress, opts v1.CreateOptions) (*v1beta1.UDPIngress, error)
-	Update(ctx context.Context, uDPIngress *v1beta1.UDPIngress, opts v1.UpdateOptions) (*v1beta1.UDPIngress, error)
+	Create(ctx context.Context, uDPIngress *configurationv1beta1.UDPIngress, opts v1.CreateOptions) (*configurationv1beta1.UDPIngress, error)
+	Update(ctx context.Context, uDPIngress *configurationv1beta1.UDPIngress, opts v1.UpdateOptions) (*configurationv1beta1.UDPIngress, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, uDPIngress *v1beta1.UDPIngress, opts v1.UpdateOptions) (*v1beta1.UDPIngress, error)
+	UpdateStatus(ctx context.Context, uDPIngress *configurationv1beta1.UDPIngress, opts v1.UpdateOptions) (*configurationv1beta1.UDPIngress, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1beta1.UDPIngress, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1beta1.UDPIngressList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1beta1.UDPIngress, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1beta1.UDPIngressList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1beta1.UDPIngress, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1beta1.UDPIngress, err error)
 	UDPIngressExpansion
 }
 
 // uDPIngresses implements UDPIngressInterface
 type uDPIngresses struct {
-	*gentype.ClientWithList[*v1beta1.UDPIngress, *v1beta1.UDPIngressList]
+	*gentype.ClientWithList[*configurationv1beta1.UDPIngress, *configurationv1beta1.UDPIngressList]
 }
 
 // newUDPIngresses returns a UDPIngresses
 func newUDPIngresses(c *ConfigurationV1beta1Client, namespace string) *uDPIngresses {
 	return &uDPIngresses{
-		gentype.NewClientWithList[*v1beta1.UDPIngress, *v1beta1.UDPIngressList](
+		gentype.NewClientWithList[*configurationv1beta1.UDPIngress, *configurationv1beta1.UDPIngressList](
 			"udpingresses",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1beta1.UDPIngress { return &v1beta1.UDPIngress{} },
-			func() *v1beta1.UDPIngressList { return &v1beta1.UDPIngressList{} }),
+			func() *configurationv1beta1.UDPIngress { return &configurationv1beta1.UDPIngress{} },
+			func() *configurationv1beta1.UDPIngressList { return &configurationv1beta1.UDPIngressList{} },
+		),
 	}
 }

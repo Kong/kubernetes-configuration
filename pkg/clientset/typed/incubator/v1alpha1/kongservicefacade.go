@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/incubator/v1alpha1"
+	incubatorv1alpha1 "github.com/kong/kubernetes-configuration/api/incubator/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type KongServiceFacadesGetter interface {
 
 // KongServiceFacadeInterface has methods to work with KongServiceFacade resources.
 type KongServiceFacadeInterface interface {
-	Create(ctx context.Context, kongServiceFacade *v1alpha1.KongServiceFacade, opts v1.CreateOptions) (*v1alpha1.KongServiceFacade, error)
-	Update(ctx context.Context, kongServiceFacade *v1alpha1.KongServiceFacade, opts v1.UpdateOptions) (*v1alpha1.KongServiceFacade, error)
+	Create(ctx context.Context, kongServiceFacade *incubatorv1alpha1.KongServiceFacade, opts v1.CreateOptions) (*incubatorv1alpha1.KongServiceFacade, error)
+	Update(ctx context.Context, kongServiceFacade *incubatorv1alpha1.KongServiceFacade, opts v1.UpdateOptions) (*incubatorv1alpha1.KongServiceFacade, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongServiceFacade *v1alpha1.KongServiceFacade, opts v1.UpdateOptions) (*v1alpha1.KongServiceFacade, error)
+	UpdateStatus(ctx context.Context, kongServiceFacade *incubatorv1alpha1.KongServiceFacade, opts v1.UpdateOptions) (*incubatorv1alpha1.KongServiceFacade, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongServiceFacade, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongServiceFacadeList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*incubatorv1alpha1.KongServiceFacade, error)
+	List(ctx context.Context, opts v1.ListOptions) (*incubatorv1alpha1.KongServiceFacadeList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongServiceFacade, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *incubatorv1alpha1.KongServiceFacade, err error)
 	KongServiceFacadeExpansion
 }
 
 // kongServiceFacades implements KongServiceFacadeInterface
 type kongServiceFacades struct {
-	*gentype.ClientWithList[*v1alpha1.KongServiceFacade, *v1alpha1.KongServiceFacadeList]
+	*gentype.ClientWithList[*incubatorv1alpha1.KongServiceFacade, *incubatorv1alpha1.KongServiceFacadeList]
 }
 
 // newKongServiceFacades returns a KongServiceFacades
 func newKongServiceFacades(c *IncubatorV1alpha1Client, namespace string) *kongServiceFacades {
 	return &kongServiceFacades{
-		gentype.NewClientWithList[*v1alpha1.KongServiceFacade, *v1alpha1.KongServiceFacadeList](
+		gentype.NewClientWithList[*incubatorv1alpha1.KongServiceFacade, *incubatorv1alpha1.KongServiceFacadeList](
 			"kongservicefacades",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongServiceFacade { return &v1alpha1.KongServiceFacade{} },
-			func() *v1alpha1.KongServiceFacadeList { return &v1alpha1.KongServiceFacadeList{} }),
+			func() *incubatorv1alpha1.KongServiceFacade { return &incubatorv1alpha1.KongServiceFacade{} },
+			func() *incubatorv1alpha1.KongServiceFacadeList { return &incubatorv1alpha1.KongServiceFacadeList{} },
+		),
 	}
 }

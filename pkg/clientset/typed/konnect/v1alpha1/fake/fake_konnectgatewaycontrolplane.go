@@ -19,129 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	konnectv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKonnectGatewayControlPlanes implements KonnectGatewayControlPlaneInterface
-type FakeKonnectGatewayControlPlanes struct {
+// fakeKonnectGatewayControlPlanes implements KonnectGatewayControlPlaneInterface
+type fakeKonnectGatewayControlPlanes struct {
+	*gentype.FakeClientWithList[*v1alpha1.KonnectGatewayControlPlane, *v1alpha1.KonnectGatewayControlPlaneList]
 	Fake *FakeKonnectV1alpha1
-	ns   string
 }
 
-var konnectgatewaycontrolplanesResource = v1alpha1.SchemeGroupVersion.WithResource("konnectgatewaycontrolplanes")
-
-var konnectgatewaycontrolplanesKind = v1alpha1.SchemeGroupVersion.WithKind("KonnectGatewayControlPlane")
-
-// Get takes name of the konnectGatewayControlPlane, and returns the corresponding konnectGatewayControlPlane object, and an error if there is any.
-func (c *FakeKonnectGatewayControlPlanes) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KonnectGatewayControlPlane, err error) {
-	emptyResult := &v1alpha1.KonnectGatewayControlPlane{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(konnectgatewaycontrolplanesResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKonnectGatewayControlPlanes(fake *FakeKonnectV1alpha1, namespace string) konnectv1alpha1.KonnectGatewayControlPlaneInterface {
+	return &fakeKonnectGatewayControlPlanes{
+		gentype.NewFakeClientWithList[*v1alpha1.KonnectGatewayControlPlane, *v1alpha1.KonnectGatewayControlPlaneList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("konnectgatewaycontrolplanes"),
+			v1alpha1.SchemeGroupVersion.WithKind("KonnectGatewayControlPlane"),
+			func() *v1alpha1.KonnectGatewayControlPlane { return &v1alpha1.KonnectGatewayControlPlane{} },
+			func() *v1alpha1.KonnectGatewayControlPlaneList { return &v1alpha1.KonnectGatewayControlPlaneList{} },
+			func(dst, src *v1alpha1.KonnectGatewayControlPlaneList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KonnectGatewayControlPlaneList) []*v1alpha1.KonnectGatewayControlPlane {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KonnectGatewayControlPlaneList, items []*v1alpha1.KonnectGatewayControlPlane) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KonnectGatewayControlPlane), err
-}
-
-// List takes label and field selectors, and returns the list of KonnectGatewayControlPlanes that match those selectors.
-func (c *FakeKonnectGatewayControlPlanes) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KonnectGatewayControlPlaneList, err error) {
-	emptyResult := &v1alpha1.KonnectGatewayControlPlaneList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(konnectgatewaycontrolplanesResource, konnectgatewaycontrolplanesKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KonnectGatewayControlPlaneList{ListMeta: obj.(*v1alpha1.KonnectGatewayControlPlaneList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KonnectGatewayControlPlaneList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested konnectGatewayControlPlanes.
-func (c *FakeKonnectGatewayControlPlanes) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(konnectgatewaycontrolplanesResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a konnectGatewayControlPlane and creates it.  Returns the server's representation of the konnectGatewayControlPlane, and an error, if there is any.
-func (c *FakeKonnectGatewayControlPlanes) Create(ctx context.Context, konnectGatewayControlPlane *v1alpha1.KonnectGatewayControlPlane, opts v1.CreateOptions) (result *v1alpha1.KonnectGatewayControlPlane, err error) {
-	emptyResult := &v1alpha1.KonnectGatewayControlPlane{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(konnectgatewaycontrolplanesResource, c.ns, konnectGatewayControlPlane, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KonnectGatewayControlPlane), err
-}
-
-// Update takes the representation of a konnectGatewayControlPlane and updates it. Returns the server's representation of the konnectGatewayControlPlane, and an error, if there is any.
-func (c *FakeKonnectGatewayControlPlanes) Update(ctx context.Context, konnectGatewayControlPlane *v1alpha1.KonnectGatewayControlPlane, opts v1.UpdateOptions) (result *v1alpha1.KonnectGatewayControlPlane, err error) {
-	emptyResult := &v1alpha1.KonnectGatewayControlPlane{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(konnectgatewaycontrolplanesResource, c.ns, konnectGatewayControlPlane, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KonnectGatewayControlPlane), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKonnectGatewayControlPlanes) UpdateStatus(ctx context.Context, konnectGatewayControlPlane *v1alpha1.KonnectGatewayControlPlane, opts v1.UpdateOptions) (result *v1alpha1.KonnectGatewayControlPlane, err error) {
-	emptyResult := &v1alpha1.KonnectGatewayControlPlane{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(konnectgatewaycontrolplanesResource, "status", c.ns, konnectGatewayControlPlane, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KonnectGatewayControlPlane), err
-}
-
-// Delete takes name of the konnectGatewayControlPlane and deletes it. Returns an error if one occurs.
-func (c *FakeKonnectGatewayControlPlanes) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(konnectgatewaycontrolplanesResource, c.ns, name, opts), &v1alpha1.KonnectGatewayControlPlane{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKonnectGatewayControlPlanes) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(konnectgatewaycontrolplanesResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KonnectGatewayControlPlaneList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched konnectGatewayControlPlane.
-func (c *FakeKonnectGatewayControlPlanes) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KonnectGatewayControlPlane, err error) {
-	emptyResult := &v1alpha1.KonnectGatewayControlPlane{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(konnectgatewaycontrolplanesResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KonnectGatewayControlPlane), err
 }

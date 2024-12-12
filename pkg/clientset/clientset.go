@@ -19,8 +19,8 @@ limitations under the License.
 package clientset
 
 import (
-	"fmt"
-	"net/http"
+	fmt "fmt"
+	http "net/http"
 
 	configurationv1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1"
 	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"

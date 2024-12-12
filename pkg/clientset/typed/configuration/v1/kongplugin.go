@@ -19,9 +19,9 @@ limitations under the License.
 package v1
 
 import (
-	"context"
+	context "context"
 
-	v1 "github.com/kong/kubernetes-configuration/api/configuration/v1"
+	configurationv1 "github.com/kong/kubernetes-configuration/api/configuration/v1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type KongPluginsGetter interface {
 
 // KongPluginInterface has methods to work with KongPlugin resources.
 type KongPluginInterface interface {
-	Create(ctx context.Context, kongPlugin *v1.KongPlugin, opts metav1.CreateOptions) (*v1.KongPlugin, error)
-	Update(ctx context.Context, kongPlugin *v1.KongPlugin, opts metav1.UpdateOptions) (*v1.KongPlugin, error)
+	Create(ctx context.Context, kongPlugin *configurationv1.KongPlugin, opts metav1.CreateOptions) (*configurationv1.KongPlugin, error)
+	Update(ctx context.Context, kongPlugin *configurationv1.KongPlugin, opts metav1.UpdateOptions) (*configurationv1.KongPlugin, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongPlugin *v1.KongPlugin, opts metav1.UpdateOptions) (*v1.KongPlugin, error)
+	UpdateStatus(ctx context.Context, kongPlugin *configurationv1.KongPlugin, opts metav1.UpdateOptions) (*configurationv1.KongPlugin, error)
 	Delete(ctx context.Context, name string, opts metav1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts metav1.DeleteOptions, listOpts metav1.ListOptions) error
-	Get(ctx context.Context, name string, opts metav1.GetOptions) (*v1.KongPlugin, error)
-	List(ctx context.Context, opts metav1.ListOptions) (*v1.KongPluginList, error)
+	Get(ctx context.Context, name string, opts metav1.GetOptions) (*configurationv1.KongPlugin, error)
+	List(ctx context.Context, opts metav1.ListOptions) (*configurationv1.KongPluginList, error)
 	Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *v1.KongPlugin, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *configurationv1.KongPlugin, err error)
 	KongPluginExpansion
 }
 
 // kongPlugins implements KongPluginInterface
 type kongPlugins struct {
-	*gentype.ClientWithList[*v1.KongPlugin, *v1.KongPluginList]
+	*gentype.ClientWithList[*configurationv1.KongPlugin, *configurationv1.KongPluginList]
 }
 
 // newKongPlugins returns a KongPlugins
 func newKongPlugins(c *ConfigurationV1Client, namespace string) *kongPlugins {
 	return &kongPlugins{
-		gentype.NewClientWithList[*v1.KongPlugin, *v1.KongPluginList](
+		gentype.NewClientWithList[*configurationv1.KongPlugin, *configurationv1.KongPluginList](
 			"kongplugins",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1.KongPlugin { return &v1.KongPlugin{} },
-			func() *v1.KongPluginList { return &v1.KongPluginList{} }),
+			func() *configurationv1.KongPlugin { return &configurationv1.KongPlugin{} },
+			func() *configurationv1.KongPluginList { return &configurationv1.KongPluginList{} },
+		),
 	}
 }

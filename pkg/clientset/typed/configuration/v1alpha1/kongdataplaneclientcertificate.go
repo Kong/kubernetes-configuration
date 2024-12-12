@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,35 +37,38 @@ type KongDataPlaneClientCertificatesGetter interface {
 
 // KongDataPlaneClientCertificateInterface has methods to work with KongDataPlaneClientCertificate resources.
 type KongDataPlaneClientCertificateInterface interface {
-	Create(ctx context.Context, kongDataPlaneClientCertificate *v1alpha1.KongDataPlaneClientCertificate, opts v1.CreateOptions) (*v1alpha1.KongDataPlaneClientCertificate, error)
-	Update(ctx context.Context, kongDataPlaneClientCertificate *v1alpha1.KongDataPlaneClientCertificate, opts v1.UpdateOptions) (*v1alpha1.KongDataPlaneClientCertificate, error)
+	Create(ctx context.Context, kongDataPlaneClientCertificate *configurationv1alpha1.KongDataPlaneClientCertificate, opts v1.CreateOptions) (*configurationv1alpha1.KongDataPlaneClientCertificate, error)
+	Update(ctx context.Context, kongDataPlaneClientCertificate *configurationv1alpha1.KongDataPlaneClientCertificate, opts v1.UpdateOptions) (*configurationv1alpha1.KongDataPlaneClientCertificate, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongDataPlaneClientCertificate *v1alpha1.KongDataPlaneClientCertificate, opts v1.UpdateOptions) (*v1alpha1.KongDataPlaneClientCertificate, error)
+	UpdateStatus(ctx context.Context, kongDataPlaneClientCertificate *configurationv1alpha1.KongDataPlaneClientCertificate, opts v1.UpdateOptions) (*configurationv1alpha1.KongDataPlaneClientCertificate, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongDataPlaneClientCertificate, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongDataPlaneClientCertificateList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongDataPlaneClientCertificate, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongDataPlaneClientCertificateList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongDataPlaneClientCertificate, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongDataPlaneClientCertificate, err error)
 	KongDataPlaneClientCertificateExpansion
 }
 
 // kongDataPlaneClientCertificates implements KongDataPlaneClientCertificateInterface
 type kongDataPlaneClientCertificates struct {
-	*gentype.ClientWithList[*v1alpha1.KongDataPlaneClientCertificate, *v1alpha1.KongDataPlaneClientCertificateList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongDataPlaneClientCertificate, *configurationv1alpha1.KongDataPlaneClientCertificateList]
 }
 
 // newKongDataPlaneClientCertificates returns a KongDataPlaneClientCertificates
 func newKongDataPlaneClientCertificates(c *ConfigurationV1alpha1Client, namespace string) *kongDataPlaneClientCertificates {
 	return &kongDataPlaneClientCertificates{
-		gentype.NewClientWithList[*v1alpha1.KongDataPlaneClientCertificate, *v1alpha1.KongDataPlaneClientCertificateList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongDataPlaneClientCertificate, *configurationv1alpha1.KongDataPlaneClientCertificateList](
 			"kongdataplaneclientcertificates",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongDataPlaneClientCertificate { return &v1alpha1.KongDataPlaneClientCertificate{} },
-			func() *v1alpha1.KongDataPlaneClientCertificateList {
-				return &v1alpha1.KongDataPlaneClientCertificateList{}
-			}),
+			func() *configurationv1alpha1.KongDataPlaneClientCertificate {
+				return &configurationv1alpha1.KongDataPlaneClientCertificate{}
+			},
+			func() *configurationv1alpha1.KongDataPlaneClientCertificateList {
+				return &configurationv1alpha1.KongDataPlaneClientCertificateList{}
+			},
+		),
 	}
 }

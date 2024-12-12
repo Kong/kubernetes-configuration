@@ -19,129 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongCredentialACLs implements KongCredentialACLInterface
-type FakeKongCredentialACLs struct {
+// fakeKongCredentialACLs implements KongCredentialACLInterface
+type fakeKongCredentialACLs struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongCredentialACL, *v1alpha1.KongCredentialACLList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongcredentialaclsResource = v1alpha1.SchemeGroupVersion.WithResource("kongcredentialacls")
-
-var kongcredentialaclsKind = v1alpha1.SchemeGroupVersion.WithKind("KongCredentialACL")
-
-// Get takes name of the kongCredentialACL, and returns the corresponding kongCredentialACL object, and an error if there is any.
-func (c *FakeKongCredentialACLs) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongCredentialACL, err error) {
-	emptyResult := &v1alpha1.KongCredentialACL{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongcredentialaclsResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongCredentialACLs(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongCredentialACLInterface {
+	return &fakeKongCredentialACLs{
+		gentype.NewFakeClientWithList[*v1alpha1.KongCredentialACL, *v1alpha1.KongCredentialACLList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongcredentialacls"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongCredentialACL"),
+			func() *v1alpha1.KongCredentialACL { return &v1alpha1.KongCredentialACL{} },
+			func() *v1alpha1.KongCredentialACLList { return &v1alpha1.KongCredentialACLList{} },
+			func(dst, src *v1alpha1.KongCredentialACLList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongCredentialACLList) []*v1alpha1.KongCredentialACL {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KongCredentialACLList, items []*v1alpha1.KongCredentialACL) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongCredentialACL), err
-}
-
-// List takes label and field selectors, and returns the list of KongCredentialACLs that match those selectors.
-func (c *FakeKongCredentialACLs) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongCredentialACLList, err error) {
-	emptyResult := &v1alpha1.KongCredentialACLList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongcredentialaclsResource, kongcredentialaclsKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongCredentialACLList{ListMeta: obj.(*v1alpha1.KongCredentialACLList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongCredentialACLList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongCredentialACLs.
-func (c *FakeKongCredentialACLs) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongcredentialaclsResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongCredentialACL and creates it.  Returns the server's representation of the kongCredentialACL, and an error, if there is any.
-func (c *FakeKongCredentialACLs) Create(ctx context.Context, kongCredentialACL *v1alpha1.KongCredentialACL, opts v1.CreateOptions) (result *v1alpha1.KongCredentialACL, err error) {
-	emptyResult := &v1alpha1.KongCredentialACL{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongcredentialaclsResource, c.ns, kongCredentialACL, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialACL), err
-}
-
-// Update takes the representation of a kongCredentialACL and updates it. Returns the server's representation of the kongCredentialACL, and an error, if there is any.
-func (c *FakeKongCredentialACLs) Update(ctx context.Context, kongCredentialACL *v1alpha1.KongCredentialACL, opts v1.UpdateOptions) (result *v1alpha1.KongCredentialACL, err error) {
-	emptyResult := &v1alpha1.KongCredentialACL{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongcredentialaclsResource, c.ns, kongCredentialACL, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialACL), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongCredentialACLs) UpdateStatus(ctx context.Context, kongCredentialACL *v1alpha1.KongCredentialACL, opts v1.UpdateOptions) (result *v1alpha1.KongCredentialACL, err error) {
-	emptyResult := &v1alpha1.KongCredentialACL{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongcredentialaclsResource, "status", c.ns, kongCredentialACL, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialACL), err
-}
-
-// Delete takes name of the kongCredentialACL and deletes it. Returns an error if one occurs.
-func (c *FakeKongCredentialACLs) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongcredentialaclsResource, c.ns, name, opts), &v1alpha1.KongCredentialACL{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongCredentialACLs) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongcredentialaclsResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongCredentialACLList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongCredentialACL.
-func (c *FakeKongCredentialACLs) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCredentialACL, err error) {
-	emptyResult := &v1alpha1.KongCredentialACL{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongcredentialaclsResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialACL), err
 }

@@ -19,9 +19,9 @@ limitations under the License.
 package v1
 
 import (
-	"context"
+	context "context"
 
-	v1 "github.com/kong/kubernetes-configuration/api/configuration/v1"
+	configurationv1 "github.com/kong/kubernetes-configuration/api/configuration/v1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,31 +37,32 @@ type KongIngressesGetter interface {
 
 // KongIngressInterface has methods to work with KongIngress resources.
 type KongIngressInterface interface {
-	Create(ctx context.Context, kongIngress *v1.KongIngress, opts metav1.CreateOptions) (*v1.KongIngress, error)
-	Update(ctx context.Context, kongIngress *v1.KongIngress, opts metav1.UpdateOptions) (*v1.KongIngress, error)
+	Create(ctx context.Context, kongIngress *configurationv1.KongIngress, opts metav1.CreateOptions) (*configurationv1.KongIngress, error)
+	Update(ctx context.Context, kongIngress *configurationv1.KongIngress, opts metav1.UpdateOptions) (*configurationv1.KongIngress, error)
 	Delete(ctx context.Context, name string, opts metav1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts metav1.DeleteOptions, listOpts metav1.ListOptions) error
-	Get(ctx context.Context, name string, opts metav1.GetOptions) (*v1.KongIngress, error)
-	List(ctx context.Context, opts metav1.ListOptions) (*v1.KongIngressList, error)
+	Get(ctx context.Context, name string, opts metav1.GetOptions) (*configurationv1.KongIngress, error)
+	List(ctx context.Context, opts metav1.ListOptions) (*configurationv1.KongIngressList, error)
 	Watch(ctx context.Context, opts metav1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *v1.KongIngress, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts metav1.PatchOptions, subresources ...string) (result *configurationv1.KongIngress, err error)
 	KongIngressExpansion
 }
 
 // kongIngresses implements KongIngressInterface
 type kongIngresses struct {
-	*gentype.ClientWithList[*v1.KongIngress, *v1.KongIngressList]
+	*gentype.ClientWithList[*configurationv1.KongIngress, *configurationv1.KongIngressList]
 }
 
 // newKongIngresses returns a KongIngresses
 func newKongIngresses(c *ConfigurationV1Client, namespace string) *kongIngresses {
 	return &kongIngresses{
-		gentype.NewClientWithList[*v1.KongIngress, *v1.KongIngressList](
+		gentype.NewClientWithList[*configurationv1.KongIngress, *configurationv1.KongIngressList](
 			"kongingresses",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1.KongIngress { return &v1.KongIngress{} },
-			func() *v1.KongIngressList { return &v1.KongIngressList{} }),
+			func() *configurationv1.KongIngress { return &configurationv1.KongIngress{} },
+			func() *configurationv1.KongIngressList { return &configurationv1.KongIngressList{} },
+		),
 	}
 }

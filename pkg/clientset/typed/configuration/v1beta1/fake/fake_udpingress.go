@@ -19,129 +19,32 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1beta1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeUDPIngresses implements UDPIngressInterface
-type FakeUDPIngresses struct {
+// fakeUDPIngresses implements UDPIngressInterface
+type fakeUDPIngresses struct {
+	*gentype.FakeClientWithList[*v1beta1.UDPIngress, *v1beta1.UDPIngressList]
 	Fake *FakeConfigurationV1beta1
-	ns   string
 }
 
-var udpingressesResource = v1beta1.SchemeGroupVersion.WithResource("udpingresses")
-
-var udpingressesKind = v1beta1.SchemeGroupVersion.WithKind("UDPIngress")
-
-// Get takes name of the uDPIngress, and returns the corresponding uDPIngress object, and an error if there is any.
-func (c *FakeUDPIngresses) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1beta1.UDPIngress, err error) {
-	emptyResult := &v1beta1.UDPIngress{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(udpingressesResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeUDPIngresses(fake *FakeConfigurationV1beta1, namespace string) configurationv1beta1.UDPIngressInterface {
+	return &fakeUDPIngresses{
+		gentype.NewFakeClientWithList[*v1beta1.UDPIngress, *v1beta1.UDPIngressList](
+			fake.Fake,
+			namespace,
+			v1beta1.SchemeGroupVersion.WithResource("udpingresses"),
+			v1beta1.SchemeGroupVersion.WithKind("UDPIngress"),
+			func() *v1beta1.UDPIngress { return &v1beta1.UDPIngress{} },
+			func() *v1beta1.UDPIngressList { return &v1beta1.UDPIngressList{} },
+			func(dst, src *v1beta1.UDPIngressList) { dst.ListMeta = src.ListMeta },
+			func(list *v1beta1.UDPIngressList) []*v1beta1.UDPIngress { return gentype.ToPointerSlice(list.Items) },
+			func(list *v1beta1.UDPIngressList, items []*v1beta1.UDPIngress) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1beta1.UDPIngress), err
-}
-
-// List takes label and field selectors, and returns the list of UDPIngresses that match those selectors.
-func (c *FakeUDPIngresses) List(ctx context.Context, opts v1.ListOptions) (result *v1beta1.UDPIngressList, err error) {
-	emptyResult := &v1beta1.UDPIngressList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(udpingressesResource, udpingressesKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1beta1.UDPIngressList{ListMeta: obj.(*v1beta1.UDPIngressList).ListMeta}
-	for _, item := range obj.(*v1beta1.UDPIngressList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested uDPIngresses.
-func (c *FakeUDPIngresses) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(udpingressesResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a uDPIngress and creates it.  Returns the server's representation of the uDPIngress, and an error, if there is any.
-func (c *FakeUDPIngresses) Create(ctx context.Context, uDPIngress *v1beta1.UDPIngress, opts v1.CreateOptions) (result *v1beta1.UDPIngress, err error) {
-	emptyResult := &v1beta1.UDPIngress{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(udpingressesResource, c.ns, uDPIngress, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.UDPIngress), err
-}
-
-// Update takes the representation of a uDPIngress and updates it. Returns the server's representation of the uDPIngress, and an error, if there is any.
-func (c *FakeUDPIngresses) Update(ctx context.Context, uDPIngress *v1beta1.UDPIngress, opts v1.UpdateOptions) (result *v1beta1.UDPIngress, err error) {
-	emptyResult := &v1beta1.UDPIngress{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(udpingressesResource, c.ns, uDPIngress, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.UDPIngress), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeUDPIngresses) UpdateStatus(ctx context.Context, uDPIngress *v1beta1.UDPIngress, opts v1.UpdateOptions) (result *v1beta1.UDPIngress, err error) {
-	emptyResult := &v1beta1.UDPIngress{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(udpingressesResource, "status", c.ns, uDPIngress, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.UDPIngress), err
-}
-
-// Delete takes name of the uDPIngress and deletes it. Returns an error if one occurs.
-func (c *FakeUDPIngresses) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(udpingressesResource, c.ns, name, opts), &v1beta1.UDPIngress{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeUDPIngresses) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(udpingressesResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1beta1.UDPIngressList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched uDPIngress.
-func (c *FakeUDPIngresses) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1beta1.UDPIngress, err error) {
-	emptyResult := &v1beta1.UDPIngress{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(udpingressesResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1beta1.UDPIngress), err
 }

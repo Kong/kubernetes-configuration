@@ -29,11 +29,11 @@ type FakeKonnectV1alpha1 struct {
 }
 
 func (c *FakeKonnectV1alpha1) KonnectAPIAuthConfigurations(namespace string) v1alpha1.KonnectAPIAuthConfigurationInterface {
-	return &FakeKonnectAPIAuthConfigurations{c, namespace}
+	return newFakeKonnectAPIAuthConfigurations(c, namespace)
 }
 
 func (c *FakeKonnectV1alpha1) KonnectGatewayControlPlanes(namespace string) v1alpha1.KonnectGatewayControlPlaneInterface {
-	return &FakeKonnectGatewayControlPlanes{c, namespace}
+	return newFakeKonnectGatewayControlPlanes(c, namespace)
 }
 
 // RESTClient returns a RESTClient that is used to communicate

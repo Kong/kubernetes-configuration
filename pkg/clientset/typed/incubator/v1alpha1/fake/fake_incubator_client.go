@@ -29,7 +29,7 @@ type FakeIncubatorV1alpha1 struct {
 }
 
 func (c *FakeIncubatorV1alpha1) KongServiceFacades(namespace string) v1alpha1.KongServiceFacadeInterface {
-	return &FakeKongServiceFacades{c, namespace}
+	return newFakeKongServiceFacades(c, namespace)
 }
 
 // RESTClient returns a RESTClient that is used to communicate

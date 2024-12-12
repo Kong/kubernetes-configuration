@@ -19,129 +19,34 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongCredentialJWTs implements KongCredentialJWTInterface
-type FakeKongCredentialJWTs struct {
+// fakeKongCredentialJWTs implements KongCredentialJWTInterface
+type fakeKongCredentialJWTs struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongCredentialJWT, *v1alpha1.KongCredentialJWTList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongcredentialjwtsResource = v1alpha1.SchemeGroupVersion.WithResource("kongcredentialjwts")
-
-var kongcredentialjwtsKind = v1alpha1.SchemeGroupVersion.WithKind("KongCredentialJWT")
-
-// Get takes name of the kongCredentialJWT, and returns the corresponding kongCredentialJWT object, and an error if there is any.
-func (c *FakeKongCredentialJWTs) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongCredentialJWT, err error) {
-	emptyResult := &v1alpha1.KongCredentialJWT{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongcredentialjwtsResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongCredentialJWTs(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongCredentialJWTInterface {
+	return &fakeKongCredentialJWTs{
+		gentype.NewFakeClientWithList[*v1alpha1.KongCredentialJWT, *v1alpha1.KongCredentialJWTList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongcredentialjwts"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongCredentialJWT"),
+			func() *v1alpha1.KongCredentialJWT { return &v1alpha1.KongCredentialJWT{} },
+			func() *v1alpha1.KongCredentialJWTList { return &v1alpha1.KongCredentialJWTList{} },
+			func(dst, src *v1alpha1.KongCredentialJWTList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongCredentialJWTList) []*v1alpha1.KongCredentialJWT {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.KongCredentialJWTList, items []*v1alpha1.KongCredentialJWT) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongCredentialJWT), err
-}
-
-// List takes label and field selectors, and returns the list of KongCredentialJWTs that match those selectors.
-func (c *FakeKongCredentialJWTs) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongCredentialJWTList, err error) {
-	emptyResult := &v1alpha1.KongCredentialJWTList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongcredentialjwtsResource, kongcredentialjwtsKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongCredentialJWTList{ListMeta: obj.(*v1alpha1.KongCredentialJWTList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongCredentialJWTList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongCredentialJWTs.
-func (c *FakeKongCredentialJWTs) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongcredentialjwtsResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongCredentialJWT and creates it.  Returns the server's representation of the kongCredentialJWT, and an error, if there is any.
-func (c *FakeKongCredentialJWTs) Create(ctx context.Context, kongCredentialJWT *v1alpha1.KongCredentialJWT, opts v1.CreateOptions) (result *v1alpha1.KongCredentialJWT, err error) {
-	emptyResult := &v1alpha1.KongCredentialJWT{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongcredentialjwtsResource, c.ns, kongCredentialJWT, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialJWT), err
-}
-
-// Update takes the representation of a kongCredentialJWT and updates it. Returns the server's representation of the kongCredentialJWT, and an error, if there is any.
-func (c *FakeKongCredentialJWTs) Update(ctx context.Context, kongCredentialJWT *v1alpha1.KongCredentialJWT, opts v1.UpdateOptions) (result *v1alpha1.KongCredentialJWT, err error) {
-	emptyResult := &v1alpha1.KongCredentialJWT{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongcredentialjwtsResource, c.ns, kongCredentialJWT, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialJWT), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongCredentialJWTs) UpdateStatus(ctx context.Context, kongCredentialJWT *v1alpha1.KongCredentialJWT, opts v1.UpdateOptions) (result *v1alpha1.KongCredentialJWT, err error) {
-	emptyResult := &v1alpha1.KongCredentialJWT{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongcredentialjwtsResource, "status", c.ns, kongCredentialJWT, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialJWT), err
-}
-
-// Delete takes name of the kongCredentialJWT and deletes it. Returns an error if one occurs.
-func (c *FakeKongCredentialJWTs) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongcredentialjwtsResource, c.ns, name, opts), &v1alpha1.KongCredentialJWT{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongCredentialJWTs) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongcredentialjwtsResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongCredentialJWTList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongCredentialJWT.
-func (c *FakeKongCredentialJWTs) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongCredentialJWT, err error) {
-	emptyResult := &v1alpha1.KongCredentialJWT{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongcredentialjwtsResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongCredentialJWT), err
 }

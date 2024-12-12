@@ -29,19 +29,19 @@ type FakeConfigurationV1beta1 struct {
 }
 
 func (c *FakeConfigurationV1beta1) KongConsumerGroups(namespace string) v1beta1.KongConsumerGroupInterface {
-	return &FakeKongConsumerGroups{c, namespace}
+	return newFakeKongConsumerGroups(c, namespace)
 }
 
 func (c *FakeConfigurationV1beta1) KongUpstreamPolicies(namespace string) v1beta1.KongUpstreamPolicyInterface {
-	return &FakeKongUpstreamPolicies{c, namespace}
+	return newFakeKongUpstreamPolicies(c, namespace)
 }
 
 func (c *FakeConfigurationV1beta1) TCPIngresses(namespace string) v1beta1.TCPIngressInterface {
-	return &FakeTCPIngresses{c, namespace}
+	return newFakeTCPIngresses(c, namespace)
 }
 
 func (c *FakeConfigurationV1beta1) UDPIngresses(namespace string) v1beta1.UDPIngressInterface {
-	return &FakeUDPIngresses{c, namespace}
+	return newFakeUDPIngresses(c, namespace)
 }
 
 // RESTClient returns a RESTClient that is used to communicate

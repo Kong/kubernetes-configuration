@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,31 +37,36 @@ type IngressClassParametersesGetter interface {
 
 // IngressClassParametersInterface has methods to work with IngressClassParameters resources.
 type IngressClassParametersInterface interface {
-	Create(ctx context.Context, ingressClassParameters *v1alpha1.IngressClassParameters, opts v1.CreateOptions) (*v1alpha1.IngressClassParameters, error)
-	Update(ctx context.Context, ingressClassParameters *v1alpha1.IngressClassParameters, opts v1.UpdateOptions) (*v1alpha1.IngressClassParameters, error)
+	Create(ctx context.Context, ingressClassParameters *configurationv1alpha1.IngressClassParameters, opts v1.CreateOptions) (*configurationv1alpha1.IngressClassParameters, error)
+	Update(ctx context.Context, ingressClassParameters *configurationv1alpha1.IngressClassParameters, opts v1.UpdateOptions) (*configurationv1alpha1.IngressClassParameters, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.IngressClassParameters, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.IngressClassParametersList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.IngressClassParameters, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.IngressClassParametersList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.IngressClassParameters, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.IngressClassParameters, err error)
 	IngressClassParametersExpansion
 }
 
 // ingressClassParameterses implements IngressClassParametersInterface
 type ingressClassParameterses struct {
-	*gentype.ClientWithList[*v1alpha1.IngressClassParameters, *v1alpha1.IngressClassParametersList]
+	*gentype.ClientWithList[*configurationv1alpha1.IngressClassParameters, *configurationv1alpha1.IngressClassParametersList]
 }
 
 // newIngressClassParameterses returns a IngressClassParameterses
 func newIngressClassParameterses(c *ConfigurationV1alpha1Client, namespace string) *ingressClassParameterses {
 	return &ingressClassParameterses{
-		gentype.NewClientWithList[*v1alpha1.IngressClassParameters, *v1alpha1.IngressClassParametersList](
+		gentype.NewClientWithList[*configurationv1alpha1.IngressClassParameters, *configurationv1alpha1.IngressClassParametersList](
 			"ingressclassparameterses",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.IngressClassParameters { return &v1alpha1.IngressClassParameters{} },
-			func() *v1alpha1.IngressClassParametersList { return &v1alpha1.IngressClassParametersList{} }),
+			func() *configurationv1alpha1.IngressClassParameters {
+				return &configurationv1alpha1.IngressClassParameters{}
+			},
+			func() *configurationv1alpha1.IngressClassParametersList {
+				return &configurationv1alpha1.IngressClassParametersList{}
+			},
+		),
 	}
 }

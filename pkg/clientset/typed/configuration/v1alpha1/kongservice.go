@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,34 @@ type KongServicesGetter interface {
 
 // KongServiceInterface has methods to work with KongService resources.
 type KongServiceInterface interface {
-	Create(ctx context.Context, kongService *v1alpha1.KongService, opts v1.CreateOptions) (*v1alpha1.KongService, error)
-	Update(ctx context.Context, kongService *v1alpha1.KongService, opts v1.UpdateOptions) (*v1alpha1.KongService, error)
+	Create(ctx context.Context, kongService *configurationv1alpha1.KongService, opts v1.CreateOptions) (*configurationv1alpha1.KongService, error)
+	Update(ctx context.Context, kongService *configurationv1alpha1.KongService, opts v1.UpdateOptions) (*configurationv1alpha1.KongService, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, kongService *v1alpha1.KongService, opts v1.UpdateOptions) (*v1alpha1.KongService, error)
+	UpdateStatus(ctx context.Context, kongService *configurationv1alpha1.KongService, opts v1.UpdateOptions) (*configurationv1alpha1.KongService, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KongService, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KongServiceList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*configurationv1alpha1.KongService, error)
+	List(ctx context.Context, opts v1.ListOptions) (*configurationv1alpha1.KongServiceList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongService, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *configurationv1alpha1.KongService, err error)
 	KongServiceExpansion
 }
 
 // kongServices implements KongServiceInterface
 type kongServices struct {
-	*gentype.ClientWithList[*v1alpha1.KongService, *v1alpha1.KongServiceList]
+	*gentype.ClientWithList[*configurationv1alpha1.KongService, *configurationv1alpha1.KongServiceList]
 }
 
 // newKongServices returns a KongServices
 func newKongServices(c *ConfigurationV1alpha1Client, namespace string) *kongServices {
 	return &kongServices{
-		gentype.NewClientWithList[*v1alpha1.KongService, *v1alpha1.KongServiceList](
+		gentype.NewClientWithList[*configurationv1alpha1.KongService, *configurationv1alpha1.KongServiceList](
 			"kongservices",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KongService { return &v1alpha1.KongService{} },
-			func() *v1alpha1.KongServiceList { return &v1alpha1.KongServiceList{} }),
+			func() *configurationv1alpha1.KongService { return &configurationv1alpha1.KongService{} },
+			func() *configurationv1alpha1.KongServiceList { return &configurationv1alpha1.KongServiceList{} },
+		),
 	}
 }

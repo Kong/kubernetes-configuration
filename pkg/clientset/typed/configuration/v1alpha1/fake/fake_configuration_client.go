@@ -29,83 +29,83 @@ type FakeConfigurationV1alpha1 struct {
 }
 
 func (c *FakeConfigurationV1alpha1) IngressClassParameterses(namespace string) v1alpha1.IngressClassParametersInterface {
-	return &FakeIngressClassParameterses{c, namespace}
+	return newFakeIngressClassParameterses(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongCACertificates(namespace string) v1alpha1.KongCACertificateInterface {
-	return &FakeKongCACertificates{c, namespace}
+	return newFakeKongCACertificates(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongCertificates(namespace string) v1alpha1.KongCertificateInterface {
-	return &FakeKongCertificates{c, namespace}
+	return newFakeKongCertificates(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongCredentialACLs(namespace string) v1alpha1.KongCredentialACLInterface {
-	return &FakeKongCredentialACLs{c, namespace}
+	return newFakeKongCredentialACLs(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongCredentialAPIKeys(namespace string) v1alpha1.KongCredentialAPIKeyInterface {
-	return &FakeKongCredentialAPIKeys{c, namespace}
+	return newFakeKongCredentialAPIKeys(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongCredentialBasicAuths(namespace string) v1alpha1.KongCredentialBasicAuthInterface {
-	return &FakeKongCredentialBasicAuths{c, namespace}
+	return newFakeKongCredentialBasicAuths(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongCredentialHMACs(namespace string) v1alpha1.KongCredentialHMACInterface {
-	return &FakeKongCredentialHMACs{c, namespace}
+	return newFakeKongCredentialHMACs(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongCredentialJWTs(namespace string) v1alpha1.KongCredentialJWTInterface {
-	return &FakeKongCredentialJWTs{c, namespace}
+	return newFakeKongCredentialJWTs(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongCustomEntities(namespace string) v1alpha1.KongCustomEntityInterface {
-	return &FakeKongCustomEntities{c, namespace}
+	return newFakeKongCustomEntities(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongDataPlaneClientCertificates(namespace string) v1alpha1.KongDataPlaneClientCertificateInterface {
-	return &FakeKongDataPlaneClientCertificates{c, namespace}
+	return newFakeKongDataPlaneClientCertificates(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongKeys(namespace string) v1alpha1.KongKeyInterface {
-	return &FakeKongKeys{c, namespace}
+	return newFakeKongKeys(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongKeySets(namespace string) v1alpha1.KongKeySetInterface {
-	return &FakeKongKeySets{c, namespace}
+	return newFakeKongKeySets(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongLicenses() v1alpha1.KongLicenseInterface {
-	return &FakeKongLicenses{c}
+	return newFakeKongLicenses(c)
 }
 
 func (c *FakeConfigurationV1alpha1) KongPluginBindings(namespace string) v1alpha1.KongPluginBindingInterface {
-	return &FakeKongPluginBindings{c, namespace}
+	return newFakeKongPluginBindings(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongRoutes(namespace string) v1alpha1.KongRouteInterface {
-	return &FakeKongRoutes{c, namespace}
+	return newFakeKongRoutes(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongSNIs(namespace string) v1alpha1.KongSNIInterface {
-	return &FakeKongSNIs{c, namespace}
+	return newFakeKongSNIs(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongServices(namespace string) v1alpha1.KongServiceInterface {
-	return &FakeKongServices{c, namespace}
+	return newFakeKongServices(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongTargets(namespace string) v1alpha1.KongTargetInterface {
-	return &FakeKongTargets{c, namespace}
+	return newFakeKongTargets(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongUpstreams(namespace string) v1alpha1.KongUpstreamInterface {
-	return &FakeKongUpstreams{c, namespace}
+	return newFakeKongUpstreams(c, namespace)
 }
 
 func (c *FakeConfigurationV1alpha1) KongVaults() v1alpha1.KongVaultInterface {
-	return &FakeKongVaults{c}
+	return newFakeKongVaults(c)
 }
 
 // RESTClient returns a RESTClient that is used to communicate

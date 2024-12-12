@@ -19,129 +19,32 @@ limitations under the License.
 package fake
 
 import (
-	"context"
-
 	v1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeKongKeySets implements KongKeySetInterface
-type FakeKongKeySets struct {
+// fakeKongKeySets implements KongKeySetInterface
+type fakeKongKeySets struct {
+	*gentype.FakeClientWithList[*v1alpha1.KongKeySet, *v1alpha1.KongKeySetList]
 	Fake *FakeConfigurationV1alpha1
-	ns   string
 }
 
-var kongkeysetsResource = v1alpha1.SchemeGroupVersion.WithResource("kongkeysets")
-
-var kongkeysetsKind = v1alpha1.SchemeGroupVersion.WithKind("KongKeySet")
-
-// Get takes name of the kongKeySet, and returns the corresponding kongKeySet object, and an error if there is any.
-func (c *FakeKongKeySets) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.KongKeySet, err error) {
-	emptyResult := &v1alpha1.KongKeySet{}
-	obj, err := c.Fake.
-		Invokes(testing.NewGetActionWithOptions(kongkeysetsResource, c.ns, name, options), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
+func newFakeKongKeySets(fake *FakeConfigurationV1alpha1, namespace string) configurationv1alpha1.KongKeySetInterface {
+	return &fakeKongKeySets{
+		gentype.NewFakeClientWithList[*v1alpha1.KongKeySet, *v1alpha1.KongKeySetList](
+			fake.Fake,
+			namespace,
+			v1alpha1.SchemeGroupVersion.WithResource("kongkeysets"),
+			v1alpha1.SchemeGroupVersion.WithKind("KongKeySet"),
+			func() *v1alpha1.KongKeySet { return &v1alpha1.KongKeySet{} },
+			func() *v1alpha1.KongKeySetList { return &v1alpha1.KongKeySetList{} },
+			func(dst, src *v1alpha1.KongKeySetList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.KongKeySetList) []*v1alpha1.KongKeySet { return gentype.ToPointerSlice(list.Items) },
+			func(list *v1alpha1.KongKeySetList, items []*v1alpha1.KongKeySet) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.KongKeySet), err
-}
-
-// List takes label and field selectors, and returns the list of KongKeySets that match those selectors.
-func (c *FakeKongKeySets) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.KongKeySetList, err error) {
-	emptyResult := &v1alpha1.KongKeySetList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewListActionWithOptions(kongkeysetsResource, kongkeysetsKind, c.ns, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.KongKeySetList{ListMeta: obj.(*v1alpha1.KongKeySetList).ListMeta}
-	for _, item := range obj.(*v1alpha1.KongKeySetList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested kongKeySets.
-func (c *FakeKongKeySets) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewWatchActionWithOptions(kongkeysetsResource, c.ns, opts))
-
-}
-
-// Create takes the representation of a kongKeySet and creates it.  Returns the server's representation of the kongKeySet, and an error, if there is any.
-func (c *FakeKongKeySets) Create(ctx context.Context, kongKeySet *v1alpha1.KongKeySet, opts v1.CreateOptions) (result *v1alpha1.KongKeySet, err error) {
-	emptyResult := &v1alpha1.KongKeySet{}
-	obj, err := c.Fake.
-		Invokes(testing.NewCreateActionWithOptions(kongkeysetsResource, c.ns, kongKeySet, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongKeySet), err
-}
-
-// Update takes the representation of a kongKeySet and updates it. Returns the server's representation of the kongKeySet, and an error, if there is any.
-func (c *FakeKongKeySets) Update(ctx context.Context, kongKeySet *v1alpha1.KongKeySet, opts v1.UpdateOptions) (result *v1alpha1.KongKeySet, err error) {
-	emptyResult := &v1alpha1.KongKeySet{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateActionWithOptions(kongkeysetsResource, c.ns, kongKeySet, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongKeySet), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeKongKeySets) UpdateStatus(ctx context.Context, kongKeySet *v1alpha1.KongKeySet, opts v1.UpdateOptions) (result *v1alpha1.KongKeySet, err error) {
-	emptyResult := &v1alpha1.KongKeySet{}
-	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceActionWithOptions(kongkeysetsResource, "status", c.ns, kongKeySet, opts), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongKeySet), err
-}
-
-// Delete takes name of the kongKeySet and deletes it. Returns an error if one occurs.
-func (c *FakeKongKeySets) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewDeleteActionWithOptions(kongkeysetsResource, c.ns, name, opts), &v1alpha1.KongKeySet{})
-
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeKongKeySets) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewDeleteCollectionActionWithOptions(kongkeysetsResource, c.ns, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.KongKeySetList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched kongKeySet.
-func (c *FakeKongKeySets) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KongKeySet, err error) {
-	emptyResult := &v1alpha1.KongKeySet{}
-	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceActionWithOptions(kongkeysetsResource, c.ns, name, pt, data, opts, subresources...), emptyResult)
-
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.KongKeySet), err
 }

@@ -19,9 +19,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
+	konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -37,33 +37,38 @@ type KonnectAPIAuthConfigurationsGetter interface {
 
 // KonnectAPIAuthConfigurationInterface has methods to work with KonnectAPIAuthConfiguration resources.
 type KonnectAPIAuthConfigurationInterface interface {
-	Create(ctx context.Context, konnectAPIAuthConfiguration *v1alpha1.KonnectAPIAuthConfiguration, opts v1.CreateOptions) (*v1alpha1.KonnectAPIAuthConfiguration, error)
-	Update(ctx context.Context, konnectAPIAuthConfiguration *v1alpha1.KonnectAPIAuthConfiguration, opts v1.UpdateOptions) (*v1alpha1.KonnectAPIAuthConfiguration, error)
+	Create(ctx context.Context, konnectAPIAuthConfiguration *konnectv1alpha1.KonnectAPIAuthConfiguration, opts v1.CreateOptions) (*konnectv1alpha1.KonnectAPIAuthConfiguration, error)
+	Update(ctx context.Context, konnectAPIAuthConfiguration *konnectv1alpha1.KonnectAPIAuthConfiguration, opts v1.UpdateOptions) (*konnectv1alpha1.KonnectAPIAuthConfiguration, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, konnectAPIAuthConfiguration *v1alpha1.KonnectAPIAuthConfiguration, opts v1.UpdateOptions) (*v1alpha1.KonnectAPIAuthConfiguration, error)
+	UpdateStatus(ctx context.Context, konnectAPIAuthConfiguration *konnectv1alpha1.KonnectAPIAuthConfiguration, opts v1.UpdateOptions) (*konnectv1alpha1.KonnectAPIAuthConfiguration, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.KonnectAPIAuthConfiguration, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.KonnectAPIAuthConfigurationList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*konnectv1alpha1.KonnectAPIAuthConfiguration, error)
+	List(ctx context.Context, opts v1.ListOptions) (*konnectv1alpha1.KonnectAPIAuthConfigurationList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.KonnectAPIAuthConfiguration, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *konnectv1alpha1.KonnectAPIAuthConfiguration, err error)
 	KonnectAPIAuthConfigurationExpansion
 }
 
 // konnectAPIAuthConfigurations implements KonnectAPIAuthConfigurationInterface
 type konnectAPIAuthConfigurations struct {
-	*gentype.ClientWithList[*v1alpha1.KonnectAPIAuthConfiguration, *v1alpha1.KonnectAPIAuthConfigurationList]
+	*gentype.ClientWithList[*konnectv1alpha1.KonnectAPIAuthConfiguration, *konnectv1alpha1.KonnectAPIAuthConfigurationList]
 }
 
 // newKonnectAPIAuthConfigurations returns a KonnectAPIAuthConfigurations
 func newKonnectAPIAuthConfigurations(c *KonnectV1alpha1Client, namespace string) *konnectAPIAuthConfigurations {
 	return &konnectAPIAuthConfigurations{
-		gentype.NewClientWithList[*v1alpha1.KonnectAPIAuthConfiguration, *v1alpha1.KonnectAPIAuthConfigurationList](
+		gentype.NewClientWithList[*konnectv1alpha1.KonnectAPIAuthConfiguration, *konnectv1alpha1.KonnectAPIAuthConfigurationList](
 			"konnectapiauthconfigurations",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *v1alpha1.KonnectAPIAuthConfiguration { return &v1alpha1.KonnectAPIAuthConfiguration{} },
-			func() *v1alpha1.KonnectAPIAuthConfigurationList { return &v1alpha1.KonnectAPIAuthConfigurationList{} }),
+			func() *konnectv1alpha1.KonnectAPIAuthConfiguration {
+				return &konnectv1alpha1.KonnectAPIAuthConfiguration{}
+			},
+			func() *konnectv1alpha1.KonnectAPIAuthConfigurationList {
+				return &konnectv1alpha1.KonnectAPIAuthConfigurationList{}
+			},
+		),
 	}
 }
