@@ -75,13 +75,11 @@ spec:
                     default: kic
                     description: |-
                       Type indicates the type of the control plane being referenced. Allowed values:
-                      - konnectID
                       - konnectNamespacedRef
                       - kic
 
                       The default is kic, which implies that the Control Plane is KIC.
                     enum:
-                    - konnectID
                     - konnectNamespacedRef
                     - kic
                     type: string
@@ -141,13 +139,15 @@ spec:
                     - name
                     type: object
                   type:
-                    description: |-
-                      Type defines type of the KeySet object reference. It can be one of:
+                    allOf:
+                    - enum:
                       - konnectID
                       - namespacedRef
-                    enum:
-                    - konnectID
-                    - namespacedRef
+                    - enum:
+                      - namespacedRef
+                    description: |-
+                      Type defines type of the KeySet object reference. It can be one of:
+                      - namespacedRef
                     type: string
                 required:
                 - type
@@ -156,8 +156,6 @@ spec:
                 - message: when type is namespacedRef, namespacedRef must be set
                   rule: 'self.type == ''namespacedRef'' ? has(self.namespacedRef)
                     : true'
-                - message: when type is konnectID, konnectID must be set
-                  rule: 'self.type == ''konnectID'' ? has(self.konnectID) : true'
               kid:
                 description: |-
                   KID is a unique identifier for a key.
