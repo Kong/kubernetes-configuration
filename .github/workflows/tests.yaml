@@ -21,6 +21,18 @@ on:
   workflow_call: {}
 
 jobs:
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: jdx/mise-action@v2
+      with:
+        install: false
+
+    - name: Run lint.actions
+      run: make lint.actions
+
   test-unit:
     runs-on: ubuntu-latest
     steps:
@@ -125,6 +137,7 @@ jobs:
       - generate
       - apply
       - lint
+      - actionlint
       - CRDs-validation
     if: always()
     steps:

@@ -110,6 +110,20 @@ golangci-lint: mise yq ## Download golangci-lint locally if necessary.
 	@$(MISE) plugin install --yes -q golangci-lint
 	@$(MISE) install -q golangci-lint@$(GOLANGCI_LINT_VERSION)
 
+ACTIONLINT_VERSION = $(shell $(YQ) -r '.actionlint' < $(TOOLS_VERSIONS_FILE))
+ACTIONLINT = $(PROJECT_DIR)/bin/installs/actionlint/$(ACTIONLINT_VERSION)/bin/actionlint
+.PHONY: download.actionlint
+download.actionlint: mise yq ## Download actionlint locally if necessary.
+	@$(MISE) plugin install --yes -q actionlint
+	@$(MISE) install -q actionlint@$(ACTIONLINT_VERSION)
+
+SHELLCHECK_VERSION = $(shell $(YQ) -r '.shellcheck' < $(TOOLS_VERSIONS_FILE))
+SHELLCHECK = $(PROJECT_DIR)/bin/installs/shellcheck/$(SHELLCHECK_VERSION)/bin/shellcheck
+.PHONY: download.shellcheck
+download.shellcheck: mise yq ## Download shellcheck locally if necessary.
+	@$(MISE) plugin install --yes -q shellcheck
+	@$(MISE) install -q shellcheck@$(SHELLCHECK_VERSION)
+
 # ------------------------------------------------------------------------------
 # Verify steps
 # ------------------------------------------------------------------------------
@@ -192,6 +206,10 @@ GOLANGCI_LINT_CONFIG ?= $(PROJECT_DIR)/.golangci.yaml
 .PHONY: lint
 lint: golangci-lint
 	$(GOLANGCI_LINT) run -v --config $(GOLANGCI_LINT_CONFIG) $(GOLANGCI_LINT_FLAGS)
+
+.PHONY: lint.actions
+lint.actions: download.actionlint download.shellcheck
+	$(ACTIONLINT) -shellcheck $(SHELLCHECK) ./.github/workflows/*
 
 .PHONY: test.samples
 test.samples: kustomize
