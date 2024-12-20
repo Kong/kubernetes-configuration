@@ -1,5 +1,5 @@
 name: Create release
-run-name: "Release ${{ format('{0} (type: {1}) (branch: {2})', inputs.tag, inputs.release_type, github.ref_name) }} "
+run-name: "Release ${{ format('{0} (branch: {1})', inputs.tag, github.ref_name) }} "
 
 on:
   workflow_dispatch:
