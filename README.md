@@ -80,10 +80,25 @@ When you add a new CRD make sure to
 
 ## How to release?
 
-- Make sure a changelog is updated with the new version, the release date, and all the changes.
-- Trigger a [release workflow]. This will create a tag a release in GitHub.
+Releases are driven by changes in the [`VERSION`](./VERSION) file.
+This file contains 2 lines:
 
-[release workflow]: https://github.com/Kong/kubernetes-configuration/actions/workflows/release.yaml
+- The first line is the version number (e.g. `1.0.0`).
+- The second line indicates if the version should be marked as latest or not
+  (e.g. `latest` for latest, anything else is not marked as latest).
+
+To release a new version:
+
+- Pick a new version.
+- Make sure a changelog is updated with the new version, the release date, and all the changes.
+- Update the [`VERSION`](./VERSION) file with said version and whether the version should be marked as latest.
+  This can be done in a separate PR or along with the PR that introduces the changes.
+
+The [`release_on_version_change.yaml`][release_on_change_workflow]
+workflow will be triggered when a commit changing the `VERSION` file is pushed to the `main` branch.
+Releases created with this approach will be marked as latest
+
+[release_on_change_workflow]: .github/workflows/release_on_version_change.yaml
 
 ## Available custom markers
 

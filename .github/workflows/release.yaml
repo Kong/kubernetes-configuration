@@ -2,6 +2,16 @@ name: Create release
 run-name: "Release ${{ format('{0} (branch: {1})', inputs.tag, github.ref_name) }} "
 
 on:
+  workflow_call:
+    inputs:
+      tag:
+        description: "Tag to release (e.g. v1.0.0)"
+        required: true
+        type: string
+      latest:
+        description: "Whether to tag this release latest"
+        required: true
+        type: boolean
   workflow_dispatch:
     inputs:
       tag:
@@ -12,7 +22,6 @@ on:
         description: "Whether to tag this release latest"
         required: true
         type: boolean
-        default: false
 
 jobs:
   tests:
@@ -29,7 +38,7 @@ jobs:
       - uses: mukunku/tag-exists-action@v1.6.0
         id: check-tag
         with:
-          tag: ${{ github.event.inputs.tag }}
+          tag: ${{ inputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: fail if tag already exists
@@ -39,7 +48,7 @@ jobs:
         id: parse-semver
         uses: booxmedialtd/ws-action-parse-semver@v1.4.7
         with:
-          input_string: ${{ github.event.inputs.tag }}
+          input_string: ${{ inputs.tag }}
           version_extractor_regex: 'v(.*)$'
 
   release:
@@ -56,16 +65,16 @@ jobs:
 
             See [changelog] for a complete list of changes.
             
-            [changelog]: https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md#${{ github.event.inputs.tag }}
+            [changelog]: https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md#${{ inputs.tag }}
             
             #### Install CRDs from all channels
             ```shell
-            kustomize build github.com/${{ github.repository }}/config/crd/gateway-operator\?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
-            kustomize build github.com/${{ github.repository }}/config/crd/ingress-controller\?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
-            kustomize build github.com/${{ github.repository }}/config/crd/ingress-controller-incubator\?ref=${{ github.event.inputs.tag }} | kubectl apply -f -
+            kustomize build github.com/${{ github.repository }}/config/crd/gateway-operator\?ref=${{ inputs.tag }} | kubectl apply -f -
+            kustomize build github.com/${{ github.repository }}/config/crd/ingress-controller\?ref=${{ inputs.tag }} | kubectl apply -f -
+            kustomize build github.com/${{ github.repository }}/config/crd/ingress-controller-incubator\?ref=${{ inputs.tag }} | kubectl apply -f -
             ```
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.event.inputs.tag }}
+          tag: ${{ inputs.tag }}
           commit: ${{ github.sha }}
           prerelease: ${{ needs.verify-tag.outputs.prerelease != '' }}
-          makeLatest: ${{ github.event.inputs.latest == 'true' }}
+          makeLatest: ${{ inputs.latest == 'true' }}

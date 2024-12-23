@@ -15,6 +15,7 @@ REPO_URL ?= github.com/kong/kubernetes-configuration
 # NOTE: this is not neeed now before v2, but will be needed in the future.
 #GO_MOD_MAJOR_VERSION ?= $(subst $(REPO_URL)/,,$(shell go list -m))
 REPO_INFO ?= $(shell git config --get remote.origin.url)
+VERSION ?= $(shell head -1 VERSION)
 
 ifndef COMMIT
   COMMIT := $(shell git rev-parse --short HEAD)
@@ -155,7 +156,7 @@ generate.apitypes-funcs:
 .PHONY: generate.crds
 generate.crds: controller-gen ## Generate WebhookConfiguration and CustomResourceDefinition objects.
 	# Use gotypesalias=0 as a workaround for https://github.com/kubernetes-sigs/controller-tools/issues/1088.
-	GODEBUG=gotypesalias=0 go run ./scripts/crds-generator
+	VERSION=$(VERSION) GODEBUG=gotypesalias=0 go run ./scripts/crds-generator
 
 .PHONY: generate.deepcopy
 generate.deepcopy: controller-gen
