@@ -77,4 +77,4 @@ jobs:
           tag: ${{ inputs.tag }}
           commit: ${{ github.sha }}
           prerelease: ${{ needs.verify-tag.outputs.prerelease != '' }}
-          makeLatest: ${{ inputs.latest == 'true' }}
+          makeLatest: ${{ inputs.latest == true }}

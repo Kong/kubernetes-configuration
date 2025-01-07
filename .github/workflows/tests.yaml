@@ -21,6 +21,18 @@ on:
   workflow_call: {}
 
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: version
+        run: |
+          echo "version=$(head -1 VERSION)" >> "$GITHUB_OUTPUT"
+      - name: Validate VERSION
+        uses: booxmedialtd/ws-action-parse-semver@v1.4.7
+        with:
+          input_string: ${{ steps.version.outputs.version }}
+          version_extractor_regex: 'v(.*)$'
   actionlint:
     runs-on: ubuntu-latest
     steps:
@@ -133,6 +145,7 @@ jobs:
   passed:
     runs-on: ubuntu-latest
     needs:
+      - version
       - test-unit
       - generate
       - apply
