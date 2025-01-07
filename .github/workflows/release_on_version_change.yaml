@@ -30,4 +30,4 @@ jobs:
     uses: ./.github/workflows/release.yaml
     with:
       tag: ${{ needs.version.outputs.version }}
-      latest: ${{ needs.version.outputs.latest }}
+      latest: ${{ needs.version.outputs.latest == 'latest' }}
