@@ -31,6 +31,9 @@ const (
 
 	// ChannelsAnnotation is the annotation key that's used to mark the channels a CRD belongs to.
 	ChannelsAnnotation = "kubernetes-configuration.konghq.com/channels"
+
+	// VersionAnnotation is the annotation key that's used to mark the version of the CRD.
+	VersionAnnotation = "kubernetes-configuration.konghq.com/version"
 )
 
 // AllChannels is a list of all available channels.
@@ -38,6 +41,11 @@ var AllChannels = []ChannelType{IngressControllerChannelType, IngressControllerI
 
 // Code is inspired by https://github.com/kubernetes-sigs/gateway-api/blob/1fe2b9f8ee99a6475a65eedd1ce060f363a8634d/pkg/generator/main.go.
 func main() {
+	version := os.Getenv("VERSION")
+	if version == "" {
+		log.Fatalf("VERSION environment variable is required")
+	}
+
 	roots, err := loader.LoadRoots(
 		// Needed to parse generated register functions.
 		"k8s.io/apimachinery/pkg/runtime/schema",
@@ -71,6 +79,7 @@ func main() {
 	yamlOpts := []*genall.WriteYAMLOptions{
 		genall.WithTransform(transformRemoveCRDStatus),
 		genall.WithTransform(genall.TransformRemoveCreationTimestamp),
+		genall.WithTransform(addVersion(version)),
 	}
 
 	generator := &crd.Generator{}
@@ -141,7 +150,6 @@ kind: Kustomization
 resources:
 %s`
 		resources := strings.Join(lo.Map(crdFiles, func(f string, _ int) string {
-
 			return fmt.Sprintf("  - %s", filepath.Base(f))
 		}), "\n")
 		kustomizeContent := fmt.Sprintf(kustomizeFileTemplate, resources)
@@ -191,4 +199,22 @@ func channelsFromAnnotations(crd apiext.CustomResourceDefinition) []ChannelType 
 func transformRemoveCRDStatus(obj map[string]interface{}) error {
 	delete(obj, "status")
 	return nil
+}
+
+// addVersion adds the version annotation to the CRD.
+func addVersion(version string) func(obj map[string]interface{}) error {
+	return func(obj map[string]interface{}) error {
+		metadata, ok := obj["metadata"]
+		if !ok {
+			metadata = map[string]interface{}{}
+			obj["metadata"] = metadata
+		}
+		annotations, ok := metadata.(map[interface{}]interface{})["annotations"]
+		if !ok {
+			annotations = map[string]interface{}{}
+			obj["metadata"].(map[string]interface{})["annotations"] = metadata
+		}
+		annotations.(map[interface{}]interface{})[VersionAnnotation] = version
+		return nil
+	}
 }
