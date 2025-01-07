@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
-      latest: ${{ steps.version.outputs.version == 'latest' }}
+      latest: ${{ steps.version.outputs.latest == 'latest' }}
     steps:
       - uses: actions/checkout@v4
       - id: version
@@ -30,4 +30,4 @@ jobs:
     uses: ./.github/workflows/release.yaml
     with:
       tag: ${{ needs.version.outputs.version }}
-      latest: ${{ needs.version.outputs.latest == 'latest' }}
+      latest: ${{ needs.version.outputs.latest == 'true' }}
