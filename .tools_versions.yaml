@@ -1,7 +1,7 @@
 # renovate: datasource=github-tags depName=kubernetes/code-generator
 kube-code-generator: "0.32.0"
 # renovate: datasource=github-releases depName=kubernetes-sigs/controller-tools
-controller-tools: "0.16.5"
+controller-tools: "0.17.0"
 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
 kustomize: "5.5.0"
 # renovate: datasource=github-releases depName=elastic/crd-ref-docs
@@ -11,7 +11,7 @@ yq: "4.44.6"
 # renovate: datasource=github-releases depName=gotestyourself/gotestsum
 gotestsum: "1.12.0"
 # renovate: datasource=github-releases depName=golangci/golangci-lint
-golangci-lint: "1.62.2"
+golangci-lint: "1.63.4"
 # renovate: datasource=github-releases depName=rhysd/actionlint
 actionlint: "1.7.6"
 # renovate: datasource=github-releases depName=koalaman/shellcheck
