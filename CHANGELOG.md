@@ -6,11 +6,47 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.0.4](#v104)
+- [v1.0.3](#v103)
+- [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
-## Unreleased
+## [v1.0.4]
 
-> Release date: TBA
+[v1.0.4]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.3...v1.0.4
+
+> Release date: 2025-01-08
+
+### Changes
+
+- Allowed `konnectID` as `ControlPlaneRef`'s `type` field value.
+  [#214](https://github.com/Kong/kubernetes-configuration/pull/214)
+
+## [v1.0.3]
+
+[v1.0.3]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.2...v1.0.3
+
+> Release date: 2025-01-07
+
+### Changes
+
+This release didn't include any user-facing changes.
+
+## [v1.0.2]
+
+[v1.0.2]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.0...v1.0.2
+
+> Release date: 2025-01-07
+
+### Changes
+
+- Disallowed `konnectID` as `ControlPlaneRef`'s `type` field value. This is not
+  supported by KGO yet.
+  [#198](https://github.com/Kong/kubernetes-configuration/pull/198)
+- Added version information to CRDs. All CRDs now will be annotated with the
+  `kubernetes-configuration.konghq.com/version` annotation with the value of the
+  version of the CRDs bundle.
+  [#203](https://github.com/Kong/kubernetes-configuration/pull/203)
 
 ## [v1.0.0]
 
