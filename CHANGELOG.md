@@ -15,12 +15,12 @@ Adding a new version? You'll need three changes:
 
 [v1.0.4]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.3...v1.0.4
 
+> Release date: 2025-01-08
+
 ### Changes
 
 - Allowed `konnectID` as `ControlPlaneRef`'s `type` field value.
   [#214](https://github.com/Kong/kubernetes-configuration/pull/214)
-
-> Release date: 2025-01-08
 
 ## [v1.0.3]
 
