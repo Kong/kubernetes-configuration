@@ -29,7 +29,7 @@ jobs:
         run: |
           echo "version=$(head -1 VERSION)" >> "$GITHUB_OUTPUT"
       - name: Validate VERSION
-        uses: booxmedialtd/ws-action-parse-semver@v1.4.7
+        uses: booxmedialtd/ws-action-parse-semver@7784200024d6b3fc01253e617ec0168daf603de3 # v1.4.7
         with:
           input_string: ${{ steps.version.outputs.version }}
           version_extractor_regex: 'v(.*)$'
@@ -38,7 +38,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: jdx/mise-action@v2
+    - uses: jdx/mise-action@5083fe46898c414b2475087cc79da59e7da859e8 # v2.1.11
       with:
         install: false
 
@@ -54,7 +54,7 @@ jobs:
       with:
         go-version-file: go.mod
 
-    - uses: jdx/mise-action@v2
+    - uses: jdx/mise-action@5083fe46898c414b2475087cc79da59e7da859e8 # v2.1.11
       with:
         install: false
 
@@ -70,7 +70,7 @@ jobs:
       with:
         go-version-file: go.mod
 
-    - uses: jdx/mise-action@v2
+    - uses: jdx/mise-action@5083fe46898c414b2475087cc79da59e7da859e8 # v2.1.11
       with:
         install: false
 
@@ -89,7 +89,7 @@ jobs:
       with:
         go-version-file: go.mod
 
-    - uses: jdx/mise-action@v2
+    - uses: jdx/mise-action@5083fe46898c414b2475087cc79da59e7da859e8 # v2.1.11
       with:
         install: false
 
@@ -104,12 +104,12 @@ jobs:
       with:
         go-version-file: go.mod
 
-    - uses: jdx/mise-action@v2
+    - uses: jdx/mise-action@5083fe46898c414b2475087cc79da59e7da859e8 # v2.1.11
       with:
         install: false
 
     - name: Create k8s KinD Cluster
-      uses: helm/kind-action@v1.12.0
+      uses: helm/kind-action@a1b0e391336a6ee6713a0583f8c6240d70863de3 # v1.12.0
 
     - name: Verify installing CRDs via kustomize works
       run: make install
@@ -126,12 +126,12 @@ jobs:
       with:
         go-version-file: go.mod
 
-    - uses: jdx/mise-action@v2
+    - uses: jdx/mise-action@5083fe46898c414b2475087cc79da59e7da859e8 # v2.1.11
       with:
         install: false
 
     - name: Create k8s KinD Cluster
-      uses: helm/kind-action@v1.12.0
+      uses: helm/kind-action@a1b0e391336a6ee6713a0583f8c6240d70863de3 # v1.12.0
 
     - name: Verify installing CRDs via kustomize works
       run: make install

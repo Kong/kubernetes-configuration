@@ -20,7 +20,7 @@ jobs:
           echo "version=$(head -1 VERSION)" >> "$GITHUB_OUTPUT"
           echo "latest=$(tail -1 VERSION)" >> "$GITHUB_OUTPUT"
       - name: Validate semver
-        uses: booxmedialtd/ws-action-parse-semver@v1.4.7
+        uses: booxmedialtd/ws-action-parse-semver@7784200024d6b3fc01253e617ec0168daf603de3 # v1.4.7
         with:
           input_string: ${{ steps.version.outputs.version }}
           version_extractor_regex: 'v(.*)$'
