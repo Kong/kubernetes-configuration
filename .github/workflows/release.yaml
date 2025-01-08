@@ -35,7 +35,7 @@ jobs:
       # The prerelease part of the semver tag, if any. To be used in the release job.
       prerelease: ${{ steps.parse-semver.outputs.prerelease }}
     steps:
-      - uses: mukunku/tag-exists-action@v1.6.0
+      - uses: mukunku/tag-exists-action@bdad1eaa119ce71b150b952c97351c75025c06a9 # v1.6.0
         id: check-tag
         with:
           tag: ${{ inputs.tag }}
@@ -46,7 +46,7 @@ jobs:
         run: exit 1
       - name: Validate semver
         id: parse-semver
-        uses: booxmedialtd/ws-action-parse-semver@v1.4.7
+        uses: booxmedialtd/ws-action-parse-semver@7784200024d6b3fc01253e617ec0168daf603de3 # v1.4.7
         with:
           input_string: ${{ inputs.tag }}
           version_extractor_regex: 'v(.*)$'
@@ -58,7 +58,7 @@ jobs:
       - tests
       - verify-tag
     steps:
-      - uses: ncipollo/release-action@v1
+      - uses: ncipollo/release-action@2c591bcc8ecdcd2db72b97d6147f871fcd833ba5 # v1.14.0
         with:
           body: |
             #### Changes
