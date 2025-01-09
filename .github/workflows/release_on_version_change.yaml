@@ -28,6 +28,8 @@ jobs:
     needs:
     - version
     uses: ./.github/workflows/release.yaml
+    permissions:
+      contents: write # This is required to create GH releases.
     with:
       tag: ${{ needs.version.outputs.version }}
       latest: ${{ needs.version.outputs.latest == 'true' }}

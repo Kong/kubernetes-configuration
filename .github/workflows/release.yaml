@@ -57,6 +57,8 @@ jobs:
     needs:
       - tests
       - verify-tag
+    permissions:
+      contents: write # This is required to create GH releases.
     steps:
       - uses: ncipollo/release-action@2c591bcc8ecdcd2db72b97d6147f871fcd833ba5 # v1.14.0
         with:
