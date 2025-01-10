@@ -1,1 +1,5 @@
 **/zz_generated*.go linguist-generated=true
+config/crd/gateway-operator/configuration.yaml linguist-generated=true
+config/crd/gateway-operator/konnect.*.yaml linguist-generated=true
+config/crd/ingress-controller/configuration.*.yaml linguist-generated=true
+config/crd/ingress-controller-incubator/incubator.*.yaml linguist-generated=true
