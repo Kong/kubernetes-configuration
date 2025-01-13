@@ -6,10 +6,22 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.0.5](#v105)
 - [v1.0.4](#v104)
 - [v1.0.3](#v103)
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
+
+## [v1.0.5]
+
+[v1.0.5]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.4...v1.0.5
+
+> Release date: 2025-01-10
+
+### Changes
+
+- Exported CRD validation test suite types.
+  [#220](https://github.com/Kong/kubernetes-configuration/pull/220)
 
 ## [v1.0.4]
 
