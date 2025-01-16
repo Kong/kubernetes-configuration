@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     kubernetes-configuration.konghq.com/channels: ingress-controller,gateway-operator
-    kubernetes-configuration.konghq.com/version: v1.0.5
+    kubernetes-configuration.konghq.com/version: v1.0.6
   name: kongvaults.configuration.konghq.com
 spec:
   group: configuration.konghq.com

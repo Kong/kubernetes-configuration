@@ -6,11 +6,21 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.0.6](#v106)
 - [v1.0.5](#v105)
 - [v1.0.4](#v104)
 - [v1.0.3](#v103)
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
+
+## [v1.0.6]
+
+[v1.0.6]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.5...v1.0.6 
+
+### Changes
+
+- Implemented `Stringer` interface for `configuraionv1alpha1.ControlPlaneRef` type.
+  [#230](https://github.com/Kong/kubernetes-configuration/pull/230)
 
 ## [v1.0.5]
 
