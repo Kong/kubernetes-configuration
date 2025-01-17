@@ -4,6 +4,7 @@ import (
 	"context"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -32,6 +33,14 @@ func (g TestCasesGroup[T]) Run(t *testing.T) {
 	g.RunWithConfig(t, cfg, scheme.Scheme)
 }
 
+// EventuallyConfig is the configuration for assert.Eventually() which is used to assert errors.
+type EventuallyConfig struct {
+	// Timeout is the maximum time to wait for the condition to be true.
+	Timeout time.Duration
+	// Period is the time to wait between retries.
+	Period time.Duration
+}
+
 // TestCase represents a test case for CRD validation.
 type TestCase[T client.Object] struct {
 	// Name is the name of the test case.
@@ -42,6 +51,10 @@ type TestCase[T client.Object] struct {
 
 	// ExpectedErrorMessage is the expected error message when creating the object.
 	ExpectedErrorMessage *string
+
+	// ExpectedErrorEventuallyConfig is the configuration for assert.Eventually() which is used to assert the create error.
+	// If not provided the error is checked immediately, just once.
+	ExpectedErrorEventuallyConfig EventuallyConfig
 
 	// ExpectedUpdateErrorMessage is the expected error message when updating the object.
 	ExpectedUpdateErrorMessage *string
@@ -69,23 +82,48 @@ func (tc *TestCase[T]) RunWithConfig(t *testing.T, cfg *rest.Config, scheme *run
 		// set in the test case.
 		desiredObj := tc.TestObject.DeepCopyObject().(T)
 
-		// Create the object and set a cleanup function to delete it after the test if created successfully.
-		err = cl.Create(ctx, tc.TestObject)
-		if err == nil {
+		tCleanupObject := func(ctx context.Context, t *testing.T, obj client.Object) {
 			t.Cleanup(func() {
-				assert.NoError(t, client.IgnoreNotFound(cl.Delete(ctx, tc.TestObject)))
+				assert.NoError(t, client.IgnoreNotFound(cl.Delete(ctx, obj)))
 			})
 		}
 
-		// If the error message is expected, check if the error message contains the expected message and return.
-		if tc.ExpectedErrorMessage != nil {
-			require.NotNil(t, err)
-			assert.Contains(t, err.Error(), *tc.ExpectedErrorMessage)
-			return
-		}
+		if tc.ExpectedErrorEventuallyConfig.Timeout > 0 {
+			assert.EventuallyWithT(t,
+				func(c *assert.CollectT) {
+					obj := tc.TestObject.DeepCopyObject().(T)
+					// Create the object and set a cleanup function to delete it after the test if created successfully.
+					err = cl.Create(ctx, obj)
+					if err == nil {
+						tCleanupObject(ctx, t, obj)
+					}
 
-		// Otherwise, continue, expecting no error.
-		require.NoError(t, err)
+					// If the error message is expected, check if the error message contains the expected message and return.
+					if tc.ExpectedErrorMessage != nil {
+						if assert.NotNil(c, err) {
+							assert.Contains(c, err.Error(), *tc.ExpectedErrorMessage)
+						}
+					}
+				},
+				tc.ExpectedErrorEventuallyConfig.Timeout, tc.ExpectedErrorEventuallyConfig.Period,
+			)
+		} else {
+			// Create the object and set a cleanup function to delete it after the test if created successfully.
+			err = cl.Create(ctx, tc.TestObject)
+			if err == nil {
+				tCleanupObject(ctx, t, tc.TestObject)
+			}
+
+			// If the error message is expected, check if the error message contains the expected message and return.
+			if tc.ExpectedErrorMessage != nil {
+				require.NotNil(t, err)
+				assert.Contains(t, err.Error(), *tc.ExpectedErrorMessage)
+				return
+			}
+
+			// Otherwise, continue, expecting no error.
+			require.NoError(t, err)
+		}
 
 		// Check with reflect if the status field is set and Update the status if so before updating the object.
 		// That's required to populate Status that is not set on Create.
