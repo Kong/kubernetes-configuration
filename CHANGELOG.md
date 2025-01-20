@@ -6,6 +6,7 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.1.0](#v110)
 - [v1.0.6](#v106)
 - [v1.0.5](#v105)
 - [v1.0.4](#v104)
@@ -13,7 +14,9 @@ Adding a new version? You'll need three changes:
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
-## Unreleased
+## [v1.1.0]
+
+[v1.1.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.6...v1.1.0
 
 ### Changes
 
@@ -25,10 +28,13 @@ Adding a new version? You'll need three changes:
   `targets` field. A new alternative is `GlobalInControlPlane` that will make the
   plugin apply globally in a control plane.
   [#236](https://github.com/Kong/kubernetes-configuration/pull/236)
+- Make `KongPluginBinding`'s `spec.controlPlaneRef` field required as that's expected
+  by KGO.
+  [#238](https://github.com/Kong/kubernetes-configuration/pull/238)
 
 ## [v1.0.6]
 
-[v1.0.6]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.5...v1.0.6 
+[v1.0.6]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.5...v1.0.6
 
 ### Changes
 

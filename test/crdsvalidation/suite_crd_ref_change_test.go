@@ -45,13 +45,13 @@ const (
 )
 
 func NewCRDValidationTestCasesGroupCPRefChange[
-	T interface {
-		client.Object
-		DeepCopy() T
-		SetConditions([]metav1.Condition)
-		SetControlPlaneRef(*configurationv1alpha1.ControlPlaneRef)
-		GetControlPlaneRef() *configurationv1alpha1.ControlPlaneRef
-	},
+T interface {
+	client.Object
+	DeepCopy() T
+	SetConditions([]metav1.Condition)
+	SetControlPlaneRef(*configurationv1alpha1.ControlPlaneRef)
+	GetControlPlaneRef() *configurationv1alpha1.ControlPlaneRef
+},
 ](
 	t *testing.T,
 	obj T,
@@ -329,6 +329,17 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 					obj.SetControlPlaneRef(cpRef)
 				},
 				ExpectedUpdateErrorMessage: lo.ToPtr("spec.controlPlaneRef is immutable when an entity is already Programmed"),
+			})
+		}
+	}
+	{
+		if supportedByKIC == NotSupportedByKIC {
+			obj := obj.DeepCopy()
+			obj.SetControlPlaneRef(nil)
+			ret = append(ret, crdsvalidation.TestCase[T]{
+				Name:                       "cpRef is required",
+				TestObject:                 obj,
+				ExpectedUpdateErrorMessage: lo.ToPtr("spec.controlPlaneRef is required"),
 			})
 		}
 	}

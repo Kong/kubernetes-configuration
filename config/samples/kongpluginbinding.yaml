@@ -1,11 +1,14 @@
 apiVersion: configuration.konghq.com/v1alpha1
 kind: KongPluginBinding
 metadata:
-  generation: 1
   name: plugin-binding-kongservice-kongroute-kongconsumer
 spec:
   pluginRef:
     name: plugin-sample
+  controlPlaneRef:
+    type: konnectNamespacedRef
+    konnectNamespacedRef:
+      name: test1
   targets:
     consumerRef:
       name: consumer-sample
@@ -21,9 +24,12 @@ spec:
 apiVersion: configuration.konghq.com/v1alpha1
 kind: KongPluginBinding
 metadata:
-  generation: 1
   name: plugin-binding-kongservice-kongconsumer
 spec:
+  controlPlaneRef:
+    type: konnectNamespacedRef
+    konnectNamespacedRef:
+      name: test1
   pluginRef:
     name: plugin-sample
   targets:
