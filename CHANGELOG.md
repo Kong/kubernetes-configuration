@@ -17,6 +17,8 @@ Adding a new version? You'll need three changes:
 
 ### Changes
 
+- Fix `KongRoute`'s `spec.headers` field type.
+  [#243](https://github.com/Kong/kubernetes-configuration/pull/243)
 - Add a `scope` field to `KongPluginBindingSpec` to allow setting the scope of
   the plugin binding. The default value (`OnlyTargets`) is aligned with the previous
   default behavior - the plugin will only be applied to the targets specified in the
