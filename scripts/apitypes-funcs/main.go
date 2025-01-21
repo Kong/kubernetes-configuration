@@ -26,7 +26,12 @@ type templateDataT struct {
 	// If it's not provided Konnect status functions will not be generated.
 	KonnectStatusType string
 
+	// ControlPlaneRefType is the ControlPlaneRef type to be used in the template (with the package name if it's outside
+	// the type's package).
 	ControlPlaneRefType string
+
+	// ControlPlaneRefRequired is true if the ControlPlaneRef is required for the type.
+	ControlPlaneRefRequired bool
 }
 
 const (
