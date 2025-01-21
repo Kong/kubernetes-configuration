@@ -11,6 +11,15 @@ import (
 )
 
 func TestKongPluginBindings(t *testing.T) {
+	validTestCPRef := func() *configurationv1alpha1.ControlPlaneRef {
+		return &configurationv1alpha1.ControlPlaneRef{
+			Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+			KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+				Name: "test-control-plane",
+			},
+		}
+	}
+
 	t.Run("cp ref", func(t *testing.T) {
 		obj := &configurationv1alpha1.KongPluginBinding{
 			TypeMeta: metav1.TypeMeta{
@@ -29,12 +38,7 @@ func TestKongPluginBindings(t *testing.T) {
 						Group: "configuration.konghq.com",
 					},
 				},
-				ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-					Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-					KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-						Name: "test-control-plane",
-					},
-				},
+				ControlPlaneRef: validTestCPRef(),
 			},
 		}
 
@@ -55,12 +59,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "core",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("pluginRef name must be set"),
@@ -78,12 +77,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "core",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("pluginRef name must be set"),
@@ -104,12 +98,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "core",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -129,12 +118,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "core",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -154,12 +138,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "core",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr(`spec.pluginRef.kind: Unsupported value: "WrongPluginKind"`),
@@ -193,12 +172,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -226,12 +200,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -254,12 +223,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -282,12 +246,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -310,12 +269,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -338,12 +292,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -371,12 +320,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -394,12 +338,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Name: "test-consumer",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -417,12 +356,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Name: "test-consumer",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -442,12 +376,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -467,12 +396,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "core",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -503,12 +427,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("Cannot set Consumer and ConsumerGroup at the same time"),
@@ -535,12 +454,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("Cannot set Consumer and ConsumerGroup at the same time"),
@@ -567,12 +481,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("Cannot set Consumer and ConsumerGroup at the same time"),
@@ -594,12 +503,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Name: "test-consumer-group",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("Cannot set Consumer and ConsumerGroup at the same time"),
@@ -613,12 +517,7 @@ func TestKongPluginBindings(t *testing.T) {
 							Kind: lo.ToPtr("KongPlugin"),
 							Name: "my-plugin",
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("At least one target reference must be set when scope is 'OnlyTargets'"),
@@ -632,13 +531,8 @@ func TestKongPluginBindings(t *testing.T) {
 							Kind: lo.ToPtr("KongPlugin"),
 							Name: "my-plugin",
 						},
-						Targets: &configurationv1alpha1.KongPluginBindingTargets{},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						Targets:         &configurationv1alpha1.KongPluginBindingTargets{},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("At least one target reference must be set when scope is 'OnlyTargets'"),
@@ -664,12 +558,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "networking.k8s.io",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("group/kind not allowed for the serviceRef"),
@@ -690,12 +579,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "core",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("group/kind not allowed for the routeRef"),
@@ -726,12 +610,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "configuration.konghq.com",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr(" KongRoute can be used only when serviceRef is unset or set to KongService"),
@@ -757,12 +636,7 @@ func TestKongPluginBindings(t *testing.T) {
 								Group: "networking.k8s.io",
 							},
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("KongService can be used only when routeRef is unset or set to KongRoute"),
@@ -782,12 +656,7 @@ func TestKongPluginBindings(t *testing.T) {
 							Kind: lo.ToPtr("KongPlugin"),
 							Name: "my-plugin",
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
+						ControlPlaneRef: validTestCPRef(),
 					},
 				},
 			},
@@ -801,13 +670,8 @@ func TestKongPluginBindings(t *testing.T) {
 							Kind: lo.ToPtr("KongPlugin"),
 							Name: "my-plugin",
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
-							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
-								Name: "test-control-plane",
-							},
-						},
-						Targets: &configurationv1alpha1.KongPluginBindingTargets{},
+						ControlPlaneRef: validTestCPRef(),
+						Targets:         &configurationv1alpha1.KongPluginBindingTargets{},
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("No targets must be set when scope is 'GlobalInControlPlane'"),

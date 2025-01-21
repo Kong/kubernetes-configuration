@@ -45,13 +45,13 @@ const (
 )
 
 func NewCRDValidationTestCasesGroupCPRefChange[
-T interface {
-	client.Object
-	DeepCopy() T
-	SetConditions([]metav1.Condition)
-	SetControlPlaneRef(*configurationv1alpha1.ControlPlaneRef)
-	GetControlPlaneRef() *configurationv1alpha1.ControlPlaneRef
-},
+	T interface {
+		client.Object
+		DeepCopy() T
+		SetConditions([]metav1.Condition)
+		SetControlPlaneRef(*configurationv1alpha1.ControlPlaneRef)
+		GetControlPlaneRef() *configurationv1alpha1.ControlPlaneRef
+	},
 ](
 	t *testing.T,
 	obj T,
