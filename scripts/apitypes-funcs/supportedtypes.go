@@ -71,9 +71,10 @@ var supportedKonnectTypesControlPlaneConfig = []supportedTypesT{
 				ControlPlaneRefType: "ControlPlaneRef",
 			},
 			{
-				Type:                "KongPluginBinding",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType: "ControlPlaneRef",
+				Type:                    "KongPluginBinding",
+				KonnectStatusType:       "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				ControlPlaneRefType:     "ControlPlaneRef",
+				ControlPlaneRefRequired: true,
 			},
 			{
 				Type:                "KongService",

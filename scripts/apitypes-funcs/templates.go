@@ -79,11 +79,17 @@ func (obj *{{ .Type }}) SetControlPlaneID(id string) {
 {{- if .ControlPlaneRefType }}
 
 func (obj *{{ .Type }}) SetControlPlaneRef(ref *{{ .ControlPlaneRefType }}) {
-	obj.Spec.ControlPlaneRef = ref
+	{{- if .ControlPlaneRefRequired }}
+	if ref == nil {
+		obj.Spec.ControlPlaneRef = {{ .ControlPlaneRefType }}{}
+		return
+	}
+	{{- end }}
+	obj.Spec.ControlPlaneRef = {{ if .ControlPlaneRefRequired }}*{{ end }}ref
 }
 
 func (obj *{{ .Type }}) GetControlPlaneRef() *{{ .ControlPlaneRefType }} {
-	return obj.Spec.ControlPlaneRef
+	return {{ if .ControlPlaneRefRequired }}&{{ end }}obj.Spec.ControlPlaneRef
 }
 {{- end }}
 
