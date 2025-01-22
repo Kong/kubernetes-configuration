@@ -23,6 +23,9 @@ on:
         required: true
         type: boolean
 
+permissions:
+  contents: read
+
 jobs:
   tests:
     name: Run tests
