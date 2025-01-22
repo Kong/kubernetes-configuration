@@ -55,6 +55,7 @@ type KongUpstream struct {
 type KongUpstreamSpec struct {
 	// ControlPlaneRef is a reference to a ControlPlane this KongUpstream is associated with.
 	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:XValidation:rule="!has(self.type) || self.type != 'konnectID'", message="konnectID type is not supported"
 	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef"`
 
 	KongUpstreamAPISpec `json:",inline"`

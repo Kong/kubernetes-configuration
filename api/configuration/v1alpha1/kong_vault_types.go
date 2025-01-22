@@ -79,6 +79,7 @@ type KongVaultSpec struct {
 	Tags common.Tags `json:"tags,omitempty"`
 	// ControlPlaneRef is a reference to a Konnect ControlPlane this KongVault is associated with.
 	// +optional
+	// +kubebuilder:validation:XValidation:rule="!has(self.type) || self.type != 'konnectID'", message="konnectID type is not supported"
 	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 }
 

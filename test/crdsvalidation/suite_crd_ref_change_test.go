@@ -127,7 +127,7 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 		ret = append(ret, crdsvalidation.TestCase[T]{
 			Name:                 "providing konnectNamespacedRef when type is konnectID yields an error",
 			TestObject:           obj,
-			ExpectedErrorMessage: lo.ToPtr("when type is konnectID, konnectID must be set"),
+			ExpectedErrorMessage: lo.ToPtr("spec.controlPlaneRef: Invalid value: \"object\": konnectID type is not supported"),
 		})
 	}
 	{

@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     kubernetes-configuration.konghq.com/channels: gateway-operator
-    kubernetes-configuration.konghq.com/version: v1.0.7
+    kubernetes-configuration.konghq.com/version: v1.0.8
   name: kongroutes.configuration.konghq.com
 spec:
   group: configuration.konghq.com
@@ -82,6 +82,8 @@ spec:
                       - kic
 
                       The default is kic, which implies that the Control Plane is KIC.
+                      KonnectID might not be available for all the resources.
+                      Consult the specific resource documentation for more information.
                     enum:
                     - konnectID
                     - konnectNamespacedRef
@@ -89,6 +91,8 @@ spec:
                     type: string
                 type: object
                 x-kubernetes-validations:
+                - message: konnectID type is not supported
+                  rule: '!has(self.type) || self.type != ''konnectID'''
                 - message: when type is konnectNamespacedRef, konnectNamespacedRef
                     must be set
                   rule: '(has(self.type) && self.type == ''konnectNamespacedRef'')

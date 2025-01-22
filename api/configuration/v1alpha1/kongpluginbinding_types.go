@@ -80,6 +80,7 @@ type KongPluginBindingSpec struct {
 
 	// ControlPlaneRef is a reference to a ControlPlane this KongPluginBinding is associated with.
 	// +optional
+	// +kubebuilder:validation:XValidation:rule="!has(self.type) || self.type != 'konnectID'", message="konnectID type is not supported"
 	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 }
 

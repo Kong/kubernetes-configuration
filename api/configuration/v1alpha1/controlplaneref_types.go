@@ -31,6 +31,8 @@ type ControlPlaneRef struct {
 	// - kic
 	//
 	// The default is kic, which implies that the Control Plane is KIC.
+	// KonnectID might not be available for all the resources.
+	// Consult the specific resource documentation for more information.
 	//
 	// +kubebuilder:validation:Enum=konnectID;konnectNamespacedRef;kic
 	// +kubebuilder:default:=kic
