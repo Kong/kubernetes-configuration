@@ -148,10 +148,8 @@ spec:
                   type:
                     description: |-
                       Type defines type of the KeySet object reference. It can be one of:
-                      - konnectID
                       - namespacedRef
                     enum:
-                    - konnectID
                     - namespacedRef
                     type: string
                 required:
@@ -161,8 +159,6 @@ spec:
                 - message: when type is namespacedRef, namespacedRef must be set
                   rule: 'self.type == ''namespacedRef'' ? has(self.namespacedRef)
                     : true'
-                - message: when type is konnectID, konnectID must be set
-                  rule: 'self.type == ''konnectID'' ? has(self.konnectID) : true'
               kid:
                 description: |-
                   KID is a unique identifier for a key.
