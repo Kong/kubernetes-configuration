@@ -52,7 +52,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: KongServiceSpec defines specification of a Kong Route.
+            description: KongServiceSpec defines specification of a Kong Service.
             properties:
               connect_timeout:
                 description: The timeout in milliseconds for establishing a connection
