@@ -685,7 +685,7 @@ It is used to reference a Control Plane entity.
 
 | Field | Description |
 | --- | --- |
-| `type` _string_ | Type indicates the type of the control plane being referenced. Allowed values: - konnectNamespacedRef - kic<br /><br /> The default is kic, which implies that the Control Plane is KIC. |
+| `type` _string_ | Type indicates the type of the control plane being referenced. Allowed values: - konnectID - konnectNamespacedRef - kic<br /><br /> The default is kic, which implies that the Control Plane is KIC. |
 | `konnectID` _string_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
 | `konnectNamespacedRef` _[KonnectNamespacedRef](#konnectnamespacedref)_ | KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster. It contains the name of the Konnect Control Plane. This field is required when the Type is konnectNamespacedRef. |
 
@@ -776,7 +776,7 @@ It is used to reference a KeySet entity.
 
 | Field | Description |
 | --- | --- |
-| `type` _[KeySetRefType](#keysetreftype)_ | Type defines type of the KeySet object reference. It can be one of: - namespacedRef |
+| `type` _[KeySetRefType](#keysetreftype)_ | Type defines type of the KeySet object reference. It can be one of: - konnectID - namespacedRef |
 | `konnectID` _string_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
 | `namespacedRef` _[KeySetNamespacedRef](#keysetnamespacedref)_ | NamespacedRef is a reference to a KeySet entity inside the cluster. This field is required when the Type is namespacedRef. |
 
