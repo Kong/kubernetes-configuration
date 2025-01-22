@@ -92,6 +92,22 @@ KonnectAPIAuthType is the type of authentication used to authenticate with the K
 _Appears in:_
 - [KonnectAPIAuthConfigurationSpec](#konnectapiauthconfigurationspec)
 
+#### KonnectAdoptOptions
+
+
+KonnectAdoptOptions stores the options for adopting existing Konnect entities.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ |  |
+
+
+_Appears in:_
+- [KonnectEntityOptions](#konnectentityoptions)
+- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
+
 #### KonnectConfiguration
 
 
@@ -106,6 +122,8 @@ KonnectConfiguration is the Schema for the KonnectConfiguration API.
 
 _Appears in:_
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
+
+
 
 #### KonnectEntityStatus
 
@@ -159,6 +177,7 @@ KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayContro
 | `proxy_urls` _[ProxyURL](#proxyurl) array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
 | `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
 | `members` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core) array_ | Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group. Only applicable for ControlPlanes that are created as groups. |
+| `adopt` _[KonnectAdoptOptions](#konnectadoptoptions)_ |  |
 | `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
 
 

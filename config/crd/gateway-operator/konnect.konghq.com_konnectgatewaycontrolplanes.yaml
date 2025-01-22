@@ -54,6 +54,15 @@ spec:
           spec:
             description: Spec defines the desired state of KonnectGatewayControlPlane.
             properties:
+              adopt:
+                description: KonnectAdoptOptions stores the options for adopting existing
+                  Konnect entities.
+                properties:
+                  id:
+                    type: string
+                required:
+                - id
+                type: object
               auth_type:
                 description: The auth type value of the cluster associated with the
                   Runtime Group.

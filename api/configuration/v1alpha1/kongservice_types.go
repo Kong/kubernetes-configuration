@@ -39,6 +39,8 @@ import (
 // +kubebuilder:validation:XValidation:rule="!has(oldSelf.spec.controlPlaneRef) || has(self.spec.controlPlaneRef)", message="controlPlaneRef is required once set"
 // +kubebuilder:validation:XValidation:rule="(!has(self.spec.controlPlaneRef) || !has(self.spec.controlPlaneRef.konnectNamespacedRef)) ? true : !has(self.spec.controlPlaneRef.konnectNamespacedRef.__namespace__)", message="spec.controlPlaneRef cannot specify namespace for namespaced resource"
 // +kubebuilder:validation:XValidation:rule="(!has(self.spec.controlPlaneRef)) ? true : (!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef", message="spec.controlPlaneRef is immutable when an entity is already Programmed"
+// +kubebuilder:validation:XValidation:rule="(!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : !has(self.spec.konnect) || !has(self.spec.konnect.adopt) || (has(oldSelf.spec.konnect) && has(oldSelf.spec.konnect.adopt))", message="Cannot add spec.konnect.adopt when an entity is already programmed"
+// +kubebuilder:validation:XValidation:rule="(!has(self.spec.konnect) || !has(self.spec.konnect.adopt) || !has(oldSelf.spec.konnect) || !has(oldSelf.spec.konnect.adopt)) ? true : (!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.konnect.adopt == self.spec.konnect.adopt", message="spec.konnect.adopt is immutable when an entity is already Programmed"
 // +apireference:kgo:include
 // +kong:channels=gateway-operator
 type KongService struct {
@@ -53,11 +55,16 @@ type KongService struct {
 
 // KongServiceSpec defines specification of a Kong Service.
 // +kubebuilder:validation:XValidation:rule="!has(self.controlPlaneRef) ? true : self.controlPlaneRef.type != 'kic'", message="KIC is not supported as control plane"
+// +kubebuilder:validation:XValidation:rule="(has(self.controlPlaneRef) && (self.controlPlaneRef.type == 'konnectNamespacedRef' || self.controlPlaneRef.type == 'konnectID')) ? true : !has(self.konnect)", message="Cannot specify Konnect specific options when control plane is not Konnect"
 // +apireference:kgo:include
 type KongServiceSpec struct {
 	// ControlPlaneRef is a reference to a ControlPlane this KongService is associated with.
 	// +kubebuilder:validation:Required
 	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef"`
+
+	// KonnectOptions includes options specific to Konnect.
+	// Only used when we manage the KongService by Konnect entity controller.
+	KonnectOptions *konnectv1alpha1.KonnectEntityOptions `json:"konnect,omitempty"`
 
 	KongServiceAPISpec `json:",inline"`
 }

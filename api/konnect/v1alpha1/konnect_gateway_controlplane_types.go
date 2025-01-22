@@ -53,6 +53,8 @@ type KonnectGatewayControlPlaneSpec struct {
 	// Only applicable for ControlPlanes that are created as groups.
 	Members []corev1.LocalObjectReference `json:"members,omitempty"`
 
+	Adopt *KonnectAdoptOptions `json:"adopt,omitempty"`
+
 	KonnectConfiguration KonnectConfiguration `json:"konnect,omitempty"`
 }
 
