@@ -6,6 +6,7 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.0.7](#v107)
 - [v1.0.6](#v106)
 - [v1.0.5](#v105)
 - [v1.0.4](#v104)
@@ -13,12 +14,15 @@ Adding a new version? You'll need three changes:
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
-## Unreleased
+## [v1.0.7]
+
+[v1.0.7]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.6...v1.0.7
 
 ### Changes
 
 - Fix `KongRoute`'s `spec.headers` field type.
   [#243](https://github.com/Kong/kubernetes-configuration/pull/243)
+- Disallow `konnectID` as `ControlPlaneRef`'s `type` field value.
 
 ## [v1.0.6]
 
