@@ -11,6 +11,7 @@ on:
   pull_request:
     branches:
       - 'main'
+      - 'release/*'
   push:
     branches:
       - 'main'
@@ -19,6 +20,9 @@ on:
       - '*'
   workflow_dispatch: {}
   workflow_call: {}
+
+permissions:
+  contents: read
 
 jobs:
   version:
