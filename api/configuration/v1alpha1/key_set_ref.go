@@ -1,7 +1,7 @@
 package v1alpha1
 
 // KeySetRefType is the enum type for the KeySetRef.
-// +kubebuilder:validation:Enum=konnectID;namespacedRef
+// +kubebuilder:validation:Enum=namespacedRef
 // +apireference:kgo:include
 type KeySetRefType string
 
@@ -24,8 +24,6 @@ const (
 type KeySetRef struct {
 	// Type defines type of the KeySet object reference. It can be one of:
 	// - namespacedRef
-	//
-	// +kubebuilder:validation:Enum=namespacedRef
 	Type KeySetRefType `json:"type"`
 
 	// KonnectID is the schema for the KonnectID type.

@@ -6,6 +6,7 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.0.8](#v108)
 - [v1.0.7](#v107)
 - [v1.0.6](#v106)
 - [v1.0.5](#v105)
@@ -13,6 +14,16 @@ Adding a new version? You'll need three changes:
 - [v1.0.3](#v103)
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
+
+## [v1.0.8]
+
+[v1.0.8]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.7...v1.0.8
+
+### Changes
+
+- Allow `konnectID` as `ControlPlaneRef`'s `type` but disallow it in CRDs that import it.
+  This allows usage of `konnectID` in the `ControlPlaneRef`'s `type` field in CRDs
+  that are outside of this repository, e.g. KGO's `KonnectExtension`.
 
 ## [v1.0.7]
 

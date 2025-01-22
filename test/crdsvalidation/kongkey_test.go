@@ -149,7 +149,7 @@ func TestKongKey(t *testing.T) {
 				},
 			},
 			{
-				Name: "'konnectID' type is accepted",
+				Name: "'konnectID' type is not supported",
 				TestObject: &configurationv1alpha1.KongKey{
 					ObjectMeta: commonObjectMeta,
 					Spec: configurationv1alpha1.KongKeySpec{
@@ -163,7 +163,6 @@ func TestKongKey(t *testing.T) {
 						},
 					},
 				},
-				// TODO change when konnectID ref is allowed
 				ExpectedErrorMessage: lo.ToPtr("Unsupported value: \"konnectID\": supported values: \"namespacedRef\""),
 			},
 			{
@@ -180,7 +179,6 @@ func TestKongKey(t *testing.T) {
 						},
 					},
 				},
-				// TODO change when konnectID ref is allowed
 				ExpectedErrorMessage: lo.ToPtr("Unsupported value: \"konnectID\": supported values: \"namespacedRef\""),
 			},
 			{
@@ -197,7 +195,7 @@ func TestKongKey(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr(`Unsupported value: "unknown": supported values: "konnectID", "namespacedRef"`),
+				ExpectedErrorMessage: lo.ToPtr(`Unsupported value: "unknown": supported values: "namespacedRef"`),
 			},
 		}.Run(t)
 	})

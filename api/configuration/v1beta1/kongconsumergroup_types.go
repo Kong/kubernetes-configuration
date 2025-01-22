@@ -59,6 +59,7 @@ type KongConsumerGroupSpec struct {
 
 	// ControlPlaneRef is a reference to a ControlPlane this ConsumerGroup is associated with.
 	// +optional
+	// +kubebuilder:validation:XValidation:rule="!has(self.type) || self.type != 'konnectID'", message="konnectID type is not supported"
 	ControlPlaneRef *configurationv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 
 	// Tags is an optional set of tags applied to the ConsumerGroup.

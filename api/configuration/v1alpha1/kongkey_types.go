@@ -53,6 +53,7 @@ type KongKey struct {
 type KongKeySpec struct {
 	// ControlPlaneRef is a reference to a Konnect ControlPlane this KongKey is associated with.
 	// +optional
+	// +kubebuilder:validation:XValidation:rule="!has(self.type) || self.type != 'konnectID'", message="konnectID type is not supported"
 	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 
 	// KeySetRef is a reference to a KongKeySet this KongKey is attached to.
