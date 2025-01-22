@@ -143,13 +143,6 @@ spec:
                 x-kubernetes-validations:
                 - message: pluginRef name must be set
                   rule: self.name != ''
-              scope:
-                default: OnlyTargets
-                description: Scope defines the scope of the plugin binding.
-                enum:
-                - OnlyTargets
-                - GlobalInControlPlane
-                type: string
               targets:
                 description: |-
                   Targets contains the targets references. It is possible to set multiple combinations
@@ -270,6 +263,9 @@ spec:
                 x-kubernetes-validations:
                 - message: Cannot set Consumer and ConsumerGroup at the same time
                   rule: '(has(self.consumerRef) ? !has(self.consumerGroupRef) : true)'
+                - message: At least one entity reference must be set
+                  rule: has(self.routeRef) || has(self.serviceRef) || has(self.consumerRef)
+                    || has(self.consumerGroupRef)
                 - message: KongRoute can be used only when serviceRef is unset or
                     set to KongService
                   rule: '(has(self.routeRef) && self.routeRef.kind == ''KongRoute'')
@@ -282,15 +278,8 @@ spec:
                     : true'
             required:
             - pluginRef
+            - targets
             type: object
-            x-kubernetes-validations:
-            - message: At least one target reference must be set when scope is 'OnlyTargets'
-              rule: 'self.scope == ''OnlyTargets'' ? has(self.targets) && (has(self.targets.routeRef)
-                || has(self.targets.serviceRef) || has(self.targets.consumerRef) ||
-                has(self.targets.consumerGroupRef)) : true'
-            - message: No targets must be set when scope is 'GlobalInControlPlane'
-              rule: 'self.scope == ''GlobalInControlPlane'' ? !has(self.targets) :
-                true'
           status:
             default:
               conditions:
