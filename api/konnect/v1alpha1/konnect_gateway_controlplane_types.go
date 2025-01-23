@@ -23,6 +23,8 @@ func init() {
 // +kubebuilder:printcolumn:name="OrgID",description="Konnect Organization ID this resource belongs to.",type=string,JSONPath=`.status.organizationID`
 // +kubebuilder:validation:XValidation:message="spec.konnect.authRef is immutable when an entity is already Programmed", rule="!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef"
 // +kubebuilder:validation:XValidation:message="spec.konnect.authRef is immutable when an entity refers to a Valid API Auth Configuration", rule="!self.status.conditions.exists(c, c.type == 'APIAuthValid' && c.status == 'True') ? true : self.spec.konnect.authRef == oldSelf.spec.konnect.authRef"
+// +kubebuilder:validation:XValidation:message="Cannot add spec.adopt when an entitiy is already Programmed", rule="!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True') ? true : (!has(self.spec.adopt) || has(oldSelf.spec.adopt))"
+// +kubebuilder:validation:XValidation:message="spec.adopt is immutable when an entitiy is already Programmed", rule="!self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True') ? true : ((!has(self.spec.adopt) || !has(oldSelf.spec.adopt)) ? true : self.spec.adopt == oldSelf.spec.adopt)"
 // +apireference:kgo:include
 // +kong:channels=gateway-operator
 type KonnectGatewayControlPlane struct {

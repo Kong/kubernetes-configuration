@@ -44,7 +44,7 @@ func TestKongService(t *testing.T) {
 						},
 						KonnectOptions: &konnectv1alpha1.KonnectEntityOptions{
 							Adopt: &konnectv1alpha1.KonnectAdoptOptions{
-								ID: "abcddcba-0000-1111-9999-fdecba9876543210",
+								ID: "abcddcba-0000-1111-9999-0123456789ab",
 							},
 						},
 						KongServiceAPISpec: configurationv1alpha1.KongServiceAPISpec{
@@ -55,7 +55,7 @@ func TestKongService(t *testing.T) {
 				Update: func(ks *configurationv1alpha1.KongService) {
 					ks.Spec.KonnectOptions = &konnectv1alpha1.KonnectEntityOptions{
 						Adopt: &konnectv1alpha1.KonnectAdoptOptions{
-							ID: "abcddcba-0000-1111-9999-fdecba9876543211",
+							ID: "abcddcba-0000-1111-9999-0123456789ac",
 						},
 					}
 				},
@@ -73,7 +73,7 @@ func TestKongService(t *testing.T) {
 						},
 						KonnectOptions: &konnectv1alpha1.KonnectEntityOptions{
 							Adopt: &konnectv1alpha1.KonnectAdoptOptions{
-								ID: "abcddcba-0000-1111-9999-fdecba9876543210",
+								ID: "abcddcba-0000-1111-9999-0123456789ab",
 							},
 						},
 						KongServiceAPISpec: configurationv1alpha1.KongServiceAPISpec{
@@ -83,7 +83,7 @@ func TestKongService(t *testing.T) {
 					Status: configurationv1alpha1.KongServiceStatus{
 						Konnect: &konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef{
 							KonnectEntityStatus: konnectv1alpha1.KonnectEntityStatus{
-								ID: "abcddcba-0000-1111-9999-fdecba9876543210",
+								ID: "abcddcba-0000-1111-9999-0123456789ac",
 							},
 							ControlPlaneID: "cp-1",
 						},
@@ -100,7 +100,7 @@ func TestKongService(t *testing.T) {
 				Update: func(ks *configurationv1alpha1.KongService) {
 					ks.Spec.KonnectOptions = &konnectv1alpha1.KonnectEntityOptions{
 						Adopt: &konnectv1alpha1.KonnectAdoptOptions{
-							ID: "abcddcba-0000-1111-9999-fdecba9876543211",
+							ID: "abcddcba-0000-1111-9999-fd9876543211",
 						},
 					}
 				},
@@ -124,7 +124,7 @@ func TestKongService(t *testing.T) {
 					Status: configurationv1alpha1.KongServiceStatus{
 						Konnect: &konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef{
 							KonnectEntityStatus: konnectv1alpha1.KonnectEntityStatus{
-								ID: "abcddcba-0000-1111-9999-fdecba9876543210",
+								ID: "abcddcba-0000-1111-9999-fdecba987654",
 							},
 							ControlPlaneID: "cp-1",
 						},
@@ -141,7 +141,7 @@ func TestKongService(t *testing.T) {
 				Update: func(ks *configurationv1alpha1.KongService) {
 					ks.Spec.KonnectOptions = &konnectv1alpha1.KonnectEntityOptions{
 						Adopt: &konnectv1alpha1.KonnectAdoptOptions{
-							ID: "abcddcba-0000-1111-9999-fdecba9876543211",
+							ID: "abcddcba-0000-1111-9999-1234567890ab",
 						},
 					}
 				},
@@ -160,7 +160,7 @@ func TestKongService(t *testing.T) {
 						},
 						KonnectOptions: &konnectv1alpha1.KonnectEntityOptions{
 							Adopt: &konnectv1alpha1.KonnectAdoptOptions{
-								ID: "abcddcba-0000-1111-9999-fdecba9876543210",
+								ID: "abcddcba-0000-1111-9999-0123456789ab",
 							},
 						},
 						KongServiceAPISpec: configurationv1alpha1.KongServiceAPISpec{
@@ -170,7 +170,7 @@ func TestKongService(t *testing.T) {
 					Status: configurationv1alpha1.KongServiceStatus{
 						Konnect: &konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef{
 							KonnectEntityStatus: konnectv1alpha1.KonnectEntityStatus{
-								ID: "abcddcba-0000-1111-9999-fdecba9876543210",
+								ID: "abcddcba-0000-1111-9999-fdecba987654",
 							},
 							ControlPlaneID: "cp-1",
 						},
