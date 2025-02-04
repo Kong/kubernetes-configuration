@@ -10,6 +10,7 @@ Package v1alpha1 contains API Schema definitions for the konnect.konghq.com v1al
 
 - [KonnectAPIAuthConfiguration](#konnectapiauthconfiguration)
 - [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
+- [KonnectNetwork](#konnectnetwork)
 ### KonnectAPIAuthConfiguration
 
 
@@ -39,6 +40,22 @@ KonnectGatewayControlPlane is the Schema for the KonnectGatewayControlplanes API
 | `kind` _string_ | `KonnectGatewayControlPlane`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)_ | Spec defines the desired state of KonnectGatewayControlPlane. |
+
+
+
+### KonnectNetwork
+
+
+KonnectNetwork is the Schema for the Konnect Network API.
+
+<!-- konnect_network description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
+| `kind` _string_ | `KonnectNetwork`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KonnectNetworkSpec](#konnectnetworkspec)_ | Spec defines the desired state of KonnectNetwork. |
 
 
 
@@ -106,6 +123,7 @@ KonnectConfiguration is the Schema for the KonnectConfiguration API.
 
 _Appears in:_
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
+- [KonnectNetworkSpec](#konnectnetworkspec)
 
 #### KonnectEntityStatus
 
@@ -129,6 +147,7 @@ _Appears in:_
 - [KonnectEntityStatusWithControlPlaneAndUpstreamRefs](#konnectentitystatuswithcontrolplaneandupstreamrefs)
 - [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
+- [KonnectNetworkStatus](#konnectnetworkstatus)
 
 
 
@@ -164,6 +183,29 @@ KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayContro
 
 _Appears in:_
 - [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
+
+
+
+#### KonnectNetworkSpec
+
+
+KonnectNetworkSpec defines the desired state of KonnectNetwork.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Human-readable name of the network. |
+| `cloud_gateway_provider_account_id` _string_ |  |
+| `region` _string_ | Region ID for cloud provider region. |
+| `availability_zones` _string array_ | List of availability zones that the network is attached to. |
+| `cidr_block` _string_ | CIDR block configuration for the network. |
+| `state` _[NetworkCreateState](#networkcreatestate)_ | Initial state for creating a network. |
+| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
+
+
+_Appears in:_
+- [KonnectNetwork](#konnectnetwork)
 
 
 

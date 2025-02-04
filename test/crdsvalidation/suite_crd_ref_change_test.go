@@ -12,6 +12,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/config"
 
+	"github.com/kong/kubernetes-configuration/api/configuration/common"
 	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	"github.com/kong/kubernetes-configuration/test/crdsvalidation"
 )
@@ -99,8 +100,8 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 		if objScope == meta.RESTScopeNameNamespace {
 			obj := obj.DeepCopy()
 			obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-				Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-				KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+				Type: common.ControlPlaneRefKonnectNamespacedRef,
+				KonnectNamespacedRef: &common.KonnectNamespacedRef{
 					Name:      "test-konnect-control-plane",
 					Namespace: "another-namespace",
 				},
@@ -127,8 +128,8 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 	{
 		obj := obj.DeepCopy()
 		obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-			Type: configurationv1alpha1.ControlPlaneRefKonnectID,
-			KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+			Type: common.ControlPlaneRefKonnectID,
+			KonnectNamespacedRef: &common.KonnectNamespacedRef{
 				Name: "test-konnect-control-plane",
 			},
 		})
@@ -141,9 +142,9 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 	{
 		obj := obj.DeepCopy()
 		obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-			Type:      configurationv1alpha1.ControlPlaneRefKonnectID,
+			Type:      common.ControlPlaneRefKonnectID,
 			KonnectID: lo.ToPtr("123456"),
-			KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+			KonnectNamespacedRef: &common.KonnectNamespacedRef{
 				Name: "test-konnect-control-plane",
 			},
 		})
@@ -158,7 +159,7 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 		obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
 			Type:      configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 			KonnectID: lo.ToPtr("123456"),
-			KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+			KonnectNamespacedRef: &common.KonnectNamespacedRef{
 				Name: "test-konnect-control-plane",
 			},
 		})
@@ -171,7 +172,7 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 	{
 		obj := obj.DeepCopy()
 		obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-			Type:      configurationv1alpha1.ControlPlaneRefKIC,
+			Type:      common.ControlPlaneRefKIC,
 			KonnectID: lo.ToPtr("123456"),
 		})
 		ret = append(ret, crdsvalidation.TestCase[T]{
@@ -183,8 +184,8 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 	{
 		obj := obj.DeepCopy()
 		obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-			Type: configurationv1alpha1.ControlPlaneRefKIC,
-			KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+			Type: common.ControlPlaneRefKIC,
+			KonnectNamespacedRef: &common.KonnectNamespacedRef{
 				Name: "test-konnect-control-plane",
 			},
 		})
@@ -198,7 +199,7 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 		if supportedByKIC == SupportedByKIC {
 			obj := obj.DeepCopy()
 			obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-				Type: configurationv1alpha1.ControlPlaneRefKIC,
+				Type: common.ControlPlaneRefKIC,
 			})
 			ret = append(ret, crdsvalidation.TestCase[T]{
 				Name:       "kic control plane ref is allowed",
@@ -211,8 +212,8 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 	{
 		obj := obj.DeepCopy()
 		obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-			Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-			KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+			Type: common.ControlPlaneRefKonnectNamespacedRef,
+			KonnectNamespacedRef: &common.KonnectNamespacedRef{
 				Name: "test-konnect-control-plane",
 			},
 		})
@@ -231,8 +232,8 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 	{
 		obj := obj.DeepCopy()
 		obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-			Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-			KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+			Type: common.ControlPlaneRefKonnectNamespacedRef,
+			KonnectNamespacedRef: &common.KonnectNamespacedRef{
 				Name: "test-konnect-control-plane",
 			},
 		})
@@ -242,8 +243,8 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 			TestObject: obj,
 			Update: func(obj T) {
 				cpRef := &configurationv1alpha1.ControlPlaneRef{
-					Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-					KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+					Type: common.ControlPlaneRefKonnectNamespacedRef,
+					KonnectNamespacedRef: &common.KonnectNamespacedRef{
 						Name: "new-konnect-control-plane",
 					},
 				}
@@ -257,7 +258,7 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 		if supportedByKIC == SupportedByKIC {
 			obj := obj.DeepCopy()
 			obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-				Type: configurationv1alpha1.ControlPlaneRefKIC,
+				Type: common.ControlPlaneRefKIC,
 			})
 			obj.SetConditions([]metav1.Condition{programmedConditionTrue})
 			ret = append(ret, crdsvalidation.TestCase[T]{
@@ -265,8 +266,8 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 				TestObject: obj,
 				Update: func(obj T) {
 					cpRef := &configurationv1alpha1.ControlPlaneRef{
-						Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-						KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+						Type: common.ControlPlaneRefKonnectNamespacedRef,
+						KonnectNamespacedRef: &common.KonnectNamespacedRef{
 							Name: "new-konnect-control-plane",
 						},
 					}
@@ -280,7 +281,7 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 		if supportedByKIC == SupportedByKIC {
 			obj := obj.DeepCopy()
 			obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-				Type: configurationv1alpha1.ControlPlaneRefKIC,
+				Type: common.ControlPlaneRefKIC,
 			})
 			obj.SetConditions([]metav1.Condition{programmedConditionFalse})
 			ret = append(ret, crdsvalidation.TestCase[T]{
@@ -288,8 +289,8 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 				TestObject: obj,
 				Update: func(obj T) {
 					cpRef := &configurationv1alpha1.ControlPlaneRef{
-						Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-						KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+						Type: common.ControlPlaneRefKonnectNamespacedRef,
+						KonnectNamespacedRef: &common.KonnectNamespacedRef{
 							Name: "new-konnect-control-plane",
 						},
 					}
@@ -309,8 +310,8 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 				TestObject: obj,
 				Update: func(obj T) {
 					cpRef := &configurationv1alpha1.ControlPlaneRef{
-						Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-						KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+						Type: common.ControlPlaneRefKonnectNamespacedRef,
+						KonnectNamespacedRef: &common.KonnectNamespacedRef{
 							Name: "new-konnect-control-plane",
 						},
 					}
@@ -329,8 +330,8 @@ func NewCRDValidationTestCasesGroupCPRefChange[
 				TestObject: obj,
 				Update: func(obj T) {
 					cpRef := &configurationv1alpha1.ControlPlaneRef{
-						Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-						KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+						Type: common.ControlPlaneRefKonnectNamespacedRef,
+						KonnectNamespacedRef: &common.KonnectNamespacedRef{
 							Name: "new-konnect-control-plane",
 						},
 					}

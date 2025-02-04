@@ -7,6 +7,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
+	"github.com/kong/kubernetes-configuration/api/configuration/common"
 	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	"github.com/kong/kubernetes-configuration/test/crdsvalidation"
 )
@@ -36,7 +37,7 @@ func NewCRDValidationTestCasesGroupCPRefChangeKICUnsupportedTypes[
 	{
 		obj := obj.DeepCopy()
 		obj.SetControlPlaneRef(&configurationv1alpha1.ControlPlaneRef{
-			Type: configurationv1alpha1.ControlPlaneRefKIC,
+			Type: common.ControlPlaneRefKIC,
 		})
 		ret = append(ret, crdsvalidation.TestCase[T]{
 			Name:                 "kic control plane ref is not allowed",

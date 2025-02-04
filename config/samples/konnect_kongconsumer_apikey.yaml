@@ -1,7 +1,7 @@
 kind: KonnectAPIAuthConfiguration
 apiVersion: konnect.konghq.com/v1alpha1
 metadata:
-  name: konnect-api-auth-dev-1
+  name: konnect-api-auth-1
   namespace: default
 spec:
   type: token
@@ -20,7 +20,7 @@ spec:
     key1: test-cp-basic-auth
   konnect:
     authRef:
-      name: konnect-api-auth-dev-1
+      name: konnect-api-auth-1
 ---
 kind: KongConsumer
 apiVersion: configuration.konghq.com/v1

@@ -7,6 +7,7 @@ import (
 	"github.com/samber/lo"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
+	"github.com/kong/kubernetes-configuration/api/configuration/common"
 	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	"github.com/kong/kubernetes-configuration/test/crdsvalidation"
 )
@@ -37,7 +38,7 @@ func TestKongService(t *testing.T) {
 					Spec: configurationv1alpha1.KongServiceSpec{
 						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+							KonnectNamespacedRef: &common.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
 							},
 						},
@@ -60,7 +61,7 @@ func TestKongService(t *testing.T) {
 					Spec: configurationv1alpha1.KongServiceSpec{
 						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+							KonnectNamespacedRef: &common.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
 							},
 						},
@@ -84,7 +85,7 @@ func TestKongService(t *testing.T) {
 					Spec: configurationv1alpha1.KongServiceSpec{
 						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-							KonnectNamespacedRef: &configurationv1alpha1.KonnectNamespacedRef{
+							KonnectNamespacedRef: &common.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
 							},
 						},
