@@ -13,10 +13,10 @@ import (
 
 func TestKonnectNetwork(t *testing.T) {
 	t.Run("spec", func(t *testing.T) {
-		crdsvalidation.TestCasesGroup[*konnectv1alpha1.KonnectNetwork]{
+		crdsvalidation.TestCasesGroup[*konnectv1alpha1.KonnectCloudGatewayNetwork]{
 			{
 				Name: "all required fields are set",
-				TestObject: &konnectv1alpha1.KonnectNetwork{
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayNetwork{
 					ObjectMeta: commonObjectMeta,
 					Spec: konnectv1alpha1.KonnectNetworkSpec{
 						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{

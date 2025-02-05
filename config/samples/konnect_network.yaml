@@ -8,7 +8,7 @@ spec:
   serverURL: eu.api.konghq.com
 ---
 apiVersion: konnect.konghq.com/v1alpha1
-kind: KonnectNetwork
+kind: KonnectCloudGatewayNetwork
 metadata:
   name: network1
 spec:

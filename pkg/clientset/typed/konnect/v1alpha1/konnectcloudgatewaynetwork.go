@@ -29,41 +29,46 @@ import (
 	gentype "k8s.io/client-go/gentype"
 )
 
-// KonnectNetworksGetter has a method to return a KonnectNetworkInterface.
+// KonnectCloudGatewayNetworksGetter has a method to return a KonnectCloudGatewayNetworkInterface.
 // A group's client should implement this interface.
-type KonnectNetworksGetter interface {
-	KonnectNetworks(namespace string) KonnectNetworkInterface
+type KonnectCloudGatewayNetworksGetter interface {
+	KonnectCloudGatewayNetworks(namespace string) KonnectCloudGatewayNetworkInterface
 }
 
-// KonnectNetworkInterface has methods to work with KonnectNetwork resources.
-type KonnectNetworkInterface interface {
-	Create(ctx context.Context, konnectNetwork *konnectv1alpha1.KonnectCloudGatewayNetwork, opts v1.CreateOptions) (*konnectv1alpha1.KonnectCloudGatewayNetwork, error)
-	Update(ctx context.Context, konnectNetwork *konnectv1alpha1.KonnectCloudGatewayNetwork, opts v1.UpdateOptions) (*konnectv1alpha1.KonnectCloudGatewayNetwork, error)
+// KonnectCloudGatewayNetworkInterface has methods to work with KonnectCloudGatewayNetwork resources.
+type KonnectCloudGatewayNetworkInterface interface {
+	Create(ctx context.Context, konnectCloudGatewayNetwork *konnectv1alpha1.KonnectCloudGatewayNetwork, opts v1.CreateOptions) (*konnectv1alpha1.KonnectCloudGatewayNetwork, error)
+	Update(ctx context.Context, konnectCloudGatewayNetwork *konnectv1alpha1.KonnectCloudGatewayNetwork, opts v1.UpdateOptions) (*konnectv1alpha1.KonnectCloudGatewayNetwork, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, konnectNetwork *konnectv1alpha1.KonnectCloudGatewayNetwork, opts v1.UpdateOptions) (*konnectv1alpha1.KonnectCloudGatewayNetwork, error)
+	UpdateStatus(ctx context.Context, konnectCloudGatewayNetwork *konnectv1alpha1.KonnectCloudGatewayNetwork, opts v1.UpdateOptions) (*konnectv1alpha1.KonnectCloudGatewayNetwork, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
 	Get(ctx context.Context, name string, opts v1.GetOptions) (*konnectv1alpha1.KonnectCloudGatewayNetwork, error)
 	List(ctx context.Context, opts v1.ListOptions) (*konnectv1alpha1.KonnectCloudGatewayNetworkList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
 	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *konnectv1alpha1.KonnectCloudGatewayNetwork, err error)
+	KonnectCloudGatewayNetworkExpansion
 }
 
-// konnectNetworks implements KonnectNetworkInterface
-type konnectNetworks struct {
+// konnectCloudGatewayNetworks implements KonnectCloudGatewayNetworkInterface
+type konnectCloudGatewayNetworks struct {
 	*gentype.ClientWithList[*konnectv1alpha1.KonnectCloudGatewayNetwork, *konnectv1alpha1.KonnectCloudGatewayNetworkList]
 }
 
-// newKonnectNetworks returns a KonnectNetworks
-func newKonnectNetworks(c *KonnectV1alpha1Client, namespace string) *konnectNetworks {
-	return &konnectNetworks{
+// newKonnectCloudGatewayNetworks returns a KonnectCloudGatewayNetworks
+func newKonnectCloudGatewayNetworks(c *KonnectV1alpha1Client, namespace string) *konnectCloudGatewayNetworks {
+	return &konnectCloudGatewayNetworks{
 		gentype.NewClientWithList[*konnectv1alpha1.KonnectCloudGatewayNetwork, *konnectv1alpha1.KonnectCloudGatewayNetworkList](
-			"konnectnetworks",
+			"konnectcloudgatewaynetworks",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			namespace,
-			func() *konnectv1alpha1.KonnectCloudGatewayNetwork { return &konnectv1alpha1.KonnectCloudGatewayNetwork{} },
-			func() *konnectv1alpha1.KonnectCloudGatewayNetworkList { return &konnectv1alpha1.KonnectCloudGatewayNetworkList{} },
+			func() *konnectv1alpha1.KonnectCloudGatewayNetwork {
+				return &konnectv1alpha1.KonnectCloudGatewayNetwork{}
+			},
+			func() *konnectv1alpha1.KonnectCloudGatewayNetworkList {
+				return &konnectv1alpha1.KonnectCloudGatewayNetworkList{}
+			},
 		),
 	}
 }

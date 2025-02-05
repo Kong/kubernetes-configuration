@@ -24,19 +24,19 @@ import (
 	gentype "k8s.io/client-go/gentype"
 )
 
-// fakeKonnectNetworks implements KonnectNetworkInterface
-type fakeKonnectNetworks struct {
+// fakeKonnectCloudGatewayNetworks implements KonnectCloudGatewayNetworkInterface
+type fakeKonnectCloudGatewayNetworks struct {
 	*gentype.FakeClientWithList[*v1alpha1.KonnectCloudGatewayNetwork, *v1alpha1.KonnectCloudGatewayNetworkList]
 	Fake *FakeKonnectV1alpha1
 }
 
-func newFakeKonnectNetworks(fake *FakeKonnectV1alpha1, namespace string) konnectv1alpha1.KonnectNetworkInterface {
-	return &fakeKonnectNetworks{
+func newFakeKonnectCloudGatewayNetworks(fake *FakeKonnectV1alpha1, namespace string) konnectv1alpha1.KonnectCloudGatewayNetworkInterface {
+	return &fakeKonnectCloudGatewayNetworks{
 		gentype.NewFakeClientWithList[*v1alpha1.KonnectCloudGatewayNetwork, *v1alpha1.KonnectCloudGatewayNetworkList](
 			fake.Fake,
 			namespace,
-			v1alpha1.SchemeGroupVersion.WithResource("konnectnetworks"),
-			v1alpha1.SchemeGroupVersion.WithKind("KonnectNetwork"),
+			v1alpha1.SchemeGroupVersion.WithResource("konnectcloudgatewaynetworks"),
+			v1alpha1.SchemeGroupVersion.WithKind("KonnectCloudGatewayNetwork"),
 			func() *v1alpha1.KonnectCloudGatewayNetwork { return &v1alpha1.KonnectCloudGatewayNetwork{} },
 			func() *v1alpha1.KonnectCloudGatewayNetworkList { return &v1alpha1.KonnectCloudGatewayNetworkList{} },
 			func(dst, src *v1alpha1.KonnectCloudGatewayNetworkList) { dst.ListMeta = src.ListMeta },

@@ -7,10 +7,10 @@ import (
 )
 
 func init() {
-	SchemeBuilder.Register(&KonnectNetwork{}, &KonnectNetworkList{})
+	SchemeBuilder.Register(&KonnectCloudGatewayNetwork{}, &KonnectCloudGatewayNetworkList{})
 }
 
-// KonnectNetwork is the Schema for the Konnect Network API.
+// KonnectCloudGatewayNetwork is the Schema for the Konnect Network API.
 //
 // +genclient
 // +kubebuilder:resource:scope=Namespaced
@@ -22,18 +22,18 @@ func init() {
 // +kubebuilder:printcolumn:name="OrgID",description="Konnect Organization ID this resource belongs to.",type=string,JSONPath=`.status.organizationID`
 // +apireference:kgo:include
 // +kong:channels=gateway-operator
-type KonnectNetwork struct {
+type KonnectCloudGatewayNetwork struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	// Spec defines the desired state of KonnectNetwork.
+	// Spec defines the desired state of KonnectCloudGatewayNetwork.
 	Spec KonnectNetworkSpec `json:"spec,omitempty"`
 
-	// Status defines the observed state of KonnectNetwork.
-	Status KonnectNetworkStatus `json:"status,omitempty"`
+	// Status defines the observed state of KonnectCloudGatewayNetwork.
+	Status KonnectCloudGatewayNetworkStatus `json:"status,omitempty"`
 }
 
-// KonnectNetworkSpec defines the desired state of KonnectNetwork.
+// KonnectNetworkSpec defines the desired state of KonnectCloudGatewayNetwork.
 // +apireference:kgo:include
 type KonnectNetworkSpec struct {
 	sdkkonnectcomp.CreateNetworkRequest `json:",inline"`
@@ -42,12 +42,12 @@ type KonnectNetworkSpec struct {
 	KonnectConfiguration KonnectConfiguration `json:"konnect,omitempty"`
 }
 
-// KonnectNetworkStatus defines the observed state of KonnectNetwork.
+// KonnectCloudGatewayNetworkStatus defines the observed state of KonnectCloudGatewayNetwork.
 // +apireference:kgo:include
-type KonnectNetworkStatus struct {
+type KonnectCloudGatewayNetworkStatus struct {
 	KonnectEntityStatus `json:",inline"`
 
-	// Conditions describe the current conditions of the KonnectNetwork.
+	// Conditions describe the current conditions of the KonnectCloudGatewayNetwork.
 	//
 	// Known condition types are:
 	//
@@ -61,16 +61,16 @@ type KonnectNetworkStatus struct {
 }
 
 // GetKonnectAPIAuthConfigurationRef returns the Konnect API Auth Configuration Ref.
-func (c *KonnectNetwork) GetKonnectAPIAuthConfigurationRef() KonnectAPIAuthConfigurationRef {
+func (c *KonnectCloudGatewayNetwork) GetKonnectAPIAuthConfigurationRef() KonnectAPIAuthConfigurationRef {
 	return c.Spec.KonnectConfiguration.APIAuthConfigurationRef
 }
 
-// KonnectNetworkList contains a list of KonnectNetwork.
+// KonnectCloudGatewayNetworkList contains a list of KonnectCloudGatewayNetwork.
 // +kubebuilder:object:root=true
 // +apireference:kgo:include
-type KonnectNetworkList struct {
+type KonnectCloudGatewayNetworkList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
 
-	Items []KonnectNetwork `json:"items"`
+	Items []KonnectCloudGatewayNetwork `json:"items"`
 }

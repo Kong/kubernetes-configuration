@@ -9,8 +9,8 @@
 Package v1alpha1 contains API Schema definitions for the konnect.konghq.com v1alpha1 API group.
 
 - [KonnectAPIAuthConfiguration](#konnectapiauthconfiguration)
+- [KonnectCloudGatewayNetwork](#konnectcloudgatewaynetwork)
 - [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
-- [KonnectNetwork](#konnectnetwork)
 ### KonnectAPIAuthConfiguration
 
 
@@ -27,6 +27,22 @@ KonnectAPIAuthConfiguration is the Schema for the Konnect configuration type.
 
 
 
+### KonnectCloudGatewayNetwork
+
+
+KonnectCloudGatewayNetwork is the Schema for the Konnect Network API.
+
+<!-- konnect_cloud_gateway_network description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
+| `kind` _string_ | `KonnectCloudGatewayNetwork`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KonnectNetworkSpec](#konnectnetworkspec)_ | Spec defines the desired state of KonnectCloudGatewayNetwork. |
+
+
+
 ### KonnectGatewayControlPlane
 
 
@@ -40,22 +56,6 @@ KonnectGatewayControlPlane is the Schema for the KonnectGatewayControlplanes API
 | `kind` _string_ | `KonnectGatewayControlPlane`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)_ | Spec defines the desired state of KonnectGatewayControlPlane. |
-
-
-
-### KonnectNetwork
-
-
-KonnectNetwork is the Schema for the Konnect Network API.
-
-<!-- konnect_network description placeholder -->
-
-| Field | Description |
-| --- | --- |
-| `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
-| `kind` _string_ | `KonnectNetwork`
-| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[KonnectNetworkSpec](#konnectnetworkspec)_ | Spec defines the desired state of KonnectNetwork. |
 
 
 
@@ -109,6 +109,8 @@ KonnectAPIAuthType is the type of authentication used to authenticate with the K
 _Appears in:_
 - [KonnectAPIAuthConfigurationSpec](#konnectapiauthconfigurationspec)
 
+
+
 #### KonnectConfiguration
 
 
@@ -140,6 +142,7 @@ KonnectEntityStatus represents the status of a Konnect entity.
 
 
 _Appears in:_
+- [KonnectCloudGatewayNetworkStatus](#konnectcloudgatewaynetworkstatus)
 - [KonnectEntityStatusWithControlPlaneAndCertificateRefs](#konnectentitystatuswithcontrolplaneandcertificaterefs)
 - [KonnectEntityStatusWithControlPlaneAndConsumerRefs](#konnectentitystatuswithcontrolplaneandconsumerrefs)
 - [KonnectEntityStatusWithControlPlaneAndKeySetRef](#konnectentitystatuswithcontrolplaneandkeysetref)
@@ -147,7 +150,6 @@ _Appears in:_
 - [KonnectEntityStatusWithControlPlaneAndUpstreamRefs](#konnectentitystatuswithcontrolplaneandupstreamrefs)
 - [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
-- [KonnectNetworkStatus](#konnectnetworkstatus)
 
 
 
@@ -189,7 +191,7 @@ _Appears in:_
 #### KonnectNetworkSpec
 
 
-KonnectNetworkSpec defines the desired state of KonnectNetwork.
+KonnectNetworkSpec defines the desired state of KonnectCloudGatewayNetwork.
 
 
 
@@ -205,7 +207,5 @@ KonnectNetworkSpec defines the desired state of KonnectNetwork.
 
 
 _Appears in:_
-- [KonnectNetwork](#konnectnetwork)
-
-
+- [KonnectCloudGatewayNetwork](#konnectcloudgatewaynetwork)
 
