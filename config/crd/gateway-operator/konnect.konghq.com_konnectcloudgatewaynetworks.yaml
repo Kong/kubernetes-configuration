@@ -85,7 +85,6 @@ spec:
                 - authRef
                 type: object
               name:
-                description: Human-readable name of the network.
                 type: string
               region:
                 description: Region ID for cloud provider region.
@@ -100,7 +99,6 @@ spec:
             - konnect
             - name
             - region
-            - state
             type: object
           status:
             description: Status defines the observed state of KonnectCloudGatewayNetwork.

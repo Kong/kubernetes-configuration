@@ -39,7 +39,7 @@ KonnectCloudGatewayNetwork is the Schema for the Konnect Network API.
 | `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
 | `kind` _string_ | `KonnectCloudGatewayNetwork`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[KonnectNetworkSpec](#konnectnetworkspec)_ | Spec defines the desired state of KonnectCloudGatewayNetwork. |
+| `spec` _[KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)_ | Spec defines the desired state of KonnectCloudGatewayNetwork. |
 
 
 
@@ -109,6 +109,27 @@ KonnectAPIAuthType is the type of authentication used to authenticate with the K
 _Appears in:_
 - [KonnectAPIAuthConfigurationSpec](#konnectapiauthconfigurationspec)
 
+#### KonnectCloudGatewayNetworkSpec
+
+
+KonnectCloudGatewayNetworkSpec defines the desired state of KonnectCloudGatewayNetwork.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ |  |
+| `cloud_gateway_provider_account_id` _string_ |  |
+| `region` _string_ | Region ID for cloud provider region. |
+| `availability_zones` _string array_ | List of availability zones that the network is attached to. |
+| `cidr_block` _string_ | CIDR block configuration for the network. |
+| `state` _[NetworkCreateState](#networkcreatestate)_ | Initial state for creating a network. |
+| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
+
+
+_Appears in:_
+- [KonnectCloudGatewayNetwork](#konnectcloudgatewaynetwork)
+
 
 
 #### KonnectConfiguration
@@ -124,8 +145,8 @@ KonnectConfiguration is the Schema for the KonnectConfiguration API.
 
 
 _Appears in:_
+- [KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
-- [KonnectNetworkSpec](#konnectnetworkspec)
 
 #### KonnectEntityStatus
 
@@ -187,25 +208,4 @@ _Appears in:_
 - [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
 
 
-
-#### KonnectNetworkSpec
-
-
-KonnectNetworkSpec defines the desired state of KonnectCloudGatewayNetwork.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Human-readable name of the network. |
-| `cloud_gateway_provider_account_id` _string_ |  |
-| `region` _string_ | Region ID for cloud provider region. |
-| `availability_zones` _string array_ | List of availability zones that the network is attached to. |
-| `cidr_block` _string_ | CIDR block configuration for the network. |
-| `state` _[NetworkCreateState](#networkcreatestate)_ | Initial state for creating a network. |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
-
-
-_Appears in:_
-- [KonnectCloudGatewayNetwork](#konnectcloudgatewaynetwork)
 

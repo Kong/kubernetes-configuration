@@ -18,28 +18,30 @@ func TestKonnectNetwork(t *testing.T) {
 				Name: "all required fields are set",
 				TestObject: &konnectv1alpha1.KonnectCloudGatewayNetwork{
 					ObjectMeta: commonObjectMeta,
-					Spec: konnectv1alpha1.KonnectNetworkSpec{
+					Spec: konnectv1alpha1.KonnectCloudGatewayNetworkSpec{
 						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
 							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
 								Name: "test-konnect-api-auth-configuration",
 							},
 						},
-						CreateNetworkRequest: sdkkonnectcomp.CreateNetworkRequest{
-							Name:   "test-network",
-							Region: "us-west",
-							AvailabilityZones: []string{
-								"us-west-1a",
-								"us-west-1b",
-							},
-							CidrBlock:                     "10.0.0.1/24",
-							CloudGatewayProviderAccountID: "test-cloud-gateway-provider-account-id",
-							// NOTE: this is required as of now because we embded the sdk type in the CRD
-							// and we do not have controler over the field being optional or required
-							// without any additional machinery in place.
-							// The API itself https://docs.konghq.com/konnect/api/cloud-gateways/latest/#/Networks/create-network
-							// does not require this field.
-							State: lo.ToPtr(sdkkonnectcomp.NetworkCreateStateInitializing),
+						// APISpec: konnectv1alpha1.KonnectCloudGatewayNetworkAPISpec{
+						// CreateNetworkRequest: sdkkonnectcomp.CreateNetworkRequest{
+						Name:   "test-network",
+						Region: "us-west",
+						AvailabilityZones: []string{
+							"us-west-1a",
+							"us-west-1b",
 						},
+						CidrBlock:                     "10.0.0.1/24",
+						CloudGatewayProviderAccountID: "test-cloud-gateway-provider-account-id",
+						// NOTE: this is required as of now because we embded the sdk type in the CRD
+						// and we do not have controler over the field being optional or required
+						// without any additional machinery in place.
+						// The API itself https://docs.konghq.com/konnect/api/cloud-gateways/latest/#/Networks/create-network
+						// does not require this field.
+						State: lo.ToPtr(sdkkonnectcomp.NetworkCreateStateInitializing),
+						// },
+						// },
 					},
 				},
 			},

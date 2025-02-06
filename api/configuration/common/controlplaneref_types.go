@@ -51,6 +51,8 @@ type ControlPlaneRef struct {
 }
 
 // KonnectNamespacedRef is the schema for the KonnectNamespacedRef type.
+//
+// +kubebuilder:object:generate=true
 // +apireference:kgo:include
 type KonnectNamespacedRef struct {
 	// Name is the name of the Konnect Control Plane.

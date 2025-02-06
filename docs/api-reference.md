@@ -676,7 +676,7 @@ See: https://docs.konghq.com/gateway/latest/kong-enterprise/secrets-management/
 
 In this section you will find types that the CRDs rely on.
 #### ControlPlaneRef
-_Underlying type:_ `ControlPlaneRef`
+
 
 ControlPlaneRef is the schema for the ControlPlaneRef type.
 It is used to reference a Control Plane entity.
@@ -1581,6 +1581,22 @@ _Appears in:_
 - [KongVault](#kongvault)
 
 
+
+#### KonnectNamespacedRef
+
+
+KonnectNamespacedRef is the schema for the KonnectNamespacedRef type.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the Konnect Control Plane. |
+| `namespace` _string_ | Namespace is the namespace where the Konnect Control Plane is in. Currently only cluster scoped resources (KongVault) are allowed to set `konnectNamespacedRef.namespace`. |
+
+
+_Appears in:_
+- [ControlPlaneRef](#controlplaneref)
 
 #### Namespace
 _Underlying type:_ `string`

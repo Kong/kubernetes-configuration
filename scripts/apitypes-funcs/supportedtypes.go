@@ -124,6 +124,10 @@ var supportedKonnectTypesStandalone = []supportedTypesT{
 			{
 				Type: "KonnectAPIAuthConfiguration",
 			},
+			{
+				Type:              "KonnectCloudGatewayNetwork",
+				KonnectStatusType: "*KonnectEntityStatus",
+			},
 		},
 	},
 }

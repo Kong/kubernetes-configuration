@@ -1,9 +1,9 @@
 package v1alpha1
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
 	sdkkonnectcomp "github.com/Kong/sdk-konnect-go/models/components"
+
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func init() {
@@ -27,19 +27,33 @@ type KonnectCloudGatewayNetwork struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec defines the desired state of KonnectCloudGatewayNetwork.
-	Spec KonnectNetworkSpec `json:"spec,omitempty"`
+	Spec KonnectCloudGatewayNetworkSpec `json:"spec,omitempty"`
 
 	// Status defines the observed state of KonnectCloudGatewayNetwork.
 	Status KonnectCloudGatewayNetworkStatus `json:"status,omitempty"`
 }
 
-// KonnectNetworkSpec defines the desired state of KonnectCloudGatewayNetwork.
+// KonnectCloudGatewayNetworkSpec defines the desired state of KonnectCloudGatewayNetwork.
 // +apireference:kgo:include
-type KonnectNetworkSpec struct {
-	sdkkonnectcomp.CreateNetworkRequest `json:",inline"`
+type KonnectCloudGatewayNetworkSpec struct {
+	// NOTE: These fields are extracted from sdkkonnectcomp.CreateNetworkRequest
+	// because for some reason when embedding the struct, the fields deserialization
+	// doesn't work (konnect field is always empty).
+
+	Name                          string `json:"name"`
+	CloudGatewayProviderAccountID string `json:"cloud_gateway_provider_account_id"`
+	// Region ID for cloud provider region.
+	Region string `json:"region"`
+	// List of availability zones that the network is attached to.
+	AvailabilityZones []string `json:"availability_zones"`
+	// CIDR block configuration for the network.
+	CidrBlock string `json:"cidr_block"`
+	// Initial state for creating a network.
+	// +optional
+	State *sdkkonnectcomp.NetworkCreateState `json:"state"`
 
 	// +kubebuilder:validation:Required
-	KonnectConfiguration KonnectConfiguration `json:"konnect,omitempty"`
+	KonnectConfiguration KonnectConfiguration `json:"konnect"`
 }
 
 // KonnectCloudGatewayNetworkStatus defines the observed state of KonnectCloudGatewayNetwork.
