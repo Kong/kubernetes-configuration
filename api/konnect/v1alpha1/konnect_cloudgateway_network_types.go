@@ -1,9 +1,9 @@
 package v1alpha1
 
 import (
-	sdkkonnectcomp "github.com/Kong/sdk-konnect-go/models/components"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	sdkkonnectcomp "github.com/Kong/sdk-konnect-go/models/components"
 )
 
 func init() {

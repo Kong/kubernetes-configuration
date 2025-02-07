@@ -22,7 +22,7 @@ package v1alpha1
 
 import (
 	"github.com/Kong/sdk-konnect-go/models/components"
-	"github.com/kong/kubernetes-configuration/api/configuration/common"
+	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
@@ -203,7 +203,7 @@ func (in *KongCACertificateAPISpec) DeepCopyInto(out *KongCACertificateAPISpec) 
 	*out = *in
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -330,7 +330,7 @@ func (in *KongCertificateAPISpec) DeepCopyInto(out *KongCertificateAPISpec) {
 	*out = *in
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -457,7 +457,7 @@ func (in *KongCredentialACLAPISpec) DeepCopyInto(out *KongCredentialACLAPISpec) 
 	*out = *in
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -580,7 +580,7 @@ func (in *KongCredentialAPIKeyAPISpec) DeepCopyInto(out *KongCredentialAPIKeyAPI
 	*out = *in
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -703,7 +703,7 @@ func (in *KongCredentialBasicAuthAPISpec) DeepCopyInto(out *KongCredentialBasicA
 	*out = *in
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -836,7 +836,7 @@ func (in *KongCredentialHMACAPISpec) DeepCopyInto(out *KongCredentialHMACAPISpec
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 	if in.Username != nil {
@@ -984,7 +984,7 @@ func (in *KongCredentialJWTAPISpec) DeepCopyInto(out *KongCredentialJWTAPISpec) 
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -1346,7 +1346,7 @@ func (in *KongKeyAPISpec) DeepCopyInto(out *KongKeyAPISpec) {
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -1425,7 +1425,7 @@ func (in *KongKeySetAPISpec) DeepCopyInto(out *KongKeySetAPISpec) {
 	*out = *in
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -1965,7 +1965,7 @@ func (in *KongRouteAPISpec) DeepCopyInto(out *KongRouteAPISpec) {
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -2097,7 +2097,7 @@ func (in *KongSNIAPISpec) DeepCopyInto(out *KongSNIAPISpec) {
 	*out = *in
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -2255,7 +2255,7 @@ func (in *KongServiceAPISpec) DeepCopyInto(out *KongServiceAPISpec) {
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 	if in.TLSVerify != nil {
@@ -2397,7 +2397,7 @@ func (in *KongTargetAPISpec) DeepCopyInto(out *KongTargetAPISpec) {
 	*out = *in
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 }
@@ -2595,7 +2595,7 @@ func (in *KongUpstreamAPISpec) DeepCopyInto(out *KongUpstreamAPISpec) {
 	}
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 	if in.UseSrvName != nil {
@@ -2760,7 +2760,7 @@ func (in *KongVaultSpec) DeepCopyInto(out *KongVaultSpec) {
 	in.Config.DeepCopyInto(&out.Config)
 	if in.Tags != nil {
 		in, out := &in.Tags, &out.Tags
-		*out = make(common.Tags, len(*in))
+		*out = make(commonv1alpha1.Tags, len(*in))
 		copy(*out, *in)
 	}
 	if in.ControlPlaneRef != nil {

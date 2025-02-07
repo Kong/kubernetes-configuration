@@ -1,4 +1,4 @@
-package common_test
+package v1alpha1_test
 
 import (
 	"testing"
@@ -6,18 +6,18 @@ import (
 	"github.com/samber/lo"
 	"github.com/stretchr/testify/require"
 
-	"github.com/kong/kubernetes-configuration/api/configuration/common"
+	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
 )
 
 func TestControlPlaneRefStringer(t *testing.T) {
 	testCases := []struct {
 		name     string
-		ref      *common.ControlPlaneRef
+		ref      *commonv1alpha1.ControlPlaneRef
 		expected string
 	}{
 		{
 			name: "unknown type - doesn't panic",
-			ref: &common.ControlPlaneRef{
+			ref: &commonv1alpha1.ControlPlaneRef{
 				Type: "notSupportedType",
 			},
 			expected: "<unknown:notSupportedType>",
@@ -29,9 +29,9 @@ func TestControlPlaneRefStringer(t *testing.T) {
 		},
 		{
 			name: "konnectNamespacedRef with no namespace",
-			ref: &common.ControlPlaneRef{
-				Type: common.ControlPlaneRefKonnectNamespacedRef,
-				KonnectNamespacedRef: &common.KonnectNamespacedRef{
+			ref: &commonv1alpha1.ControlPlaneRef{
+				Type: commonv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+				KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 					Name: "foo",
 				},
 			},
@@ -39,9 +39,9 @@ func TestControlPlaneRefStringer(t *testing.T) {
 		},
 		{
 			name: "konnectNamespacedRef with namespace",
-			ref: &common.ControlPlaneRef{
-				Type: common.ControlPlaneRefKonnectNamespacedRef,
-				KonnectNamespacedRef: &common.KonnectNamespacedRef{
+			ref: &commonv1alpha1.ControlPlaneRef{
+				Type: commonv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+				KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 					Namespace: "bar",
 					Name:      "foo",
 				},
@@ -50,23 +50,23 @@ func TestControlPlaneRefStringer(t *testing.T) {
 		},
 		{
 			name: "konnectID without ID - doesn't panic",
-			ref: &common.ControlPlaneRef{
-				Type: common.ControlPlaneRefKonnectID,
+			ref: &commonv1alpha1.ControlPlaneRef{
+				Type: commonv1alpha1.ControlPlaneRefKonnectID,
 			},
 			expected: "<konnectID:nil>",
 		},
 		{
 			name: "konnectID with ID",
-			ref: &common.ControlPlaneRef{
-				Type:      common.ControlPlaneRefKonnectID,
+			ref: &commonv1alpha1.ControlPlaneRef{
+				Type:      commonv1alpha1.ControlPlaneRefKonnectID,
 				KonnectID: lo.ToPtr("foo"),
 			},
 			expected: "<konnectID:foo>",
 		},
 		{
 			name: "kic",
-			ref: &common.ControlPlaneRef{
-				Type: common.ControlPlaneRefKIC,
+			ref: &commonv1alpha1.ControlPlaneRef{
+				Type: commonv1alpha1.ControlPlaneRefKIC,
 			},
 			expected: "<kic>",
 		},

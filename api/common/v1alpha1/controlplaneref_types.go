@@ -1,4 +1,4 @@
-package common
+package v1alpha1
 
 const (
 	// ControlPlaneRefKonnectID is the type for the KonnectID ControlPlaneRef.

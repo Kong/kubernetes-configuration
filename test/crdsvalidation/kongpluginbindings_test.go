@@ -6,7 +6,7 @@ import (
 	"github.com/samber/lo"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/kong/kubernetes-configuration/api/configuration/common"
+	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
 	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	"github.com/kong/kubernetes-configuration/test/crdsvalidation"
 )
@@ -15,7 +15,7 @@ func TestKongPluginBindings(t *testing.T) {
 	validTestCPRef := func() configurationv1alpha1.ControlPlaneRef {
 		return configurationv1alpha1.ControlPlaneRef{
 			Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-			KonnectNamespacedRef: &common.KonnectNamespacedRef{
+			KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 				Name: "test-control-plane",
 			},
 		}

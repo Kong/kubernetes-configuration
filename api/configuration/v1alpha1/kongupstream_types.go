@@ -21,7 +21,7 @@ import (
 
 	sdkkonnectcomp "github.com/Kong/sdk-konnect-go/models/components"
 
-	"github.com/kong/kubernetes-configuration/api/configuration/common"
+	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 )
 
@@ -108,7 +108,7 @@ type KongUpstreamAPISpec struct {
 	// +kubebuilder:validation:Maximum=65536
 	Slots *int64 `default:"10000" json:"slots,omitempty"`
 	// An optional set of strings associated with the Upstream for grouping and filtering.
-	Tags common.Tags `json:"tags,omitempty"`
+	Tags commonv1alpha1.Tags `json:"tags,omitempty"`
 	// If set, the balancer will use SRV hostname(if DNS Answer has SRV record) as the proxy upstream `Host`.
 	UseSrvName *bool `default:"false" json:"use_srv_name,omitempty"`
 }
