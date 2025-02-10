@@ -26,6 +26,10 @@ import (
 	fakeconfigurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1/fake"
 	configurationv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1beta1"
 	fakeconfigurationv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1beta1/fake"
+	gatewayoperatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1alpha1"
+	fakegatewayoperatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1alpha1/fake"
+	gatewayoperatorv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1beta1"
+	fakegatewayoperatorv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1beta1/fake"
 	incubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1"
 	fakeincubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1/fake"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha1"
@@ -104,6 +108,16 @@ func (c *Clientset) ConfigurationV1alpha1() configurationv1alpha1.ConfigurationV
 // ConfigurationV1beta1 retrieves the ConfigurationV1beta1Client
 func (c *Clientset) ConfigurationV1beta1() configurationv1beta1.ConfigurationV1beta1Interface {
 	return &fakeconfigurationv1beta1.FakeConfigurationV1beta1{Fake: &c.Fake}
+}
+
+// GatewayoperatorV1alpha1 retrieves the GatewayoperatorV1alpha1Client
+func (c *Clientset) GatewayoperatorV1alpha1() gatewayoperatorv1alpha1.GatewayoperatorV1alpha1Interface {
+	return &fakegatewayoperatorv1alpha1.FakeGatewayoperatorV1alpha1{Fake: &c.Fake}
+}
+
+// GatewayoperatorV1beta1 retrieves the GatewayoperatorV1beta1Client
+func (c *Clientset) GatewayoperatorV1beta1() gatewayoperatorv1beta1.GatewayoperatorV1beta1Interface {
+	return &fakegatewayoperatorv1beta1.FakeGatewayoperatorV1beta1{Fake: &c.Fake}
 }
 
 // IncubatorV1alpha1 retrieves the IncubatorV1alpha1Client

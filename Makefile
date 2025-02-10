@@ -140,7 +140,7 @@ verify.generators: generate verify.diff
 # Build - Generators
 # ------------------------------------------------------------------------------
 
-CRD_GEN_PATHS ?= ./api/configuration/...;./api/konnect/...
+CRD_GEN_PATHS ?= ./api/configuration/...;./api/konnect/...;./api/gateway-operator/...
 CRD_INCUBATOR_GEN_PATHS ?= ./api/incubator/...
 CRD_OPTIONS ?= "+crd:allowDangerousTypes=true"
 
@@ -175,6 +175,8 @@ generate.clientsets: client-gen
 		--input configuration/v1beta1 \
 		--input konnect/v1alpha1 \
 		--input incubator/v1alpha1 \
+		--input gateway-operator/v1alpha1 \
+		--input gateway-operator/v1beta1 \
 		--output-dir pkg/ \
 		--output-pkg $(REPO_URL)/pkg/
 

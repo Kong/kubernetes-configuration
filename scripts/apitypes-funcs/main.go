@@ -35,9 +35,10 @@ type templateDataT struct {
 }
 
 const (
-	apiPackageName           = "api"
-	configurationPackageName = "configuration"
-	konnectPackageName       = "konnect"
+	apiPackageName             = "api"
+	configurationPackageName   = "configuration"
+	konnectPackageName         = "konnect"
+	gatewayOperatorPackageName = "gateway-operator"
 )
 
 func main() {
@@ -51,6 +52,9 @@ func main() {
 		panic(err)
 	}
 	if err := renderTemplate(listFuncTemplate, listFuncOutputFileNamme, supportedConfigurationPackageTypesWithList, configurationPackageName); err != nil {
+		panic(err)
+	}
+	if err := renderTemplate(listFuncTemplate, listFuncOutputFileNamme, supportedGatewayOperatorPackageTypesWithList, gatewayOperatorPackageName); err != nil {
 		panic(err)
 	}
 }

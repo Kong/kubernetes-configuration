@@ -128,6 +128,36 @@ var supportedKonnectTypesStandalone = []supportedTypesT{
 	},
 }
 
+var supportedGatewayOperatorTypes = []supportedTypesT{
+	{
+		PackageVersion: "v1alpha1",
+		Types: []templateDataT{
+			{
+				Type: "AIGateway",
+			},
+			{
+				Type: "KongPluginInstallation",
+			},
+			{
+				Type: "KonnectExtension",
+			},
+		},
+	},
+	{
+		PackageVersion: "v1beta1",
+		Types: []templateDataT{
+			{
+				Type: "DataPlane",
+			},
+			{
+				Type: "ControlPlane",
+			},
+		},
+	},
+}
+
 var supportedConfigurationPackageTypesWithList = supportedKonnectTypesControlPlaneConfig
 
 var supportedKonnectPackageTypesWithList = supportedKonnectTypesStandalone
+
+var supportedGatewayOperatorPackageTypesWithList = supportedGatewayOperatorTypes
