@@ -23,6 +23,6 @@ resources:
   - configuration.konghq.com_kongtargets.yaml
   - configuration.konghq.com_kongupstreams.yaml
   - configuration.konghq.com_kongvaults.yaml
-  - gatewayoperator.konghq.com_controlplanes.yaml
+  - gateway-operator.konghq.com_controlplanes.yaml
   - konnect.konghq.com_konnectapiauthconfigurations.yaml
   - konnect.konghq.com_konnectgatewaycontrolplanes.yaml

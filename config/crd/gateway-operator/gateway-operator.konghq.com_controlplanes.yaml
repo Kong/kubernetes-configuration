@@ -5,9 +5,9 @@ metadata:
   annotations:
     kubernetes-configuration.konghq.com/channels: gateway-operator
     kubernetes-configuration.konghq.com/version: v1.1.0
-  name: controlplanes.gatewayoperator.konghq.com
+  name: controlplanes.gateway-operator.konghq.com
 spec:
-  group: gatewayoperator.konghq.com
+  group: gateway-operator.konghq.com
   names:
     categories:
     - kong
