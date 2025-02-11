@@ -22,6 +22,8 @@ import (
 	configurationv1 "github.com/kong/kubernetes-configuration/api/configuration/v1"
 	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	configurationv1beta1 "github.com/kong/kubernetes-configuration/api/configuration/v1beta1"
+	gatewayoperatorv1alpha1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v1alpha1"
+	gatewayoperatorv1beta1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v1beta1"
 	incubatorv1alpha1 "github.com/kong/kubernetes-configuration/api/incubator/v1alpha1"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -38,6 +40,8 @@ var localSchemeBuilder = runtime.SchemeBuilder{
 	configurationv1.AddToScheme,
 	configurationv1alpha1.AddToScheme,
 	configurationv1beta1.AddToScheme,
+	gatewayoperatorv1alpha1.AddToScheme,
+	gatewayoperatorv1beta1.AddToScheme,
 	incubatorv1alpha1.AddToScheme,
 	konnectv1alpha1.AddToScheme,
 }

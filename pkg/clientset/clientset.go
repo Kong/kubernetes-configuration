@@ -25,6 +25,8 @@ import (
 	configurationv1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1"
 	configurationv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1alpha1"
 	configurationv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1beta1"
+	gatewayoperatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1alpha1"
+	gatewayoperatorv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1beta1"
 	incubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha1"
 	discovery "k8s.io/client-go/discovery"
@@ -37,6 +39,8 @@ type Interface interface {
 	ConfigurationV1() configurationv1.ConfigurationV1Interface
 	ConfigurationV1alpha1() configurationv1alpha1.ConfigurationV1alpha1Interface
 	ConfigurationV1beta1() configurationv1beta1.ConfigurationV1beta1Interface
+	GatewayoperatorV1alpha1() gatewayoperatorv1alpha1.GatewayoperatorV1alpha1Interface
+	GatewayoperatorV1beta1() gatewayoperatorv1beta1.GatewayoperatorV1beta1Interface
 	IncubatorV1alpha1() incubatorv1alpha1.IncubatorV1alpha1Interface
 	KonnectV1alpha1() konnectv1alpha1.KonnectV1alpha1Interface
 }
@@ -44,11 +48,13 @@ type Interface interface {
 // Clientset contains the clients for groups.
 type Clientset struct {
 	*discovery.DiscoveryClient
-	configurationV1       *configurationv1.ConfigurationV1Client
-	configurationV1alpha1 *configurationv1alpha1.ConfigurationV1alpha1Client
-	configurationV1beta1  *configurationv1beta1.ConfigurationV1beta1Client
-	incubatorV1alpha1     *incubatorv1alpha1.IncubatorV1alpha1Client
-	konnectV1alpha1       *konnectv1alpha1.KonnectV1alpha1Client
+	configurationV1         *configurationv1.ConfigurationV1Client
+	configurationV1alpha1   *configurationv1alpha1.ConfigurationV1alpha1Client
+	configurationV1beta1    *configurationv1beta1.ConfigurationV1beta1Client
+	gatewayoperatorV1alpha1 *gatewayoperatorv1alpha1.GatewayoperatorV1alpha1Client
+	gatewayoperatorV1beta1  *gatewayoperatorv1beta1.GatewayoperatorV1beta1Client
+	incubatorV1alpha1       *incubatorv1alpha1.IncubatorV1alpha1Client
+	konnectV1alpha1         *konnectv1alpha1.KonnectV1alpha1Client
 }
 
 // ConfigurationV1 retrieves the ConfigurationV1Client
@@ -64,6 +70,16 @@ func (c *Clientset) ConfigurationV1alpha1() configurationv1alpha1.ConfigurationV
 // ConfigurationV1beta1 retrieves the ConfigurationV1beta1Client
 func (c *Clientset) ConfigurationV1beta1() configurationv1beta1.ConfigurationV1beta1Interface {
 	return c.configurationV1beta1
+}
+
+// GatewayoperatorV1alpha1 retrieves the GatewayoperatorV1alpha1Client
+func (c *Clientset) GatewayoperatorV1alpha1() gatewayoperatorv1alpha1.GatewayoperatorV1alpha1Interface {
+	return c.gatewayoperatorV1alpha1
+}
+
+// GatewayoperatorV1beta1 retrieves the GatewayoperatorV1beta1Client
+func (c *Clientset) GatewayoperatorV1beta1() gatewayoperatorv1beta1.GatewayoperatorV1beta1Interface {
+	return c.gatewayoperatorV1beta1
 }
 
 // IncubatorV1alpha1 retrieves the IncubatorV1alpha1Client
@@ -132,6 +148,14 @@ func NewForConfigAndClient(c *rest.Config, httpClient *http.Client) (*Clientset,
 	if err != nil {
 		return nil, err
 	}
+	cs.gatewayoperatorV1alpha1, err = gatewayoperatorv1alpha1.NewForConfigAndClient(&configShallowCopy, httpClient)
+	if err != nil {
+		return nil, err
+	}
+	cs.gatewayoperatorV1beta1, err = gatewayoperatorv1beta1.NewForConfigAndClient(&configShallowCopy, httpClient)
+	if err != nil {
+		return nil, err
+	}
 	cs.incubatorV1alpha1, err = incubatorv1alpha1.NewForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
 		return nil, err
@@ -164,6 +188,8 @@ func New(c rest.Interface) *Clientset {
 	cs.configurationV1 = configurationv1.New(c)
 	cs.configurationV1alpha1 = configurationv1alpha1.New(c)
 	cs.configurationV1beta1 = configurationv1beta1.New(c)
+	cs.gatewayoperatorV1alpha1 = gatewayoperatorv1alpha1.New(c)
+	cs.gatewayoperatorV1beta1 = gatewayoperatorv1beta1.New(c)
 	cs.incubatorV1alpha1 = incubatorv1alpha1.New(c)
 	cs.konnectV1alpha1 = konnectv1alpha1.New(c)
 
