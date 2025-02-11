@@ -110,14 +110,14 @@ func (c *Clientset) ConfigurationV1beta1() configurationv1beta1.ConfigurationV1b
 	return &fakeconfigurationv1beta1.FakeConfigurationV1beta1{Fake: &c.Fake}
 }
 
-// GatewayoperatorV1alpha1 retrieves the GatewayoperatorV1alpha1Client
-func (c *Clientset) GatewayoperatorV1alpha1() gatewayoperatorv1alpha1.GatewayoperatorV1alpha1Interface {
-	return &fakegatewayoperatorv1alpha1.FakeGatewayoperatorV1alpha1{Fake: &c.Fake}
+// GatewayOperatorV1alpha1 retrieves the GatewayOperatorV1alpha1Client
+func (c *Clientset) GatewayOperatorV1alpha1() gatewayoperatorv1alpha1.GatewayOperatorV1alpha1Interface {
+	return &fakegatewayoperatorv1alpha1.FakeGatewayOperatorV1alpha1{Fake: &c.Fake}
 }
 
-// GatewayoperatorV1beta1 retrieves the GatewayoperatorV1beta1Client
-func (c *Clientset) GatewayoperatorV1beta1() gatewayoperatorv1beta1.GatewayoperatorV1beta1Interface {
-	return &fakegatewayoperatorv1beta1.FakeGatewayoperatorV1beta1{Fake: &c.Fake}
+// GatewayOperatorV1beta1 retrieves the GatewayOperatorV1beta1Client
+func (c *Clientset) GatewayOperatorV1beta1() gatewayoperatorv1beta1.GatewayOperatorV1beta1Interface {
+	return &fakegatewayoperatorv1beta1.FakeGatewayOperatorV1beta1{Fake: &c.Fake}
 }
 
 // IncubatorV1alpha1 retrieves the IncubatorV1alpha1Client

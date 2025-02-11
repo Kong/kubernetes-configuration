@@ -56,7 +56,7 @@ type gatewayConfigurations struct {
 }
 
 // newGatewayConfigurations returns a GatewayConfigurations
-func newGatewayConfigurations(c *GatewayoperatorV1beta1Client, namespace string) *gatewayConfigurations {
+func newGatewayConfigurations(c *GatewayOperatorV1beta1Client, namespace string) *gatewayConfigurations {
 	return &gatewayConfigurations{
 		gentype.NewClientWithList[*gatewayoperatorv1beta1.GatewayConfiguration, *gatewayoperatorv1beta1.GatewayConfigurationList](
 			"gatewayconfigurations",

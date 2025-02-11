@@ -26,7 +26,7 @@ import (
 	rest "k8s.io/client-go/rest"
 )
 
-type GatewayoperatorV1alpha1Interface interface {
+type GatewayOperatorV1alpha1Interface interface {
 	RESTClient() rest.Interface
 	AIGatewaysGetter
 	DataPlaneMetricsExtensionsGetter
@@ -34,31 +34,31 @@ type GatewayoperatorV1alpha1Interface interface {
 	KonnectExtensionsGetter
 }
 
-// GatewayoperatorV1alpha1Client is used to interact with features provided by the gatewayoperator.konghq.com group.
-type GatewayoperatorV1alpha1Client struct {
+// GatewayOperatorV1alpha1Client is used to interact with features provided by the gateway-operator.konghq.com group.
+type GatewayOperatorV1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *GatewayoperatorV1alpha1Client) AIGateways(namespace string) AIGatewayInterface {
+func (c *GatewayOperatorV1alpha1Client) AIGateways(namespace string) AIGatewayInterface {
 	return newAIGateways(c, namespace)
 }
 
-func (c *GatewayoperatorV1alpha1Client) DataPlaneMetricsExtensions(namespace string) DataPlaneMetricsExtensionInterface {
+func (c *GatewayOperatorV1alpha1Client) DataPlaneMetricsExtensions(namespace string) DataPlaneMetricsExtensionInterface {
 	return newDataPlaneMetricsExtensions(c, namespace)
 }
 
-func (c *GatewayoperatorV1alpha1Client) KongPluginInstallations(namespace string) KongPluginInstallationInterface {
+func (c *GatewayOperatorV1alpha1Client) KongPluginInstallations(namespace string) KongPluginInstallationInterface {
 	return newKongPluginInstallations(c, namespace)
 }
 
-func (c *GatewayoperatorV1alpha1Client) KonnectExtensions(namespace string) KonnectExtensionInterface {
+func (c *GatewayOperatorV1alpha1Client) KonnectExtensions(namespace string) KonnectExtensionInterface {
 	return newKonnectExtensions(c, namespace)
 }
 
-// NewForConfig creates a new GatewayoperatorV1alpha1Client for the given config.
+// NewForConfig creates a new GatewayOperatorV1alpha1Client for the given config.
 // NewForConfig is equivalent to NewForConfigAndClient(c, httpClient),
 // where httpClient was generated with rest.HTTPClientFor(c).
-func NewForConfig(c *rest.Config) (*GatewayoperatorV1alpha1Client, error) {
+func NewForConfig(c *rest.Config) (*GatewayOperatorV1alpha1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -70,9 +70,9 @@ func NewForConfig(c *rest.Config) (*GatewayoperatorV1alpha1Client, error) {
 	return NewForConfigAndClient(&config, httpClient)
 }
 
-// NewForConfigAndClient creates a new GatewayoperatorV1alpha1Client for the given config and http client.
+// NewForConfigAndClient creates a new GatewayOperatorV1alpha1Client for the given config and http client.
 // Note the http client provided takes precedence over the configured transport values.
-func NewForConfigAndClient(c *rest.Config, h *http.Client) (*GatewayoperatorV1alpha1Client, error) {
+func NewForConfigAndClient(c *rest.Config, h *http.Client) (*GatewayOperatorV1alpha1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -81,12 +81,12 @@ func NewForConfigAndClient(c *rest.Config, h *http.Client) (*GatewayoperatorV1al
 	if err != nil {
 		return nil, err
 	}
-	return &GatewayoperatorV1alpha1Client{client}, nil
+	return &GatewayOperatorV1alpha1Client{client}, nil
 }
 
-// NewForConfigOrDie creates a new GatewayoperatorV1alpha1Client for the given config and
+// NewForConfigOrDie creates a new GatewayOperatorV1alpha1Client for the given config and
 // panics if there is an error in the config.
-func NewForConfigOrDie(c *rest.Config) *GatewayoperatorV1alpha1Client {
+func NewForConfigOrDie(c *rest.Config) *GatewayOperatorV1alpha1Client {
 	client, err := NewForConfig(c)
 	if err != nil {
 		panic(err)
@@ -94,9 +94,9 @@ func NewForConfigOrDie(c *rest.Config) *GatewayoperatorV1alpha1Client {
 	return client
 }
 
-// New creates a new GatewayoperatorV1alpha1Client for the given RESTClient.
-func New(c rest.Interface) *GatewayoperatorV1alpha1Client {
-	return &GatewayoperatorV1alpha1Client{c}
+// New creates a new GatewayOperatorV1alpha1Client for the given RESTClient.
+func New(c rest.Interface) *GatewayOperatorV1alpha1Client {
+	return &GatewayOperatorV1alpha1Client{c}
 }
 
 func setConfigDefaults(config *rest.Config) error {
@@ -114,7 +114,7 @@ func setConfigDefaults(config *rest.Config) error {
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *GatewayoperatorV1alpha1Client) RESTClient() rest.Interface {
+func (c *GatewayOperatorV1alpha1Client) RESTClient() rest.Interface {
 	if c == nil {
 		return nil
 	}

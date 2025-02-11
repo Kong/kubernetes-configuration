@@ -56,7 +56,7 @@ type dataPlanes struct {
 }
 
 // newDataPlanes returns a DataPlanes
-func newDataPlanes(c *GatewayoperatorV1beta1Client, namespace string) *dataPlanes {
+func newDataPlanes(c *GatewayOperatorV1beta1Client, namespace string) *dataPlanes {
 	return &dataPlanes{
 		gentype.NewClientWithList[*gatewayoperatorv1beta1.DataPlane, *gatewayoperatorv1beta1.DataPlaneList](
 			"dataplanes",

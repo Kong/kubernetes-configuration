@@ -56,7 +56,7 @@ type dataPlaneMetricsExtensions struct {
 }
 
 // newDataPlaneMetricsExtensions returns a DataPlaneMetricsExtensions
-func newDataPlaneMetricsExtensions(c *GatewayoperatorV1alpha1Client, namespace string) *dataPlaneMetricsExtensions {
+func newDataPlaneMetricsExtensions(c *GatewayOperatorV1alpha1Client, namespace string) *dataPlaneMetricsExtensions {
 	return &dataPlaneMetricsExtensions{
 		gentype.NewClientWithList[*gatewayoperatorv1alpha1.DataPlaneMetricsExtension, *gatewayoperatorv1alpha1.DataPlaneMetricsExtensionList](
 			"dataplanemetricsextensions",
