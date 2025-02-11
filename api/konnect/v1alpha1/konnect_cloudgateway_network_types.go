@@ -18,6 +18,7 @@ func init() {
 // +kubebuilder:object:generate=true
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Programmed",description="The Resource is Programmed on Konnect",type=string,JSONPath=`.status.conditions[?(@.type=='Programmed')].status`
+// +kubebuilder:printcolumn:name="State",description="The state the network is in",type=string,JSONPath=`.status.state`
 // +kubebuilder:printcolumn:name="ID",description="Konnect ID",type=string,JSONPath=`.status.id`
 // +kubebuilder:printcolumn:name="OrgID",description="Konnect Organization ID this resource belongs to.",type=string,JSONPath=`.status.organizationID`
 // +apireference:kgo:include
@@ -60,6 +61,9 @@ type KonnectCloudGatewayNetworkSpec struct {
 // +apireference:kgo:include
 type KonnectCloudGatewayNetworkStatus struct {
 	KonnectEntityStatus `json:",inline"`
+
+	// State is the current state of the network. Can be e.g. initializing, ready, terminating.
+	State string `json:"state,omitempty"`
 
 	// Conditions describe the current conditions of the KonnectCloudGatewayNetwork.
 	//

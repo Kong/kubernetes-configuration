@@ -20,6 +20,10 @@ spec:
       jsonPath: .status.conditions[?(@.type=='Programmed')].status
       name: Programmed
       type: string
+    - description: The state the network is in
+      jsonPath: .status.state
+      name: State
+      type: string
     - description: Konnect ID
       jsonPath: .status.id
       name: ID
@@ -187,6 +191,10 @@ spec:
               serverURL:
                 description: ServerURL is the URL of the Konnect server in which the
                   entity exists.
+                type: string
+              state:
+                description: State is the current state of the network. Can be e.g.
+                  initializing, ready, terminating.
                 type: string
             type: object
         type: object
