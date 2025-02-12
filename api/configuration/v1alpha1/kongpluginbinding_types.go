@@ -97,6 +97,7 @@ type KongPluginBindingSpec struct {
 
 	// ControlPlaneRef is a reference to a ControlPlane this KongPluginBinding is associated with.
 	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:XValidation:message="spec.controlPlaneRef: Required value",rule="has(self.konnectID) || has(self.konnectNamespacedRef)"
 	ControlPlaneRef ControlPlaneRef `json:"controlPlaneRef"`
 
 	// Scope defines the scope of the plugin binding.
