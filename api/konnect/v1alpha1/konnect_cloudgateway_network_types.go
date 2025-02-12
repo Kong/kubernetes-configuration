@@ -35,26 +35,63 @@ type KonnectCloudGatewayNetwork struct {
 }
 
 // KonnectCloudGatewayNetworkSpec defines the desired state of KonnectCloudGatewayNetwork.
+//
 // +apireference:kgo:include
 type KonnectCloudGatewayNetworkSpec struct {
-	// NOTE: These fields are extracted from sdkkonnectcomp.CreateNetworkRequest
-	// because for some reason when embedding the struct, the fields deserialization
-	// doesn't work (konnect field is always empty).
-
-	Name                          string `json:"name"`
-	CloudGatewayProviderAccountID string `json:"cloud_gateway_provider_account_id"`
-	// Region ID for cloud provider region.
-	Region string `json:"region"`
-	// List of availability zones that the network is attached to.
-	AvailabilityZones []string `json:"availability_zones"`
-	// CIDR block configuration for the network.
-	CidrBlock string `json:"cidr_block"`
-	// Initial state for creating a network.
-	// +optional
-	State *sdkkonnectcomp.NetworkCreateState `json:"state"`
+	// KonnectCloudGatewayNetworkAPISpec defines the desired state of the network
+	// as specified in the Konnect API contract.
+	KonnectCloudGatewayNetworkAPISpec `json:",inline"`
 
 	// +kubebuilder:validation:Required
 	KonnectConfiguration KonnectConfiguration `json:"konnect"`
+}
+
+// KonnectCloudGatewayNetworkAPISpec defines the desired state of the network
+// as specified in the Konnect API contract.
+//
+// +kubebuilder:validation:XValidation:rule="self.name == oldSelf.name", message="Network name is immutable"
+// +kubebuilder:validation:XValidation:rule="self.cloud_gateway_provider_account_id == oldSelf.cloud_gateway_provider_account_id", message="Network cloud gateway provider account ID is immutable"
+// +kubebuilder:validation:XValidation:rule="self.region == oldSelf.region", message="Network region is immutable"
+// +kubebuilder:validation:XValidation:rule="self.availability_zones == oldSelf.availability_zones", message="Network availability zones are immutable"
+// +kubebuilder:validation:XValidation:rule="self.cidr_block == oldSelf.cidr_block", message="Network CIDR block is immutable"
+// +kubebuilder:validation:XValidation:rule="(!has(self.state) && !has(oldSelf.state)) || self.state == oldSelf.state", message="Network state is immutable"
+// +apireference:kgo:include
+type KonnectCloudGatewayNetworkAPISpec struct {
+	// NOTE: These fields are extracted from sdkkonnectcomp.CreateNetworkRequest
+	// because for some reason when embedding the struct, the fields deserialization
+	// doesn't work (the embedded field is always empty).
+
+	// Specifies the name of the network on Konnect.
+	//
+	// +kubebuilder:validation:Required
+	Name string `json:"name"`
+
+	// Specifies the provider Account ID.
+	//
+	// +kubebuilder:validation:Required
+	CloudGatewayProviderAccountID string `json:"cloud_gateway_provider_account_id"`
+
+	// Region ID for cloud provider region.
+	//
+	// +kubebuilder:validation:Required
+	Region string `json:"region"`
+
+	// List of availability zones that the network is attached to.
+	//
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:MinItems=1
+	// +kubebuilder:validation:MaxItems=5
+	AvailabilityZones []string `json:"availability_zones"`
+
+	// CIDR block configuration for the network.
+	//
+	// +kubebuilder:validation:Required
+	CidrBlock string `json:"cidr_block"`
+
+	// Initial state for creating a network.
+	//
+	// +optional
+	State *sdkkonnectcomp.NetworkCreateState `json:"state"`
 }
 
 // KonnectCloudGatewayNetworkStatus defines the observed state of KonnectCloudGatewayNetwork.

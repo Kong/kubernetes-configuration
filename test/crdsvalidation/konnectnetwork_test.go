@@ -24,26 +24,183 @@ func TestKonnectNetwork(t *testing.T) {
 								Name: "test-konnect-api-auth-configuration",
 							},
 						},
-						// APISpec: konnectv1alpha1.KonnectCloudGatewayNetworkAPISpec{
-						// CreateNetworkRequest: sdkkonnectcomp.CreateNetworkRequest{
-						Name:   "test-network",
-						Region: "us-west",
-						AvailabilityZones: []string{
-							"us-west-1a",
-							"us-west-1b",
+						KonnectCloudGatewayNetworkAPISpec: konnectv1alpha1.KonnectCloudGatewayNetworkAPISpec{
+							Name:   "test-network",
+							Region: "us-west",
+							AvailabilityZones: []string{
+								"us-west-1a",
+								"us-west-1b",
+							},
+							CidrBlock:                     "10.0.0.1/24",
+							CloudGatewayProviderAccountID: "test-cloud-gateway-provider-account-id",
 						},
-						CidrBlock:                     "10.0.0.1/24",
-						CloudGatewayProviderAccountID: "test-cloud-gateway-provider-account-id",
-						// NOTE: this is required as of now because we embded the sdk type in the CRD
-						// and we do not have controler over the field being optional or required
-						// without any additional machinery in place.
-						// The API itself https://docs.konghq.com/konnect/api/cloud-gateways/latest/#/Networks/create-network
-						// does not require this field.
-						State: lo.ToPtr(sdkkonnectcomp.NetworkCreateStateInitializing),
-						// },
-						// },
 					},
 				},
+			},
+			{
+				Name: "spec.name is immutable",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayNetwork{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayNetworkSpec{
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "test-konnect-api-auth-configuration",
+							},
+						},
+						KonnectCloudGatewayNetworkAPISpec: konnectv1alpha1.KonnectCloudGatewayNetworkAPISpec{
+							Name:   "test-network",
+							Region: "us-west",
+							AvailabilityZones: []string{
+								"us-west-1a",
+								"us-west-1b",
+							},
+							CidrBlock:                     "10.0.0.1/24",
+							CloudGatewayProviderAccountID: "test-cloud-gateway-provider-account-id",
+						},
+					},
+				},
+				Update: func(n *konnectv1alpha1.KonnectCloudGatewayNetwork) {
+					n.Spec.Name = "new-name"
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("Network name is immutable"),
+			},
+			{
+				Name: "spec.cidr_block is immutable",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayNetwork{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayNetworkSpec{
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "test-konnect-api-auth-configuration",
+							},
+						},
+						KonnectCloudGatewayNetworkAPISpec: konnectv1alpha1.KonnectCloudGatewayNetworkAPISpec{
+							Name:   "test-network",
+							Region: "us-west",
+							AvailabilityZones: []string{
+								"us-west-1a",
+								"us-west-1b",
+							},
+							CidrBlock:                     "10.0.0.1/24",
+							CloudGatewayProviderAccountID: "test-cloud-gateway-provider-account-id",
+						},
+					},
+				},
+				Update: func(n *konnectv1alpha1.KonnectCloudGatewayNetwork) {
+					n.Spec.CidrBlock = "10.0.0.2/24"
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("Network CIDR block is immutable"),
+			},
+			{
+				Name: "spec.region is immutable",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayNetwork{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayNetworkSpec{
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "test-konnect-api-auth-configuration",
+							},
+						},
+						KonnectCloudGatewayNetworkAPISpec: konnectv1alpha1.KonnectCloudGatewayNetworkAPISpec{
+							Name:   "test-network",
+							Region: "us-west",
+							AvailabilityZones: []string{
+								"us-west-1a",
+								"us-west-1b",
+							},
+							CidrBlock:                     "10.0.0.1/24",
+							CloudGatewayProviderAccountID: "test-cloud-gateway-provider-account-id",
+						},
+					},
+				},
+				Update: func(n *konnectv1alpha1.KonnectCloudGatewayNetwork) {
+					n.Spec.Region = "us-east"
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("Network region is immutable"),
+			},
+			{
+				Name: "spec.region is immutable",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayNetwork{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayNetworkSpec{
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "test-konnect-api-auth-configuration",
+							},
+						},
+						KonnectCloudGatewayNetworkAPISpec: konnectv1alpha1.KonnectCloudGatewayNetworkAPISpec{
+							Name:   "test-network",
+							Region: "us-west",
+							AvailabilityZones: []string{
+								"us-west-1a",
+								"us-west-1b",
+							},
+							CidrBlock:                     "10.0.0.1/24",
+							CloudGatewayProviderAccountID: "test-cloud-gateway-provider-account-id",
+						},
+					},
+				},
+				Update: func(n *konnectv1alpha1.KonnectCloudGatewayNetwork) {
+					n.Spec.CloudGatewayProviderAccountID = "id-new-1234"
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("Network cloud gateway provider account ID is immutable"),
+			},
+			{
+				Name: "spec.region is immutable",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayNetwork{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayNetworkSpec{
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "test-konnect-api-auth-configuration",
+							},
+						},
+						KonnectCloudGatewayNetworkAPISpec: konnectv1alpha1.KonnectCloudGatewayNetworkAPISpec{
+							Name:   "test-network",
+							Region: "us-west",
+							AvailabilityZones: []string{
+								"us-west-1a",
+								"us-west-1b",
+							},
+							CidrBlock:                     "10.0.0.1/24",
+							CloudGatewayProviderAccountID: "test-cloud-gateway-provider-account-id",
+						},
+					},
+				},
+				Update: func(n *konnectv1alpha1.KonnectCloudGatewayNetwork) {
+					n.Spec.AvailabilityZones = []string{
+						"us-west-1b",
+						"us-west-1c",
+					}
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("Network availability zones are immutable"),
+			},
+			{
+				Name: "spec.state is immutable",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayNetwork{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayNetworkSpec{
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "test-konnect-api-auth-configuration",
+							},
+						},
+						KonnectCloudGatewayNetworkAPISpec: konnectv1alpha1.KonnectCloudGatewayNetworkAPISpec{
+							Name:   "test-network",
+							Region: "us-west",
+							AvailabilityZones: []string{
+								"us-west-1a",
+								"us-west-1b",
+							},
+							CidrBlock:                     "10.0.0.1/24",
+							CloudGatewayProviderAccountID: "test-cloud-gateway-provider-account-id",
+						},
+					},
+				},
+				Update: func(n *konnectv1alpha1.KonnectCloudGatewayNetwork) {
+					n.Spec.State = lo.ToPtr(sdkkonnectcomp.NetworkCreateStateOffline)
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("Network state is immutable"),
 			},
 		}.Run(t)
 	})

@@ -18,12 +18,6 @@ spec:
   - us-west-1
   cidr_block: "10.0.0.1/24"
   region: us-west
-  # NOTE: this is required as of now because we embded the sdk type in the CRD
-  # and we do not have controler over the field being optional or required
-  # without any additional machinery in place.
-  # The API itself https://docs.konghq.com/konnect/api/cloud-gateways/latest/#/Networks/create-network
-  # does not require this field.
-  state: initializing
   konnect:
     authRef:
       name: konnect-api-auth-1

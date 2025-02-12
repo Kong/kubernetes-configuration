@@ -63,11 +63,14 @@ spec:
                   to.
                 items:
                   type: string
+                maxItems: 5
+                minItems: 1
                 type: array
               cidr_block:
                 description: CIDR block configuration for the network.
                 type: string
               cloud_gateway_provider_account_id:
+                description: Specifies the provider Account ID.
                 type: string
               konnect:
                 description: KonnectConfiguration is the Schema for the KonnectConfiguration
@@ -89,6 +92,7 @@ spec:
                 - authRef
                 type: object
               name:
+                description: Specifies the name of the network on Konnect.
                 type: string
               region:
                 description: Region ID for cloud provider region.
@@ -104,6 +108,19 @@ spec:
             - name
             - region
             type: object
+            x-kubernetes-validations:
+            - message: Network name is immutable
+              rule: self.name == oldSelf.name
+            - message: Network cloud gateway provider account ID is immutable
+              rule: self.cloud_gateway_provider_account_id == oldSelf.cloud_gateway_provider_account_id
+            - message: Network region is immutable
+              rule: self.region == oldSelf.region
+            - message: Network availability zones are immutable
+              rule: self.availability_zones == oldSelf.availability_zones
+            - message: Network CIDR block is immutable
+              rule: self.cidr_block == oldSelf.cidr_block
+            - message: Network state is immutable
+              rule: (!has(self.state) && !has(oldSelf.state)) || self.state == oldSelf.state
           status:
             description: Status defines the observed state of KonnectCloudGatewayNetwork.
             properties:
