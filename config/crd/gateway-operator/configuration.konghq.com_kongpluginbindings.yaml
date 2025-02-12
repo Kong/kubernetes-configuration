@@ -96,8 +96,6 @@ spec:
                     type: string
                 type: object
                 x-kubernetes-validations:
-                - message: 'spec.controlPlaneRef: Required value'
-                  rule: has(self.konnectID) || has(self.konnectNamespacedRef)
                 - message: when type is konnectNamespacedRef, konnectNamespacedRef
                     must be set
                   rule: '(has(self.type) && self.type == ''konnectNamespacedRef'')
