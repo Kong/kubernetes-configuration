@@ -24,29 +24,29 @@ import (
 	testing "k8s.io/client-go/testing"
 )
 
-type FakeGatewayoperatorV1alpha1 struct {
+type FakeGatewayOperatorV1alpha1 struct {
 	*testing.Fake
 }
 
-func (c *FakeGatewayoperatorV1alpha1) AIGateways(namespace string) v1alpha1.AIGatewayInterface {
+func (c *FakeGatewayOperatorV1alpha1) AIGateways(namespace string) v1alpha1.AIGatewayInterface {
 	return newFakeAIGateways(c, namespace)
 }
 
-func (c *FakeGatewayoperatorV1alpha1) DataPlaneMetricsExtensions(namespace string) v1alpha1.DataPlaneMetricsExtensionInterface {
+func (c *FakeGatewayOperatorV1alpha1) DataPlaneMetricsExtensions(namespace string) v1alpha1.DataPlaneMetricsExtensionInterface {
 	return newFakeDataPlaneMetricsExtensions(c, namespace)
 }
 
-func (c *FakeGatewayoperatorV1alpha1) KongPluginInstallations(namespace string) v1alpha1.KongPluginInstallationInterface {
+func (c *FakeGatewayOperatorV1alpha1) KongPluginInstallations(namespace string) v1alpha1.KongPluginInstallationInterface {
 	return newFakeKongPluginInstallations(c, namespace)
 }
 
-func (c *FakeGatewayoperatorV1alpha1) KonnectExtensions(namespace string) v1alpha1.KonnectExtensionInterface {
+func (c *FakeGatewayOperatorV1alpha1) KonnectExtensions(namespace string) v1alpha1.KonnectExtensionInterface {
 	return newFakeKonnectExtensions(c, namespace)
 }
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *FakeGatewayoperatorV1alpha1) RESTClient() rest.Interface {
+func (c *FakeGatewayOperatorV1alpha1) RESTClient() rest.Interface {
 	var ret *rest.RESTClient
 	return ret
 }

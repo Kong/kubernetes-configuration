@@ -27,10 +27,10 @@ import (
 // fakeGatewayConfigurations implements GatewayConfigurationInterface
 type fakeGatewayConfigurations struct {
 	*gentype.FakeClientWithList[*v1beta1.GatewayConfiguration, *v1beta1.GatewayConfigurationList]
-	Fake *FakeGatewayoperatorV1beta1
+	Fake *FakeGatewayOperatorV1beta1
 }
 
-func newFakeGatewayConfigurations(fake *FakeGatewayoperatorV1beta1, namespace string) gatewayoperatorv1beta1.GatewayConfigurationInterface {
+func newFakeGatewayConfigurations(fake *FakeGatewayOperatorV1beta1, namespace string) gatewayoperatorv1beta1.GatewayConfigurationInterface {
 	return &fakeGatewayConfigurations{
 		gentype.NewFakeClientWithList[*v1beta1.GatewayConfiguration, *v1beta1.GatewayConfigurationList](
 			fake.Fake,

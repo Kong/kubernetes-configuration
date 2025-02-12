@@ -27,10 +27,10 @@ import (
 // fakeKongPluginInstallations implements KongPluginInstallationInterface
 type fakeKongPluginInstallations struct {
 	*gentype.FakeClientWithList[*v1alpha1.KongPluginInstallation, *v1alpha1.KongPluginInstallationList]
-	Fake *FakeGatewayoperatorV1alpha1
+	Fake *FakeGatewayOperatorV1alpha1
 }
 
-func newFakeKongPluginInstallations(fake *FakeGatewayoperatorV1alpha1, namespace string) gatewayoperatorv1alpha1.KongPluginInstallationInterface {
+func newFakeKongPluginInstallations(fake *FakeGatewayOperatorV1alpha1, namespace string) gatewayoperatorv1alpha1.KongPluginInstallationInterface {
 	return &fakeKongPluginInstallations{
 		gentype.NewFakeClientWithList[*v1alpha1.KongPluginInstallation, *v1alpha1.KongPluginInstallationList](
 			fake.Fake,

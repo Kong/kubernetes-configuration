@@ -56,7 +56,7 @@ type aIGateways struct {
 }
 
 // newAIGateways returns a AIGateways
-func newAIGateways(c *GatewayoperatorV1alpha1Client, namespace string) *aIGateways {
+func newAIGateways(c *GatewayOperatorV1alpha1Client, namespace string) *aIGateways {
 	return &aIGateways{
 		gentype.NewClientWithList[*gatewayoperatorv1alpha1.AIGateway, *gatewayoperatorv1alpha1.AIGatewayList](
 			"aigateways",

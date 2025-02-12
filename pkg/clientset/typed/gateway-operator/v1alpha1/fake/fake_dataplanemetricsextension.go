@@ -27,10 +27,10 @@ import (
 // fakeDataPlaneMetricsExtensions implements DataPlaneMetricsExtensionInterface
 type fakeDataPlaneMetricsExtensions struct {
 	*gentype.FakeClientWithList[*v1alpha1.DataPlaneMetricsExtension, *v1alpha1.DataPlaneMetricsExtensionList]
-	Fake *FakeGatewayoperatorV1alpha1
+	Fake *FakeGatewayOperatorV1alpha1
 }
 
-func newFakeDataPlaneMetricsExtensions(fake *FakeGatewayoperatorV1alpha1, namespace string) gatewayoperatorv1alpha1.DataPlaneMetricsExtensionInterface {
+func newFakeDataPlaneMetricsExtensions(fake *FakeGatewayOperatorV1alpha1, namespace string) gatewayoperatorv1alpha1.DataPlaneMetricsExtensionInterface {
 	return &fakeDataPlaneMetricsExtensions{
 		gentype.NewFakeClientWithList[*v1alpha1.DataPlaneMetricsExtension, *v1alpha1.DataPlaneMetricsExtensionList](
 			fake.Fake,

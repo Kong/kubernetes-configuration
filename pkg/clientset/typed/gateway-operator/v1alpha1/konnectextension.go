@@ -56,7 +56,7 @@ type konnectExtensions struct {
 }
 
 // newKonnectExtensions returns a KonnectExtensions
-func newKonnectExtensions(c *GatewayoperatorV1alpha1Client, namespace string) *konnectExtensions {
+func newKonnectExtensions(c *GatewayOperatorV1alpha1Client, namespace string) *konnectExtensions {
 	return &konnectExtensions{
 		gentype.NewClientWithList[*gatewayoperatorv1alpha1.KonnectExtension, *gatewayoperatorv1alpha1.KonnectExtensionList](
 			"konnectextensions",

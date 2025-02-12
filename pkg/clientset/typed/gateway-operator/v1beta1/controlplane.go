@@ -56,7 +56,7 @@ type controlPlanes struct {
 }
 
 // newControlPlanes returns a ControlPlanes
-func newControlPlanes(c *GatewayoperatorV1beta1Client, namespace string) *controlPlanes {
+func newControlPlanes(c *GatewayOperatorV1beta1Client, namespace string) *controlPlanes {
 	return &controlPlanes{
 		gentype.NewClientWithList[*gatewayoperatorv1beta1.ControlPlane, *gatewayoperatorv1beta1.ControlPlaneList](
 			"controlplanes",

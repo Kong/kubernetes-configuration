@@ -27,10 +27,10 @@ import (
 // fakeAIGateways implements AIGatewayInterface
 type fakeAIGateways struct {
 	*gentype.FakeClientWithList[*v1alpha1.AIGateway, *v1alpha1.AIGatewayList]
-	Fake *FakeGatewayoperatorV1alpha1
+	Fake *FakeGatewayOperatorV1alpha1
 }
 
-func newFakeAIGateways(fake *FakeGatewayoperatorV1alpha1, namespace string) gatewayoperatorv1alpha1.AIGatewayInterface {
+func newFakeAIGateways(fake *FakeGatewayOperatorV1alpha1, namespace string) gatewayoperatorv1alpha1.AIGatewayInterface {
 	return &fakeAIGateways{
 		gentype.NewFakeClientWithList[*v1alpha1.AIGateway, *v1alpha1.AIGatewayList](
 			fake.Fake,

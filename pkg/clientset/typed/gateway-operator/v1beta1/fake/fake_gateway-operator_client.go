@@ -24,25 +24,25 @@ import (
 	testing "k8s.io/client-go/testing"
 )
 
-type FakeGatewayoperatorV1beta1 struct {
+type FakeGatewayOperatorV1beta1 struct {
 	*testing.Fake
 }
 
-func (c *FakeGatewayoperatorV1beta1) ControlPlanes(namespace string) v1beta1.ControlPlaneInterface {
+func (c *FakeGatewayOperatorV1beta1) ControlPlanes(namespace string) v1beta1.ControlPlaneInterface {
 	return newFakeControlPlanes(c, namespace)
 }
 
-func (c *FakeGatewayoperatorV1beta1) DataPlanes(namespace string) v1beta1.DataPlaneInterface {
+func (c *FakeGatewayOperatorV1beta1) DataPlanes(namespace string) v1beta1.DataPlaneInterface {
 	return newFakeDataPlanes(c, namespace)
 }
 
-func (c *FakeGatewayoperatorV1beta1) GatewayConfigurations(namespace string) v1beta1.GatewayConfigurationInterface {
+func (c *FakeGatewayOperatorV1beta1) GatewayConfigurations(namespace string) v1beta1.GatewayConfigurationInterface {
 	return newFakeGatewayConfigurations(c, namespace)
 }
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *FakeGatewayoperatorV1beta1) RESTClient() rest.Interface {
+func (c *FakeGatewayOperatorV1beta1) RESTClient() rest.Interface {
 	var ret *rest.RESTClient
 	return ret
 }
