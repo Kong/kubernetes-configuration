@@ -43,7 +43,7 @@ func TestKongDataPlaneClientCertificate(t *testing.T) {
 						KongDataPlaneClientCertificateAPISpec: configurationv1alpha1.KongDataPlaneClientCertificateAPISpec{
 							Cert: "cert",
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
@@ -67,7 +67,7 @@ func TestKongDataPlaneClientCertificate(t *testing.T) {
 						KongDataPlaneClientCertificateAPISpec: configurationv1alpha1.KongDataPlaneClientCertificateAPISpec{
 							Cert: "cert",
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
@@ -97,7 +97,7 @@ func TestKongDataPlaneClientCertificate(t *testing.T) {
 						KongDataPlaneClientCertificateAPISpec: configurationv1alpha1.KongDataPlaneClientCertificateAPISpec{
 							Cert: "cert",
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",

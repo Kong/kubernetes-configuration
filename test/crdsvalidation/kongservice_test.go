@@ -36,7 +36,7 @@ func TestKongService(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongService{
 					ObjectMeta: commonObjectMeta,
 					Spec: configurationv1alpha1.KongServiceSpec{
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
@@ -59,7 +59,7 @@ func TestKongService(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongService{
 					ObjectMeta: commonObjectMeta,
 					Spec: configurationv1alpha1.KongServiceSpec{
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
@@ -83,7 +83,7 @@ func TestKongService(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongService{
 					ObjectMeta: commonObjectMeta,
 					Spec: configurationv1alpha1.KongServiceSpec{
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",

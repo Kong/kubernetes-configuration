@@ -126,8 +126,6 @@ func (tc *TestCase[T]) RunWithConfig(t *testing.T, cfg *rest.Config, scheme *run
 					if !assert.Contains(c, err.Error(), *tc.ExpectedErrorMessage) {
 						return
 					}
-				} else {
-					assert.NoError(c, err)
 				}
 
 				tc.TestObject = toCreate

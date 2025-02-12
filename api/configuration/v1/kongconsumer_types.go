@@ -20,7 +20,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
-	configurationv1alpha1 "github.com/kong/kubernetes-configuration/api/configuration/v1alpha1"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 )
 
@@ -76,7 +75,7 @@ type KongConsumer struct {
 type KongConsumerSpec struct {
 	// ControlPlaneRef is a reference to a ControlPlane this Consumer is associated with.
 	// +optional
-	ControlPlaneRef *configurationv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
+	ControlPlaneRef *commonv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 
 	// Tags is an optional set of tags applied to the consumer.
 	Tags commonv1alpha1.Tags `json:"tags,omitempty"`

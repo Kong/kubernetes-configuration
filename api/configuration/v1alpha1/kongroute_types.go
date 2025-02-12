@@ -63,7 +63,7 @@ type KongRouteSpec struct {
 	// Route can either specify a ControlPlaneRef and be 'serviceless' route or
 	// specify a ServiceRef and be associated with a Service.
 	// +optional
-	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
+	ControlPlaneRef *commonv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 	// ServiceRef is a reference to a Service this KongRoute is associated with.
 	// Route can either specify a ControlPlaneRef and be 'serviceless' route or
 	// specify a ServiceRef and be associated with a Service.

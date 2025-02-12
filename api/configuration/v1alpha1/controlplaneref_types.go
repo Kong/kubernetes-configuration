@@ -4,9 +4,12 @@ import (
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
 )
 
+// NOTE: ControlPlaneRef is not a type alias because that doesn't work with crd-ref-docs.
+// 2025-02-12T11:41:26.708Z	ERROR	crd-ref-docs	Failed to process source directory	{"error": "type not loaded: github.com/kong/kubernetes-configuration/api/common/v1alpha1.ControlPlaneRef"}
+
 // ControlPlaneRef is the schema for the ControlPlaneRef type.
 // It is used to reference a Control Plane entity.
-type ControlPlaneRef = commonv1alpha1.ControlPlaneRef
+type ControlPlaneRef commonv1alpha1.ControlPlaneRef
 
 // KonnectNamespacedRef is the schema for the KonnectNamespacedRef type.
 type KonnectNamespacedRef = commonv1alpha1.KonnectNamespacedRef

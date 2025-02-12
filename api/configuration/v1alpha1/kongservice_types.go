@@ -57,7 +57,7 @@ type KongService struct {
 type KongServiceSpec struct {
 	// ControlPlaneRef is a reference to a ControlPlane this KongService is associated with.
 	// +kubebuilder:validation:Required
-	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef"`
+	ControlPlaneRef *commonv1alpha1.ControlPlaneRef `json:"controlPlaneRef"`
 
 	KongServiceAPISpec `json:",inline"`
 }

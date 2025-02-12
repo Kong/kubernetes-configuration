@@ -79,7 +79,7 @@ type KongVaultSpec struct {
 	Tags commonv1alpha1.Tags `json:"tags,omitempty"`
 	// ControlPlaneRef is a reference to a Konnect ControlPlane this KongVault is associated with.
 	// +optional
-	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef,omitempty"`
+	ControlPlaneRef *commonv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
 }
 
 // KongVaultStatus represents the current status of the KongVault resource.

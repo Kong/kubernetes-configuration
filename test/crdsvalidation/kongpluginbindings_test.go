@@ -12,8 +12,8 @@ import (
 )
 
 func TestKongPluginBindings(t *testing.T) {
-	validTestCPRef := func() configurationv1alpha1.ControlPlaneRef {
-		return configurationv1alpha1.ControlPlaneRef{
+	validTestCPRef := func() commonv1alpha1.ControlPlaneRef {
+		return commonv1alpha1.ControlPlaneRef{
 			Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 			KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 				Name: "test-control-plane",

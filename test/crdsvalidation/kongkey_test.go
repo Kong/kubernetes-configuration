@@ -62,7 +62,7 @@ func TestKongKey(t *testing.T) {
 						KongKeyAPISpec: configurationv1alpha1.KongKeyAPISpec{
 							JWK: lo.ToPtr("{}"),
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
@@ -80,7 +80,7 @@ func TestKongKey(t *testing.T) {
 						KongKeyAPISpec: configurationv1alpha1.KongKeyAPISpec{
 							KID: "1",
 						},
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
@@ -187,7 +187,7 @@ func TestKongKey(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongKey{
 					ObjectMeta: commonObjectMeta,
 					Spec: configurationv1alpha1.KongKeySpec{
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
@@ -212,7 +212,7 @@ func TestKongKey(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongKey{
 					ObjectMeta: commonObjectMeta,
 					Spec: configurationv1alpha1.KongKeySpec{
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",
@@ -238,7 +238,7 @@ func TestKongKey(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongKey{
 					ObjectMeta: commonObjectMeta,
 					Spec: configurationv1alpha1.KongKeySpec{
-						ControlPlaneRef: &configurationv1alpha1.ControlPlaneRef{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
 							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
 							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
 								Name: "test-konnect-control-plane",

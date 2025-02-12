@@ -37,7 +37,7 @@ type KongCertificate struct {
 type KongCertificateSpec struct {
 	// ControlPlaneRef references the Konnect Control Plane that this KongCertificate should be created in.
 	// +kubebuilder:validation:Required
-	ControlPlaneRef *ControlPlaneRef `json:"controlPlaneRef"`
+	ControlPlaneRef *commonv1alpha1.ControlPlaneRef `json:"controlPlaneRef"`
 
 	KongCertificateAPISpec `json:",inline"`
 }
