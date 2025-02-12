@@ -20,6 +20,7 @@ Adding a new version? You'll need three changes:
 
 - Migrate KGO CRDs to this repo.
   [#274](https://github.com/Kong/kubernetes-configuration/pull/274)
+  [#282](https://github.com/Kong/kubernetes-configuration/pull/282)
 
 ## [v1.1.0]
 
