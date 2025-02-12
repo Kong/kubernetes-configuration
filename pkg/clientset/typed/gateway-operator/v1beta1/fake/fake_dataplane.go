@@ -27,10 +27,10 @@ import (
 // fakeDataPlanes implements DataPlaneInterface
 type fakeDataPlanes struct {
 	*gentype.FakeClientWithList[*v1beta1.DataPlane, *v1beta1.DataPlaneList]
-	Fake *FakeGatewayoperatorV1beta1
+	Fake *FakeGatewayOperatorV1beta1
 }
 
-func newFakeDataPlanes(fake *FakeGatewayoperatorV1beta1, namespace string) gatewayoperatorv1beta1.DataPlaneInterface {
+func newFakeDataPlanes(fake *FakeGatewayOperatorV1beta1, namespace string) gatewayoperatorv1beta1.DataPlaneInterface {
 	return &fakeDataPlanes{
 		gentype.NewFakeClientWithList[*v1beta1.DataPlane, *v1beta1.DataPlaneList](
 			fake.Fake,

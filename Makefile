@@ -202,7 +202,7 @@ CHANNELS := ingress-controller ingress-controller-incubator gateway-operator
 .PHONY: install
 install: generate.crds kustomize
 	@for channel in $(CHANNELS); do \
-		$(KUSTOMIZE) build config/crd/$$channel | kubectl apply -f -; \
+		$(KUSTOMIZE) build config/crd/$$channel | kubectl apply --server-side -f -; \
 	done
 
 GOLANGCI_LINT_CONFIG ?= $(PROJECT_DIR)/.golangci.yaml

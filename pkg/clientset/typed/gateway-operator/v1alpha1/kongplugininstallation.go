@@ -56,7 +56,7 @@ type kongPluginInstallations struct {
 }
 
 // newKongPluginInstallations returns a KongPluginInstallations
-func newKongPluginInstallations(c *GatewayoperatorV1alpha1Client, namespace string) *kongPluginInstallations {
+func newKongPluginInstallations(c *GatewayOperatorV1alpha1Client, namespace string) *kongPluginInstallations {
 	return &kongPluginInstallations{
 		gentype.NewClientWithList[*gatewayoperatorv1alpha1.KongPluginInstallation, *gatewayoperatorv1alpha1.KongPluginInstallationList](
 			"kongplugininstallations",

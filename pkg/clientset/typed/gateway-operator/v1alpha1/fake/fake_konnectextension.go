@@ -27,10 +27,10 @@ import (
 // fakeKonnectExtensions implements KonnectExtensionInterface
 type fakeKonnectExtensions struct {
 	*gentype.FakeClientWithList[*v1alpha1.KonnectExtension, *v1alpha1.KonnectExtensionList]
-	Fake *FakeGatewayoperatorV1alpha1
+	Fake *FakeGatewayOperatorV1alpha1
 }
 
-func newFakeKonnectExtensions(fake *FakeGatewayoperatorV1alpha1, namespace string) gatewayoperatorv1alpha1.KonnectExtensionInterface {
+func newFakeKonnectExtensions(fake *FakeGatewayOperatorV1alpha1, namespace string) gatewayoperatorv1alpha1.KonnectExtensionInterface {
 	return &fakeKonnectExtensions{
 		gentype.NewFakeClientWithList[*v1alpha1.KonnectExtension, *v1alpha1.KonnectExtensionList](
 			fake.Fake,

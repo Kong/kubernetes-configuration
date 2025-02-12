@@ -39,8 +39,8 @@ type Interface interface {
 	ConfigurationV1() configurationv1.ConfigurationV1Interface
 	ConfigurationV1alpha1() configurationv1alpha1.ConfigurationV1alpha1Interface
 	ConfigurationV1beta1() configurationv1beta1.ConfigurationV1beta1Interface
-	GatewayoperatorV1alpha1() gatewayoperatorv1alpha1.GatewayoperatorV1alpha1Interface
-	GatewayoperatorV1beta1() gatewayoperatorv1beta1.GatewayoperatorV1beta1Interface
+	GatewayOperatorV1alpha1() gatewayoperatorv1alpha1.GatewayOperatorV1alpha1Interface
+	GatewayOperatorV1beta1() gatewayoperatorv1beta1.GatewayOperatorV1beta1Interface
 	IncubatorV1alpha1() incubatorv1alpha1.IncubatorV1alpha1Interface
 	KonnectV1alpha1() konnectv1alpha1.KonnectV1alpha1Interface
 }
@@ -51,8 +51,8 @@ type Clientset struct {
 	configurationV1         *configurationv1.ConfigurationV1Client
 	configurationV1alpha1   *configurationv1alpha1.ConfigurationV1alpha1Client
 	configurationV1beta1    *configurationv1beta1.ConfigurationV1beta1Client
-	gatewayoperatorV1alpha1 *gatewayoperatorv1alpha1.GatewayoperatorV1alpha1Client
-	gatewayoperatorV1beta1  *gatewayoperatorv1beta1.GatewayoperatorV1beta1Client
+	gatewayOperatorV1alpha1 *gatewayoperatorv1alpha1.GatewayOperatorV1alpha1Client
+	gatewayOperatorV1beta1  *gatewayoperatorv1beta1.GatewayOperatorV1beta1Client
 	incubatorV1alpha1       *incubatorv1alpha1.IncubatorV1alpha1Client
 	konnectV1alpha1         *konnectv1alpha1.KonnectV1alpha1Client
 }
@@ -72,14 +72,14 @@ func (c *Clientset) ConfigurationV1beta1() configurationv1beta1.ConfigurationV1b
 	return c.configurationV1beta1
 }
 
-// GatewayoperatorV1alpha1 retrieves the GatewayoperatorV1alpha1Client
-func (c *Clientset) GatewayoperatorV1alpha1() gatewayoperatorv1alpha1.GatewayoperatorV1alpha1Interface {
-	return c.gatewayoperatorV1alpha1
+// GatewayOperatorV1alpha1 retrieves the GatewayOperatorV1alpha1Client
+func (c *Clientset) GatewayOperatorV1alpha1() gatewayoperatorv1alpha1.GatewayOperatorV1alpha1Interface {
+	return c.gatewayOperatorV1alpha1
 }
 
-// GatewayoperatorV1beta1 retrieves the GatewayoperatorV1beta1Client
-func (c *Clientset) GatewayoperatorV1beta1() gatewayoperatorv1beta1.GatewayoperatorV1beta1Interface {
-	return c.gatewayoperatorV1beta1
+// GatewayOperatorV1beta1 retrieves the GatewayOperatorV1beta1Client
+func (c *Clientset) GatewayOperatorV1beta1() gatewayoperatorv1beta1.GatewayOperatorV1beta1Interface {
+	return c.gatewayOperatorV1beta1
 }
 
 // IncubatorV1alpha1 retrieves the IncubatorV1alpha1Client
@@ -148,11 +148,11 @@ func NewForConfigAndClient(c *rest.Config, httpClient *http.Client) (*Clientset,
 	if err != nil {
 		return nil, err
 	}
-	cs.gatewayoperatorV1alpha1, err = gatewayoperatorv1alpha1.NewForConfigAndClient(&configShallowCopy, httpClient)
+	cs.gatewayOperatorV1alpha1, err = gatewayoperatorv1alpha1.NewForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
 		return nil, err
 	}
-	cs.gatewayoperatorV1beta1, err = gatewayoperatorv1beta1.NewForConfigAndClient(&configShallowCopy, httpClient)
+	cs.gatewayOperatorV1beta1, err = gatewayoperatorv1beta1.NewForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
 		return nil, err
 	}
@@ -188,8 +188,8 @@ func New(c rest.Interface) *Clientset {
 	cs.configurationV1 = configurationv1.New(c)
 	cs.configurationV1alpha1 = configurationv1alpha1.New(c)
 	cs.configurationV1beta1 = configurationv1beta1.New(c)
-	cs.gatewayoperatorV1alpha1 = gatewayoperatorv1alpha1.New(c)
-	cs.gatewayoperatorV1beta1 = gatewayoperatorv1beta1.New(c)
+	cs.gatewayOperatorV1alpha1 = gatewayoperatorv1alpha1.New(c)
+	cs.gatewayOperatorV1beta1 = gatewayoperatorv1beta1.New(c)
 	cs.incubatorV1alpha1 = incubatorv1alpha1.New(c)
 	cs.konnectV1alpha1 = konnectv1alpha1.New(c)
 
