@@ -155,8 +155,7 @@ generate.apitypes-funcs:
 
 .PHONY: generate.crds
 generate.crds: controller-gen ## Generate WebhookConfiguration and CustomResourceDefinition objects.
-	# Use gotypesalias=0 as a workaround for https://github.com/kubernetes-sigs/controller-tools/issues/1088.
-	VERSION=$(VERSION) GODEBUG=gotypesalias=0 go run ./scripts/crds-generator
+	VERSION=$(VERSION) go run ./scripts/crds-generator
 
 .PHONY: generate.deepcopy
 generate.deepcopy: controller-gen

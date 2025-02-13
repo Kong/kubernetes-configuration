@@ -20,7 +20,7 @@ spec:
     key1: test1
   konnect:
     authRef:
-      name: konnect-api-auth-dev-1
+      name: konnect-api-auth-1
 ---
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer

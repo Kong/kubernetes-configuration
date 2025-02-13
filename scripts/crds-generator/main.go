@@ -64,6 +64,9 @@ func main() {
 		// gateway-operator.konghq.com
 		"github.com/kong/kubernetes-configuration/api/gateway-operator/v1alpha1",
 		"github.com/kong/kubernetes-configuration/api/gateway-operator/v1beta1",
+
+		// common types
+		"github.com/kong/kubernetes-configuration/api/common/v1alpha1",
 	)
 	if err != nil {
 		log.Fatalf("failed to load package roots: %s", err)

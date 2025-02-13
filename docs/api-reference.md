@@ -675,34 +675,7 @@ See: https://docs.konghq.com/gateway/latest/kong-enterprise/secrets-management/
 ### Types
 
 In this section you will find types that the CRDs rely on.
-#### ControlPlaneRef
 
-
-ControlPlaneRef is the schema for the ControlPlaneRef type.
-It is used to reference a Control Plane entity.
-
-
-
-| Field | Description |
-| --- | --- |
-| `type` _string_ | Type indicates the type of the control plane being referenced. Allowed values: - konnectID - konnectNamespacedRef - kic<br /><br /> The default is kic, which implies that the Control Plane is KIC. |
-| `konnectID` _string_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
-| `konnectNamespacedRef` _[KonnectNamespacedRef](#konnectnamespacedref)_ | KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster. It contains the name of the Konnect Control Plane. This field is required when the Type is konnectNamespacedRef. |
-
-
-_Appears in:_
-- [KongCACertificateSpec](#kongcacertificatespec)
-- [KongCertificateSpec](#kongcertificatespec)
-- [KongConsumerGroupSpec](#kongconsumergroupspec)
-- [KongConsumerSpec](#kongconsumerspec)
-- [KongDataPlaneClientCertificateSpec](#kongdataplaneclientcertificatespec)
-- [KongKeySetSpec](#kongkeysetspec)
-- [KongKeySpec](#kongkeyspec)
-- [KongPluginBindingSpec](#kongpluginbindingspec)
-- [KongRouteSpec](#kongroutespec)
-- [KongServiceSpec](#kongservicespec)
-- [KongUpstreamSpec](#kongupstreamspec)
-- [KongVaultSpec](#kongvaultspec)
 
 #### ControllerReference
 
