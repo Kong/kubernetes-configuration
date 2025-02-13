@@ -2350,6 +2350,11 @@ func (in *KongServiceSpec) DeepCopyInto(out *KongServiceSpec) {
 		*out = new(ControlPlaneRef)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.KonnectOptions != nil {
+		in, out := &in.KonnectOptions, &out.KonnectOptions
+		*out = new(konnectv1alpha1.KonnectEntityOptions)
+		(*in).DeepCopyInto(*out)
+	}
 	in.KongServiceAPISpec.DeepCopyInto(&out.KongServiceAPISpec)
 }
 

@@ -135,6 +135,21 @@ spec:
                 description: The host of the upstream server. Note that the host value
                   is case sensitive.
                 type: string
+              konnect:
+                description: |-
+                  KonnectOptions includes options specific to Konnect.
+                  Only used when we manage the KongService by Konnect entity controller.
+                properties:
+                  adopt:
+                    description: KonnectAdoptOptions stores the options for adopting
+                      existing Konnect entities.
+                    properties:
+                      id:
+                        type: string
+                    required:
+                    - id
+                    type: object
+                type: object
               name:
                 description: The Service name.
                 type: string
@@ -193,6 +208,10 @@ spec:
             - message: KIC is not supported as control plane
               rule: '!has(self.controlPlaneRef) ? true : self.controlPlaneRef.type
                 != ''kic'''
+            - message: Cannot specify Konnect specific options when control plane
+                is not Konnect
+              rule: '(has(self.controlPlaneRef) && (self.controlPlaneRef.type == ''konnectNamespacedRef''
+                || self.controlPlaneRef.type == ''konnectID'')) ? true : !has(self.konnect)'
           status:
             default:
               conditions:
@@ -301,6 +320,15 @@ spec:
           rule: '(!has(self.spec.controlPlaneRef)) ? true : (!has(self.status) ||
             !self.status.conditions.exists(c, c.type == ''Programmed'' && c.status
             == ''True'')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef'
+        - message: Cannot add spec.konnect.adopt when an entity is already programmed
+          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
+            ''Programmed'' && c.status == ''True'')) ? true : !has(self.spec.konnect)
+            || !has(self.spec.konnect.adopt) || (has(oldSelf.spec.konnect) && has(oldSelf.spec.konnect.adopt))'
+        - message: spec.konnect.adopt is immutable when an entity is already Programmed
+          rule: '(!has(self.spec.konnect) || !has(self.spec.konnect.adopt) || !has(oldSelf.spec.konnect)
+            || !has(oldSelf.spec.konnect.adopt)) ? true : (!has(self.status) || !self.status.conditions.exists(c,
+            c.type == ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.konnect.adopt
+            == self.spec.konnect.adopt'
     served: true
     storage: true
     subresources:

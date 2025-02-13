@@ -685,4 +685,155 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 			},
 		}.Run(t)
 	})
+
+	t.Run("constraint on adopt options", func(t *testing.T) {
+		crdsvalidation.TestCasesGroup[*konnectv1alpha1.KonnectGatewayControlPlane]{
+			{
+				Name: "Can update adopt options before programmed",
+				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
+						Adopt: &konnectv1alpha1.KonnectAdoptOptions{
+							ID: "abcddcba-1234-5678-abcd-0123456789ab",
+						},
+						CreateControlPlaneRequest: sdkkonnectcomp.CreateControlPlaneRequest{
+							Name:        "cp-1",
+							ClusterType: sdkkonnectcomp.CreateControlPlaneRequestClusterTypeClusterTypeControlPlane.ToPointer(),
+						},
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "name-1",
+							},
+						},
+					},
+					Status: konnectv1alpha1.KonnectGatewayControlPlaneStatus{
+						Conditions: []metav1.Condition{
+							{
+								Type:               "Programmed",
+								Status:             metav1.ConditionUnknown,
+								Reason:             "Pending",
+								LastTransitionTime: metav1.Now(),
+							},
+						},
+					},
+				},
+				Update: func(kgcp *konnectv1alpha1.KonnectGatewayControlPlane) {
+					kgcp.Spec.Adopt = &konnectv1alpha1.KonnectAdoptOptions{
+						ID: "abcddcba-1234-5678-abcd-0123456789ac",
+					}
+				},
+			},
+			{
+				Name: "Cannot update adopt options after programmed",
+				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
+						Adopt: &konnectv1alpha1.KonnectAdoptOptions{
+							ID: "abcddcba-1234-5678-abcd-0123456789ab",
+						},
+						CreateControlPlaneRequest: sdkkonnectcomp.CreateControlPlaneRequest{
+							Name:        "cp-1",
+							ClusterType: sdkkonnectcomp.CreateControlPlaneRequestClusterTypeClusterTypeControlPlane.ToPointer(),
+						},
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "name-1",
+							},
+						},
+					},
+					Status: konnectv1alpha1.KonnectGatewayControlPlaneStatus{
+						KonnectEntityStatus: konnectv1alpha1.KonnectEntityStatus{
+							ID: "abcddcba-1234-5678-abcd-0123456789ab",
+						},
+						Conditions: []metav1.Condition{
+							{
+								Type:               "Programmed",
+								Status:             metav1.ConditionTrue,
+								Reason:             "Programmed",
+								LastTransitionTime: metav1.Now(),
+							},
+						},
+					},
+				},
+				Update: func(kgcp *konnectv1alpha1.KonnectGatewayControlPlane) {
+					kgcp.Spec.Adopt = &konnectv1alpha1.KonnectAdoptOptions{
+						ID: "abcddcba-1234-5678-abcd-0123456789ac",
+					}
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("spec.adopt is immutable when an entitiy is already Programmed"),
+			},
+			{
+				Name: "Cannot add adopt options after programmed",
+				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
+						CreateControlPlaneRequest: sdkkonnectcomp.CreateControlPlaneRequest{
+							Name:        "cp-1",
+							ClusterType: sdkkonnectcomp.CreateControlPlaneRequestClusterTypeClusterTypeControlPlane.ToPointer(),
+						},
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "name-1",
+							},
+						},
+					},
+					Status: konnectv1alpha1.KonnectGatewayControlPlaneStatus{
+						KonnectEntityStatus: konnectv1alpha1.KonnectEntityStatus{
+							ID: "abcddcba-1234-5678-abcd-0123456789ab",
+						},
+						Conditions: []metav1.Condition{
+							{
+								Type:               "Programmed",
+								Status:             metav1.ConditionTrue,
+								Reason:             "Programmed",
+								LastTransitionTime: metav1.Now(),
+							},
+						},
+					},
+				},
+				Update: func(kgcp *konnectv1alpha1.KonnectGatewayControlPlane) {
+					kgcp.Spec.Adopt = &konnectv1alpha1.KonnectAdoptOptions{
+						ID: "abcddcba-1234-5678-abcd-0123456789ac",
+					}
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("Cannot add spec.adopt when an entitiy is already Programmed"),
+			},
+			{
+				Name: "can delete adopt options after programmed",
+				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
+						Adopt: &konnectv1alpha1.KonnectAdoptOptions{
+							ID: "abcddcba-1234-5678-abcd-0123456789ab",
+						},
+						CreateControlPlaneRequest: sdkkonnectcomp.CreateControlPlaneRequest{
+							Name:        "cp-1",
+							ClusterType: sdkkonnectcomp.CreateControlPlaneRequestClusterTypeClusterTypeControlPlane.ToPointer(),
+						},
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "name-1",
+							},
+						},
+					},
+					Status: konnectv1alpha1.KonnectGatewayControlPlaneStatus{
+						KonnectEntityStatus: konnectv1alpha1.KonnectEntityStatus{
+							ID: "abcddcba-1234-5678-abcd-0123456789ab",
+						},
+						Conditions: []metav1.Condition{
+							{
+								Type:               "Programmed",
+								Status:             metav1.ConditionTrue,
+								Reason:             "Programmed",
+								LastTransitionTime: metav1.Now(),
+							},
+						},
+					},
+				},
+				Update: func(kgcp *konnectv1alpha1.KonnectGatewayControlPlane) {
+					kgcp.Spec.Adopt = nil
+				},
+			},
+		}.Run(t)
+	})
 }
