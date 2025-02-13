@@ -109,27 +109,6 @@ KonnectAPIAuthType is the type of authentication used to authenticate with the K
 _Appears in:_
 - [KonnectAPIAuthConfigurationSpec](#konnectapiauthconfigurationspec)
 
-#### KonnectCloudGatewayNetworkAPISpec
-
-
-KonnectCloudGatewayNetworkAPISpec defines the desired state of the network
-as specified in the Konnect API contract.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Specifies the name of the network on Konnect. |
-| `cloud_gateway_provider_account_id` _string_ | Specifies the provider Account ID. |
-| `region` _string_ | Region ID for cloud provider region. |
-| `availability_zones` _string array_ | List of availability zones that the network is attached to. |
-| `cidr_block` _string_ | CIDR block configuration for the network. |
-| `state` _[NetworkCreateState](#networkcreatestate)_ | Initial state for creating a network. |
-
-
-_Appears in:_
-- [KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)
-
 #### KonnectCloudGatewayNetworkSpec
 
 

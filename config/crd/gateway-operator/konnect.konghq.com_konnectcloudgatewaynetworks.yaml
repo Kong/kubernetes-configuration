@@ -108,19 +108,6 @@ spec:
             - name
             - region
             type: object
-            x-kubernetes-validations:
-            - message: Network name is immutable
-              rule: self.name == oldSelf.name
-            - message: Network cloud gateway provider account ID is immutable
-              rule: self.cloud_gateway_provider_account_id == oldSelf.cloud_gateway_provider_account_id
-            - message: Network region is immutable
-              rule: self.region == oldSelf.region
-            - message: Network availability zones are immutable
-              rule: self.availability_zones == oldSelf.availability_zones
-            - message: Network CIDR block is immutable
-              rule: self.cidr_block == oldSelf.cidr_block
-            - message: Network state is immutable
-              rule: (!has(self.state) && !has(oldSelf.state)) || self.state == oldSelf.state
           status:
             description: Status defines the observed state of KonnectCloudGatewayNetwork.
             properties:
@@ -214,7 +201,36 @@ spec:
                   initializing, ready, terminating.
                 type: string
             type: object
+        required:
+        - spec
         type: object
+        x-kubernetes-validations:
+        - message: spec.name is immutable when an entity is already Programmed
+          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
+            ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.name ==
+            self.spec.name'
+        - message: spec.cloud_gateway_provider_account_id is immutable when an entity
+            is already Programmed
+          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
+            ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.cloud_gateway_provider_account_id
+            == self.spec.cloud_gateway_provider_account_id'
+        - message: spec.region is immutable when an entity is already Programmed
+          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
+            ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.region
+            == self.spec.region'
+        - message: spec.availability_zones is immutable when an entity is already
+            Programmed
+          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
+            ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.availability_zones
+            == self.spec.availability_zones'
+        - message: spec.cidr_block is immutable when an entity is already Programmed
+          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
+            ''Programmed'' && c.status == ''True'')) ? true : oldSelf.spec.cidr_block
+            == self.spec.cidr_block'
+        - message: spec.state is immutable when an entity is already Programmed
+          rule: '(!has(self.status) || !self.status.conditions.exists(c, c.type ==
+            ''Programmed'' && c.status == ''True'')) ? true : (!has(self.spec.state)
+            && !has(oldSelf.spec.state)) || self.spec.state == oldSelf.spec.state'
     served: true
     storage: true
     subresources:

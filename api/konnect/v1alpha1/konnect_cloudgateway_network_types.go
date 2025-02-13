@@ -21,6 +21,12 @@ func init() {
 // +kubebuilder:printcolumn:name="State",description="The state the network is in",type=string,JSONPath=`.status.state`
 // +kubebuilder:printcolumn:name="ID",description="Konnect ID",type=string,JSONPath=`.status.id`
 // +kubebuilder:printcolumn:name="OrgID",description="Konnect Organization ID this resource belongs to.",type=string,JSONPath=`.status.organizationID`
+// +kubebuilder:validation:XValidation:rule="(!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.name == self.spec.name",message="spec.name is immutable when an entity is already Programmed"
+// +kubebuilder:validation:XValidation:rule="(!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.cloud_gateway_provider_account_id == self.spec.cloud_gateway_provider_account_id",message="spec.cloud_gateway_provider_account_id is immutable when an entity is already Programmed"
+// +kubebuilder:validation:XValidation:rule="(!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.region == self.spec.region",message="spec.region is immutable when an entity is already Programmed"
+// +kubebuilder:validation:XValidation:rule="(!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.availability_zones == self.spec.availability_zones",message="spec.availability_zones is immutable when an entity is already Programmed"
+// +kubebuilder:validation:XValidation:rule="(!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.cidr_block == self.spec.cidr_block",message="spec.cidr_block is immutable when an entity is already Programmed"
+// +kubebuilder:validation:XValidation:rule="(!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : (!has(self.spec.state) && !has(oldSelf.spec.state)) || self.spec.state == oldSelf.spec.state",message="spec.state is immutable when an entity is already Programmed"
 // +apireference:kgo:include
 // +kong:channels=gateway-operator
 type KonnectCloudGatewayNetwork struct {
@@ -28,7 +34,7 @@ type KonnectCloudGatewayNetwork struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec defines the desired state of KonnectCloudGatewayNetwork.
-	Spec KonnectCloudGatewayNetworkSpec `json:"spec,omitempty"`
+	Spec KonnectCloudGatewayNetworkSpec `json:"spec"`
 
 	// Status defines the observed state of KonnectCloudGatewayNetwork.
 	Status KonnectCloudGatewayNetworkStatus `json:"status,omitempty"`
@@ -38,25 +44,6 @@ type KonnectCloudGatewayNetwork struct {
 //
 // +apireference:kgo:include
 type KonnectCloudGatewayNetworkSpec struct {
-	// KonnectCloudGatewayNetworkAPISpec defines the desired state of the network
-	// as specified in the Konnect API contract.
-	KonnectCloudGatewayNetworkAPISpec `json:",inline"`
-
-	// +kubebuilder:validation:Required
-	KonnectConfiguration KonnectConfiguration `json:"konnect"`
-}
-
-// KonnectCloudGatewayNetworkAPISpec defines the desired state of the network
-// as specified in the Konnect API contract.
-//
-// +kubebuilder:validation:XValidation:rule="self.name == oldSelf.name", message="Network name is immutable"
-// +kubebuilder:validation:XValidation:rule="self.cloud_gateway_provider_account_id == oldSelf.cloud_gateway_provider_account_id", message="Network cloud gateway provider account ID is immutable"
-// +kubebuilder:validation:XValidation:rule="self.region == oldSelf.region", message="Network region is immutable"
-// +kubebuilder:validation:XValidation:rule="self.availability_zones == oldSelf.availability_zones", message="Network availability zones are immutable"
-// +kubebuilder:validation:XValidation:rule="self.cidr_block == oldSelf.cidr_block", message="Network CIDR block is immutable"
-// +kubebuilder:validation:XValidation:rule="(!has(self.state) && !has(oldSelf.state)) || self.state == oldSelf.state", message="Network state is immutable"
-// +apireference:kgo:include
-type KonnectCloudGatewayNetworkAPISpec struct {
 	// NOTE: These fields are extracted from sdkkonnectcomp.CreateNetworkRequest
 	// because for some reason when embedding the struct, the fields deserialization
 	// doesn't work (the embedded field is always empty).
@@ -92,6 +79,9 @@ type KonnectCloudGatewayNetworkAPISpec struct {
 	//
 	// +optional
 	State *sdkkonnectcomp.NetworkCreateState `json:"state"`
+
+	// +kubebuilder:validation:Required
+	KonnectConfiguration KonnectConfiguration `json:"konnect"`
 }
 
 // KonnectCloudGatewayNetworkStatus defines the observed state of KonnectCloudGatewayNetwork.

@@ -29,7 +29,6 @@ func TestKongVault(t *testing.T) {
 		NewCRDValidationTestCasesGroupCPRefChange(t, obj, SupportedByKIC, ControlPlaneRefNotRequired).Run(t)
 	})
 
-	return
 	t.Run("spec", func(t *testing.T) {
 		crdsvalidation.TestCasesGroup[*configurationv1alpha1.KongVault]{
 			{
