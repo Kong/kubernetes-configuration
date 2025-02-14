@@ -295,30 +295,6 @@ such as "internet-accessible", "internal-only".
 _Appears in:_
 - [AIGatewayEndpoint](#aigatewayendpoint)
 
-#### ExtensionRef
-
-
-ExtensionRef corresponds to another resource in the Kubernetes cluster which
-defines extended behavior for a resource (e.g. ControlPlane).
-
-
-
-| Field | Description |
-| --- | --- |
-| `group` _string_ | Group is the group of the extension resource. |
-| `kind` _string_ | Kind is kind of the extension resource. |
-| `name` _string_ | Name is the name of the referred resource. |
-| `namespace` _string_ | Namespace is the namespace of the referred resource.<br /><br /> For namespace-scoped resources if no Namespace is provided then the namespace of the parent object MUST be used.<br /><br /> This field MUST not be set when referring to cluster-scoped resources. |
-
-
-_Appears in:_
-- [ControlPlaneOptions](#controlplaneoptions)
-- [ControlPlaneSpec](#controlplanespec)
-- [DataPlaneOptions](#dataplaneoptions)
-- [DataPlaneSpec](#dataplanespec)
-- [GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)
-- [GatewayConfigurationSpec](#gatewayconfigurationspec)
-
 
 
 
@@ -476,24 +452,6 @@ MetricsConfig holds the configuration for the DataPlane metrics.
 
 _Appears in:_
 - [DataPlaneMetricsExtensionSpec](#dataplanemetricsextensionspec)
-
-#### NamespacedRef
-
-
-NamespacedRef is a reference to a namespaced resource.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the referred resource. |
-| `namespace` _string_ | Namespace is the namespace of the referred resource.<br /><br /> For namespace-scoped resources if no Namespace is provided then the namespace of the parent object MUST be used.<br /><br /> This field MUST not be set when referring to cluster-scoped resources. |
-
-
-_Appears in:_
-- [DataPlaneMetricsExtensionStatus](#dataplanemetricsextensionstatus)
-- [ExtensionRef](#extensionref)
-- [KonnectExtensionStatus](#konnectextensionstatus)
 
 #### ServiceSelector
 
@@ -685,7 +643,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 | --- | --- |
 | `deployment` _[ControlPlaneDeploymentOptions](#controlplanedeploymentoptions)_ |  |
 | `dataplane` _string_ | DataPlanes refers to the named DataPlane objects which this ControlPlane is responsible for. Currently they must be in the same namespace as the DataPlane. |
-| `extensions` _[ExtensionRef](#extensionref) array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 
 
 _Appears in:_
@@ -703,7 +661,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | --- | --- |
 | `deployment` _[ControlPlaneDeploymentOptions](#controlplanedeploymentoptions)_ |  |
 | `dataplane` _string_ | DataPlanes refers to the named DataPlane objects which this ControlPlane is responsible for. Currently they must be in the same namespace as the DataPlane. |
-| `extensions` _[ExtensionRef](#extensionref) array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `gatewayClass` _[ObjectName](#objectname)_ | GatewayClass indicates the Gateway resources which this ControlPlane should be responsible for configuring routes for (e.g. HTTPRoute, TCPRoute, UDPRoute, TLSRoute, e.t.c.).<br /><br /> Required for the ControlPlane to have any effect: at least one Gateway must be present for configuration to be pushed to the data-plane and only Gateway resources can be used to identify data-plane entities. |
 | `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> Routing configured this way will be applied to the Gateway resources indicated by GatewayClass.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
 
@@ -764,7 +722,7 @@ deploy the DataPlane.
 | `deployment` _[DataPlaneDeploymentOptions](#dataplanedeploymentoptions)_ |  |
 | `network` _[DataPlaneNetworkOptions](#dataplanenetworkoptions)_ |  |
 | `resources` _[DataPlaneResources](#dataplaneresources)_ |  |
-| `extensions` _[ExtensionRef](#extensionref) array_ | Extensions provide additional or replacement features for the DataPlane resources to influence or enhance functionality. NOTE: since we have one extension only (KonnectExtension), we limit the amount of extensions to 1. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the DataPlane resources to influence or enhance functionality. NOTE: since we have one extension only (KonnectExtension), we limit the amount of extensions to 1. |
 | `pluginsToInstall` _[NamespacedName](#namespacedname) array_ | PluginsToInstall is a list of KongPluginInstallation resources that will be installed and available in the DataPlane. |
 
 
@@ -901,7 +859,7 @@ DataPlaneSpec defines the desired state of DataPlane
 | `deployment` _[DataPlaneDeploymentOptions](#dataplanedeploymentoptions)_ |  |
 | `network` _[DataPlaneNetworkOptions](#dataplanenetworkoptions)_ |  |
 | `resources` _[DataPlaneResources](#dataplaneresources)_ |  |
-| `extensions` _[ExtensionRef](#extensionref) array_ | Extensions provide additional or replacement features for the DataPlane resources to influence or enhance functionality. NOTE: since we have one extension only (KonnectExtension), we limit the amount of extensions to 1. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the DataPlane resources to influence or enhance functionality. NOTE: since we have one extension only (KonnectExtension), we limit the amount of extensions to 1. |
 | `pluginsToInstall` _[NamespacedName](#namespacedname) array_ | PluginsToInstall is a list of KongPluginInstallation resources that will be installed and available in the DataPlane. |
 
 
@@ -958,7 +916,7 @@ configure and deploy a DataPlane object.
 | --- | --- |
 | `deployment` _[DataPlaneDeploymentOptions](#dataplanedeploymentoptions)_ |  |
 | `network` _[GatewayConfigDataPlaneNetworkOptions](#gatewayconfigdataplanenetworkoptions)_ |  |
-| `extensions` _[ExtensionRef](#extensionref) array_ | Extensions provide additional or replacement features for the DataPlane resources to influence or enhance functionality. NOTE: since we have one extension only (KonnectExtension), we limit the amount of extensions to 1. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the DataPlane resources to influence or enhance functionality. NOTE: since we have one extension only (KonnectExtension), we limit the amount of extensions to 1. |
 | `pluginsToInstall` _[NamespacedName](#namespacedname) array_ | PluginsToInstall is a list of KongPluginInstallation resources that will be installed and available in the Gateways (DataPlanes) that use this GatewayConfig. |
 
 
@@ -1010,7 +968,7 @@ GatewayConfigurationSpec defines the desired state of GatewayConfiguration
 | --- | --- |
 | `dataPlaneOptions` _[GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)_ | DataPlaneOptions is the specification for configuration overrides for DataPlane resources that will be created for the Gateway. |
 | `controlPlaneOptions` _[ControlPlaneOptions](#controlplaneoptions)_ | ControlPlaneOptions is the specification for configuration overrides for ControlPlane resources that will be created for the Gateway. |
-| `extensions` _[ExtensionRef](#extensionref) array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: currently, there's only 1 extension that can be attached at the Gateway level (KonnectExtension), so the amount of extensions is limited to 1. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: currently, there's only 1 extension that can be attached at the Gateway level (KonnectExtension), so the amount of extensions is limited to 1. |
 
 
 _Appears in:_
