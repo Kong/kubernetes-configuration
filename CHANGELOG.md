@@ -23,6 +23,8 @@ Adding a new version? You'll need three changes:
   [#282](https://github.com/Kong/kubernetes-configuration/pull/282)
 - Added `KonnectCloudGatewayNetwork` CRD.
   [#268](https://github.com/Kong/kubernetes-configuration/pull/268)
+- Added `GatewayConfiguration` extension point.
+  [#300](https://github.com/Kong/kubernetes-configuration/pull/300)
 
 ## [v1.1.0]
 
