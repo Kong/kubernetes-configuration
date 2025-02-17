@@ -1010,7 +1010,7 @@ GatewayConfigurationSpec defines the desired state of GatewayConfiguration
 | --- | --- |
 | `dataPlaneOptions` _[GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)_ | DataPlaneOptions is the specification for configuration overrides for DataPlane resources that will be created for the Gateway. |
 | `controlPlaneOptions` _[ControlPlaneOptions](#controlplaneoptions)_ | ControlPlaneOptions is the specification for configuration overrides for ControlPlane resources that will be created for the Gateway. |
-| `extensions` _[ExtensionRef](#extensionref) array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: since we have one extension only (KonnectExtension) that can be attached at the Gateway level, we limit the amount of extensions to 1. |
+| `extensions` _[ExtensionRef](#extensionref) array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: currently, there's only 1 extension that can be attached at the Gateway level (KonnectExtension), so the amount of extensions is limited to 1. |
 
 
 _Appears in:_

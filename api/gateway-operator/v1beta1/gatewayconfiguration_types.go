@@ -60,8 +60,9 @@ type GatewayConfigurationSpec struct {
 
 	// Extensions provide additional or replacement features for the Gateway
 	// resource to influence or enhance functionality.
-	// NOTE: since we have one extension only (KonnectExtension) that can be attached
-	// at the Gateway level, we limit the amount of extensions to 1.
+	// NOTE: currently, there's only 1 extension that can be attached
+	// at the Gateway level (KonnectExtension), so the amount of extensions
+	// is limited to 1.
 	//
 	// +optional
 	// +kubebuilder:validation:MinItems=0
