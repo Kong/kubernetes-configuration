@@ -25,6 +25,8 @@ Adding a new version? You'll need three changes:
   [#268](https://github.com/Kong/kubernetes-configuration/pull/268)
 - Added `GatewayConfiguration` extension point.
   [#300](https://github.com/Kong/kubernetes-configuration/pull/300)
+- Added Endpoints to `KonnectGatewayControlPlane`'s status.
+  [#299](https://github.com/Kong/kubernetes-configuration/pull/299)
 
 ## [v1.1.0]
 
