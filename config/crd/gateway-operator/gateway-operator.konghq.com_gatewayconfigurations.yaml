@@ -17327,6 +17327,45 @@ spec:
                       type: object
                     type: array
                 type: object
+              extensions:
+                description: |-
+                  Extensions provide additional or replacement features for the Gateway
+                  resource to influence or enhance functionality.
+                  NOTE: since we have one extension only (KonnectExtension) that can be attached
+                  at the Gateway level, we limit the amount of extensions to 1.
+                items:
+                  description: |-
+                    ExtensionRef corresponds to another resource in the Kubernetes cluster which
+                    defines extended behavior for a resource (e.g. ControlPlane).
+                  properties:
+                    group:
+                      default: gateway-operator.konghq.com
+                      description: Group is the group of the extension resource.
+                      type: string
+                    kind:
+                      description: Kind is kind of the extension resource.
+                      type: string
+                    name:
+                      description: Name is the name of the referred resource.
+                      maxLength: 253
+                      minLength: 1
+                      type: string
+                    namespace:
+                      description: |-
+                        Namespace is the namespace of the referred resource.
+
+                        For namespace-scoped resources if no Namespace is provided then the
+                        namespace of the parent object MUST be used.
+
+                        This field MUST not be set when referring to cluster-scoped resources.
+                      type: string
+                  required:
+                  - kind
+                  - name
+                  type: object
+                maxItems: 1
+                minItems: 0
+                type: array
             type: object
           status:
             description: GatewayConfigurationStatus defines the observed state of

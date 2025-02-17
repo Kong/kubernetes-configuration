@@ -57,6 +57,16 @@ type GatewayConfigurationSpec struct {
 	//
 	// +optional
 	ControlPlaneOptions *ControlPlaneOptions `json:"controlPlaneOptions,omitempty"`
+
+	// Extensions provide additional or replacement features for the Gateway
+	// resource to influence or enhance functionality.
+	// NOTE: since we have one extension only (KonnectExtension) that can be attached
+	// at the Gateway level, we limit the amount of extensions to 1.
+	//
+	// +optional
+	// +kubebuilder:validation:MinItems=0
+	// +kubebuilder:validation:MaxItems=1
+	Extensions []v1alpha1.ExtensionRef `json:"extensions,omitempty"`
 }
 
 // GatewayConfigDataPlaneOptions indicates the specific information needed to
@@ -77,6 +87,7 @@ type GatewayConfigDataPlaneOptions struct {
 	// +kubebuilder:validation:MinItems=0
 	// +kubebuilder:validation:MaxItems=1
 	Extensions []v1alpha1.ExtensionRef `json:"extensions,omitempty"`
+
 	// PluginsToInstall is a list of KongPluginInstallation resources that
 	// will be installed and available in the Gateways (DataPlanes) that
 	// use this GatewayConfig.
