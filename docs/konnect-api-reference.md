@@ -148,6 +148,22 @@ _Appears in:_
 - [KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
+#### KonnectEndpoints
+
+
+KonnectEndpoints defines the Konnect endpoints for the control plane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `telemetry` _string_ | TelemetryEndpoint is the endpoint for telemetry. |
+| `controlPlane` _string_ | ControlPlaneEndpoint is the endpoint for the control plane. |
+
+
+_Appears in:_
+- [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
+
 #### KonnectEntityStatus
 
 
