@@ -95,7 +95,8 @@ func main() {
 		Checker: &loader.TypeChecker{
 			NodeFilters: []loader.NodeFilter{generator.CheckFilter()},
 		},
-		AllowDangerousTypes: true, // Allows float32 and float64.
+		AllowDangerousTypes:        true, // Allows float32 and float64.
+		GenerateEmbeddedObjectMeta: true,
 	}
 
 	err = generator.RegisterMarkers(parser.Collector.Registry)
