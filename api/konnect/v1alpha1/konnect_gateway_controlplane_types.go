@@ -61,6 +61,10 @@ type KonnectGatewayControlPlaneSpec struct {
 type KonnectGatewayControlPlaneStatus struct {
 	KonnectEntityStatus `json:",inline"`
 
+	// Endpoints defines the Konnect endpoints for the control plane.
+	// They are required by the DataPlane to be properly configured in
+	// Konnect and connect to the control plane.
+	//
 	// +kubebuilder:validation:Optional
 	Endpoints *KonnectEndpoints `json:"konnectEndpoints,omitempty"`
 

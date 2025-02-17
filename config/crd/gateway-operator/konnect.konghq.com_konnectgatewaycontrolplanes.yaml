@@ -257,8 +257,10 @@ spec:
                   If it's unset (empty string), it means the Konnect entity hasn't been created yet.
                 type: string
               konnectEndpoints:
-                description: KonnectEndpoints defines the Konnect endpoints for the
-                  control plane.
+                description: |-
+                  Endpoints defines the Konnect endpoints for the control plane.
+                  They are required by the DataPlane to be properly configured in
+                  Konnect and connect to the control plane.
                 properties:
                   controlPlane:
                     description: ControlPlaneEndpoint is the endpoint for the control
