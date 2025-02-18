@@ -44,12 +44,6 @@ spec:
           spec:
             description: Spec is the specification of the KonnectExtension resource.
             properties:
-              clusterDataPlaneLabels:
-                additionalProperties:
-                  type: string
-                description: ClusterDataPlaneLabels is a set of labels that will be
-                  applied to the Konnect DataPlane.
-                type: object
               controlPlaneRef:
                 description: ControlPlaneRef is a reference to a Konnect ControlPlane
                   this KonnectExtension is associated with.
@@ -129,7 +123,7 @@ spec:
                   Konnect Platform.
                 properties:
                   certificateSecret:
-                    description: certificateSecret contains the information to access
+                    description: CertificateSecret contains the information to access
                       the client certificate.
                     properties:
                       provisioning:
@@ -164,6 +158,13 @@ spec:
                         : true'
                 required:
                 - certificateSecret
+                type: object
+              dataPlaneLabels:
+                additionalProperties:
+                  type: string
+                description: ClusterDataPlaneLabels is a set of labels that will be
+                  applied to the Konnect DataPlane.
+                maxProperties: 16
                 type: object
               konnect:
                 description: KonnectConfiguration is the Schema for the KonnectConfiguration

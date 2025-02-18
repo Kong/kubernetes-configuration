@@ -102,14 +102,14 @@ _Appears in:_
 
 
 DataPlaneClientAuth contains the configuration for the client authentication for the DataPlane.
-At the moment authentication is only supported through client certificate, but it could be improved in the future,
+At the moment authentication is only supported through client certificate, but it might be extended in the future,
 with e.g., token-based authentication.
 
 
 
 | Field | Description |
 | --- | --- |
-| `certificateSecret` _[CertificateSecret](#certificatesecret)_ | certificateSecret contains the information to access the client certificate. |
+| `certificateSecret` _[CertificateSecret](#certificatesecret)_ | CertificateSecret contains the information to access the client certificate. |
 
 
 _Appears in:_
@@ -281,7 +281,7 @@ KonnectExtensionSpec defines the desired state of KonnectExtension.
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with. |
 | `dataPlaneClientAuth` _[DataPlaneClientAuth](#dataplaneclientauth)_ | DataPlaneClientAuth is the configuration for the client certificate authentication for the DataPlane. In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the Konnect Platform. |
 | `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
-| `clusterDataPlaneLabels` _object (keys:string, values:string)_ | ClusterDataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane. |
+| `dataPlaneLabels` _object (keys:string, values:string)_ | ClusterDataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane. |
 
 
 _Appears in:_
