@@ -67,7 +67,7 @@ type GatewayConfigurationSpec struct {
 	// +optional
 	// +kubebuilder:validation:MinItems=0
 	// +kubebuilder:validation:MaxItems=1
-	Extensions []operatorv1alpha1.ExtensionRef `json:"extensions,omitempty"`
+	Extensions []commonv1alpha1.ExtensionRef `json:"extensions,omitempty"`
 }
 
 // GatewayConfigDataPlaneOptions indicates the specific information needed to
