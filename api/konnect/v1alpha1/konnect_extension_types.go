@@ -89,10 +89,10 @@ type KonnectExtensionSpec struct {
 }
 
 // DataPlaneClientAuth contains the configuration for the client authentication for the DataPlane.
-// At the moment authentication is only supported through client certificate, but it could be improved in the future,
+// At the moment authentication is only supported through client certificate, but it might be extended in the future,
 // with e.g., token-based authentication.
 type DataPlaneClientAuth struct {
-	// certificateSecret contains the information to access the client certificate.
+	// CertificateSecret contains the information to access the client certificate.
 	//
 	// +kubebuilder:validation:XValidation:rule="self.provisioning == 'Manual' ? has(self.secretRef) : true",message="secretRef must be set when provisioning is set to Manual."
 	// +kubebuilder:validation:XValidation:rule="self.provisioning == 'Automatic' ? !has(self.secretRef) : true",message="secretRef must not be set when provisioning is set to Automatic."
