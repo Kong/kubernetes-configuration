@@ -279,7 +279,7 @@ KonnectExtensionSpec defines the desired state of KonnectExtension.
 | Field | Description |
 | --- | --- |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with. |
-| `dataPlaneClientAuth` _[DataPlaneClientAuth](#dataplaneclientauth)_ | DataPlaneClientAuth is the configuration for the client certificate authentication for the DataPlane. It is required to set up the connection with the Konnect Platform. |
+| `dataPlaneClientAuth` _[DataPlaneClientAuth](#dataplaneclientauth)_ | DataPlaneClientAuth is the configuration for the client certificate authentication for the DataPlane. In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the Konnect Platform. |
 | `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
 | `clusterDataPlaneLabels` _object (keys:string, values:string)_ | ClusterDataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane. |
 

@@ -39,7 +39,7 @@ const (
 // +kubebuilder:object:root=true
 // +kubebuilder:object:generate=true
 // +kubebuilder:subresource:status
-// +kubebuilder:deprecatedversion:warning="The v1alpha1 version of KonnectExtension in the gateway-operator.konghq.com API group has been deprecated and will be removed in a future release of the API. Please use the v1alpha1 version in the konnect.konghq.com API group."
+// +kubebuilder:deprecatedversion:warning="The v1alpha1 version of KonnectExtension in the gateway-operator.konghq.com API group has been deprecated and will be removed in a future release of the API. Please use the version from the konnect.konghq.com API group."
 // +kubebuilder:validation:XValidation:rule="oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef", message="spec.controlPlaneRef is immutable."
 // +apireference:kgo:include
 // +kong:channels=gateway-operator

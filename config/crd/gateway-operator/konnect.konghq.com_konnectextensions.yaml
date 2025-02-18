@@ -125,7 +125,8 @@ spec:
                     provisioning: Automatic
                 description: |-
                   DataPlaneClientAuth is the configuration for the client certificate authentication for the DataPlane.
-                  It is required to set up the connection with the Konnect Platform.
+                  In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the
+                  Konnect Platform.
                 properties:
                   certificateSecret:
                     description: certificateSecret contains the information to access
@@ -190,12 +191,7 @@ spec:
             description: Status is the status of the KonnectExtension resource.
             properties:
               conditions:
-                description: |-
-                  Conditions describe the current conditions of the KonnectExtensionStatus.
-
-                  Known condition types are:
-
-                  * TODO: define condition types https://github.com/Kong/kubernetes-configuration/issues/292
+                description: Conditions describe the current conditions of the KonnectExtensionStatus.
                 items:
                   description: Condition contains details for one aspect of the current
                     state of this API Resource.

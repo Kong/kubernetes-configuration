@@ -66,12 +66,15 @@ type KonnectExtensionList struct {
 // KonnectExtensionSpec defines the desired state of KonnectExtension.
 type KonnectExtensionSpec struct {
 	// ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with.
+	//
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:XValidation:rule="self.type != 'kic'", message="kic type not supported as controlPlaneRef."
 	ControlPlaneRef *commonv1alpha1.ControlPlaneRef `json:"controlPlaneRef"`
 
 	// DataPlaneClientAuth is the configuration for the client certificate authentication for the DataPlane.
-	// It is required to set up the connection with the Konnect Platform.
+	// In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the
+	// Konnect Platform.
+	//
 	// +kubebuilder:validation:Optional
 	// +kubebuilder:default={certificateSecret:{provisioning: Automatic}}
 	DataPlaneClientAuth *DataPlaneClientAuth `json:"dataPlaneClientAuth,omitempty"`
@@ -80,6 +83,7 @@ type KonnectExtensionSpec struct {
 	KonnectConfiguration *KonnectConfiguration `json:"konnect,omitempty"`
 
 	// ClusterDataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane.
+	//
 	// +optional
 	ClusterDataPlaneLabels map[string]string `json:"clusterDataPlaneLabels,omitempty"`
 }
@@ -115,6 +119,7 @@ type CertificateSecret struct {
 	Provisioning *string `json:"provisioning,omitempty"`
 
 	// CertificateSecretRef is the reference to the Secret containing the client certificate.
+	//
 	// +kubebuilder:validation:Optional
 	CertificateSecretRef *SecretRef `json:"secretRef,omitempty"`
 }
@@ -122,9 +127,12 @@ type CertificateSecret struct {
 // SecretRef contains the reference to the Secret containing the Konnect Control Plane's cluster certificate.
 type SecretRef struct {
 	// Name is the name of the Secret containing the Konnect Control Plane's cluster certificate.
+	//
 	// +kubebuilder:validation:Required
 	Name string `json:"name"`
 }
+
+// * TODO: define condition types https://github.com/Kong/kubernetes-configuration/issues/292
 
 // KonnectExtensionStatus defines the observed state of KonnectExtension.
 type KonnectExtensionStatus struct {
@@ -143,14 +151,11 @@ type KonnectExtensionStatus struct {
 	ControlPlaneRefs []commonv1alpha1.NamespacedRef `json:"controlPlaneRefs,omitempty"`
 
 	// DataPlaneClientAuth contains the configuration for the client certificate authentication for the DataPlane.
+	//
 	// +kubebuilder:validation:Optional
 	DataPlaneClientAuth *DataPlaneClientAuthStatus `json:"dataPlaneClientAuth,omitempty"`
 
 	// Conditions describe the current conditions of the KonnectExtensionStatus.
-	//
-	// Known condition types are:
-	//
-	// * TODO: define condition types https://github.com/Kong/kubernetes-configuration/issues/292
 	//
 	// +listType=map
 	// +listMapKey=type
