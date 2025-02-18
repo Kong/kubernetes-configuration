@@ -148,17 +148,16 @@ spec:
                         - name
                         type: object
                     type: object
-                    x-kubernetes-validations:
-                    - message: secretRef must be set when provisioning is set to Manual.
-                      rule: 'self.provisioning == ''Manual'' ? has(self.secretRef)
-                        : true'
-                    - message: secretRef must not be set when provisioning is set
-                        to Automatic.
-                      rule: 'self.provisioning == ''Automatic'' ? !has(self.secretRef)
-                        : true'
                 required:
                 - certificateSecret
                 type: object
+                x-kubernetes-validations:
+                - message: secretRef must be set when provisioning is set to Manual.
+                  rule: 'self.certificateSecret.provisioning == ''Manual'' ? has(self.certificateSecret.secretRef)
+                    : true'
+                - message: secretRef must not be set when provisioning is set to Automatic.
+                  rule: 'self.certificateSecret.provisioning == ''Automatic'' ? !has(self.certificateSecret.secretRef)
+                    : true'
               dataPlaneLabels:
                 additionalProperties:
                   type: string

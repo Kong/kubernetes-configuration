@@ -121,7 +121,7 @@ func TestKonnectExtension(t *testing.T) {
 						},
 						DataPlaneClientAuth: &konnectv1alpha1.DataPlaneClientAuth{
 							CertificateSecret: konnectv1alpha1.CertificateSecret{
-								Provisioning: lo.ToPtr(string(konnectv1alpha1.AutomaticSecretProvisioning)),
+								Provisioning: lo.ToPtr(konnectv1alpha1.AutomaticSecretProvisioning),
 								CertificateSecretRef: &konnectv1alpha1.SecretRef{
 									Name: "test-secret",
 								},

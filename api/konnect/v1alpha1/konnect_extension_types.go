@@ -77,6 +77,8 @@ type KonnectExtensionSpec struct {
 	//
 	// +kubebuilder:validation:Optional
 	// +kubebuilder:default={certificateSecret:{provisioning: Automatic}}
+	// +kubebuilder:validation:XValidation:rule="self.certificateSecret.provisioning == 'Manual' ? has(self.certificateSecret.secretRef) : true",message="secretRef must be set when provisioning is set to Manual."
+	// +kubebuilder:validation:XValidation:rule="self.certificateSecret.provisioning == 'Automatic' ? !has(self.certificateSecret.secretRef) : true",message="secretRef must not be set when provisioning is set to Automatic."
 	DataPlaneClientAuth *DataPlaneClientAuth `json:"dataPlaneClientAuth,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -95,17 +97,18 @@ type KonnectExtensionSpec struct {
 type DataPlaneClientAuth struct {
 	// CertificateSecret contains the information to access the client certificate.
 	//
-	// +kubebuilder:validation:XValidation:rule="self.provisioning == 'Manual' ? has(self.secretRef) : true",message="secretRef must be set when provisioning is set to Manual."
-	// +kubebuilder:validation:XValidation:rule="self.provisioning == 'Automatic' ? !has(self.secretRef) : true",message="secretRef must not be set when provisioning is set to Automatic."
 	// +kubebuilder:validation:Required
 	CertificateSecret CertificateSecret `json:"certificateSecret"`
 }
 
+// ProvisioningMethod is the type of the provisioning methods available to provision the certificate.
+type ProvisioningMethod string
+
 const (
 	// ManualSecretProvisioning is the method used to provision the certificate manually.
-	ManualSecretProvisioning = "Manual"
+	ManualSecretProvisioning ProvisioningMethod = "Manual"
 	// AutomaticSecretProvisioning is the method used to provision the certificate automatically.
-	AutomaticSecretProvisioning = "Automatic"
+	AutomaticSecretProvisioning ProvisioningMethod = "Automatic"
 )
 
 // CertificateSecret contains the information to access the client certificate.
@@ -117,7 +120,7 @@ type CertificateSecret struct {
 	// +kubebuilder:validation:Optional
 	// +kubebuilder:validation:Enum=Manual;Automatic
 	// +kubebuilder:default=Automatic
-	Provisioning *string `json:"provisioning,omitempty"`
+	Provisioning *ProvisioningMethod `json:"provisioning,omitempty"`
 
 	// CertificateSecretRef is the reference to the Secret containing the client certificate.
 	//

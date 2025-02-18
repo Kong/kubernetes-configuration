@@ -33,7 +33,7 @@ func (in *CertificateSecret) DeepCopyInto(out *CertificateSecret) {
 	*out = *in
 	if in.Provisioning != nil {
 		in, out := &in.Provisioning, &out.Provisioning
-		*out = new(string)
+		*out = new(ProvisioningMethod)
 		**out = **in
 	}
 	if in.CertificateSecretRef != nil {
