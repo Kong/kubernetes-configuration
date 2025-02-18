@@ -77,8 +77,6 @@ type KonnectExtensionSpec struct {
 	//
 	// +kubebuilder:validation:Optional
 	// +kubebuilder:default={certificateSecret:{provisioning: Automatic}}
-	// +kubebuilder:validation:XValidation:rule="self.certificateSecret.provisioning == 'Manual' ? has(self.certificateSecret.secretRef) : true",message="secretRef must be set when provisioning is set to Manual."
-	// +kubebuilder:validation:XValidation:rule="self.certificateSecret.provisioning == 'Automatic' ? !has(self.certificateSecret.secretRef) : true",message="secretRef must not be set when provisioning is set to Automatic."
 	DataPlaneClientAuth *DataPlaneClientAuth `json:"dataPlaneClientAuth,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -94,6 +92,8 @@ type KonnectExtensionSpec struct {
 // DataPlaneClientAuth contains the configuration for the client authentication for the DataPlane.
 // At the moment authentication is only supported through client certificate, but it might be extended in the future,
 // with e.g., token-based authentication.
+// +kubebuilder:validation:XValidation:rule="self.certificateSecret.provisioning == 'Manual' ? has(self.certificateSecret.secretRef) : true",message="secretRef must be set when provisioning is set to Manual."
+// +kubebuilder:validation:XValidation:rule="self.certificateSecret.provisioning == 'Automatic' ? !has(self.certificateSecret.secretRef) : true",message="secretRef must not be set when provisioning is set to Automatic."
 type DataPlaneClientAuth struct {
 	// CertificateSecret contains the information to access the client certificate.
 	//
