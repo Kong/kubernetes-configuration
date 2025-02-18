@@ -85,7 +85,7 @@ type KonnectExtensionSpec struct {
 	// ClusterDataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane.
 	//
 	// +optional
-	// +kubebuilder:validation:MaxProperties=16
+	// +kubebuilder:validation:MaxProperties=50
 	ClusterDataPlaneLabels map[string]string `json:"dataPlaneLabels,omitempty"`
 }
 
