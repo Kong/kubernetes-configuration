@@ -28,6 +28,12 @@ Adding a new version? You'll need three changes:
 - Added Endpoints to `KonnectGatewayControlPlane`'s status.
   [#299](https://github.com/Kong/kubernetes-configuration/pull/299)
 
+### Changes
+
+- Set `GenerateEmbeddedObjectMeta` to `true` when generating CRDs to align with
+  existing KGO CRDs.
+  [#298](https://github.com/Kong/kubernetes-configuration/pull/298)
+
 ## [v1.1.0]
 
 [v1.1.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.0.6...v1.1.0
