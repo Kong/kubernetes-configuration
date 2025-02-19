@@ -175,4 +175,196 @@ func TestKonnectExtension(t *testing.T) {
 			},
 		}.Run(t)
 	})
+	t.Run("dataPlaneLabels", func(t *testing.T) {
+		crdsvalidation.TestCasesGroup[*konnectv1alpha1.KonnectExtension]{
+			{
+				Name: "valid labels",
+				TestObject: &konnectv1alpha1.KonnectExtension{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectExtensionSpec{
+						ControlPlaneRef: commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						DataPlaneLabels: []konnectv1alpha1.DataPlaneLabel{
+							{
+								Key:   "valid-key",
+								Value: "valid.value",
+							},
+						},
+					},
+				},
+			},
+			{
+				Name: "invalid label value 1",
+				TestObject: &konnectv1alpha1.KonnectExtension{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectExtensionSpec{
+						ControlPlaneRef: commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						DataPlaneLabels: []konnectv1alpha1.DataPlaneLabel{
+							{
+								Key:   "valid-key",
+								Value: ".invalid.value",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("should match '^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$"),
+			},
+			{
+				Name: "invalid label value 2",
+				TestObject: &konnectv1alpha1.KonnectExtension{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectExtensionSpec{
+						ControlPlaneRef: commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						DataPlaneLabels: []konnectv1alpha1.DataPlaneLabel{
+							{
+								Key:   "valid-key",
+								Value: "invalid.value.",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("should match '^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$"),
+			},
+			{
+				Name: "invalid label value 3",
+				TestObject: &konnectv1alpha1.KonnectExtension{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectExtensionSpec{
+						ControlPlaneRef: commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						DataPlaneLabels: []konnectv1alpha1.DataPlaneLabel{
+							{
+								Key:   "valid-key",
+								Value: "invalid$value.",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("should match '^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$"),
+			},
+			{
+				Name: "invalid label value 4",
+				TestObject: &konnectv1alpha1.KonnectExtension{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectExtensionSpec{
+						ControlPlaneRef: commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						DataPlaneLabels: []konnectv1alpha1.DataPlaneLabel{
+							{
+								Key:   "valid-key",
+								Value: "Xv9gTq2LmNZp4WJdCYKfRB86oAhsMEytkPUOQGV7Dbx53cHFnwzjL1rS0vqIXv9gTq2LmNZp4WJdCYKfRB86oAhsMEytkPUOQGV7Dbx53cHFnwzjL1rS0vqI.",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("Too long: may not be more than 63 bytes"),
+			},
+			{
+				Name: "invalid label key 1",
+				TestObject: &konnectv1alpha1.KonnectExtension{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectExtensionSpec{
+						ControlPlaneRef: commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						DataPlaneLabels: []konnectv1alpha1.DataPlaneLabel{
+							{
+								Key:   ".invalid.key",
+								Value: "valid.value",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("should match '^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$"),
+			},
+			{
+				Name: "invalid label value 2",
+				TestObject: &konnectv1alpha1.KonnectExtension{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectExtensionSpec{
+						ControlPlaneRef: commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						DataPlaneLabels: []konnectv1alpha1.DataPlaneLabel{
+							{
+								Key:   "invalid.key.",
+								Value: "valid.value",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("should match '^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$"),
+			},
+			{
+				Name: "invalid label value 3",
+				TestObject: &konnectv1alpha1.KonnectExtension{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectExtensionSpec{
+						ControlPlaneRef: commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						DataPlaneLabels: []konnectv1alpha1.DataPlaneLabel{
+							{
+								Key:   "invalid$key",
+								Value: "valid.value",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("should match '^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$"),
+			},
+			{
+				Name: "invalid label value 4",
+				TestObject: &konnectv1alpha1.KonnectExtension{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectExtensionSpec{
+						ControlPlaneRef: commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						DataPlaneLabels: []konnectv1alpha1.DataPlaneLabel{
+							{
+								Key:   "Xv9gTq2LmNZp4WJdCYKfRB86oAhsMEytkPUOQGV7Dbx53cHFnwzjL1rS0vqIXv9gTq2LmNZp4WJdCYKfRB86oAhsMEytkPUOQGV7Dbx53cHFnwzjL1rS0vqI",
+								Value: "valid.value",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("Too long: may not be more than 63 bytes"),
+			},
+		}.Run(t)
+	})
 }

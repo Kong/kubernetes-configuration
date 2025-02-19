@@ -159,15 +159,39 @@ spec:
                   rule: 'self.certificateSecret.provisioning == ''Automatic'' ? !has(self.certificateSecret.secretRef)
                     : true'
               dataPlaneLabels:
-                additionalProperties:
-                  type: string
-                description: ClusterDataPlaneLabels is a set of labels that will be
-                  applied to the Konnect DataPlane.
-                maxProperties: 50
-                type: object
+                description: DataPlaneLabels is a set of labels that will be applied
+                  to the Konnect DataPlane.
+                items:
+                  description: DataPlaneLabel contains the key-value pair of a label
+                    that will be applied to the Konnect DataPlane.
+                  properties:
+                    key:
+                      description: Key is the key of the label.
+                      maxLength: 63
+                      minLength: 1
+                      pattern: ^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$
+                      type: string
+                      x-kubernetes-validations:
+                      - message: Keys must not start with 'kong', 'konnect', 'insomnia',
+                          'mesh', 'kic', or '_', which are reserved for Kong.
+                        rule: '!(self.startsWith(''kong'') || self.startsWith(''konnect'')
+                          || self.startsWith(''insomnia'') || self.startsWith(''mesh'')
+                          || self.startsWith(''kic'') || self.startsWith(''_''))'
+                    value:
+                      description: Value is the value of the label.
+                      maxLength: 63
+                      minLength: 1
+                      pattern: ^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$
+                      type: string
+                  required:
+                  - key
+                  - value
+                  type: object
+                maxItems: 5
+                type: array
               konnect:
-                description: KonnectConfiguration is the Schema for the KonnectConfiguration
-                  API.
+                description: KonnectConfiguration holds the information needed to
+                  setup the Konnect Configuration.
                 properties:
                   authRef:
                     description: |-

@@ -79,19 +79,22 @@ type KonnectExtensionSpec struct {
 	// +kubebuilder:default={certificateSecret:{provisioning: Automatic}}
 	DataPlaneClientAuth *DataPlaneClientAuth `json:"dataPlaneClientAuth,omitempty"`
 
+	// KonnectConfiguration holds the information needed to setup the Konnect Configuration.
+	//
 	// +kubebuilder:validation:Optional
 	KonnectConfiguration *KonnectConfiguration `json:"konnect,omitempty"`
 
-	// ClusterDataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane.
+	// DataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane.
 	//
 	// +optional
-	// +kubebuilder:validation:MaxProperties=50
-	ClusterDataPlaneLabels map[string]string `json:"dataPlaneLabels,omitempty"`
+	// +kubebuilder:validation:MaxItems=5
+	DataPlaneLabels []DataPlaneLabel `json:"dataPlaneLabels,omitempty"`
 }
 
 // DataPlaneClientAuth contains the configuration for the client authentication for the DataPlane.
 // At the moment authentication is only supported through client certificate, but it might be extended in the future,
 // with e.g., token-based authentication.
+//
 // +kubebuilder:validation:XValidation:rule="self.certificateSecret.provisioning == 'Manual' ? has(self.certificateSecret.secretRef) : true",message="secretRef must be set when provisioning is set to Manual."
 // +kubebuilder:validation:XValidation:rule="self.certificateSecret.provisioning == 'Automatic' ? !has(self.certificateSecret.secretRef) : true",message="secretRef must not be set when provisioning is set to Automatic."
 type DataPlaneClientAuth struct {
@@ -134,6 +137,24 @@ type SecretRef struct {
 	//
 	// +kubebuilder:validation:Required
 	Name string `json:"name"`
+}
+
+// DataPlaneLabel contains the key-value pair of a label that will be applied to the Konnect DataPlane.
+type DataPlaneLabel struct {
+	// Key is the key of the label.
+	//
+	// +kubebuilder:validation:MinLength=1
+	// +kubebuilder:validation:MaxLength=63
+	// +kubebuilder:validation:Pattern="^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$"
+	// +kubebuilder:validation:XValidation:rule="!(self.startsWith('kong') || self.startsWith('konnect') || self.startsWith('insomnia') || self.startsWith('mesh') || self.startsWith('kic') || self.startsWith('_'))",message="Keys must not start with 'kong', 'konnect', 'insomnia', 'mesh', 'kic', or '_', which are reserved for Kong."
+	Key string `json:"key"`
+
+	// Value is the value of the label.
+	//
+	// +kubebuilder:validation:MinLength=1
+	// +kubebuilder:validation:MaxLength=63
+	// +kubebuilder:validation:Pattern="^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$"
+	Value string `json:"value"`
 }
 
 // * TODO: define condition types https://github.com/Kong/kubernetes-configuration/issues/292
