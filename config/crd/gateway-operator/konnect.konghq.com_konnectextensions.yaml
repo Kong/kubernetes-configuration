@@ -351,6 +351,41 @@ spec:
                   type: object
                 maxItems: 16
                 type: array
+              konnect:
+                description: Konnect contains the status information related to the
+                  Konnect Control Plane.
+                properties:
+                  clusterType:
+                    description: TypClusterType is the type of the Konnect Control
+                      Plane.
+                    enum:
+                    - ControlPlane
+                    - K8SIngressController
+                    type: string
+                  controlPlaneID:
+                    description: ControlPlaneID is the Konnect ID of the ControlPlane
+                      this KonnectExtension is associated with.
+                    type: string
+                  endpoints:
+                    description: Endpoints defines the Konnect endpoints for the control
+                      plane.
+                    properties:
+                      controlPlane:
+                        description: ControlPlaneEndpoint is the endpoint for the
+                          control plane.
+                        type: string
+                      telemetry:
+                        description: TelemetryEndpoint is the endpoint for telemetry.
+                        type: string
+                    required:
+                    - controlPlane
+                    - telemetry
+                    type: object
+                required:
+                - clusterType
+                - controlPlaneID
+                - endpoints
+                type: object
             type: object
         type: object
         x-kubernetes-validations:
