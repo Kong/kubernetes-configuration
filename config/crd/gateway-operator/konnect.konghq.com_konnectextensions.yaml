@@ -212,16 +212,19 @@ spec:
             - controlPlaneRef
             type: object
           status:
+            default:
+              conditions:
+              - lastTransitionTime: "1970-01-01T00:00:00Z"
+                message: Waiting for controller
+                reason: Pending
+                status: Unknown
+                type: Ready
             description: Status is the status of the KonnectExtension resource.
             properties:
               conditions:
                 description: |-
                   Conditions describe the current conditions of the KonnectExtensionStatus.
                   Known condition types are:
-
-                  * "Accepted"
-                  * "SecretProvisioned"
-                  * "ControlPlaneRefValid"
                 items:
                   description: Condition contains details for one aspect of the current
                     state of this API Resource.
@@ -351,6 +354,41 @@ spec:
                   type: object
                 maxItems: 16
                 type: array
+              konnect:
+                description: Konnect contains the status information related to the
+                  Konnect Control Plane.
+                properties:
+                  clusterType:
+                    description: TypClusterType is the type of the Konnect Control
+                      Plane.
+                    enum:
+                    - ControlPlane
+                    - K8SIngressController
+                    type: string
+                  controlPlaneID:
+                    description: ControlPlaneID is the Konnect ID of the ControlPlane
+                      this KonnectExtension is associated with.
+                    type: string
+                  endpoints:
+                    description: Endpoints defines the Konnect endpoints for the control
+                      plane.
+                    properties:
+                      controlPlane:
+                        description: ControlPlaneEndpoint is the endpoint for the
+                          control plane.
+                        type: string
+                      telemetry:
+                        description: TelemetryEndpoint is the endpoint for telemetry.
+                        type: string
+                    required:
+                    - controlPlane
+                    - telemetry
+                    type: object
+                required:
+                - clusterType
+                - controlPlaneID
+                - endpoints
+                type: object
             type: object
         type: object
         x-kubernetes-validations:
