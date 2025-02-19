@@ -27,6 +27,9 @@ Adding a new version? You'll need three changes:
   [#300](https://github.com/Kong/kubernetes-configuration/pull/300)
 - Added Endpoints to `KonnectGatewayControlPlane`'s status.
   [#299](https://github.com/Kong/kubernetes-configuration/pull/299)
+- Added `konnect.konghq.com/KonnectExtension` CRD. `gateway-operator.konghq.com/KonnectExtension`
+  has been deprecated.
+  [#291](https://github.com/Kong/kubernetes-configuration/pull/291)
 
 ### Changes
 

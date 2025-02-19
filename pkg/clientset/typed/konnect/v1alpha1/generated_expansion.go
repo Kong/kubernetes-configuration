@@ -22,4 +22,6 @@ type KonnectAPIAuthConfigurationExpansion interface{}
 
 type KonnectCloudGatewayNetworkExpansion interface{}
 
+type KonnectExtensionExpansion interface{}
+
 type KonnectGatewayControlPlaneExpansion interface{}
