@@ -1,16 +1,37 @@
 package main
 
-var supportedKonnectTypesControlPlaneConfig = []supportedTypesT{
+var supportedKonnectV1Alpha1TypesWithControlPlaneRef = []supportedTypesT{
 	{
-		PackageVersion: "v1",
+		PackageVersion: "v1alpha1",
 		AdditionalImports: []string{
 			`commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"`,
 		},
 		Types: []templateDataT{
 			{
-				Type:                "KongConsumer",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KonnectCloudGatewayDataPlaneGroupConfiguration",
+				KonnectStatusType:          "KonnectEntityStatusWithControlPlaneRef",
+				KonnectStatusEmbedded:      true,
+				GetKonnectStatusReturnType: "*KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
+				ControlPlaneRefRequired:    true,
+			},
+		},
+	},
+}
+
+var supportedKonnectTypesControlPlaneConfig = []supportedTypesT{
+	{
+		PackageVersion: "v1",
+		AdditionalImports: []string{
+			`commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"`,
+			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"`,
+		},
+		Types: []templateDataT{
+			{
+				Type:                       "KongConsumer",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 			{
 				Type: "KongPlugin",
@@ -21,12 +42,14 @@ var supportedKonnectTypesControlPlaneConfig = []supportedTypesT{
 		PackageVersion: "v1beta1",
 		AdditionalImports: []string{
 			`commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"`,
+			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"`,
 		},
 		Types: []templateDataT{
 			{
-				Type:                "KongConsumerGroup",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KongConsumerGroup",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 		},
 	},
@@ -34,86 +57,104 @@ var supportedKonnectTypesControlPlaneConfig = []supportedTypesT{
 		PackageVersion: "v1alpha1",
 		AdditionalImports: []string{
 			`commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"`,
+			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"`,
 		},
 		Types: []templateDataT{
 			{
-				Type:                "KongKey",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndKeySetRef",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KongKey",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndKeySetRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 			{
-				Type:                "KongKeySet",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KongKeySet",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 			{
-				Type:              "KongCredentialBasicAuth",
-				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+				Type:                       "KongCredentialBasicAuth",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
 			},
 			{
-				Type:              "KongCredentialAPIKey",
-				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+				Type:                       "KongCredentialAPIKey",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
 			},
 			{
-				Type:              "KongCredentialJWT",
-				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+				Type:                       "KongCredentialJWT",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
 			},
 			{
-				Type:              "KongCredentialACL",
-				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+				Type:                       "KongCredentialACL",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
 			},
 			{
-				Type:              "KongCredentialHMAC",
-				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+				Type:                       "KongCredentialHMAC",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndConsumerRefs",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
 			},
 			{
-				Type:                "KongCACertificate",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KongCACertificate",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 			{
-				Type:                "KongCertificate",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KongCertificate",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 			{
-				Type:                    "KongPluginBinding",
-				KonnectStatusType:       "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType:     "commonv1alpha1.ControlPlaneRef",
-				ControlPlaneRefRequired: true,
+				Type:                       "KongPluginBinding",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
+				ControlPlaneRefRequired:    true,
 			},
 			{
-				Type:                "KongService",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KongService",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 			{
-				Type:                "KongRoute",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndServiceRefs",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KongRoute",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndServiceRefs",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 			{
-				Type:                "KongUpstream",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KongUpstream",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 			{
-				Type:              "KongTarget",
-				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndUpstreamRefs",
+				Type:                       "KongTarget",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndUpstreamRefs",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
 			},
 			{
-				Type:                "KongVault",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KongVault",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 			{
-				Type:              "KongSNI",
-				KonnectStatusType: "konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndCertificateRefs",
+				Type:                       "KongSNI",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndCertificateRefs",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
 			},
 			{
-				Type:                "KongDataPlaneClientCertificate",
-				KonnectStatusType:   "konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
-				ControlPlaneRefType: "commonv1alpha1.ControlPlaneRef",
+				Type:                       "KongDataPlaneClientCertificate",
+				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneRef",
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
+				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 			},
 		},
 	},
@@ -124,15 +165,19 @@ var supportedKonnectTypesStandalone = []supportedTypesT{
 		PackageVersion: "v1alpha1",
 		Types: []templateDataT{
 			{
-				Type:              "KonnectGatewayControlPlane",
-				KonnectStatusType: "*KonnectEntityStatus",
+				Type:                       "KonnectGatewayControlPlane",
+				KonnectStatusType:          "*KonnectEntityStatus",
+				KonnectStatusEmbedded:      true,
+				GetKonnectStatusReturnType: "KonnectEntityStatus",
 			},
 			{
 				Type: "KonnectAPIAuthConfiguration",
 			},
 			{
-				Type:              "KonnectCloudGatewayNetwork",
-				KonnectStatusType: "*KonnectEntityStatus",
+				Type:                       "KonnectCloudGatewayNetwork",
+				KonnectStatusType:          "*KonnectEntityStatus",
+				KonnectStatusEmbedded:      true,
+				GetKonnectStatusReturnType: "KonnectEntityStatus",
 			},
 			{
 				Type: "KonnectExtension",
@@ -171,6 +216,9 @@ var supportedGatewayOperatorTypes = []supportedTypesT{
 
 var supportedConfigurationPackageTypesWithList = supportedKonnectTypesControlPlaneConfig
 
-var supportedKonnectPackageTypesWithList = supportedKonnectTypesStandalone
+var supportedKonnectPackageTypesWithList = append(
+	supportedKonnectTypesStandalone,
+	supportedKonnectV1Alpha1TypesWithControlPlaneRef...,
+)
 
 var supportedGatewayOperatorPackageTypesWithList = supportedGatewayOperatorTypes

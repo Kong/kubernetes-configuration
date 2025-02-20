@@ -20,6 +20,8 @@ package v1alpha1
 
 type KonnectAPIAuthConfigurationExpansion interface{}
 
+type KonnectCloudGatewayDataPlaneGroupConfigurationExpansion interface{}
+
 type KonnectCloudGatewayNetworkExpansion interface{}
 
 type KonnectExtensionExpansion interface{}
