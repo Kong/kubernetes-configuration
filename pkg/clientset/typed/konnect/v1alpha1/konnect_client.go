@@ -29,6 +29,7 @@ import (
 type KonnectV1alpha1Interface interface {
 	RESTClient() rest.Interface
 	KonnectAPIAuthConfigurationsGetter
+	KonnectCloudGatewayDataPlaneGroupConfigurationsGetter
 	KonnectCloudGatewayNetworksGetter
 	KonnectExtensionsGetter
 	KonnectGatewayControlPlanesGetter
@@ -41,6 +42,10 @@ type KonnectV1alpha1Client struct {
 
 func (c *KonnectV1alpha1Client) KonnectAPIAuthConfigurations(namespace string) KonnectAPIAuthConfigurationInterface {
 	return newKonnectAPIAuthConfigurations(c, namespace)
+}
+
+func (c *KonnectV1alpha1Client) KonnectCloudGatewayDataPlaneGroupConfigurations(namespace string) KonnectCloudGatewayDataPlaneGroupConfigurationInterface {
+	return newKonnectCloudGatewayDataPlaneGroupConfigurations(c, namespace)
 }
 
 func (c *KonnectV1alpha1Client) KonnectCloudGatewayNetworks(namespace string) KonnectCloudGatewayNetworkInterface {

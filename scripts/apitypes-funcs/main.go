@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"text/template"
@@ -26,6 +27,12 @@ type templateDataT struct {
 	// If it's not provided Konnect status functions will not be generated.
 	KonnectStatusType string
 
+	// KonnectStatusEmbedded is true if the Konnect status is embedded in the type's status.
+	KonnectStatusEmbedded bool
+
+	// GetKonnectStatusReturnType is the return type of the GetKonnectStatus function.
+	GetKonnectStatusReturnType string
+
 	// ControlPlaneRefType is the ControlPlaneRef type to be used in the template (with the package name if it's outside
 	// the type's package).
 	ControlPlaneRefType string
@@ -42,20 +49,70 @@ const (
 )
 
 func main() {
-	if err := renderTemplate(konnectFuncTemplate, konnectFuncOutputFileName, supportedKonnectTypesControlPlaneConfig, configurationPackageName); err != nil {
-		panic(err)
+	type render struct {
+		templateContent string
+		outputFile      string
+		supportedTypes  []supportedTypesT
 	}
-	if err := renderTemplate(konnectFuncStandaloneTemplate, konnectFuncOutputFileName, supportedKonnectTypesStandalone, konnectPackageName); err != nil {
-		panic(err)
+	type templatePipeline struct {
+		packagename string
+		renders     []render
 	}
-	if err := renderTemplate(listFuncTemplate, listFuncOutputFileNamme, supportedKonnectPackageTypesWithList, konnectPackageName); err != nil {
-		panic(err)
+	templateRenderingPipeline := []templatePipeline{
+		{
+			packagename: configurationPackageName,
+			renders: []render{
+				{
+					templateContent: konnectFuncTemplate,
+					outputFile:      konnectFuncOutputFileName,
+					supportedTypes:  supportedKonnectTypesControlPlaneConfig,
+				},
+				{
+					templateContent: listFuncTemplate,
+					outputFile:      listFuncOutputFileNamme,
+					supportedTypes:  supportedConfigurationPackageTypesWithList,
+				},
+			},
+		},
+		{
+			packagename: konnectPackageName,
+			renders: []render{
+				{
+					templateContent: konnectFuncTemplate,
+					outputFile:      konnectFuncOutputFileName,
+					supportedTypes:  supportedKonnectV1Alpha1TypesWithControlPlaneRef,
+				},
+				{
+					templateContent: konnectFuncStandaloneTemplate,
+					outputFile:      konnectFuncOutputStandaloneFileName,
+					supportedTypes:  supportedKonnectTypesStandalone,
+				},
+				{
+					templateContent: listFuncTemplate,
+					outputFile:      listFuncOutputFileNamme,
+					supportedTypes:  supportedKonnectPackageTypesWithList,
+				},
+			},
+		},
+		{
+			packagename: gatewayOperatorPackageName,
+			renders: []render{
+				{
+					templateContent: listFuncTemplate,
+					outputFile:      listFuncOutputFileNamme,
+					supportedTypes:  supportedGatewayOperatorPackageTypesWithList,
+				},
+			},
+		},
 	}
-	if err := renderTemplate(listFuncTemplate, listFuncOutputFileNamme, supportedConfigurationPackageTypesWithList, configurationPackageName); err != nil {
-		panic(err)
-	}
-	if err := renderTemplate(listFuncTemplate, listFuncOutputFileNamme, supportedGatewayOperatorPackageTypesWithList, gatewayOperatorPackageName); err != nil {
-		panic(err)
+
+	for _, p := range templateRenderingPipeline {
+		packagename := p.packagename
+		for _, r := range p.renders {
+			if err := renderTemplate(r.templateContent, r.outputFile, r.supportedTypes, packagename); err != nil {
+				panic(err)
+			}
+		}
 	}
 }
 
@@ -65,6 +122,8 @@ func renderTemplate(
 	supportedTypes []supportedTypesT,
 	packagename string,
 ) error {
+	log := slog.With("packageName", packagename, "outputFile", outputFile)
+
 	tpl, err := template.New("tpl").Funcs(sprig.TxtFuncMap()).Parse(templateContent)
 	if err != nil {
 		return fmt.Errorf("failed to parse template for %s: %w", outputFile, err)
@@ -75,6 +134,8 @@ func renderTemplate(
 		if err := tpl.Execute(contents, st); err != nil {
 			return fmt.Errorf("%s: failed to execute template for %s: %w", path, outputFile, err)
 		}
+
+		log.Info("Writing to file", "path", path)
 		if err := os.WriteFile(path, contents.Bytes(), 0o600); err != nil {
 			return fmt.Errorf("%s: failed to write file %s: %w", path, outputFile, err)
 		}
