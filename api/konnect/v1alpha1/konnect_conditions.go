@@ -161,26 +161,26 @@ const (
 )
 
 const (
-	// KonnectExtensionAcceptedConditionType is the type of the condition that indicates
-	// whether the Konnect extension has been accepted.
-	KonnectExtensionAcceptedConditionType = "Accepted"
+	// KonnectExtensionReadyConditionType is the type of the condition that indicates
+	// whether the Konnect extension is ready to be used.
+	KonnectExtensionReadyConditionType = "Ready"
 
-	// KonnectExtensionAcceptedReasonAccepted is the reason used with the
-	// KonnectExtensionAccepted condition type indicating that the Konnect extension
-	// has been accepted.
-	KonnectExtensionAcceptedReasonAccepted = "Accepted"
-	// KonnectExtensionAcceptedReasonPending is the reason used with the
-	// KonnectExtensionAccepted condition type indicating that the Konnect extension
+	// KonnectExtensionReadyReasonReady is the reason used with the
+	// KonnectExtensionReady condition type indicating that the Konnect extension
+	// is Ready.
+	KonnectExtensionReadyReasonReady = "Ready"
+	// KonnectExtensionReadyReasonPending is the reason used with the
+	// KonnectExtensionReady condition type indicating that the Konnect extension
 	// is pending.
-	KonnectExtensionAcceptedReasonPending = "Pending"
-	// KonnectExtensionAcceptedReasonInvalidControlPlaneRef is the reason used with the
-	// KonnectExtensionAccepted condition type indicating that the ControlPlane reference
+	KonnectExtensionReadyReasonPending = "Pending"
+	// KonnectExtensionReadyReasonInvalidControlPlaneRef is the reason used with the
+	// KonnectExtensionReady condition type indicating that the ControlPlane reference
 	// is invalid. Further details can be found in the ControlPlaneRef condition.
-	KonnectExtensionAcceptedReasonInvalidControlPlaneRef = "InvalidControlPlaneRef"
-	// KonnectExtensionAcceptedReasonFailedDataPlaneClientAuthSecretProvisioning is the reason used with the
-	// KonnectExtensionAccepted condition type indicating that the DataPlaneClientAuth secret
+	KonnectExtensionReadyReasonInvalidControlPlaneRef = "InvalidControlPlaneRef"
+	// KonnectExtensionReadyReasonFailedDataPlaneClientAuthSecretProvisioning is the reason used with the
+	// KonnectExtensionReady condition type indicating that the DataPlaneClientAuth secret
 	// reference provisioning has failed. Further details can be found in the DataPlaneClientAuthSecretProvisioning condition.
-	KonnectExtensionAcceptedReasonFailedDataPlaneClientAuthSecretProvisioning = "FailedDataPlaneClientAuthSecretProvisioning"
+	KonnectExtensionReadyReasonFailedDataPlaneClientAuthSecretProvisioning = "FailedDataPlaneClientAuthSecretProvisioning"
 )
 
 const (

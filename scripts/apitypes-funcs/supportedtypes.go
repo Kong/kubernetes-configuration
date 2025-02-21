@@ -131,6 +131,9 @@ var supportedKonnectTypesStandalone = []supportedTypesT{
 				Type:              "KonnectCloudGatewayNetwork",
 				KonnectStatusType: "*KonnectEntityStatus",
 			},
+			{
+				Type: "KonnectExtension",
+			},
 		},
 	},
 }
