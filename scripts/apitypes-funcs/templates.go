@@ -45,22 +45,6 @@ func (obj *{{ .Type }}) SetKonnectID(id string) {
 	obj.Status.Konnect.ID = id
 }
 
-{{ end -}}
-// GetTypeName returns the {{ .Type }} Kind name
-func (obj {{ .Type }}) GetTypeName() string {
-	return "{{ .Type }}"
-}
-
-// GetConditions returns the Status Conditions
-func (obj *{{ .Type }}) GetConditions() []metav1.Condition {
-	return obj.Status.Conditions
-}
-
-// SetConditions sets the Status Conditions
-func (obj *{{ .Type }}) SetConditions(conditions []metav1.Condition) {
-	obj.Status.Conditions = conditions
-}
-
 // GetControlPlaneID returns the ControlPlane ID in the {{ .Type }} status.
 func (obj *{{ .Type }}) GetControlPlaneID() string {
 	if obj.Status.Konnect == nil {
@@ -75,6 +59,22 @@ func (obj *{{ .Type }}) SetControlPlaneID(id string) {
 		obj.initKonnectStatus()
 	}
 	obj.Status.Konnect.ControlPlaneID = id
+}
+{{- end }}
+
+// GetTypeName returns the {{ .Type }} Kind name
+func (obj {{ .Type }}) GetTypeName() string {
+	return "{{ .Type }}"
+}
+
+// GetConditions returns the Status Conditions
+func (obj *{{ .Type }}) GetConditions() []metav1.Condition {
+	return obj.Status.Conditions
+}
+
+// SetConditions sets the Status Conditions
+func (obj *{{ .Type }}) SetConditions(conditions []metav1.Condition) {
+	obj.Status.Conditions = conditions
 }
 {{- if .ControlPlaneRefType }}
 
