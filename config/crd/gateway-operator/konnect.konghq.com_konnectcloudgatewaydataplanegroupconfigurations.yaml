@@ -192,6 +192,8 @@ spec:
                       - type
                       type: object
                       x-kubernetes-validations:
+                      - message: can't provide both autopilot and static configuration
+                        rule: '!(has(self.autopilot) && has(self.static))'
                       - message: static is required when type is ConfigurationDataPlaneGroupAutoscaleStatic
                         rule: 'self.type == ''ConfigurationDataPlaneGroupAutoscaleStatic''
                           ? has(self.static) : true'

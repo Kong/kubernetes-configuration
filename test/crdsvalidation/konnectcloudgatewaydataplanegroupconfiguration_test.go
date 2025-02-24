@@ -103,6 +103,35 @@ func TestKonnectDataPlaneGroupConfiguration(t *testing.T) {
 				ExpectedErrorMessage: lo.ToPtr("autopilot is required when type is ConfigurationDataPlaneGroupAutoscaleAutopilot"),
 			},
 			{
+				Name: "can't provide both autopilot and static configuration",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayDataPlaneGroupConfiguration{
+					ObjectMeta: commonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayDataPlaneGroupConfigurationSpec{
+						ControlPlaneRef: cpRef,
+						Version:         "3.9",
+						APIAccess:       lo.ToPtr(sdkkonnectcomp.APIAccessPrivatePlusPublic),
+						DataplaneGroups: []konnectv1alpha1.KonnectConfigurationDataPlaneGroup{
+							{
+								Provider:   sdkkonnectcomp.ProviderNameAws,
+								Region:     "us-west-2",
+								NetworkRef: networkRef,
+								Autoscale: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscale{
+									Type: sdkkonnectcomp.ConfigurationDataPlaneGroupAutoscaleTypeConfigurationDataPlaneGroupAutoscaleAutopilot,
+									ConfigurationDataPlaneGroupAutoscaleStatic: &konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleStatic{
+										InstanceType:       sdkkonnectcomp.InstanceTypeNameSmall,
+										RequestedInstances: 3,
+									},
+									ConfigurationDataPlaneGroupAutoscaleAutopilot: &konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleAutopilot{
+										BaseRps: 123,
+									},
+								},
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("can't provide both autopilot and static configuration"),
+			},
+			{
 				Name: "envs have to start with KONG_",
 				TestObject: &konnectv1alpha1.KonnectCloudGatewayDataPlaneGroupConfiguration{
 					ObjectMeta: commonObjectMeta,

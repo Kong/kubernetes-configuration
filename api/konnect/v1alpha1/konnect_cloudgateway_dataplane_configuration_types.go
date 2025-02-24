@@ -148,6 +148,7 @@ type ConfigurationDataPlaneGroupEnvironmentField struct {
 
 // ConfigurationDataPlaneGroupAutoscale specifies the autoscale configuration for the data-plane group.
 //
+// +kubebuilder:validation:XValidation:rule="!(has(self.autopilot) && has(self.static))",message="can't provide both autopilot and static configuration"
 // +kubebuilder:validation:XValidation:rule="self.type == 'ConfigurationDataPlaneGroupAutoscaleStatic' ? has(self.static) : true",message="static is required when type is ConfigurationDataPlaneGroupAutoscaleStatic"
 // +kubebuilder:validation:XValidation:rule="self.type == 'ConfigurationDataPlaneGroupAutoscaleAutopilot' ? has(self.autopilot) : true",message="autopilot is required when type is ConfigurationDataPlaneGroupAutoscaleAutopilot"
 type ConfigurationDataPlaneGroupAutoscale struct {
