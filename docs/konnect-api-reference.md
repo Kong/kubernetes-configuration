@@ -467,6 +467,21 @@ KonnectExtensionClusterType is the type of the Konnect Control Plane.
 _Appears in:_
 - [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
 
+#### KonnectExtensionControlPlane
+
+
+KonnectExtensionControlPlane is the configuration for the Konnect Control Plane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with. |
+
+
+_Appears in:_
+- [KonnectExtensionSpec](#konnectextensionspec)
+
 #### KonnectExtensionControlPlaneStatus
 
 
@@ -493,7 +508,7 @@ KonnectExtensionSpec defines the desired state of KonnectExtension.
 
 | Field | Description |
 | --- | --- |
-| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with. |
+| `konnectControlPlane` _[KonnectExtensionControlPlane](#konnectextensioncontrolplane)_ | KonnectControlPlane is the configuration for the Konnect Control Plane. |
 | `dataPlaneClientAuth` _[DataPlaneClientAuth](#dataplaneclientauth)_ | DataPlaneClientAuth is the configuration for the client certificate authentication for the DataPlane. In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the Konnect Platform. |
 | `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration holds the information needed to setup the Konnect Configuration. |
 | `dataPlaneLabels` _object (keys:string, values:[DataPlaneLabelValue](#dataplanelabelvalue))_ | DataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane. |
