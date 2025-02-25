@@ -38,9 +38,9 @@ const (
 // +kubebuilder:object:root=true
 // +kubebuilder:object:generate=true
 // +kubebuilder:subresource:status
-// +kubebuilder:validation:XValidation:rule="oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef", message="spec.controlPlaneRef is immutable."
-// +kubebuilder:validation:XValidation:rule="self.spec.controlPlaneRef.type == 'konnectID' ? has(self.spec.konnect) : true",message="konnect must be set when ControlPlaneRef is set to KonnectID."
-// +kubebuilder:validation:XValidation:rule="self.spec.controlPlaneRef.type == 'konnectNamespacedRef' ? !has(self.spec.konnect) : true",message="konnect must be unset when ControlPlaneRef is set to konnectNamespacedRef."
+// +kubebuilder:validation:XValidation:rule="oldSelf.spec.konnectControlPlane.controlPlaneRef == self.spec.konnectControlPlane.controlPlaneRef", message="spec.konnectControlPlane.controlPlaneRef is immutable."
+// +kubebuilder:validation:XValidation:rule="self.spec.konnectControlPlane.controlPlaneRef.type == 'konnectID' ? has(self.spec.konnect) : true",message="konnect must be set when ControlPlaneRef is set to KonnectID."
+// +kubebuilder:validation:XValidation:rule="self.spec.konnectControlPlane.controlPlaneRef.type == 'konnectNamespacedRef' ? !has(self.spec.konnect) : true",message="konnect must be unset when ControlPlaneRef is set to konnectNamespacedRef."
 // +apireference:kgo:include
 // +kong:channels=gateway-operator
 type KonnectExtension struct {
@@ -68,12 +68,10 @@ type KonnectExtensionList struct {
 
 // KonnectExtensionSpec defines the desired state of KonnectExtension.
 type KonnectExtensionSpec struct {
-	// ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with.
+	// KonnectControlPlane is the configuration for the Konnect Control Plane.
 	//
 	// +kubebuilder:validation:Required
-	// +kubebuilder:validation:XValidation:rule="self.type != 'kic'", message="kic type not supported as controlPlaneRef."
-	ControlPlaneRef commonv1alpha1.ControlPlaneRef `json:"controlPlaneRef"`
-
+	KonnectControlPlane KonnectExtensionControlPlane `json:"konnectControlPlane"`
 	// DataPlaneClientAuth is the configuration for the client certificate authentication for the DataPlane.
 	// In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the
 	// Konnect Platform.
@@ -92,6 +90,15 @@ type KonnectExtensionSpec struct {
 	// +optional
 	// +kubebuilder:validation:MaxItems=5
 	DataPlaneLabels []DataPlaneLabel `json:"dataPlaneLabels,omitempty"`
+}
+
+// KonnectExtensionControlPlane is the configuration for the Konnect Control Plane.
+type KonnectExtensionControlPlane struct {
+	// ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with.
+	//
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:XValidation:rule="self.type != 'kic'", message="kic type not supported as controlPlaneRef."
+	ControlPlaneRef commonv1alpha1.ControlPlaneRef `json:"controlPlaneRef"`
 }
 
 // DataPlaneClientAuth contains the configuration for the client authentication for the DataPlane.
