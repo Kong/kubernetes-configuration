@@ -98,18 +98,6 @@ CertificateSecret contains the information to access the client certificate.
 _Appears in:_
 - [DataPlaneClientAuth](#dataplaneclientauth)
 
-#### ClusterType
-_Underlying type:_ `string`
-
-ClusterType is the type of the Konnect Control Plane.
-
-
-
-
-
-_Appears in:_
-- [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
-
 #### DataPlaneClientAuth
 
 
@@ -298,6 +286,18 @@ _Appears in:_
 
 
 
+#### KonnectExtensionClusterType
+_Underlying type:_ `string`
+
+KonnectExtensionClusterType is the type of the Konnect Control Plane.
+
+
+
+
+
+_Appears in:_
+- [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
+
 #### KonnectExtensionControlPlaneStatus
 
 
@@ -308,7 +308,7 @@ KonnectExtensionControlPlaneStatus contains the Konnect Control Plane status inf
 | Field | Description |
 | --- | --- |
 | `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this KonnectExtension is associated with. |
-| `clusterType` _[ClusterType](#clustertype)_ | ClusterType is the type of the Konnect Control Plane. |
+| `clusterType` _[KonnectExtensionClusterType](#konnectextensionclustertype)_ | ClusterType is the type of the Konnect Control Plane. |
 | `endpoints` _[KonnectEndpoints](#konnectendpoints)_ | Endpoints defines the Konnect endpoints for the control plane. |
 
 

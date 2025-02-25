@@ -196,14 +196,14 @@ type KonnectExtensionStatus struct {
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
-// ClusterType is the type of the Konnect Control Plane.
-type ClusterType string
+// KonnectExtensionClusterType is the type of the Konnect Control Plane.
+type KonnectExtensionClusterType string
 
 const (
 	// ClusterTypeControlPlane is the type of the Konnect Control Plane.
-	ClusterTypeControlPlane ClusterType = "ControlPlane"
+	ClusterTypeControlPlane KonnectExtensionClusterType = "ControlPlane"
 	// ClusterTypeK8sIngressController is the type of the Kubernetes Control Plane.
-	ClusterTypeK8sIngressController ClusterType = "K8SIngressController"
+	ClusterTypeK8sIngressController KonnectExtensionClusterType = "K8SIngressController"
 )
 
 // KonnectExtensionControlPlaneStatus contains the Konnect Control Plane status information.
@@ -211,13 +211,13 @@ type KonnectExtensionControlPlaneStatus struct {
 	// ControlPlaneID is the Konnect ID of the ControlPlane this KonnectExtension is associated with.
 	//
 	// +kubebuilder:validation:Required
-	ControlPlaneID string `json:"controlPlaneID,omitempty"`
+	ControlPlaneID string `json:"controlPlaneID"`
 
 	// ClusterType is the type of the Konnect Control Plane.
 	//
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:Enum=ControlPlane;K8SIngressController
-	ClusterType ClusterType `json:"clusterType"`
+	ClusterType KonnectExtensionClusterType `json:"clusterType"`
 
 	// Endpoints defines the Konnect endpoints for the control plane.
 	//
