@@ -146,27 +146,38 @@ type ConfigurationDataPlaneGroupEnvironmentField struct {
 	Value string `json:"value"`
 }
 
+// ConfigurationDataPlaneGroupAutoscaleType is the type of autoscale configuration for the data-plane group.
+type ConfigurationDataPlaneGroupAutoscaleType string
+
+const (
+	// ConfigurationDataPlaneGroupAutoscaleTypeStatic is the autoscale type for static configuration.
+	ConfigurationDataPlaneGroupAutoscaleTypeStatic ConfigurationDataPlaneGroupAutoscaleType = "static"
+
+	// ConfigurationDataPlaneGroupAutoscaleTypeAutopilot is the autoscale type for autopilot configuration.
+	ConfigurationDataPlaneGroupAutoscaleTypeAutopilot ConfigurationDataPlaneGroupAutoscaleType = "autopilot"
+)
+
 // ConfigurationDataPlaneGroupAutoscale specifies the autoscale configuration for the data-plane group.
 //
 // +kubebuilder:validation:XValidation:rule="!(has(self.autopilot) && has(self.static))",message="can't provide both autopilot and static configuration"
-// +kubebuilder:validation:XValidation:rule="self.type == 'ConfigurationDataPlaneGroupAutoscaleStatic' ? has(self.static) : true",message="static is required when type is ConfigurationDataPlaneGroupAutoscaleStatic"
-// +kubebuilder:validation:XValidation:rule="self.type == 'ConfigurationDataPlaneGroupAutoscaleAutopilot' ? has(self.autopilot) : true",message="autopilot is required when type is ConfigurationDataPlaneGroupAutoscaleAutopilot"
+// +kubebuilder:validation:XValidation:rule="self.type == 'static' ? has(self.static) : true",message="static is required when type is static"
+// +kubebuilder:validation:XValidation:rule="self.type == 'autopilot' ? has(self.autopilot) : true",message="autopilot is required when type is autopilot"
 type ConfigurationDataPlaneGroupAutoscale struct {
-	// ConfigurationDataPlaneGroupAutoscaleStatic specifies the static configuration for the data-plane group.
+	// Static specifies the static configuration for the data-plane group.
 	//
 	// +kubebuilder:validation:Optional
-	ConfigurationDataPlaneGroupAutoscaleStatic *ConfigurationDataPlaneGroupAutoscaleStatic `json:"static,omitempty"`
+	Static *ConfigurationDataPlaneGroupAutoscaleStatic `json:"static,omitempty"`
 
-	// ConfigurationDataPlaneGroupAutoscaleAutopilot specifies the autoscale configuration for the data-plane group.
+	// Autopilot specifies the autoscale configuration for the data-plane group.
 	//
 	// +kubebuilder:validation:Optional
-	ConfigurationDataPlaneGroupAutoscaleAutopilot *ConfigurationDataPlaneGroupAutoscaleAutopilot `json:"autopilot,omitempty"`
+	Autopilot *ConfigurationDataPlaneGroupAutoscaleAutopilot `json:"autopilot,omitempty"`
 
 	// Type of autoscaling to use.
 	//
 	// +kubebuilder:validation:Required
-	// +kubebuilder:validation:Enum=ConfigurationDataPlaneGroupAutoscaleStatic;ConfigurationDataPlaneGroupAutoscaleAutopilot
-	Type sdkkonnectcomp.ConfigurationDataPlaneGroupAutoscaleType `json:"type"`
+	// +kubebuilder:validation:Enum=static;autopilot
+	Type ConfigurationDataPlaneGroupAutoscaleType `json:"type"`
 }
 
 // ConfigurationDataPlaneGroupAutoscaleAutopilot specifies the autoscale configuration for the data-plane group.

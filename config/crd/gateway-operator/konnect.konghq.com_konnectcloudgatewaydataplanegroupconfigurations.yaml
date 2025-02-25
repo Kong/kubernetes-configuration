@@ -147,9 +147,8 @@ spec:
                       description: Autoscale configuration for the data-plane group.
                       properties:
                         autopilot:
-                          description: ConfigurationDataPlaneGroupAutoscaleAutopilot
-                            specifies the autoscale configuration for the data-plane
-                            group.
+                          description: Autopilot specifies the autoscale configuration
+                            for the data-plane group.
                           properties:
                             base_rps:
                               description: Base number of requests per second that
@@ -166,9 +165,8 @@ spec:
                           - base_rps
                           type: object
                         static:
-                          description: ConfigurationDataPlaneGroupAutoscaleStatic
-                            specifies the static configuration for the data-plane
-                            group.
+                          description: Static specifies the static configuration for
+                            the data-plane group.
                           properties:
                             instance_type:
                               description: |-
@@ -190,8 +188,8 @@ spec:
                         type:
                           description: Type of autoscaling to use.
                           enum:
-                          - ConfigurationDataPlaneGroupAutoscaleStatic
-                          - ConfigurationDataPlaneGroupAutoscaleAutopilot
+                          - static
+                          - autopilot
                           type: string
                       required:
                       - type
@@ -199,12 +197,11 @@ spec:
                       x-kubernetes-validations:
                       - message: can't provide both autopilot and static configuration
                         rule: '!(has(self.autopilot) && has(self.static))'
-                      - message: static is required when type is ConfigurationDataPlaneGroupAutoscaleStatic
-                        rule: 'self.type == ''ConfigurationDataPlaneGroupAutoscaleStatic''
-                          ? has(self.static) : true'
-                      - message: autopilot is required when type is ConfigurationDataPlaneGroupAutoscaleAutopilot
-                        rule: 'self.type == ''ConfigurationDataPlaneGroupAutoscaleAutopilot''
-                          ? has(self.autopilot) : true'
+                      - message: static is required when type is static
+                        rule: 'self.type == ''static'' ? has(self.static) : true'
+                      - message: autopilot is required when type is autopilot
+                        rule: 'self.type == ''autopilot'' ? has(self.autopilot) :
+                          true'
                     environment:
                       description: Array of environment variables to set for a data-plane
                         group.

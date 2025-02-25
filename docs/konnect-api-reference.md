@@ -126,8 +126,8 @@ ConfigurationDataPlaneGroupAutoscale specifies the autoscale configuration for t
 
 | Field | Description |
 | --- | --- |
-| `static` _[ConfigurationDataPlaneGroupAutoscaleStatic](#configurationdataplanegroupautoscalestatic)_ | ConfigurationDataPlaneGroupAutoscaleStatic specifies the static configuration for the data-plane group. |
-| `autopilot` _[ConfigurationDataPlaneGroupAutoscaleAutopilot](#configurationdataplanegroupautoscaleautopilot)_ | ConfigurationDataPlaneGroupAutoscaleAutopilot specifies the autoscale configuration for the data-plane group. |
+| `static` _[ConfigurationDataPlaneGroupAutoscaleStatic](#configurationdataplanegroupautoscalestatic)_ | Static specifies the static configuration for the data-plane group. |
+| `autopilot` _[ConfigurationDataPlaneGroupAutoscaleAutopilot](#configurationdataplanegroupautoscaleautopilot)_ | Autopilot specifies the autoscale configuration for the data-plane group. |
 | `type` _[ConfigurationDataPlaneGroupAutoscaleType](#configurationdataplanegroupautoscaletype)_ | Type of autoscaling to use. |
 
 
@@ -161,6 +161,18 @@ ConfigurationDataPlaneGroupAutoscaleStatic specifies the static configuration fo
 | --- | --- |
 | `instance_type` _[InstanceTypeName](#instancetypename)_ | Instance type name to indicate capacity. Currently supported values are small, medium, large but this list might be expanded in the future. For all the allowed values, please refer to the Konnect API documentation at https://docs.konghq.com/konnect/api/cloud-gateways/latest/#/Data-Plane%20Group%20Configurations/create-configuration. |
 | `requested_instances` _integer_ | Number of data-planes the deployment target will contain. |
+
+
+_Appears in:_
+- [ConfigurationDataPlaneGroupAutoscale](#configurationdataplanegroupautoscale)
+
+#### ConfigurationDataPlaneGroupAutoscaleType
+_Underlying type:_ `string`
+
+ConfigurationDataPlaneGroupAutoscaleType is the type of autoscale configuration for the data-plane group.
+
+
+
 
 
 _Appears in:_
