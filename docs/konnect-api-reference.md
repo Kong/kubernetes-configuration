@@ -159,7 +159,7 @@ ConfigurationDataPlaneGroupAutoscaleStatic specifies the static configuration fo
 
 | Field | Description |
 | --- | --- |
-| `instance_type` _[InstanceTypeName](#instancetypename)_ | Instance type name to indicate capacity. |
+| `instance_type` _[InstanceTypeName](#instancetypename)_ | Instance type name to indicate capacity. Currently supported values are small, medium, large but this list might be expanded in the future. For all the allowed values, please refer to the Konnect API documentation at https://docs.konghq.com/konnect/api/cloud-gateways/latest/#/Data-Plane%20Group%20Configurations/create-configuration. |
 | `requested_instances` _integer_ | Number of data-planes the deployment target will contain. |
 
 

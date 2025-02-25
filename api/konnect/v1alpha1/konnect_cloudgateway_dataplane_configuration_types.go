@@ -183,6 +183,10 @@ type ConfigurationDataPlaneGroupAutoscaleAutopilot struct {
 // ConfigurationDataPlaneGroupAutoscaleStatic specifies the static configuration for the data-plane group.
 type ConfigurationDataPlaneGroupAutoscaleStatic struct {
 	// Instance type name to indicate capacity.
+	// Currently supported values are small, medium, large but this list might be
+	// expanded in the future.
+	// For all the allowed values, please refer to the Konnect API documentation
+	// at https://docs.konghq.com/konnect/api/cloud-gateways/latest/#/Data-Plane%20Group%20Configurations/create-configuration.
 	//
 	// +kubebuilder:validation:Required
 	InstanceType sdkkonnectcomp.InstanceTypeName `json:"instance_type"`
