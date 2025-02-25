@@ -184,7 +184,7 @@ type KonnectExtensionStatus struct {
 	// Konnect contains the status information related to the Konnect Control Plane.
 	//
 	// +kubebuilder:validation:Optional
-	Konnect *KonnectControlPlaneStatus `json:"konnect,omitempty"`
+	Konnect *KonnectExtensionControlPlaneStatus `json:"konnect,omitempty"`
 
 	// Conditions describe the current conditions of the KonnectExtensionStatus.
 	// Known condition types are:
@@ -206,14 +206,14 @@ const (
 	ClusterTypeK8sIngressController ClusterType = "K8SIngressController"
 )
 
-// KonnectControlPlaneStatus contains the Konnect Control Plane status information.
-type KonnectControlPlaneStatus struct {
+// KonnectExtensionControlPlaneStatus contains the Konnect Control Plane status information.
+type KonnectExtensionControlPlaneStatus struct {
 	// ControlPlaneID is the Konnect ID of the ControlPlane this KonnectExtension is associated with.
 	//
 	// +kubebuilder:validation:Required
 	ControlPlaneID string `json:"controlPlaneID,omitempty"`
 
-	// TypClusterType is the type of the Konnect Control Plane.
+	// ClusterType is the type of the Konnect Control Plane.
 	//
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:Enum=ControlPlane;K8SIngressController
@@ -222,7 +222,7 @@ type KonnectControlPlaneStatus struct {
 	// Endpoints defines the Konnect endpoints for the control plane.
 	//
 	// +kubebuilder:validation:Required
-	KonnectEndpoints KonnectEndpoints `json:"endpoints"`
+	Endpoints KonnectEndpoints `json:"endpoints"`
 }
 
 // DataPlaneClientAuthStatus contains the status information related to the ClientAuth configuration.

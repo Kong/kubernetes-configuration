@@ -359,8 +359,7 @@ spec:
                   Konnect Control Plane.
                 properties:
                   clusterType:
-                    description: TypClusterType is the type of the Konnect Control
-                      Plane.
+                    description: ClusterType is the type of the Konnect Control Plane.
                     enum:
                     - ControlPlane
                     - K8SIngressController
