@@ -35,6 +35,8 @@ Adding a new version? You'll need three changes:
   [#291](https://github.com/Kong/kubernetes-configuration/pull/291)
 - Added `KonnectExtension` status conditions.
   [#301](https://github.com/Kong/kubernetes-configuration/pull/301)
+- Added `KonnectCloudGatewayDataPlaneGroupConfiguration`.
+  [#307](https://github.com/Kong/kubernetes-configuration/pull/307)
 
 ### Changes
 

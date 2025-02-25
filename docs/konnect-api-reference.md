@@ -9,6 +9,7 @@
 Package v1alpha1 contains API Schema definitions for the konnect.konghq.com v1alpha1 API group.
 
 - [KonnectAPIAuthConfiguration](#konnectapiauthconfiguration)
+- [KonnectCloudGatewayDataPlaneGroupConfiguration](#konnectcloudgatewaydataplanegroupconfiguration)
 - [KonnectCloudGatewayNetwork](#konnectcloudgatewaynetwork)
 - [KonnectExtension](#konnectextension)
 - [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
@@ -25,6 +26,22 @@ KonnectAPIAuthConfiguration is the Schema for the Konnect configuration type.
 | `kind` _string_ | `KonnectAPIAuthConfiguration`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KonnectAPIAuthConfigurationSpec](#konnectapiauthconfigurationspec)_ | Spec is the specification of the KonnectAPIAuthConfiguration resource. |
+
+
+
+### KonnectCloudGatewayDataPlaneGroupConfiguration
+
+
+KonnectCloudGatewayDataPlaneGroupConfiguration is the Schema for the Konnect Network API.
+
+<!-- konnect_cloud_gateway_data_plane_group_configuration description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
+| `kind` _string_ | `KonnectCloudGatewayDataPlaneGroupConfiguration`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KonnectCloudGatewayDataPlaneGroupConfigurationSpec](#konnectcloudgatewaydataplanegroupconfigurationspec)_ | Spec defines the desired state of KonnectCloudGatewayDataPlaneGroupConfiguration. |
 
 
 
@@ -82,6 +99,8 @@ KonnectGatewayControlPlane is the Schema for the KonnectGatewayControlplanes API
 ### Types
 
 In this section you will find types that the CRDs rely on.
+
+
 #### CertificateSecret
 
 
@@ -97,6 +116,83 @@ CertificateSecret contains the information to access the client certificate.
 
 _Appears in:_
 - [DataPlaneClientAuth](#dataplaneclientauth)
+
+#### ConfigurationDataPlaneGroupAutoscale
+
+
+ConfigurationDataPlaneGroupAutoscale specifies the autoscale configuration for the data-plane group.
+
+
+
+| Field | Description |
+| --- | --- |
+| `static` _[ConfigurationDataPlaneGroupAutoscaleStatic](#configurationdataplanegroupautoscalestatic)_ | Static specifies the static configuration for the data-plane group. |
+| `autopilot` _[ConfigurationDataPlaneGroupAutoscaleAutopilot](#configurationdataplanegroupautoscaleautopilot)_ | Autopilot specifies the autoscale configuration for the data-plane group. |
+| `type` _[ConfigurationDataPlaneGroupAutoscaleType](#configurationdataplanegroupautoscaletype)_ | Type of autoscaling to use. |
+
+
+_Appears in:_
+- [KonnectConfigurationDataPlaneGroup](#konnectconfigurationdataplanegroup)
+
+#### ConfigurationDataPlaneGroupAutoscaleAutopilot
+
+
+ConfigurationDataPlaneGroupAutoscaleAutopilot specifies the autoscale configuration for the data-plane group.
+
+
+
+| Field | Description |
+| --- | --- |
+| `base_rps` _integer_ | Base number of requests per second that the deployment target should support. |
+| `max_rps` _integer_ | Max number of requests per second that the deployment target should support. If not set, this defaults to 10x base_rps. |
+
+
+_Appears in:_
+- [ConfigurationDataPlaneGroupAutoscale](#configurationdataplanegroupautoscale)
+
+#### ConfigurationDataPlaneGroupAutoscaleStatic
+
+
+ConfigurationDataPlaneGroupAutoscaleStatic specifies the static configuration for the data-plane group.
+
+
+
+| Field | Description |
+| --- | --- |
+| `instance_type` _[InstanceTypeName](#instancetypename)_ | Instance type name to indicate capacity. Currently supported values are small, medium, large but this list might be expanded in the future. For all the allowed values, please refer to the Konnect API documentation at https://docs.konghq.com/konnect/api/cloud-gateways/latest/#/Data-Plane%20Group%20Configurations/create-configuration. |
+| `requested_instances` _integer_ | Number of data-planes the deployment target will contain. |
+
+
+_Appears in:_
+- [ConfigurationDataPlaneGroupAutoscale](#configurationdataplanegroupautoscale)
+
+#### ConfigurationDataPlaneGroupAutoscaleType
+_Underlying type:_ `string`
+
+ConfigurationDataPlaneGroupAutoscaleType is the type of autoscale configuration for the data-plane group.
+
+
+
+
+
+_Appears in:_
+- [ConfigurationDataPlaneGroupAutoscale](#configurationdataplanegroupautoscale)
+
+#### ConfigurationDataPlaneGroupEnvironmentField
+
+
+ConfigurationDataPlaneGroupEnvironmentField specifies an environment variable field for the data-plane group.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name of the environment variable field to set for the data-plane group. Must be prefixed by KONG_. |
+| `value` _string_ | Value assigned to the environment variable field for the data-plane group. |
+
+
+_Appears in:_
+- [KonnectConfigurationDataPlaneGroup](#konnectconfigurationdataplanegroup)
 
 #### DataPlaneClientAuth
 
@@ -193,6 +289,47 @@ KonnectAPIAuthType is the type of authentication used to authenticate with the K
 _Appears in:_
 - [KonnectAPIAuthConfigurationSpec](#konnectapiauthconfigurationspec)
 
+#### KonnectCloudGatewayDataPlaneGroupConfigurationSpec
+
+
+KonnectCloudGatewayDataPlaneGroupConfigurationSpec defines the desired state of KonnectCloudGatewayDataPlaneGroupConfiguration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `version` _string_ | Version specifies the desired Kong Gateway version. |
+| `dataplane_groups` _[KonnectConfigurationDataPlaneGroup](#konnectconfigurationdataplanegroup) array_ | DataplaneGroups is a list of desired data-plane groups that describe where to deploy instances, along with how many instances. |
+| `api_access` _[APIAccess](#apiaccess)_ | APIAccess is the desired type of API access for data-plane groups. |
+| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane which DataPlanes from this configuration will connect to. |
+
+
+_Appears in:_
+- [KonnectCloudGatewayDataPlaneGroupConfiguration](#konnectcloudgatewaydataplanegroupconfiguration)
+
+
+
+#### KonnectCloudGatewayDataPlaneGroupConfigurationStatusGroup
+
+
+KonnectCloudGatewayDataPlaneGroupConfigurationStatusGroup defines the observed state of a deployed data-plane group.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the ID of the deployed data-plane group. |
+| `cloud_gateway_network_id` _string_ | CloudGatewayNetworkID is the ID of the cloud gateway network. |
+| `provider` _[ProviderName](#providername)_ | Name of cloud provider. |
+| `region` _string_ | Region ID for cloud provider region. |
+| `private_ip_addresses` _string array_ | PrivateIPAddresses is a list of private IP addresses of the internal load balancer that proxies traffic to this data-plane group. |
+| `egress_ip_addresses` _string array_ | EgressIPAddresses is a list of egress IP addresses for the network that this data-plane group runs on. |
+| `state` _string_ | State is the current state of the data plane group. Can be e.g. initializing, ready, terminating. |
+
+
+_Appears in:_
+- [KonnectCloudGatewayDataPlaneGroupConfigurationStatus](#konnectcloudgatewaydataplanegroupconfigurationstatus)
+
 #### KonnectCloudGatewayNetworkSpec
 
 
@@ -233,6 +370,25 @@ _Appears in:_
 - [KonnectExtensionSpec](#konnectextensionspec)
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
+#### KonnectConfigurationDataPlaneGroup
+
+
+KonnectConfigurationDataPlaneGroup is the schema for the KonnectConfiguration type.
+
+
+
+| Field | Description |
+| --- | --- |
+| `provider` _[ProviderName](#providername)_ | Name of cloud provider. |
+| `region` _string_ | Region for cloud provider region. |
+| `networkRef` _[NetworkRef](#networkref)_ | NetworkRef is the schema for the NetworkRef type. |
+| `autoscale` _[ConfigurationDataPlaneGroupAutoscale](#configurationdataplanegroupautoscale)_ | Autoscale configuration for the data-plane group. |
+| `environment` _[ConfigurationDataPlaneGroupEnvironmentField](#configurationdataplanegroupenvironmentfield) array_ | Array of environment variables to set for a data-plane group. |
+
+
+_Appears in:_
+- [KonnectCloudGatewayDataPlaneGroupConfigurationSpec](#konnectcloudgatewaydataplanegroupconfigurationspec)
+
 #### KonnectEndpoints
 
 
@@ -265,6 +421,7 @@ KonnectEntityStatus represents the status of a Konnect entity.
 
 
 _Appears in:_
+- [KonnectCloudGatewayDataPlaneGroupConfigurationStatus](#konnectcloudgatewaydataplanegroupconfigurationstatus)
 - [KonnectCloudGatewayNetworkStatus](#konnectcloudgatewaynetworkstatus)
 - [KonnectEntityStatusWithControlPlaneAndCertificateRefs](#konnectentitystatuswithcontrolplaneandcertificaterefs)
 - [KonnectEntityStatusWithControlPlaneAndConsumerRefs](#konnectentitystatuswithcontrolplaneandconsumerrefs)
@@ -284,7 +441,23 @@ _Appears in:_
 
 
 
+#### KonnectEntityStatusWithControlPlaneRef
 
+
+KonnectEntityStatusWithControlPlaneRef represents the status of a Konnect entity with a reference to a ControlPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this Route is associated with. |
+
+
+_Appears in:_
+- [KonnectCloudGatewayDataPlaneGroupConfigurationStatus](#konnectcloudgatewaydataplanegroupconfigurationstatus)
 
 #### KonnectExtensionClusterType
 _Underlying type:_ `string`
@@ -359,6 +532,23 @@ _Appears in:_
 - [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
 
 
+
+#### NetworkRef
+
+
+NetworkRef is the schema for the NetworkRef type.
+It is used to reference a Network entity.
+
+
+
+| Field | Description |
+| --- | --- |
+| `type` _string_ | Type indicates the type of the control plane being referenced. |
+| `konnectID` _string_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
+
+
+_Appears in:_
+- [KonnectConfigurationDataPlaneGroup](#konnectconfigurationdataplanegroup)
 
 #### ProvisioningMethod
 _Underlying type:_ `string`

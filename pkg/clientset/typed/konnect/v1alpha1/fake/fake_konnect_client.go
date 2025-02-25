@@ -32,6 +32,10 @@ func (c *FakeKonnectV1alpha1) KonnectAPIAuthConfigurations(namespace string) v1a
 	return newFakeKonnectAPIAuthConfigurations(c, namespace)
 }
 
+func (c *FakeKonnectV1alpha1) KonnectCloudGatewayDataPlaneGroupConfigurations(namespace string) v1alpha1.KonnectCloudGatewayDataPlaneGroupConfigurationInterface {
+	return newFakeKonnectCloudGatewayDataPlaneGroupConfigurations(c, namespace)
+}
+
 func (c *FakeKonnectV1alpha1) KonnectCloudGatewayNetworks(namespace string) v1alpha1.KonnectCloudGatewayNetworkInterface {
 	return newFakeKonnectCloudGatewayNetworks(c, namespace)
 }
