@@ -381,6 +381,12 @@ spec:
                       description: State is the current state of the data plane group.
                         Can be e.g. initializing, ready, terminating.
                       type: string
+                  required:
+                  - cloud_gateway_network_id
+                  - id
+                  - provider
+                  - region
+                  - state
                   type: object
                 type: array
               id:

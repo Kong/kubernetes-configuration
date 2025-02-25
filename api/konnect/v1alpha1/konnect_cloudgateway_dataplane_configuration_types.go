@@ -233,33 +233,38 @@ type KonnectCloudGatewayDataPlaneGroupConfigurationStatus struct {
 type KonnectCloudGatewayDataPlaneGroupConfigurationStatusGroup struct {
 	// ID is the ID of the deployed data-plane group.
 	//
-	// +kubebuilder:validation:Optional
-	ID *string `json:"id,omitempty"`
+	// +kubebuilder:validation:Required
+	ID string `json:"id"`
 
 	// CloudGatewayNetworkID is the ID of the cloud gateway network.
 	//
-	// +kubebuilder:validation:Optional
-	CloudGatewayNetworkID *string `json:"cloud_gateway_network_id,omitempty"`
+	// +kubebuilder:validation:Required
+	CloudGatewayNetworkID string `json:"cloud_gateway_network_id"`
 
 	// Name of cloud provider.
 	//
-	// +kubebuilder:validation:Optional
-	Provider sdkkonnectcomp.ProviderName `json:"provider,omitempty"`
+	// +kubebuilder:validation:Required
+	Provider sdkkonnectcomp.ProviderName `json:"provider"`
 
 	// Region ID for cloud provider region.
 	//
-	// +kubebuilder:validation:Optional
-	Region string `json:"region,omitempty"`
+	// +kubebuilder:validation:Required
+	Region string `json:"region"`
 
 	// PrivateIPAddresses is a list of private IP addresses of the internal load balancer that proxies traffic to this data-plane group.
+	//
+	// +kubebuilder:validation:Optional
 	PrivateIPAddresses []string `json:"private_ip_addresses,omitempty"`
 
 	// EgressIPAddresses is a list of egress IP addresses for the network that this data-plane group runs on.
+	//
+	// +kubebuilder:validation:Optional
 	EgressIPAddresses []string `json:"egress_ip_addresses,omitempty"`
 
 	// State is the current state of the data plane group. Can be e.g. initializing, ready, terminating.
-	// +kubebuilder:validation:Optional
-	State *string `json:"state,omitempty"`
+	//
+	// +kubebuilder:validation:Required
+	State string `json:"state"`
 }
 
 // KonnectCloudGatewayDataPlaneGroupConfigurationList contains a list of KonnectCloudGatewayDataPlaneGroupConfiguration.
