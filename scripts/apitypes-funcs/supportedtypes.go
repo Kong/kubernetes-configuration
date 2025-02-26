@@ -1,5 +1,7 @@
 package main
 
+import "github.com/samber/lo"
+
 var supportedKonnectV1Alpha1TypesWithControlPlaneRef = []supportedTypesT{
 	{
 		PackageVersion: "v1alpha1",
@@ -216,9 +218,25 @@ var supportedGatewayOperatorTypes = []supportedTypesT{
 
 var supportedConfigurationPackageTypesWithList = supportedKonnectTypesControlPlaneConfig
 
-var supportedKonnectPackageTypesWithList = append(
-	supportedKonnectTypesStandalone,
-	supportedKonnectV1Alpha1TypesWithControlPlaneRef...,
-)
+var supportedKonnectPackageTypesWithList = func() []supportedTypesT {
+	// Make sure that each template is generated once per package version.
+	base := append(
+		supportedKonnectTypesStandalone,
+		supportedKonnectV1Alpha1TypesWithControlPlaneRef...,
+	)
+
+	m := make(map[string]supportedTypesT)
+	for _, t := range base {
+		v, ok := m[t.PackageVersion]
+		if !ok {
+			m[t.PackageVersion] = t
+			continue
+		}
+		v.Types = append(m[t.PackageVersion].Types, t.Types...)
+		m[t.PackageVersion] = v
+	}
+
+	return lo.Values(m)
+}()
 
 var supportedGatewayOperatorPackageTypesWithList = supportedGatewayOperatorTypes
