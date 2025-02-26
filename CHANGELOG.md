@@ -33,6 +33,7 @@ Adding a new version? You'll need three changes:
 - Added `konnect.konghq.com/KonnectExtension` CRD. `gateway-operator.konghq.com/KonnectExtension`
   has been deprecated.
   [#291](https://github.com/Kong/kubernetes-configuration/pull/291)
+  [#317](https://github.com/Kong/kubernetes-configuration/pull/317)
 - Added `KonnectExtension` status conditions.
   [#301](https://github.com/Kong/kubernetes-configuration/pull/301)
 - Added `KonnectCloudGatewayDataPlaneGroupConfiguration`.
