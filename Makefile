@@ -215,7 +215,7 @@ lint.actions: download.actionlint download.shellcheck
 
 .PHONY: test.samples
 test.samples: kustomize
-	find ./config/samples -not -name "kustomization.*" -type f | sort | xargs -I{} bash -c "kubectl apply -f {}; kubectl delete -f {}"
+	@cd config/samples/ && find . -not -name "kustomization.*" -type f | sort | xargs -I{} bash -c "echo;echo {}; kubectl apply -f {} && kubectl delete -f {}" \;
 
 GOTESTSUM_FORMAT ?= standard-verbose
 
