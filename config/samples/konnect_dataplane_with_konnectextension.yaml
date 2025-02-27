@@ -1,0 +1,54 @@
+kind: KonnectAPIAuthConfiguration
+apiVersion: konnect.konghq.com/v1alpha1
+metadata:
+  name: konnect-api-auth
+spec:
+  type: token
+  token: kpat_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  serverURL: us.api.konghq.com
+---
+apiVersion: konnect.konghq.com/v1alpha1
+kind: KonnectExtension
+metadata:
+  name: my-konnect-extension
+spec:
+  konnectControlPlane:
+    controlPlaneRef:
+      type: konnectID
+      konnectID: 12345678-1234-1234-1234-123456789abc
+  dataPlaneClientAuth:
+    certificateSecret:
+      provisioning: Automatic
+  konnect:
+    authRef:
+      name: konnect-api-auth
+  dataPlaneLabels:
+    environment: "production"
+    team: "platform"
+    application: "payments"
+---
+apiVersion: gateway-operator.konghq.com/v1beta1
+kind: DataPlane
+metadata:
+  name: dataplane-konnect-extension-example
+spec:
+  extensions:
+  - kind: KonnectExtension
+    name: my-konnect-config
+    group: gateway-operator.konghq.com
+  deployment:
+    replicas: 3
+    podTemplateSpec:
+      metadata:
+        labels:
+          dataplane-pod-label: example
+        annotations:
+          dataplane-pod-annotation: example
+      spec:
+        containers:
+        - name: proxy
+          # renovate: datasource=docker versioning=docker
+          image: kong/kong-gateway:3.9
+          readinessProbe:
+            initialDelaySeconds: 1
+            periodSeconds: 1
