@@ -151,3 +151,7 @@ func (c *ControlPlane) GetConditions() []metav1.Condition {
 func (c *ControlPlane) SetConditions(conditions []metav1.Condition) {
 	c.Status.Conditions = conditions
 }
+
+func (c *ControlPlane) GetExtensions() []commonv1alpha1.ExtensionRef {
+	return c.Spec.Extensions
+}
