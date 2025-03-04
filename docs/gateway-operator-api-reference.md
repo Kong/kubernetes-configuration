@@ -528,7 +528,7 @@ DataPlane is the Schema for the dataplanes API
 ### GatewayConfiguration
 
 
-GatewayConfiguration is the Schema for the gatewayconfigurations API
+GatewayConfiguration is the Schema for the gatewayconfigurations API.
 
 <!-- gateway_configuration description placeholder -->
 

@@ -104,6 +104,8 @@ type ControlPlaneOptions struct {
 	// resources to influence or enhance functionality.
 	//
 	// +optional
+	// +kubebuilder:validation:MinItems=0
+	// +kubebuilder:validation:MaxItems=2
 	Extensions []commonv1alpha1.ExtensionRef `json:"extensions,omitempty"`
 }
 

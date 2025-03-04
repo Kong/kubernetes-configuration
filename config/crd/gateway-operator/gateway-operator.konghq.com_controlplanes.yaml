@@ -8233,6 +8233,8 @@ spec:
                   - kind
                   - name
                   type: object
+                maxItems: 2
+                minItems: 0
                 type: array
               gatewayClass:
                 description: |-
