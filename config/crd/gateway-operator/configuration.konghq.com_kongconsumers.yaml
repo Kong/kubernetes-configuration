@@ -119,6 +119,8 @@ spec:
                     type: string
                 type: object
                 x-kubernetes-validations:
+                - message: '''konnectID'' type is not supported'
+                  rule: self.type != 'konnectID'
                 - message: when type is konnectNamespacedRef, konnectNamespacedRef
                     must be set
                   rule: '(has(self.type) && self.type == ''konnectNamespacedRef'')
