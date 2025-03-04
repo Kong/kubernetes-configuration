@@ -115,7 +115,7 @@ CertificateSecret contains the information to access the client certificate.
 
 
 _Appears in:_
-- [DataPlaneClientAuth](#dataplaneclientauth)
+- [KonnectExtensionClientAuth](#konnectextensionclientauth)
 
 #### ConfigurationDataPlaneGroupAutoscale
 
@@ -194,23 +194,6 @@ ConfigurationDataPlaneGroupEnvironmentField specifies an environment variable fi
 _Appears in:_
 - [KonnectConfigurationDataPlaneGroup](#konnectconfigurationdataplanegroup)
 
-#### DataPlaneClientAuth
-
-
-DataPlaneClientAuth contains the configuration for the client authentication for the DataPlane.
-At the moment authentication is only supported through client certificate, but it might be extended in the future,
-with e.g., token-based authentication.
-
-
-
-| Field | Description |
-| --- | --- |
-| `certificateSecret` _[CertificateSecret](#certificatesecret)_ | CertificateSecret contains the information to access the client certificate. |
-
-
-_Appears in:_
-- [KonnectExtensionSpec](#konnectextensionspec)
-
 #### DataPlaneClientAuthStatus
 
 
@@ -236,7 +219,7 @@ DataPlaneLabelValue is the type that defines the value of a label that will be a
 
 
 _Appears in:_
-- [KonnectExtensionSpec](#konnectextensionspec)
+- [KonnectExtensionDataPlane](#konnectextensiondataplane)
 
 #### KonnectAPIAuthConfigurationRef
 
@@ -363,7 +346,7 @@ KonnectConfiguration is the Schema for the KonnectConfiguration API.
 
 _Appears in:_
 - [KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)
-- [KonnectExtensionSpec](#konnectextensionspec)
+- [KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### KonnectConfigurationDataPlaneGroup
@@ -455,6 +438,23 @@ KonnectEntityStatusWithControlPlaneRef represents the status of a Konnect entity
 _Appears in:_
 - [KonnectCloudGatewayDataPlaneGroupConfigurationStatus](#konnectcloudgatewaydataplanegroupconfigurationstatus)
 
+#### KonnectExtensionClientAuth
+
+
+KonnectExtensionClientAuth contains the configuration for the client authentication for the DataPlane.
+At the moment authentication is only supported through client certificate, but it might be extended in the future,
+with e.g., token-based authentication.
+
+
+
+| Field | Description |
+| --- | --- |
+| `certificateSecret` _[CertificateSecret](#certificatesecret)_ | CertificateSecret contains the information to access the client certificate. |
+
+
+_Appears in:_
+- [KonnectExtensionSpec](#konnectextensionspec)
+
 #### KonnectExtensionClusterType
 _Underlying type:_ `string`
 
@@ -476,11 +476,11 @@ KonnectExtensionControlPlane is the configuration for the Konnect Control Plane.
 
 | Field | Description |
 | --- | --- |
-| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with. |
+| `ref` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with. |
 
 
 _Appears in:_
-- [KonnectExtensionSpec](#konnectextensionspec)
+- [KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)
 
 #### KonnectExtensionControlPlaneStatus
 
@@ -499,6 +499,38 @@ KonnectExtensionControlPlaneStatus contains the Konnect Control Plane status inf
 _Appears in:_
 - [KonnectExtensionStatus](#konnectextensionstatus)
 
+#### KonnectExtensionDataPlane
+
+
+KonnectExtensionDataPlane is the configuration for the Konnect DataPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `labels` _object (keys:string, values:[DataPlaneLabelValue](#dataplanelabelvalue))_ | DataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane. |
+
+
+_Appears in:_
+- [KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)
+
+#### KonnectExtensionKonnectSpec
+
+
+KonnectExtensionKonnectSpec holds the konnect-related configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `controlPlane` _[KonnectExtensionControlPlane](#konnectextensioncontrolplane)_ | ControlPlane is the configuration for the Konnect Control Plane. |
+| `dataPlane` _[KonnectExtensionDataPlane](#konnectextensiondataplane)_ | DataPlane is the configuration for the Konnect DataPlane. |
+| `configuration` _[KonnectConfiguration](#konnectconfiguration)_ | Configuration holds the information needed to set up the Konnect Configuration. |
+
+
+_Appears in:_
+- [KonnectExtensionSpec](#konnectextensionspec)
+
 #### KonnectExtensionSpec
 
 
@@ -508,10 +540,8 @@ KonnectExtensionSpec defines the desired state of KonnectExtension.
 
 | Field | Description |
 | --- | --- |
-| `konnectControlPlane` _[KonnectExtensionControlPlane](#konnectextensioncontrolplane)_ | KonnectControlPlane is the configuration for the Konnect Control Plane. |
-| `dataPlaneClientAuth` _[DataPlaneClientAuth](#dataplaneclientauth)_ | DataPlaneClientAuth is the configuration for the client certificate authentication for the DataPlane. In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the Konnect Platform. |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration holds the information needed to setup the Konnect Configuration. |
-| `dataPlaneLabels` _object (keys:string, values:[DataPlaneLabelValue](#dataplanelabelvalue))_ | DataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane. |
+| `konnect` _[KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)_ | Konnect holds the konnect-related configuration |
+| `clientAuth` _[KonnectExtensionClientAuth](#konnectextensionclientauth)_ | ClientAuth is the configuration for the client certificate authenticatione. In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the Konnect Platform. |
 
 
 _Appears in:_
