@@ -8233,6 +8233,8 @@ spec:
                   - kind
                   - name
                   type: object
+                maxItems: 2
+                minItems: 0
                 type: array
               gatewayClass:
                 description: |-
@@ -8257,6 +8259,11 @@ spec:
                   If omitted, Ingress resources will not be supported by the ControlPlane.
                 type: string
             type: object
+            x-kubernetes-validations:
+            - message: Extension not allowed for ControlPlane
+              rule: 'has(self.extensions) ? self.extensions.all(e, (e.group == ''konnect.konghq.com''
+                && e.kind == ''KonnectExtension'') || (e.group == ''gateway-operator.konghq.com''
+                && e.kind == ''DataPlaneMetricsExtension'')) : true'
           status:
             description: ControlPlaneStatus defines the observed state of ControlPlane
             properties:
@@ -8331,9 +8338,9 @@ spec:
         type: object
         x-kubernetes-validations:
         - message: ControlPlane requires an image to be set on controller container
-          rule: has(self.spec.deployment.podTemplateSpec) && has(self.spec.deployment.podTemplateSpec.spec.containers)
-            && self.spec.deployment.podTemplateSpec.spec.containers.exists(c, c.name
-            == 'controller' && has(c.image))
+          rule: '((has(self.spec.deployment) && has(self.spec.deployment.podTemplateSpec)
+            && has(self.spec.deployment.podTemplateSpec.spec)) ? self.spec.deployment.podTemplateSpec.spec.containers.exists(c,
+            c.name == ''controller'' && has(c.image)) : true)'
     served: true
     storage: true
     subresources:
