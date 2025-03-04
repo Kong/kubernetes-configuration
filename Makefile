@@ -204,6 +204,12 @@ install: generate.crds kustomize
 		$(KUSTOMIZE) build config/crd/$$channel | kubectl apply --server-side -f -; \
 	done
 
+.PHONY: uninstall
+uninstall: generate.crds kustomize
+	@for channel in $(CHANNELS); do \
+		$(KUSTOMIZE) build config/crd/$$channel | kubectl delete -f -; \
+	done
+
 GOLANGCI_LINT_CONFIG ?= $(PROJECT_DIR)/.golangci.yaml
 .PHONY: lint
 lint: golangci-lint

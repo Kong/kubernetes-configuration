@@ -363,7 +363,7 @@ KonnectConfiguration is the Schema for the KonnectConfiguration API.
 
 _Appears in:_
 - [KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)
-- [KonnectExtensionSpec](#konnectextensionspec)
+- [KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### KonnectConfigurationDataPlaneGroup
@@ -480,7 +480,7 @@ KonnectExtensionControlPlane is the configuration for the Konnect Control Plane.
 
 
 _Appears in:_
-- [KonnectExtensionSpec](#konnectextensionspec)
+- [KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)
 
 #### KonnectExtensionControlPlaneStatus
 
@@ -499,6 +499,22 @@ KonnectExtensionControlPlaneStatus contains the Konnect Control Plane status inf
 _Appears in:_
 - [KonnectExtensionStatus](#konnectextensionstatus)
 
+#### KonnectExtensionKonnectSpec
+
+
+KonnectExtensionKonnectSpec holds the konnect-related configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `controlPlane` _[KonnectExtensionControlPlane](#konnectextensioncontrolplane)_ | ControlPlane is the configuration for the Konnect Control Plane. |
+| `configuration` _[KonnectConfiguration](#konnectconfiguration)_ | Configuration holds the information needed to set up the Konnect Configuration. |
+
+
+_Appears in:_
+- [KonnectExtensionSpec](#konnectextensionspec)
+
 #### KonnectExtensionSpec
 
 
@@ -508,9 +524,8 @@ KonnectExtensionSpec defines the desired state of KonnectExtension.
 
 | Field | Description |
 | --- | --- |
-| `konnectControlPlane` _[KonnectExtensionControlPlane](#konnectextensioncontrolplane)_ | KonnectControlPlane is the configuration for the Konnect Control Plane. |
+| `konnect` _[KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)_ | Konnect holds the konnect-related configuration |
 | `dataPlaneClientAuth` _[DataPlaneClientAuth](#dataplaneclientauth)_ | DataPlaneClientAuth is the configuration for the client certificate authentication for the DataPlane. In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the Konnect Platform. |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration holds the information needed to setup the Konnect Configuration. |
 | `dataPlaneLabels` _object (keys:string, values:[DataPlaneLabelValue](#dataplanelabelvalue))_ | DataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane. |
 
 
