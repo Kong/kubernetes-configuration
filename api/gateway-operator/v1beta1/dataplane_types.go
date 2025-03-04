@@ -29,8 +29,12 @@ func init() {
 	SchemeBuilder.Register(&DataPlane{}, &DataPlaneList{})
 }
 
+// DataPlane is the Schema for the dataplanes API
+//
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +apireference:kgo:include
+// +kong:channels=gateway-operator
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:shortName=kodp,categories=kong;all
@@ -39,10 +43,6 @@ func init() {
 // +kubebuilder:validation:XValidation:message="DataPlane requires an image to be set on proxy container",rule="has(self.spec.deployment.podTemplateSpec) && has(self.spec.deployment.podTemplateSpec.spec.containers) && self.spec.deployment.podTemplateSpec.spec.containers.exists(c, c.name == 'proxy' && has(c.image))"
 // +kubebuilder:validation:XValidation:message="DataPlane supports only db mode 'off'",rule="!has(self.spec.deployment.podTemplateSpec) ? true : ( self.spec.deployment.podTemplateSpec.spec.containers.size() == 0 || self.spec.deployment.podTemplateSpec.spec.containers[0].name == 'proxy' ? (!has(self.spec.deployment.podTemplateSpec.spec.containers[0].env) ? true : self.spec.deployment.podTemplateSpec.spec.containers[0].env.all(e, e.name != 'KONG_DATABASE' || e.value == 'off' || e.value == '')) : true)"
 // +kubebuilder:validation:XValidation:message="DataPlane spec cannot be updated when promotion is in progress",rule="((self.spec == oldSelf.spec) || !has(self.status.rollout)) ? true : self.status.rollout.conditions.all(c, c.type != 'RolledOut' || c.reason != 'PromotionInProgress')"
-
-// DataPlane is the Schema for the dataplanes API
-// +apireference:kgo:include
-// +kong:channels=gateway-operator
 type DataPlane struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
