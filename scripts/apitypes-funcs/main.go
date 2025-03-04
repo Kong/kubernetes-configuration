@@ -39,6 +39,10 @@ type templateDataT struct {
 
 	// ControlPlaneRefRequired is true if the ControlPlaneRef is required for the type.
 	ControlPlaneRefRequired bool
+
+	// ControlPlaneRefFieldPath is the field path to the ControlPlaneRef in the type.
+	// If unspecified, the default is Spec.ControlPlaneRef.
+	ControlPlaneRefFieldPath string
 }
 
 const (
