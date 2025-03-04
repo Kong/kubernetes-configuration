@@ -21,6 +21,19 @@ Adding a new version? You'll need three changes:
 
 - Migrate KGO conditions to this repo.
   [#323](https://github.com/Kong/kubernetes-configuration/pull/323)
+- Disallowed `konnectID` as `ControlPlaneRef`'s `type` field value for Konnect entities that do not support it yet:
+  - `KongCACertificate`
+  - `KongCertificate`
+  - `KongVault`
+  - `KongDataPlaneClientCertificate`
+  - `KongKey`
+  - `KongKeySet`
+  - `KongPluginBinding`
+  - `KongRoute`
+  - `KongService`
+  - `KongUpstream`
+  - `KongConsumerGroup`
+  [#326](https://github.com/Kong/kubernetes-configuration/pull/326)
 
 ## [v1.2.0-rc.1]
 
