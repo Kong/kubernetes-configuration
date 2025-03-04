@@ -38,9 +38,9 @@ const (
 // +kubebuilder:object:root=true
 // +kubebuilder:object:generate=true
 // +kubebuilder:subresource:status
-// +kubebuilder:validation:XValidation:rule="oldSelf.spec.konnectControlPlane.controlPlaneRef == self.spec.konnectControlPlane.controlPlaneRef", message="spec.konnectControlPlane.controlPlaneRef is immutable."
-// +kubebuilder:validation:XValidation:rule="self.spec.konnectControlPlane.controlPlaneRef.type == 'konnectID' ? has(self.spec.konnect) : true",message="konnect must be set when ControlPlaneRef is set to KonnectID."
-// +kubebuilder:validation:XValidation:rule="self.spec.konnectControlPlane.controlPlaneRef.type == 'konnectNamespacedRef' ? !has(self.spec.konnect) : true",message="konnect must be unset when ControlPlaneRef is set to konnectNamespacedRef."
+// +kubebuilder:validation:XValidation:rule="oldSelf.spec.konnect.controlPlane.controlPlaneRef == self.spec.konnect.controlPlane.controlPlaneRef", message="spec.konnect.controlPlane.controlPlaneRef is immutable."
+// +kubebuilder:validation:XValidation:rule="self.spec.konnect.controlPlane.controlPlaneRef.type == 'konnectID' ? has(self.spec.konnect.configuration) : true",message="konnect must be set when ControlPlaneRef is set to KonnectID."
+// +kubebuilder:validation:XValidation:rule="self.spec.konnect.controlPlane.controlPlaneRef.type == 'konnectNamespacedRef' ? !has(self.spec.konnect.configuration) : true",message="konnect must be unset when ControlPlaneRef is set to konnectNamespacedRef."
 // +apireference:kgo:include
 // +kong:channels=gateway-operator
 type KonnectExtension struct {
@@ -68,10 +68,10 @@ type KonnectExtensionList struct {
 
 // KonnectExtensionSpec defines the desired state of KonnectExtension.
 type KonnectExtensionSpec struct {
-	// KonnectControlPlane is the configuration for the Konnect Control Plane.
+	// Konnect holds the konnect-related configuration
 	//
 	// +kubebuilder:validation:Required
-	KonnectControlPlane KonnectExtensionControlPlane `json:"konnectControlPlane"`
+	Konnect KonnectExtensionKonnectSpec `json:"konnect"`
 
 	// DataPlaneClientAuth is the configuration for the client certificate authentication for the DataPlane.
 	// In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the
@@ -81,11 +81,6 @@ type KonnectExtensionSpec struct {
 	// +kubebuilder:default={certificateSecret:{provisioning: Automatic}}
 	DataPlaneClientAuth *DataPlaneClientAuth `json:"dataPlaneClientAuth,omitempty"`
 
-	// KonnectConfiguration holds the information needed to setup the Konnect Configuration.
-	//
-	// +kubebuilder:validation:Optional
-	KonnectConfiguration *KonnectConfiguration `json:"konnect,omitempty"`
-
 	// DataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane.
 	//
 	// +optional
@@ -94,6 +89,19 @@ type KonnectExtensionSpec struct {
 	// +kubebuilder:validation:XValidation:rule="self.all(key, !(key.startsWith('kong') || key.startsWith('konnect') || key.startsWith('insomnia') || key.startsWith('mesh') || key.startsWith('kic') || key.startsWith('_')))",message="keys must not start with 'kong', 'konnect', 'insomnia', 'mesh', 'kic', or '_'."
 	// +kubebuilder:validation:XValidation:rule="self.all(key, size(key) > 0 && size(key) < 64)",message="Too long: may not be more than 63 bytes"
 	DataPlaneLabels map[string]DataPlaneLabelValue `json:"dataPlaneLabels,omitempty"`
+}
+
+// KonnectExtensionKonnectSpec holds the konnect-related configuration.
+type KonnectExtensionKonnectSpec struct {
+	// ControlPlane is the configuration for the Konnect Control Plane.
+	//
+	// +kubebuilder:validation:Required
+	ControlPlane KonnectExtensionControlPlane `json:"controlPlane"`
+
+	// Configuration holds the information needed to set up the Konnect Configuration.
+	//
+	// +kubebuilder:validation:Optional
+	Configuration *KonnectConfiguration `json:"configuration,omitempty"`
 }
 
 // KonnectExtensionControlPlane is the configuration for the Konnect Control Plane.

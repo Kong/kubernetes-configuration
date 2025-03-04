@@ -12,16 +12,17 @@ kind: KonnectExtension
 metadata:
   name: my-konnect-extension
 spec:
-  konnectControlPlane:
-    controlPlaneRef:
-      type: konnectID
-      konnectID: 12345678-1234-1234-1234-123456789abc
+  konnect:
+    controlPlane:
+      controlPlaneRef:
+        type: konnectID
+        konnectID: 12345678-1234-1234-1234-123456789abc
+    configuration:
+      authRef:
+        name: konnect-api-auth
   dataPlaneClientAuth:
     certificateSecret:
-      provisioning: Automatic
-  konnect:
-    authRef:
-      name: konnect-api-auth
+      provisioning: Automatic    
   dataPlaneLabels:
     environment: "production"
     team: "platform"
