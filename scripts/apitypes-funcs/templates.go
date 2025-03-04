@@ -110,18 +110,25 @@ func (obj *{{ .Type }}) SetConditions(conditions []metav1.Condition) {
 }
 {{- if .ControlPlaneRefType }}
 
+{{- $cpRefFieldPath := "Spec.ControlPlaneRef" }}
+{{- if ne .ControlPlaneRefFieldPath "" }}
+{{- $cpRefFieldPath = .ControlPlaneRefFieldPath }}
+{{- end }}
+
+// SetControlPlaneRef sets the ControlPlaneRef.
 func (obj *{{ .Type }}) SetControlPlaneRef(ref *{{ .ControlPlaneRefType }}) {
 	{{- if .ControlPlaneRefRequired }}
 	if ref == nil {
-		obj.Spec.ControlPlaneRef = {{ .ControlPlaneRefType }}{}
+		obj.{{ $cpRefFieldPath }} = {{ .ControlPlaneRefType }}{}
 		return
 	}
 	{{- end }}
-	obj.Spec.ControlPlaneRef = {{ if .ControlPlaneRefRequired }}*{{ end }}ref
+	obj.{{ $cpRefFieldPath }} = {{ if .ControlPlaneRefRequired }}*{{ end }}ref
 }
 
+// GetControlPlaneRef returns the ControlPlaneRef.
 func (obj *{{ .Type }}) GetControlPlaneRef() *{{ .ControlPlaneRefType }} {
-	return {{ if .ControlPlaneRefRequired }}&{{ end }}obj.Spec.ControlPlaneRef
+	return {{ if .ControlPlaneRefRequired }}&{{ end }}obj.{{ $cpRefFieldPath }}
 }
 {{- end }}
 

@@ -17,6 +17,12 @@ var supportedKonnectV1Alpha1TypesWithControlPlaneRef = []supportedTypesT{
 				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 				ControlPlaneRefRequired:    true,
 			},
+			{
+				Type:                     "KonnectExtension",
+				ControlPlaneRefType:      "commonv1alpha1.ControlPlaneRef",
+				ControlPlaneRefRequired:  true,
+				ControlPlaneRefFieldPath: "Spec.KonnectControlPlane.ControlPlaneRef",
+			},
 		},
 	},
 }
@@ -180,9 +186,6 @@ var supportedKonnectTypesStandalone = []supportedTypesT{
 				KonnectStatusType:          "*KonnectEntityStatus",
 				KonnectStatusEmbedded:      true,
 				GetKonnectStatusReturnType: "KonnectEntityStatus",
-			},
-			{
-				Type: "KonnectExtension",
 			},
 		},
 	},
