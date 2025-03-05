@@ -24,7 +24,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: GatewayConfiguration is the Schema for the gatewayconfigurations
-          API
+          API.
         properties:
           apiVersion:
             description: |-
@@ -8324,8 +8324,16 @@ spec:
                       - kind
                       - name
                       type: object
+                    maxItems: 2
+                    minItems: 0
                     type: array
                 type: object
+                x-kubernetes-validations:
+                - message: Extension not allowed for ControlPlane
+                  rule: 'has(self.extensions) ? self.extensions.all(e, (e.group ==
+                    ''konnect.konghq.com'' && e.kind == ''KonnectExtension'') || (e.group
+                    == ''gateway-operator.konghq.com'' && e.kind == ''DataPlaneMetricsExtension''))
+                    : true'
               dataPlaneOptions:
                 description: |-
                   DataPlaneOptions is the specification for configuration
@@ -17395,6 +17403,11 @@ spec:
                       type: object
                     type: array
                 type: object
+                x-kubernetes-validations:
+                - message: Extension not allowed for DataPlane
+                  rule: 'has(self.extensions) ? self.extensions.all(e, (e.group ==
+                    ''konnect.konghq.com'' || e.group == ''gateway-operator.konghq.com'')
+                    && e.kind == ''KonnectExtension'') : true'
               extensions:
                 description: |-
                   Extensions provide additional or replacement features for the Gateway
@@ -17436,6 +17449,15 @@ spec:
                 minItems: 0
                 type: array
             type: object
+            x-kubernetes-validations:
+            - message: KonnectExtension must be set at the Gateway level
+              rule: 'has(self.dataPlaneOptions.extensions) ? self.dataPlaneOptions.extensions.all(e,
+                (e.group != ''konnect.konghq.com'' && e.group != ''gateway-operator.konghq.com'')
+                || e.kind != ''KonnectExtension'') : true'
+            - message: KonnectExtension must be set at the Gateway level
+              rule: 'has(self.controlPlaneOptions.extensions) ? self.controlPlaneOptions.extensions.all(e,
+                (e.group != ''konnect.konghq.com'' && e.group != ''gateway-operator.konghq.com'')
+                || e.kind != ''KonnectExtension'') : true'
           status:
             description: GatewayConfigurationStatus defines the observed state of
               GatewayConfiguration
@@ -17504,10 +17526,9 @@ spec:
             type: object
         type: object
         x-kubernetes-validations:
-        - message: Extension not allowed for DataPlane config options
-          rule: 'has(self.spec.dataPlaneOptions.extensions) ? self.spec.dataPlaneOptions.extensions.all(e,
-            e.group == ''gateway-operator.konghq.com'' && e.kind == ''KonnectExtension'')
-            : true'
+        - message: Extension not allowed for GatewayConfiguration
+          rule: 'has(self.spec.extensions) ? self.spec.extensions.all(e, e.group ==
+            ''konnect.konghq.com'' && e.kind == ''KonnectExtension'') : true'
     served: true
     storage: true
     subresources:
