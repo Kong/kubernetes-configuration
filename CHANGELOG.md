@@ -34,6 +34,8 @@ Adding a new version? You'll need three changes:
   - `KongUpstream`
   - `KongConsumerGroup`
   [#326](https://github.com/Kong/kubernetes-configuration/pull/326)
+- Added `kong` category to Kong CRDs.
+  [#336](https://github.com/Kong/kubernetes-configuration/pull/336)
 
 ## [v1.2.0-rc.1]
 
