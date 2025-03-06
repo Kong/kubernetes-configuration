@@ -25,7 +25,7 @@ import (
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:categories=kong;all
+// +kubebuilder:resource:categories=kong
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 // +kubebuilder:resource:shortName=ki,categories=kong-ingress-controller

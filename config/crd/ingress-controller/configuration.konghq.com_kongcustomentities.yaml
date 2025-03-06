@@ -11,6 +11,7 @@ spec:
   names:
     categories:
     - kong-ingress-controller
+    - kong
     kind: KongCustomEntity
     listKind: KongCustomEntityList
     plural: kongcustomentities

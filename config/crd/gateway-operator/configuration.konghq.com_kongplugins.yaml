@@ -12,7 +12,6 @@ spec:
     categories:
     - kong-ingress-controller
     - kong
-    - all
     kind: KongPlugin
     listKind: KongPluginList
     plural: kongplugins

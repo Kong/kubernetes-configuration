@@ -27,7 +27,7 @@ import (
 // +genclient:nonNamespaced
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:scope=Cluster,shortName=kcp,categories=kong-ingress-controller;kong;all
+// +kubebuilder:resource:scope=Cluster,shortName=kcp,categories=kong-ingress-controller;kong
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 // +kubebuilder:printcolumn:name="Plugin-Type",type=string,JSONPath=`.plugin`,description="Name of the plugin"

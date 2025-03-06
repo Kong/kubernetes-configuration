@@ -11,7 +11,6 @@ spec:
   names:
     categories:
     - kong
-    - all
     kind: KonnectCloudGatewayDataPlaneGroupConfiguration
     listKind: KonnectCloudGatewayDataPlaneGroupConfigurationList
     plural: konnectcloudgatewaydataplanegroupconfigurations
