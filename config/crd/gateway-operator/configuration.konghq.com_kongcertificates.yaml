@@ -9,6 +9,8 @@ metadata:
 spec:
   group: configuration.konghq.com
   names:
+    categories:
+    - kong
     kind: KongCertificate
     listKind: KongCertificateList
     plural: kongcertificates

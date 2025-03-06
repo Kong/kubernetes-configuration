@@ -11,6 +11,7 @@ spec:
   names:
     categories:
     - kong-ingress-controller
+    - kong
     kind: KongLicense
     listKind: KongLicenseList
     plural: konglicenses

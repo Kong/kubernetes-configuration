@@ -9,6 +9,8 @@ metadata:
 spec:
   group: konnect.konghq.com
   names:
+    categories:
+    - kong
     kind: KonnectGatewayControlPlane
     listKind: KonnectGatewayControlPlaneList
     plural: konnectgatewaycontrolplanes

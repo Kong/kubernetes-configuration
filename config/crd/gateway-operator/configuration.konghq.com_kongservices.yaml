@@ -9,6 +9,8 @@ metadata:
 spec:
   group: configuration.konghq.com
   names:
+    categories:
+    - kong
     kind: KongService
     listKind: KongServiceList
     plural: kongservices
