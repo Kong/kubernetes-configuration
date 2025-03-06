@@ -13,6 +13,8 @@ spec:
   names:
     categories:
     - kong-ingress-controller
+    - kong
+    - all
     kind: KongUpstreamPolicy
     listKind: KongUpstreamPolicyList
     plural: kongupstreampolicies

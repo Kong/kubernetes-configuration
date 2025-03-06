@@ -11,6 +11,8 @@ spec:
   names:
     categories:
     - kong-ingress-controller
+    - kong
+    - all
     kind: KongVault
     listKind: KongVaultList
     plural: kongvaults

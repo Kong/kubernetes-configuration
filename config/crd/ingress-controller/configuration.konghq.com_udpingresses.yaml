@@ -11,6 +11,8 @@ spec:
   names:
     categories:
     - kong-ingress-controller
+    - kong
+    - all
     kind: UDPIngress
     listKind: UDPIngressList
     plural: udpingresses

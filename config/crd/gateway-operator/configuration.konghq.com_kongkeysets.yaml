@@ -9,6 +9,9 @@ metadata:
 spec:
   group: configuration.konghq.com
   names:
+    categories:
+    - kong
+    - all
     kind: KongKeySet
     listKind: KongKeySetList
     plural: kongkeysets
