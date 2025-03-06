@@ -9453,9 +9453,9 @@ spec:
         type: object
         x-kubernetes-validations:
         - message: DataPlane requires an image to be set on proxy container
-          rule: '((has(self.spec.deployment) && has(self.spec.deployment.podTemplateSpec)
-            && has(self.spec.deployment.podTemplateSpec.spec)) ? self.spec.deployment.podTemplateSpec.spec.containers.exists(c,
-            c.name == ''proxy'' && has(c.image)) : true)'
+          rule: has(self.spec.deployment.podTemplateSpec) && has(self.spec.deployment.podTemplateSpec.spec.containers)
+            && self.spec.deployment.podTemplateSpec.spec.containers.exists(c, c.name
+            == 'proxy' && has(c.image))
         - message: DataPlane supports only db mode 'off'
           rule: '!has(self.spec.deployment.podTemplateSpec) ? true : ( self.spec.deployment.podTemplateSpec.spec.containers.size()
             == 0 || self.spec.deployment.podTemplateSpec.spec.containers[0].name ==

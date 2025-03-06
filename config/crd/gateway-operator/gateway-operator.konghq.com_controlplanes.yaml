@@ -8338,9 +8338,9 @@ spec:
         type: object
         x-kubernetes-validations:
         - message: ControlPlane requires an image to be set on controller container
-          rule: '((has(self.spec.deployment) && has(self.spec.deployment.podTemplateSpec)
-            && has(self.spec.deployment.podTemplateSpec.spec)) ? self.spec.deployment.podTemplateSpec.spec.containers.exists(c,
-            c.name == ''controller'' && has(c.image)) : true)'
+          rule: has(self.spec.deployment.podTemplateSpec) && has(self.spec.deployment.podTemplateSpec.spec.containers)
+            && self.spec.deployment.podTemplateSpec.spec.containers.exists(c, c.name
+            == 'controller' && has(c.image))
     served: true
     storage: true
     subresources:
