@@ -541,7 +541,7 @@ KonnectExtensionSpec defines the desired state of KonnectExtension.
 | Field | Description |
 | --- | --- |
 | `konnect` _[KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)_ | Konnect holds the konnect-related configuration |
-| `clientAuth` _[KonnectExtensionClientAuth](#konnectextensionclientauth)_ | ClientAuth is the configuration for the client certificate authenticatione. In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the Konnect Platform. |
+| `clientAuth` _[KonnectExtensionClientAuth](#konnectextensionclientauth)_ | ClientAuth is the configuration for the client certificate authentication. In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the Konnect Platform. |
 
 
 _Appears in:_
