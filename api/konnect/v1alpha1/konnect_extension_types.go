@@ -74,7 +74,7 @@ type KonnectExtensionSpec struct {
 	// +kubebuilder:validation:Required
 	Konnect KonnectExtensionKonnectSpec `json:"konnect"`
 
-	// ClientAuth is the configuration for the client certificate authenticatione.
+	// ClientAuth is the configuration for the client certificate authentication.
 	// In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the
 	// Konnect Platform.
 	//
