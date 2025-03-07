@@ -103,23 +103,23 @@ type KonnectExtensionKonnectSpec struct {
 
 // KonnectExtensionControlPlane is the configuration for the Konnect Control Plane.
 type KonnectExtensionControlPlane struct {
-	// ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with.
+	// Ref is a reference to a Konnect ControlPlane this KonnectExtension is associated with.
 	//
 	// +kubebuilder:validation:Required
 	// +kubebuilder:validation:XValidation:rule="self.type != 'kic'", message="kic type not supported as controlPlaneRef."
-	ControlPlaneRef commonv1alpha1.ControlPlaneRef `json:"ref"`
+	Ref commonv1alpha1.ControlPlaneRef `json:"ref"`
 }
 
 // KonnectExtensionDataPlane is the configuration for the Konnect DataPlane.
 type KonnectExtensionDataPlane struct {
-	// DataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane.
+	// Labels is a set of labels that will be applied to the Konnect DataPlane.
 	//
 	// +optional
 	// +kubebuilder:validation:MaxItems=5
 	// +kubebuilder:validation:XValidation:rule="self.all(key, key.matches('^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$'))",message="keys must match the pattern '^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$'."
 	// +kubebuilder:validation:XValidation:rule="self.all(key, !(key.startsWith('kong') || key.startsWith('konnect') || key.startsWith('insomnia') || key.startsWith('mesh') || key.startsWith('kic') || key.startsWith('_')))",message="keys must not start with 'kong', 'konnect', 'insomnia', 'mesh', 'kic', or '_'."
 	// +kubebuilder:validation:XValidation:rule="self.all(key, size(key) > 0 && size(key) < 64)",message="Too long: may not be more than 63 bytes"
-	DataPlaneLabels map[string]DataPlaneLabelValue `json:"labels,omitempty"`
+	Labels map[string]DataPlaneLabelValue `json:"labels,omitempty"`
 }
 
 // DataPlaneLabelValue is the type that defines the value of a label that will be applied to the Konnect DataPlane.

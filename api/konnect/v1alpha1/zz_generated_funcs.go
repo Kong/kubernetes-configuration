@@ -82,13 +82,13 @@ func (obj *KonnectExtension) SetConditions(conditions []metav1.Condition) {
 // SetControlPlaneRef sets the ControlPlaneRef.
 func (obj *KonnectExtension) SetControlPlaneRef(ref *commonv1alpha1.ControlPlaneRef) {
 	if ref == nil {
-		obj.Spec.Konnect.ControlPlane.ControlPlaneRef = commonv1alpha1.ControlPlaneRef{}
+		obj.Spec.Konnect.ControlPlane.Ref = commonv1alpha1.ControlPlaneRef{}
 		return
 	}
-	obj.Spec.Konnect.ControlPlane.ControlPlaneRef = *ref
+	obj.Spec.Konnect.ControlPlane.Ref = *ref
 }
 
 // GetControlPlaneRef returns the ControlPlaneRef.
 func (obj *KonnectExtension) GetControlPlaneRef() *commonv1alpha1.ControlPlaneRef {
-	return &obj.Spec.Konnect.ControlPlane.ControlPlaneRef
+	return &obj.Spec.Konnect.ControlPlane.Ref
 }

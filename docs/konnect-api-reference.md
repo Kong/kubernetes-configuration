@@ -476,7 +476,7 @@ KonnectExtensionControlPlane is the configuration for the Konnect Control Plane.
 
 | Field | Description |
 | --- | --- |
-| `ref` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KonnectExtension is associated with. |
+| `ref` _[ControlPlaneRef](#controlplaneref)_ | Ref is a reference to a Konnect ControlPlane this KonnectExtension is associated with. |
 
 
 _Appears in:_
@@ -508,7 +508,7 @@ KonnectExtensionDataPlane is the configuration for the Konnect DataPlane.
 
 | Field | Description |
 | --- | --- |
-| `labels` _object (keys:string, values:[DataPlaneLabelValue](#dataplanelabelvalue))_ | DataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane. |
+| `labels` _object (keys:string, values:[DataPlaneLabelValue](#dataplanelabelvalue))_ | Labels is a set of labels that will be applied to the Konnect DataPlane. |
 
 
 _Appears in:_

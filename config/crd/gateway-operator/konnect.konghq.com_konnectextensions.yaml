@@ -118,7 +118,7 @@ spec:
                       Control Plane.
                     properties:
                       ref:
-                        description: ControlPlaneRef is a reference to a Konnect ControlPlane
+                        description: Ref is a reference to a Konnect ControlPlane
                           this KonnectExtension is associated with.
                         properties:
                           konnectID:
@@ -205,8 +205,8 @@ spec:
                           minLength: 1
                           pattern: ^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$
                           type: string
-                        description: DataPlaneLabels is a set of labels that will
-                          be applied to the Konnect DataPlane.
+                        description: Labels is a set of labels that will be applied
+                          to the Konnect DataPlane.
                         type: object
                         x-kubernetes-validations:
                         - message: keys must match the pattern '^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$'.
