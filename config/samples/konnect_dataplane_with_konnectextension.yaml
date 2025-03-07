@@ -12,20 +12,22 @@ kind: KonnectExtension
 metadata:
   name: my-konnect-extension
 spec:
-  konnectControlPlane:
-    controlPlaneRef:
-      type: konnectID
-      konnectID: 12345678-1234-1234-1234-123456789abc
-  dataPlaneClientAuth:
-    certificateSecret:
-      provisioning: Automatic
   konnect:
-    authRef:
-      name: konnect-api-auth
-  dataPlaneLabels:
-    environment: "production"
-    team: "platform"
-    application: "payments"
+    controlPlane:
+      ref:
+        type: konnectID
+        konnectID: 12345678-1234-1234-1234-123456789abc
+    dataPlane:
+      labels:
+        environment: "production"
+        team: "platform"
+        application: "payments"
+    configuration:
+      authRef:
+        name: konnect-api-auth   
+  clientAuth:
+    certificateSecret:
+      provisioning: Automatic 
 ---
 apiVersion: gateway-operator.konghq.com/v1beta1
 kind: DataPlane
