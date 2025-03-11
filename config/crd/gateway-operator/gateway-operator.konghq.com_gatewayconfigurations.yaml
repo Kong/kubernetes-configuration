@@ -17527,8 +17527,10 @@ spec:
         type: object
         x-kubernetes-validations:
         - message: Extension not allowed for GatewayConfiguration
-          rule: 'has(self.spec.extensions) ? self.spec.extensions.all(e, e.group ==
-            ''konnect.konghq.com'' && e.kind == ''KonnectExtension'') : true'
+          rule: 'has(self.spec.extensions) ? self.spec.extensions.all(e, (e.group
+            == ''konnect.konghq.com'' && e.kind == ''KonnectExtension'') || (e.group
+            == ''gateway-operator.konghq.com'' && e.kind == ''DataPlaneMetricsExtension''))
+            : true'
     served: true
     storage: true
     subresources:
