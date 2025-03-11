@@ -180,7 +180,7 @@ spec:
                 == oldSelf.cluster_type'
             - message: cloud_gateway cannot be set for cluster_type 'CLUSTER_TYPE_K8S_INGRESS_CONTROLLER'
               rule: 'has(self.cluster_type) && self.cluster_type == ''CLUSTER_TYPE_K8S_INGRESS_CONTROLLER''
-                ? self.cloud_gateway == false : true'
+                ? !has(self.cloud_gateway) : true'
           status:
             description: Status defines the observed state of KonnectGatewayControlPlane.
             properties:
