@@ -17,9 +17,9 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
-## [v1.2.0-rc.2]
+## [v1.2.0-rc.3]
 
-[v1.2.0-rc.2]: https://github.com/Kong/kubernetes-configuration/compare/v1.1.0...v1.2.0-rc.2
+[v1.2.0-rc.3]: https://github.com/Kong/kubernetes-configuration/compare/v1.1.0...v1.2.0-rc.3
 
 ### Added
 
