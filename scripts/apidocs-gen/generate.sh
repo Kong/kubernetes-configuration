@@ -18,7 +18,8 @@ generate() {
       --max-depth=10
 }
 
-generate "/api/configuration" "/docs/api-reference.md"
+generate "/api/configuration" "/docs/configuration-api-reference.md"
 generate "/api/konnect" "/docs/konnect-api-reference.md"
 generate "/api/incubator" "/docs/incubator-api-reference.md"
 generate "/api/gateway-operator" "/docs/gateway-operator-api-reference.md"
+generate "/api" "/docs/all-api-reference.md"
