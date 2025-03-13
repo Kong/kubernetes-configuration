@@ -10,8 +10,8 @@ set -o nounset
 set -o pipefail
 
 SCRIPT_ROOT="$(dirname "${BASH_SOURCE[0]}")/../.."
-CRD_REF_DOC="${SCRIPT_ROOT}/docs/api-reference.md"
-POST_PROCESSED_DOC="${1}"
+CRD_REF_DOC="${1}"
+POST_PROCESSED_DOC="${2}"
 
 # Add a title and turn the vale linter off
 echo "---
@@ -38,5 +38,5 @@ fi
 
 # Replace all description placeholders with proper include directives
 ${SED} -i \
-  's/<!-- \(.*\) description placeholder -->/{% include md\/kic\/crd-ref\/\1_description.md kong_version=page.kong_version %}/' \
+  's/<!-- \(.*\) description placeholder -->/{% include md\/k8s\/crd-ref\/\1_description.md kong_version=page.kong_version %}/' \
   "${POST_PROCESSED_DOC}"
