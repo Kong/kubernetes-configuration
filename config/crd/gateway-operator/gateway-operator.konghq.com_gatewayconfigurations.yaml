@@ -17451,13 +17451,15 @@ spec:
             type: object
             x-kubernetes-validations:
             - message: KonnectExtension must be set at the Gateway level
-              rule: 'has(self.dataPlaneOptions.extensions) ? self.dataPlaneOptions.extensions.all(e,
-                (e.group != ''konnect.konghq.com'' && e.group != ''gateway-operator.konghq.com'')
-                || e.kind != ''KonnectExtension'') : true'
+              rule: 'has(self.dataPlaneOptions) && has(self.dataPlaneOptions.extensions)
+                ? self.dataPlaneOptions.extensions.all(e, (e.group != ''konnect.konghq.com''
+                && e.group != ''gateway-operator.konghq.com'') || e.kind != ''KonnectExtension'')
+                : true'
             - message: KonnectExtension must be set at the Gateway level
-              rule: 'has(self.controlPlaneOptions.extensions) ? self.controlPlaneOptions.extensions.all(e,
-                (e.group != ''konnect.konghq.com'' && e.group != ''gateway-operator.konghq.com'')
-                || e.kind != ''KonnectExtension'') : true'
+              rule: 'has(self.controlPlaneOptions) && has(self.controlPlaneOptions.extensions)
+                ? self.controlPlaneOptions.extensions.all(e, (e.group != ''konnect.konghq.com''
+                && e.group != ''gateway-operator.konghq.com'') || e.kind != ''KonnectExtension'')
+                : true'
           status:
             description: GatewayConfigurationStatus defines the observed state of
               GatewayConfiguration
