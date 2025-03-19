@@ -21,19 +21,19 @@ type WatchNamespaces struct {
 
 // WatchNamespacesType indicates the type of namespace watching to be done.
 //
-// +kubebuilder:validation:Enum=All;List;Own
+// +kubebuilder:validation:Enum=all;list;own
 type WatchNamespacesType string
 
 const (
 	// WatchNamespacesTypeAll indicates that all namespaces should be watched
 	// for resources.
-	WatchNamespacesTypeAll WatchNamespacesType = "All"
+	WatchNamespacesTypeAll WatchNamespacesType = "all"
 	// WatchNamespacesTypeList indicates that only the namespaces listed in
 	// the Namespaces field should be watched for resources.
 	// All the namespaces enumerated in the list will be watched in addition to
 	// the namespace of the object.
-	WatchNamespacesTypeList WatchNamespacesType = "List"
+	WatchNamespacesTypeList WatchNamespacesType = "list"
 	// WatchNamespacesTypeOwn indicates that only the namespace of the
 	// object should be watched for resources.
-	WatchNamespacesTypeOwn WatchNamespacesType = "Own"
+	WatchNamespacesTypeOwn WatchNamespacesType = "own"
 )

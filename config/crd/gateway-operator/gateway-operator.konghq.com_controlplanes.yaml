@@ -8276,9 +8276,9 @@ spec:
                       Type indicates the type of namespace watching to be done.
                       By default, all namespaces are watched.
                     enum:
-                    - All
-                    - List
-                    - Own
+                    - all
+                    - list
+                    - own
                     type: string
                 required:
                 - type
