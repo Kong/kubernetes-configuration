@@ -2,8 +2,8 @@ package v1beta1
 
 // WatchNamespaces defines the namespaces to watch for resources
 //
-// +kubebuilder:validation:XValidation:message="List is required when type is List", rule="self.type == 'List' ? has(self.list) : true"
-// +kubebuilder:validation:XValidation:message="List must not be specified when type is not List", rule="self.type != 'List' ? !has(self.list) : true"
+// +kubebuilder:validation:XValidation:message="list is required when type is 'list'", rule="self.type == 'list' ? has(self.list) : true"
+// +kubebuilder:validation:XValidation:message="list must not be specified when type is not 'list'", rule="self.type != 'list' ? !has(self.list) : true"
 // +apireference:kgo:include
 type WatchNamespaces struct {
 	// Type indicates the type of namespace watching to be done.

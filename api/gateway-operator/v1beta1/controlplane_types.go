@@ -88,7 +88,7 @@ type ControlPlaneSpec struct {
 	// WatchNamespaces indicates the namespaces to watch for resources.
 	//
 	// +optional
-	// +kubebuilder:default={type: All}
+	// +kubebuilder:default={type: all}
 	WatchNamespaces *WatchNamespaces `json:"watchNamespaces,omitempty"`
 }
 

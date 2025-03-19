@@ -8260,7 +8260,7 @@ spec:
                 type: string
               watchNamespaces:
                 default:
-                  type: All
+                  type: all
                 description: WatchNamespaces indicates the namespaces to watch for
                   resources.
                 properties:
@@ -8284,10 +8284,10 @@ spec:
                 - type
                 type: object
                 x-kubernetes-validations:
-                - message: List is required when type is List
-                  rule: 'self.type == ''List'' ? has(self.list) : true'
-                - message: List must not be specified when type is not List
-                  rule: 'self.type != ''List'' ? !has(self.list) : true'
+                - message: list is required when type is 'list'
+                  rule: 'self.type == ''list'' ? has(self.list) : true'
+                - message: list must not be specified when type is not 'list'
+                  rule: 'self.type != ''list'' ? !has(self.list) : true'
             type: object
             x-kubernetes-validations:
             - message: Extension not allowed for ControlPlane

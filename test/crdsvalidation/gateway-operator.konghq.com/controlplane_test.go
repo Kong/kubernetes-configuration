@@ -204,20 +204,7 @@ func TestControlPlane(t *testing.T) {
 				TestObject: &operatorv1beta1.ControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.ControlPlaneSpec{
-						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
-							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
-								PodTemplateSpec: &corev1.PodTemplateSpec{
-									Spec: corev1.PodSpec{
-										Containers: []corev1.Container{
-											{
-												Name:  "controller",
-												Image: "kong:3.9.0",
-											},
-										},
-									},
-								},
-							},
-						},
+						ControlPlaneOptions: validControlPlaneOptions,
 					},
 				},
 			},
@@ -226,20 +213,7 @@ func TestControlPlane(t *testing.T) {
 				TestObject: &operatorv1beta1.ControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.ControlPlaneSpec{
-						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
-							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
-								PodTemplateSpec: &corev1.PodTemplateSpec{
-									Spec: corev1.PodSpec{
-										Containers: []corev1.Container{
-											{
-												Name:  "controller",
-												Image: "kong:3.9.0",
-											},
-										},
-									},
-								},
-							},
-						},
+						ControlPlaneOptions: validControlPlaneOptions,
 						WatchNamespaces: &operatorv1beta1.WatchNamespaces{
 							Type: operatorv1beta1.WatchNamespacesTypeAll,
 						},
@@ -251,20 +225,7 @@ func TestControlPlane(t *testing.T) {
 				TestObject: &operatorv1beta1.ControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.ControlPlaneSpec{
-						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
-							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
-								PodTemplateSpec: &corev1.PodTemplateSpec{
-									Spec: corev1.PodSpec{
-										Containers: []corev1.Container{
-											{
-												Name:  "controller",
-												Image: "kong:3.9.0",
-											},
-										},
-									},
-								},
-							},
-						},
+						ControlPlaneOptions: validControlPlaneOptions,
 						WatchNamespaces: &operatorv1beta1.WatchNamespaces{
 							Type: operatorv1beta1.WatchNamespacesTypeList,
 							List: []string{
@@ -279,46 +240,20 @@ func TestControlPlane(t *testing.T) {
 				TestObject: &operatorv1beta1.ControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.ControlPlaneSpec{
-						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
-							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
-								PodTemplateSpec: &corev1.PodTemplateSpec{
-									Spec: corev1.PodSpec{
-										Containers: []corev1.Container{
-											{
-												Name:  "controller",
-												Image: "kong:3.9.0",
-											},
-										},
-									},
-								},
-							},
-						},
+						ControlPlaneOptions: validControlPlaneOptions,
 						WatchNamespaces: &operatorv1beta1.WatchNamespaces{
 							Type: operatorv1beta1.WatchNamespacesTypeList,
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("List is required when type is List"),
+				ExpectedErrorMessage: lo.ToPtr("list is required when type is 'list'"),
 			},
 			{
 				Name: "watch namespaces own",
 				TestObject: &operatorv1beta1.ControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.ControlPlaneSpec{
-						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
-							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
-								PodTemplateSpec: &corev1.PodTemplateSpec{
-									Spec: corev1.PodSpec{
-										Containers: []corev1.Container{
-											{
-												Name:  "controller",
-												Image: "kong:3.9.0",
-											},
-										},
-									},
-								},
-							},
-						},
+						ControlPlaneOptions: validControlPlaneOptions,
 						WatchNamespaces: &operatorv1beta1.WatchNamespaces{
 							Type: operatorv1beta1.WatchNamespacesTypeOwn,
 						},
@@ -330,20 +265,7 @@ func TestControlPlane(t *testing.T) {
 				TestObject: &operatorv1beta1.ControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.ControlPlaneSpec{
-						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
-							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
-								PodTemplateSpec: &corev1.PodTemplateSpec{
-									Spec: corev1.PodSpec{
-										Containers: []corev1.Container{
-											{
-												Name:  "controller",
-												Image: "kong:3.9.0",
-											},
-										},
-									},
-								},
-							},
-						},
+						ControlPlaneOptions: validControlPlaneOptions,
 						WatchNamespaces: &operatorv1beta1.WatchNamespaces{
 							Type: operatorv1beta1.WatchNamespacesTypeOwn,
 							List: []string{
@@ -352,7 +274,7 @@ func TestControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("List must not be specified when type is not List"),
+				ExpectedErrorMessage: lo.ToPtr("list must not be specified when type is not 'list'"),
 			},
 		}.Run(t)
 	})
