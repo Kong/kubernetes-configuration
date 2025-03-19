@@ -8258,6 +8258,36 @@ spec:
 
                   If omitted, Ingress resources will not be supported by the ControlPlane.
                 type: string
+              watchNamespaces:
+                default:
+                  type: All
+                description: WatchNamespaces indicates the namespaces to watch for
+                  resources.
+                properties:
+                  list:
+                    description: |-
+                      List is a list of namespaces to watch for resources.
+                      Only used when Type is set to List.
+                    items:
+                      type: string
+                    type: array
+                  type:
+                    description: |-
+                      Type indicates the type of namespace watching to be done.
+                      By default, all namespaces are watched.
+                    enum:
+                    - All
+                    - List
+                    - Own
+                    type: string
+                required:
+                - type
+                type: object
+                x-kubernetes-validations:
+                - message: List is required when type is List
+                  rule: 'self.type == ''List'' ? has(self.list) : true'
+                - message: List must not be specified when type is not List
+                  rule: 'self.type != ''List'' ? !has(self.list) : true'
             type: object
             x-kubernetes-validations:
             - message: Extension not allowed for ControlPlane

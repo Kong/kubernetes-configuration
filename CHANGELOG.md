@@ -22,6 +22,11 @@ Adding a new version? You'll need three changes:
 - Proper validation of fields `dataPlaneOptions` and `controlPlaneOptions` for `GatewayConfiguration`
   [#359](https://github.com/Kong/kubernetes-configuration/pull/359)
 
+### Changes
+
+- Add `watchNamespaces` spec field to `ControlPlane` to allow watching only specific namespaces.
+  [#358](https://github.com/Kong/kubernetes-configuration/pull/358)
+
 ## [v1.2.0]
 
 [v1.2.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.1.0...v1.2.0

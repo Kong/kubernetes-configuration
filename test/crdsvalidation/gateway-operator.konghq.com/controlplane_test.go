@@ -196,4 +196,164 @@ func TestControlPlane(t *testing.T) {
 			},
 		}.Run(t)
 	})
+
+	t.Run("watch namespaces", func(t *testing.T) {
+		common.TestCasesGroup[*operatorv1beta1.ControlPlane]{
+			{
+				Name: "no watch namespaces",
+				TestObject: &operatorv1beta1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
+							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
+								PodTemplateSpec: &corev1.PodTemplateSpec{
+									Spec: corev1.PodSpec{
+										Containers: []corev1.Container{
+											{
+												Name:  "controller",
+												Image: "kong:3.9.0",
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			{
+				Name: "watch namespaces all",
+				TestObject: &operatorv1beta1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
+							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
+								PodTemplateSpec: &corev1.PodTemplateSpec{
+									Spec: corev1.PodSpec{
+										Containers: []corev1.Container{
+											{
+												Name:  "controller",
+												Image: "kong:3.9.0",
+											},
+										},
+									},
+								},
+							},
+						},
+						WatchNamespaces: &operatorv1beta1.WatchNamespaces{
+							Type: operatorv1beta1.WatchNamespacesTypeAll,
+						},
+					},
+				},
+			},
+			{
+				Name: "watch namespaces list",
+				TestObject: &operatorv1beta1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
+							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
+								PodTemplateSpec: &corev1.PodTemplateSpec{
+									Spec: corev1.PodSpec{
+										Containers: []corev1.Container{
+											{
+												Name:  "controller",
+												Image: "kong:3.9.0",
+											},
+										},
+									},
+								},
+							},
+						},
+						WatchNamespaces: &operatorv1beta1.WatchNamespaces{
+							Type: operatorv1beta1.WatchNamespacesTypeList,
+							List: []string{
+								"namespace1",
+							},
+						},
+					},
+				},
+			},
+			{
+				Name: "watch namespaces list, no list is an error",
+				TestObject: &operatorv1beta1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
+							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
+								PodTemplateSpec: &corev1.PodTemplateSpec{
+									Spec: corev1.PodSpec{
+										Containers: []corev1.Container{
+											{
+												Name:  "controller",
+												Image: "kong:3.9.0",
+											},
+										},
+									},
+								},
+							},
+						},
+						WatchNamespaces: &operatorv1beta1.WatchNamespaces{
+							Type: operatorv1beta1.WatchNamespacesTypeList,
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("List is required when type is List"),
+			},
+			{
+				Name: "watch namespaces own",
+				TestObject: &operatorv1beta1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
+							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
+								PodTemplateSpec: &corev1.PodTemplateSpec{
+									Spec: corev1.PodSpec{
+										Containers: []corev1.Container{
+											{
+												Name:  "controller",
+												Image: "kong:3.9.0",
+											},
+										},
+									},
+								},
+							},
+						},
+						WatchNamespaces: &operatorv1beta1.WatchNamespaces{
+							Type: operatorv1beta1.WatchNamespacesTypeOwn,
+						},
+					},
+				},
+			},
+			{
+				Name: "watch namespaces list, list cannot be specified when type is not List",
+				TestObject: &operatorv1beta1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
+							Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
+								PodTemplateSpec: &corev1.PodTemplateSpec{
+									Spec: corev1.PodSpec{
+										Containers: []corev1.Container{
+											{
+												Name:  "controller",
+												Image: "kong:3.9.0",
+											},
+										},
+									},
+								},
+							},
+						},
+						WatchNamespaces: &operatorv1beta1.WatchNamespaces{
+							Type: operatorv1beta1.WatchNamespacesTypeOwn,
+							List: []string{
+								"namespace1",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("List must not be specified when type is not List"),
+			},
+		}.Run(t)
+	})
 }
