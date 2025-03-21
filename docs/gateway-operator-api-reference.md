@@ -664,6 +664,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `gatewayClass` _[ObjectName](#objectname)_ | GatewayClass indicates the Gateway resources which this ControlPlane should be responsible for configuring routes for (e.g. HTTPRoute, TCPRoute, UDPRoute, TLSRoute, e.t.c.).<br /><br /> Required for the ControlPlane to have any effect: at least one Gateway must be present for configuration to be pushed to the data-plane and only Gateway resources can be used to identify data-plane entities. |
 | `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> Routing configured this way will be applied to the Gateway resources indicated by GatewayClass.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+| `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 
 
 _Appears in:_
@@ -1212,4 +1213,32 @@ such as the annotations.
 _Appears in:_
 - [DataPlaneServiceOptions](#dataplaneserviceoptions)
 - [GatewayConfigServiceOptions](#gatewayconfigserviceoptions)
+
+#### WatchNamespaces
+
+
+WatchNamespaces defines the namespaces to watch for resources
+
+
+
+| Field | Description |
+| --- | --- |
+| `type` _[WatchNamespacesType](#watchnamespacestype)_ | Type indicates the type of namespace watching to be done. By default, all namespaces are watched. |
+| `list` _string array_ | List is a list of namespaces to watch for resources. Only used when Type is set to List. |
+
+
+_Appears in:_
+- [ControlPlaneSpec](#controlplanespec)
+
+#### WatchNamespacesType
+_Underlying type:_ `string`
+
+WatchNamespacesType indicates the type of namespace watching to be done.
+
+
+
+
+
+_Appears in:_
+- [WatchNamespaces](#watchnamespaces)
 
