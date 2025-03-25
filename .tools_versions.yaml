@@ -11,7 +11,7 @@ yq: "4.45.1"
 # renovate: datasource=github-releases depName=gotestyourself/gotestsum
 gotestsum: "1.12.1"
 # renovate: datasource=github-releases depName=golangci/golangci-lint
-golangci-lint: "1.64.8"
+golangci-lint: "2.0.1"
 # renovate: datasource=github-releases depName=rhysd/actionlint
 actionlint: "1.7.7"
 # renovate: datasource=github-releases depName=koalaman/shellcheck
