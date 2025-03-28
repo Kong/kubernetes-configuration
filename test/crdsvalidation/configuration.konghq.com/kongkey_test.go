@@ -100,8 +100,8 @@ func TestKongKey(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongKey{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: configurationv1alpha1.KongKeySpec{
-						KeySetRef: &configurationv1alpha1.KeySetRef{
-							Type: configurationv1alpha1.KeySetRefNamespacedRef,
+						KeySetRef: &commonv1alpha1.ObjectRef{
+							Type: commonv1alpha1.ObjectRefTypeNamespacedRef,
 						},
 						KongKeyAPISpec: configurationv1alpha1.KongKeyAPISpec{
 							KID: "1",
@@ -116,9 +116,9 @@ func TestKongKey(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongKey{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: configurationv1alpha1.KongKeySpec{
-						KeySetRef: &configurationv1alpha1.KeySetRef{
-							Type: configurationv1alpha1.KeySetRefNamespacedRef,
-							NamespacedRef: &configurationv1alpha1.KeySetNamespacedRef{
+						KeySetRef: &commonv1alpha1.ObjectRef{
+							Type: commonv1alpha1.ObjectRefTypeNamespacedRef,
+							NamespacedRef: &commonv1alpha1.NamespacedRef{
 								Name: "keyset-1",
 							},
 						},
@@ -134,8 +134,8 @@ func TestKongKey(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongKey{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: configurationv1alpha1.KongKeySpec{
-						KeySetRef: &configurationv1alpha1.KeySetRef{
-							Type:      configurationv1alpha1.KeySetRefKonnectID,
+						KeySetRef: &commonv1alpha1.ObjectRef{
+							Type:      commonv1alpha1.ObjectRefTypeKonnectID,
 							KonnectID: lo.ToPtr("keyset-1"),
 						},
 						KongKeyAPISpec: configurationv1alpha1.KongKeyAPISpec{
@@ -150,8 +150,8 @@ func TestKongKey(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongKey{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: configurationv1alpha1.KongKeySpec{
-						KeySetRef: &configurationv1alpha1.KeySetRef{
-							Type: configurationv1alpha1.KeySetRefKonnectID,
+						KeySetRef: &commonv1alpha1.ObjectRef{
+							Type: commonv1alpha1.ObjectRefTypeKonnectID,
 						},
 						KongKeyAPISpec: configurationv1alpha1.KongKeyAPISpec{
 							KID: "1",
@@ -166,8 +166,8 @@ func TestKongKey(t *testing.T) {
 				TestObject: &configurationv1alpha1.KongKey{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: configurationv1alpha1.KongKeySpec{
-						KeySetRef: &configurationv1alpha1.KeySetRef{
-							Type: configurationv1alpha1.KeySetRefType("unknown"),
+						KeySetRef: &commonv1alpha1.ObjectRef{
+							Type: commonv1alpha1.ObjectRefType("unknown"),
 						},
 						KongKeyAPISpec: configurationv1alpha1.KongKeyAPISpec{
 							KID: "1",

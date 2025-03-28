@@ -724,51 +724,6 @@ IngressClassParametersSpec defines the desired state of IngressClassParameters.
 _Appears in:_
 - [IngressClassParameters](#ingressclassparameters)
 
-#### KeySetNamespacedRef
-
-
-KeySetNamespacedRef is the schema for the KeySetNamespacedRef type.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the KeySet object. |
-
-
-_Appears in:_
-- [KeySetRef](#keysetref)
-
-#### KeySetRef
-
-
-KeySetRef is the schema for the KeySetRef type.
-It is used to reference a KeySet entity.
-
-
-
-| Field | Description |
-| --- | --- |
-| `type` _[KeySetRefType](#keysetreftype)_ | Type defines type of the KeySet object reference. It can be one of: - konnectID - namespacedRef |
-| `konnectID` _string_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
-| `namespacedRef` _[KeySetNamespacedRef](#keysetnamespacedref)_ | NamespacedRef is a reference to a KeySet entity inside the cluster. This field is required when the Type is namespacedRef. |
-
-
-_Appears in:_
-- [KongKeySpec](#kongkeyspec)
-
-#### KeySetRefType
-_Underlying type:_ `string`
-
-KeySetRefType is the enum type for the KeySetRef.
-
-
-
-
-
-_Appears in:_
-- [KeySetRef](#keysetref)
-
 #### Kind
 _Underlying type:_ `string`
 
@@ -1165,7 +1120,7 @@ KongKeySpec defines the spec for a KongKey.
 | Field | Description |
 | --- | --- |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KongKey is associated with. |
-| `keySetRef` _[KeySetRef](#keysetref)_ | KeySetRef is a reference to a KongKeySet this KongKey is attached to. ControlPlane referenced by a KongKeySet must be the same as the ControlPlane referenced by the KongKey. |
+| `keySetRef` _[ObjectRef](#objectref)_ | KeySetRef is a reference to a KongKeySet this KongKey is attached to. ControlPlane referenced by a KongKeySet must be the same as the ControlPlane referenced by the KongKey. |
 | `kid` _string_ | KID is a unique identifier for a key. When JWK is provided, KID has to match the KID in the JWK. |
 | `name` _string_ | Name is an optional name to associate with the given key. |
 | `jwk` _string_ | JWK is a JSON Web Key represented as a string. The JWK must contain a KID field that matches the KID in the KongKey. Either JWK or PEM must be set. |

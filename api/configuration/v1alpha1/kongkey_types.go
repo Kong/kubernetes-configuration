@@ -60,7 +60,7 @@ type KongKeySpec struct {
 	// KeySetRef is a reference to a KongKeySet this KongKey is attached to.
 	// ControlPlane referenced by a KongKeySet must be the same as the ControlPlane referenced by the KongKey.
 	// +optional
-	KeySetRef *KeySetRef `json:"keySetRef,omitempty"`
+	KeySetRef *commonv1alpha1.ObjectRef `json:"keySetRef,omitempty"`
 
 	// KongKeyAPISpec are the attributes of the KongKey itself.
 	KongKeyAPISpec `json:",inline"`
