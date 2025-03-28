@@ -26,6 +26,8 @@ Adding a new version? You'll need three changes:
 
 - Add `watchNamespaces` spec field to `ControlPlane` to allow watching only specific namespaces.
   [#358](https://github.com/Kong/kubernetes-configuration/pull/358)
+- Support `NodePort` as ingress service type for `DataPlane`
+  [#367](https://github.com/Kong/kubernetes-configuration/pull/367)
 
 ## [v1.2.0]
 

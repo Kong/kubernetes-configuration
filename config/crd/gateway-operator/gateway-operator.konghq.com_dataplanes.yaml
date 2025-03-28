@@ -9046,6 +9046,10 @@ spec:
                               `ClusterIP` allocates a cluster-internal IP address for load-balancing
                               to endpoints.
 
+                              `NodePort` exposes the Service on each Node's IP at a static port (the NodePort).
+                              To make the node port available, Kubernetes sets up a cluster IP address,
+                              the same as if you had requested a Service of type: ClusterIP.
+
                               `LoadBalancer` builds on NodePort and creates an external load-balancer
                               (if supported in the current cloud) which routes to the same endpoints
                               as the clusterIP.
@@ -9053,6 +9057,7 @@ spec:
                               More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
                             enum:
                             - LoadBalancer
+                            - NodePort
                             - ClusterIP
                             type: string
                         type: object
