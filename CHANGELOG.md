@@ -28,6 +28,8 @@ Adding a new version? You'll need three changes:
   [#358](https://github.com/Kong/kubernetes-configuration/pull/358)
 - Support `NodePort` as ingress service type for `DataPlane`
   [#367](https://github.com/Kong/kubernetes-configuration/pull/367)
+- Add support for network ref of type `namespacedRef` in `KonnectCloudGatewayDataPlaneGroupConfiguration`
+  [#370](https://github.com/Kong/kubernetes-configuration/pull/370)
 
 ## [v1.2.0]
 
