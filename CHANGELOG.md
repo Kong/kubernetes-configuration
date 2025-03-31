@@ -6,6 +6,7 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.3.0](#v130)
 - [v1.2.0](#v120)
 - [v1.1.0](#v110)
 - [v1.0.6](#v106)
