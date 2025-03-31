@@ -17,6 +17,10 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
+## [v1.3.0]
+
+[v1.3.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.2.0...v1.3.0
+
 ### Fixes
 
 - Proper validation of fields `dataPlaneOptions` and `controlPlaneOptions` for `GatewayConfiguration`
