@@ -3750,7 +3750,7 @@ KonnectConfigurationDataPlaneGroup is the schema for the KonnectConfiguration ty
 | --- | --- |
 | `provider` _[ProviderName](#providername)_ | Name of cloud provider. |
 | `region` _string_ | Region for cloud provider region. |
-| `networkRef` _[NetworkRef](#networkref)_ | NetworkRef is the schema for the NetworkRef type. |
+| `networkRef` _[ObjectRef](#objectref)_ | NetworkRef is the reference to the network that this data-plane group will be deployed on. |
 | `autoscale` _[ConfigurationDataPlaneGroupAutoscale](#configurationdataplanegroupautoscale)_ | Autoscale configuration for the data-plane group. |
 | `environment` _[ConfigurationDataPlaneGroupEnvironmentField](#configurationdataplanegroupenvironmentfield) array_ | Array of environment variables to set for a data-plane group. |
 
@@ -4062,23 +4062,6 @@ _Appears in:_
 - [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
 
 
-
-#### NetworkRef
-
-
-NetworkRef is the schema for the NetworkRef type.
-It is used to reference a Network entity.
-
-
-
-| Field | Description |
-| --- | --- |
-| `type` _string_ | Type indicates the type of the control plane being referenced. |
-| `konnectID` _string_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
-
-
-_Appears in:_
-- [KonnectConfigurationDataPlaneGroup](#konnectconfigurationdataplanegroup)
 
 #### ProvisioningMethod
 _Underlying type:_ `string`
