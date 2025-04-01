@@ -40,6 +40,10 @@ func (c *FakeKonnectV1alpha1) KonnectCloudGatewayNetworks(namespace string) v1al
 	return newFakeKonnectCloudGatewayNetworks(c, namespace)
 }
 
+func (c *FakeKonnectV1alpha1) KonnectCloudGatewayTransitGateways(namespace string) v1alpha1.KonnectCloudGatewayTransitGatewayInterface {
+	return newFakeKonnectCloudGatewayTransitGateways(c, namespace)
+}
+
 func (c *FakeKonnectV1alpha1) KonnectExtensions(namespace string) v1alpha1.KonnectExtensionInterface {
 	return newFakeKonnectExtensions(c, namespace)
 }
