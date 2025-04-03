@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     kubernetes-configuration.konghq.com/channels: gateway-operator
-    kubernetes-configuration.konghq.com/version: v1.3.0
+    kubernetes-configuration.konghq.com/version: v1.3.1
   name: konnectcloudgatewaytransitgateways.konnect.konghq.com
 spec:
   group: konnect.konghq.com
@@ -43,76 +43,203 @@ spec:
           spec:
             description: Spec defines the desired state of KonnectCloudGatewayTransitGateway.
             properties:
-              attachment_config:
-                description: configuration to attach to AWS transit gateway on the
-                  AWS side.
+              awsTransitGateway:
+                description: |-
+                  AWSTransitGateway is the configuration of an AWS transit gateway.
+                  Used when type is "AWS Transit Gateway".
                 properties:
-                  kind:
-                    type: string
-                  peer_account_id:
-                    type: string
-                  peer_vpc_id:
-                    type: string
-                  peer_vpc_region:
-                    type: string
-                  ram_share_arn:
-                    description: Resource Share ARN to verify request to create transit
-                      gateway attachment.
-                    type: string
-                  resource_group_name:
-                    description: Resource Group Name for the Azure VNET Peering attachment.
-                    type: string
-                  subscription_id:
-                    description: Subscription ID for the Azure VNET Peering attachment.
-                    type: string
-                  tenant_id:
-                    description: Tenant ID for the Azure VNET Peering attachment.
-                    type: string
-                  transit_gateway_id:
-                    description: AWS Transit Gateway ID to create attachment to.
-                    type: string
-                  vnet_name:
-                    description: VNET Name for the Azure VNET Peering attachment.
+                  attachment_config:
+                    description: configuration to attach to AWS transit gateway on
+                      the AWS side.
+                    properties:
+                      kind:
+                        type: string
+                      ram_share_arn:
+                        description: Resource Share ARN to verify request to create
+                          transit gateway attachment.
+                        type: string
+                      transit_gateway_id:
+                        description: AWS Transit Gateway ID to create attachment to.
+                        type: string
+                    required:
+                    - kind
+                    - ram_share_arn
+                    - transit_gateway_id
+                    type: object
+                  cidr_blocks:
+                    description: |-
+                      CIDR blocks for constructing a route table for the transit gateway, when attaching to the owning
+                      network.
+                    items:
+                      type: string
+                    type: array
+                  dns_config:
+                    description: |-
+                      List of mappings from remote DNS server IP address sets to proxied internal domains, for a transit gateway
+                      attachment.
+                    items:
+                      description: TransitGatewayDNSConfig is the DNS configuration
+                        of a tansit gateway.
+                      properties:
+                        domain_proxy_list:
+                          description: |-
+                            Internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses,
+                            for a transit gateway.
+                          items:
+                            type: string
+                          type: array
+                        remote_dns_server_ip_addresses:
+                          description: Remote DNS Server IP Addresses to connect to
+                            for resolving internal DNS via a transit gateway.
+                          items:
+                            type: string
+                          type: array
+                      required:
+                      - domain_proxy_list
+                      - remote_dns_server_ip_addresses
+                      type: object
+                    type: array
+                  name:
+                    description: Human-readable name of the transit gateway.
+                    maxLength: 120
+                    minLength: 1
                     type: string
                 required:
-                - kind
+                - attachment_config
+                - cidr_blocks
+                - name
                 type: object
-              cidr_blocks:
+              awsVPCPeeringGateway:
                 description: |-
-                  CIDR blocks for constructing a route table for the transit gateway, when attaching to the owning
-                  network.
-                items:
-                  type: string
-                type: array
-              dns_config:
+                  AWSVPCPeeringGateway is the configuration of an AWS VPC peering gateway.
+                  Used when type is "AWS VPC Peering Gateway".
+                properties:
+                  attachment_config:
+                    description: configuration to attach to AWS VPC peering gateway
+                      on AWS side.
+                    properties:
+                      kind:
+                        type: string
+                      peer_account_id:
+                        type: string
+                      peer_vpc_id:
+                        type: string
+                      peer_vpc_region:
+                        type: string
+                    required:
+                    - kind
+                    - peer_account_id
+                    - peer_vpc_id
+                    - peer_vpc_region
+                    type: object
+                  cidr_blocks:
+                    description: |-
+                      CIDR blocks for constructing a route table for the transit gateway, when attaching to the owning
+                      network.
+                    items:
+                      type: string
+                    type: array
+                  dns_config:
+                    description: |-
+                      List of mappings from remote DNS server IP address sets to proxied internal domains, for a transit gateway
+                      attachment.
+                    items:
+                      description: TransitGatewayDNSConfig is the DNS configuration
+                        of a tansit gateway.
+                      properties:
+                        domain_proxy_list:
+                          description: |-
+                            Internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses,
+                            for a transit gateway.
+                          items:
+                            type: string
+                          type: array
+                        remote_dns_server_ip_addresses:
+                          description: Remote DNS Server IP Addresses to connect to
+                            for resolving internal DNS via a transit gateway.
+                          items:
+                            type: string
+                          type: array
+                      required:
+                      - domain_proxy_list
+                      - remote_dns_server_ip_addresses
+                      type: object
+                    type: array
+                  name:
+                    description: Human-readable name of the transit gateway.
+                    maxLength: 120
+                    minLength: 1
+                    type: string
+                required:
+                - attachment_config
+                - cidr_blocks
+                - name
+                type: object
+              azureTransitGateway:
                 description: |-
-                  List of mappings from remote DNS server IP address sets to proxied internal domains, for a transit gateway
-                  attachment.
-                items:
-                  description: TransitGatewayDNSConfig is the DNS configuration of
-                    a tansit gateway.
-                  properties:
-                    domain_proxy_list:
-                      description: |-
-                        Internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses,
-                        for a transit gateway.
-                      items:
+                  AzureTransitGateway is the configuration of an Azure transit gateway.
+                  Used when type is "Azure Transit Gateway".
+                properties:
+                  attachment_config:
+                    description: configuration to attach to Azure VNET peering gateway.
+                    properties:
+                      kind:
                         type: string
-                      type: array
-                    remote_dns_server_ip_addresses:
-                      description: Remote DNS Server IP Addresses to connect to for
-                        resolving internal DNS via a transit gateway.
-                      items:
+                      resource_group_name:
+                        description: Resource Group Name for the Azure VNET Peering
+                          attachment.
                         type: string
-                      type: array
-                  required:
-                  - domain_proxy_list
-                  - remote_dns_server_ip_addresses
-                  type: object
-                type: array
-              name:
-                description: Human-readable name of the transit gateway.
-                type: string
+                      subscription_id:
+                        description: Subscription ID for the Azure VNET Peering attachment.
+                        type: string
+                      tenant_id:
+                        description: Tenant ID for the Azure VNET Peering attachment.
+                        type: string
+                      vnet_name:
+                        description: VNET Name for the Azure VNET Peering attachment.
+                        type: string
+                    required:
+                    - kind
+                    - resource_group_name
+                    - subscription_id
+                    - tenant_id
+                    - vnet_name
+                    type: object
+                  dns_config:
+                    description: |-
+                      List of mappings from remote DNS server IP address sets to proxied internal domains, for a transit gateway
+                      attachment.
+                    items:
+                      description: TransitGatewayDNSConfig is the DNS configuration
+                        of a tansit gateway.
+                      properties:
+                        domain_proxy_list:
+                          description: |-
+                            Internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses,
+                            for a transit gateway.
+                          items:
+                            type: string
+                          type: array
+                        remote_dns_server_ip_addresses:
+                          description: Remote DNS Server IP Addresses to connect to
+                            for resolving internal DNS via a transit gateway.
+                          items:
+                            type: string
+                          type: array
+                      required:
+                      - domain_proxy_list
+                      - remote_dns_server_ip_addresses
+                      type: object
+                    type: array
+                  name:
+                    description: Human-readable name of the transit gateway.
+                    maxLength: 120
+                    minLength: 1
+                    type: string
+                required:
+                - attachment_config
+                - name
+                type: object
               networkRef:
                 description: NetworkRef is the schema for the NetworkRef type.
                 properties:
@@ -167,35 +294,58 @@ spec:
                 - message: when type is konnectID, namespacedRef must not be set
                   rule: 'self.type == ''konnectID'' ? !has(self.namespacedRef) : true'
               type:
-                description: |-
-                  Type is the type of the Konnect transit gateway.
-                  Currently types AWS Transit Gateway, AWS VPC Peering Gateway, Azure Transit Gateway are supported.
+                description: Type is the type of the Konnect transit gateway.
                 enum:
                 - AWS Transit Gateway
                 - AWS VPC Peering Gateway
                 - Azure Transit Gateway
                 type: string
             required:
-            - attachment_config
-            - name
             - networkRef
             - type
             type: object
             x-kubernetes-validations:
             - message: spec.type is immutable
               rule: self.type == oldSelf.type
-            - message: AWS transit gateway must have spec.attachment_config.kind set
-                to 'aws-transit-gateway-attachment'
-              rule: 'self.type == ''AWS Transit Gateway'' ? self.attachment_config.kind
-                == ''aws-transit-gateway-attachment'' : true'
-            - message: AWS VPC peering gateway must have spec.attachment_config.kind
-                set to 'aws-vpc-peering-attachment'
-              rule: 'self.type == ''AWS AWS VPC Peering Gateway'' ? self.attachment_config.kind
-                == ''aws-vpc-peering-attachment'' : true'
-            - message: Azure VNET peering gateway must have spec.attachment_config.kind
-                set to 'azure-vnet-peering-attachment'
-              rule: 'self.type == ''Azure Transit Gateway'' ? self.attachment_config.kind
-                == ''azure-vnet-peering-attachment'' : true'
+            - message: must set spec.awsTransitGateway when spec.type is 'AWS Transit
+                Gateway'
+              rule: 'self.type == ''AWS Transit Gateway'' ? has(self.awsTransitGateway)
+                : true'
+            - message: must not set spec.awsTransitGateway when spec.type is not 'AWS
+                Transit Gateway'
+              rule: 'self.type != ''AWS Transit Gateway'' ? !has(self.awsTransitGateway)
+                : true'
+            - message: must set spec.awsVPCPeeringGateway when spec.type is 'AWS VPC
+                Peering Gateway'
+              rule: 'self.type == ''AWS VPC Peering Gateway'' ? has(self.awsVPCPeeringGateway)
+                : true'
+            - message: must not set spec.awsVPCPeeringGateway when spec.type is not
+                'AWS VPC Peering Gateway'
+              rule: 'self.type != ''AWS VPC Peering Gateway'' ? !has(self.awsVPCPeeringGateway)
+                : true'
+            - message: must set spec.azureTransitGateway when spec.type is 'Azure
+                Transit Gateway'
+              rule: 'self.type == ''Azure Transit Gateway'' ? has(self.azureTransitGateway)
+                : true'
+            - message: must not set spec.azureTransitGateway when spec.type is not
+                'Azure Transit Gateway'
+              rule: 'self.type != ''Azure Transit Gateway'' ? !has(self.azureTransitGateway)
+                : true'
+            - message: must set spec.awsTransitGateway.attachment_config.kind to 'aws-transit-gateway-attachment'
+                for AWS transit gateway type
+              rule: 'self.type == ''AWS Transit Gateway'' ? (has(self.awsTransitGateway)
+                && self.awsTransitGateway.attachment_config.kind == ''aws-transit-gateway-attachment'')
+                : true'
+            - message: must set spec.awsVPCPeeringGateway.attachment_config.kind to
+                'aws-vpc-peering-attachment' for AWS VPC peering gateway type
+              rule: 'self.type == ''AWS VPC Peering Gateway'' ? (has(self.awsVPCPeeringGateway)
+                && self.awsVPCPeeringGateway.attachment_config.kind == ''aws-vpc-peering-attachment'')
+                : true'
+            - message: must set spec.azureTransitGateway.attachment_config.kind to
+                'azure-vnet-peering-attachment' for Azure transit gateway type
+              rule: 'self.type == ''Azure Transit Gateway'' ? (has(self.azureTransitGateway)
+                && self.azureTransitGateway.attachment_config.kind == ''azure-vnet-peering-attachment'')
+                : true'
           status:
             description: Status defines the observed state of KonnectCloudGatewayTransitGateway.
             properties:
