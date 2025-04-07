@@ -3495,25 +3495,6 @@ _Appears in:_
 - [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
 - [KonnectTransitGatewayAPISpec](#konnecttransitgatewayapispec)
 
-#### AWSVPCPeeringGateway
-
-
-AWSVPCPeeringGateway is the configuration of an AWS VPC peering gateway.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Human-readable name of the transit gateway. |
-| `dns_config` _[TransitGatewayDNSConfig](#transitgatewaydnsconfig) array_ | List of mappings from remote DNS server IP address sets to proxied internal domains, for a transit gateway attachment. |
-| `cidr_blocks` _string array_ | CIDR blocks for constructing a route table for the transit gateway, when attaching to the owning network. |
-| `attachment_config` _[AwsVpcPeeringGatewayAttachmentConfig](#awsvpcpeeringgatewayattachmentconfig)_ | configuration to attach to AWS VPC peering gateway on AWS side. |
-
-
-_Appears in:_
-- [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
-- [KonnectTransitGatewayAPISpec](#konnecttransitgatewayapispec)
-
 #### AwsTransitGatewayAttachmentConfig
 
 
@@ -3523,31 +3504,12 @@ AwsTransitGatewayAttachmentConfig is the configuration to attach to a AWS transi
 
 | Field | Description |
 | --- | --- |
-| `kind` _[AWSTransitGatewayAttachmentType](#awstransitgatewayattachmenttype)_ |  |
 | `transit_gateway_id` _string_ | AWS Transit Gateway ID to create attachment to. |
 | `ram_share_arn` _string_ | Resource Share ARN to verify request to create transit gateway attachment. |
 
 
 _Appears in:_
 - [AWSTransitGateway](#awstransitgateway)
-
-#### AwsVpcPeeringGatewayAttachmentConfig
-
-
-AwsVpcPeeringGatewayAttachmentConfig is the configuration to attach to a AWS VPC peering gateway.
-
-
-
-| Field | Description |
-| --- | --- |
-| `kind` _[AWSVPCPeeringAttachmentConfig](#awsvpcpeeringattachmentconfig)_ |  |
-| `peer_account_id` _string_ |  |
-| `peer_vpc_id` _string_ |  |
-| `peer_vpc_region` _string_ |  |
-
-
-_Appears in:_
-- [AWSVPCPeeringGateway](#awsvpcpeeringgateway)
 
 #### AzureTransitGateway
 
@@ -3576,7 +3538,6 @@ AzureVNETPeeringAttachmentConfig is the configuration to attach to a Azure VNET 
 
 | Field | Description |
 | --- | --- |
-| `kind` _[AzureVNETPeeringAttachmentType](#azurevnetpeeringattachmenttype)_ |  |
 | `tenant_id` _string_ | Tenant ID for the Azure VNET Peering attachment. |
 | `subscription_id` _string_ | Subscription ID for the Azure VNET Peering attachment. |
 | `resource_group_name` _string_ | Resource Group Name for the Azure VNET Peering attachment. |
@@ -3820,17 +3781,15 @@ _Appears in:_
 #### KonnectCloudGatewayTransitGatewaySpec
 
 
-KonnectCloudGatewayTransitGatewaySpec defines the desired state of KonnectCloudGatewayTransitGateway.<br /><br />
-TODO: add more constraints on attachment_config based on type
+KonnectCloudGatewayTransitGatewaySpec defines the desired state of KonnectCloudGatewayTransitGateway.
 
 
 
 | Field | Description |
 | --- | --- |
 | `networkRef` _[ObjectRef](#objectref)_ | NetworkRef is the schema for the NetworkRef type. |
-| `type` _[CreateTransitGatewayRequestType](#createtransitgatewayrequesttype)_ | Type is the type of the Konnect transit gateway. |
+| `type` _[TransitGatewayType](#transitgatewaytype)_ | Type is the type of the Konnect transit gateway. |
 | `awsTransitGateway` _[AWSTransitGateway](#awstransitgateway)_ | AWSTransitGateway is the configuration of an AWS transit gateway. Used when type is "AWS Transit Gateway". |
-| `awsVPCPeeringGateway` _[AWSVPCPeeringGateway](#awsvpcpeeringgateway)_ | AWSVPCPeeringGateway is the configuration of an AWS VPC peering gateway. Used when type is "AWS VPC Peering Gateway". |
 | `azureTransitGateway` _[AzureTransitGateway](#azuretransitgateway)_ | AzureTransitGateway is the configuration of an Azure transit gateway. Used when type is "Azure Transit Gateway". |
 
 
@@ -4205,15 +4164,14 @@ _Appears in:_
 
 KonnectTransitGatewayAPISpec specifies a transit gateway on the Konnect side.
 The type and all the types it referenced are mostly copied github.com/Kong/sdk-konnect-go/models/components.CreateTransitGatewayRequest.<br /><br />
-TODO: add necessary comments for types/fields if they were missing in sdk-konnect-go.
+TODO: add more constraints on attachment_config based on type
 
 
 
 | Field | Description |
 | --- | --- |
-| `type` _[CreateTransitGatewayRequestType](#createtransitgatewayrequesttype)_ | Type is the type of the Konnect transit gateway. |
+| `type` _[TransitGatewayType](#transitgatewaytype)_ | Type is the type of the Konnect transit gateway. |
 | `awsTransitGateway` _[AWSTransitGateway](#awstransitgateway)_ | AWSTransitGateway is the configuration of an AWS transit gateway. Used when type is "AWS Transit Gateway". |
-| `awsVPCPeeringGateway` _[AWSVPCPeeringGateway](#awsvpcpeeringgateway)_ | AWSVPCPeeringGateway is the configuration of an AWS VPC peering gateway. Used when type is "AWS VPC Peering Gateway". |
 | `azureTransitGateway` _[AzureTransitGateway](#azuretransitgateway)_ | AzureTransitGateway is the configuration of an Azure transit gateway. Used when type is "Azure Transit Gateway". |
 
 
@@ -4263,6 +4221,18 @@ TransitGatewayDNSConfig is the DNS configuration of a tansit gateway.
 
 _Appears in:_
 - [AWSTransitGateway](#awstransitgateway)
-- [AWSVPCPeeringGateway](#awsvpcpeeringgateway)
 - [AzureTransitGateway](#azuretransitgateway)
+
+#### TransitGatewayType
+_Underlying type:_ `string`
+
+TransitGatewayType defines the type of Konnect transit gateway.
+
+
+
+
+
+_Appears in:_
+- [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
+- [KonnectTransitGatewayAPISpec](#konnecttransitgatewayapispec)
 
