@@ -1,10 +1,11 @@
 module github.com/kong/kubernetes-configuration
 
 go 1.24.0
+
 retract v1.2.0-rc.2
 
 require (
-	github.com/Kong/sdk-konnect-go v0.2.22
+	github.com/Kong/sdk-konnect-go v0.2.24
 	github.com/kong/go-kong v0.65.0
 	github.com/stretchr/testify v1.10.0
 	k8s.io/api v0.32.3
