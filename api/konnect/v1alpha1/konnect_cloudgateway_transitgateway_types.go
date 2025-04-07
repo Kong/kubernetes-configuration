@@ -63,7 +63,7 @@ const (
 // +kubebuilder:validation:XValidation:rule="self.type != 'awsTransitGateway' ? !has(self.awsTransitGateway) : true", message="must not set spec.awsTransitGateway when spec.type is not 'awsTransitGateway'"
 // +kubebuilder:validation:XValidation:rule="self.type == 'azureTransitGateway' ? has(self.azureTransitGateway) : true", message = "must set spec.azureTransitGateway when spec.type is 'azureTransitGateway'"
 // +kubebuilder:validation:XValidation:rule="self.type != 'azureTransitGateway' ? !has(self.azureTransitGateway) : true", message = "must not set spec.azureTransitGateway when spec.type is not 'azureTransitGateway'"
-// TODO: add more constraints on attachment_config based on type
+// TODO: add more constraints on attachment_config based on type.
 type KonnectTransitGatewayAPISpec struct {
 	// Type is the type of the Konnect transit gateway.
 	//

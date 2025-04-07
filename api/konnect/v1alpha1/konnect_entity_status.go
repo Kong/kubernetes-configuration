@@ -186,5 +186,7 @@ type KonnectEntityStatusWithControlPlaneAndCertificateRefs struct {
 type KonnectEntityStatusWithNetworkRef struct {
 	KonnectEntityStatus `json:",inline"`
 	// NetworkID is the Konnect ID of the Konnect cloud gateway network this entity is associated with.
+	//
+	// +kubebuilder:validation:Optional
 	NetworkID string `json:"networkID,omitempty"`
 }

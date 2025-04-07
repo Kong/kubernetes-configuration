@@ -4164,7 +4164,7 @@ _Appears in:_
 
 KonnectTransitGatewayAPISpec specifies a transit gateway on the Konnect side.
 The type and all the types it referenced are mostly copied github.com/Kong/sdk-konnect-go/models/components.CreateTransitGatewayRequest.<br /><br />
-TODO: add more constraints on attachment_config based on type
+TODO: add more constraints on attachment_config based on type.
 
 
 
