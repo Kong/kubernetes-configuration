@@ -64,6 +64,7 @@ const (
 // +kubebuilder:validation:XValidation:rule="self.type == 'azureTransitGateway' ? has(self.azureTransitGateway) : true", message = "must set spec.azureTransitGateway when spec.type is 'azureTransitGateway'"
 // +kubebuilder:validation:XValidation:rule="self.type != 'azureTransitGateway' ? !has(self.azureTransitGateway) : true", message = "must not set spec.azureTransitGateway when spec.type is not 'azureTransitGateway'"
 // TODO: add more constraints on attachment_config based on type.
+// REVIEW: should we set "immutable after programmed" on spec.*TransitGateway.name?
 type KonnectTransitGatewayAPISpec struct {
 	// Type is the type of the Konnect transit gateway.
 	//
