@@ -19,6 +19,11 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
+### Changes
+
+- Move `KongObjectRef` to `common/v1alpha1` and rename to `NameRef`.
+  [#381](https://github.com/Kong/kubernetes-configuration/pull/381)
+
 ## [v1.3.1]
 
 [v1.3.1]: https://github.com/Kong/kubernetes-configuration/compare/v1.3.0...v1.3.1

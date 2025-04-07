@@ -744,21 +744,6 @@ IngressClassParametersSpec defines the desired state of IngressClassParameters.
 _Appears in:_
 - [IngressClassParameters](#ingressclassparameters)
 
-#### KeySetNamespacedRef
-
-
-KeySetNamespacedRef is the schema for the KeySetNamespacedRef type.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the KeySet object. |
-
-
-_Appears in:_
-- [KeySetRef](#keysetref)
-
 #### KeySetRef
 
 
@@ -771,7 +756,7 @@ It is used to reference a KeySet entity.
 | --- | --- |
 | `type` _[KeySetRefType](#keysetreftype)_ | Type defines type of the KeySet object reference. It can be one of: - konnectID - namespacedRef |
 | `konnectID` _string_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
-| `namespacedRef` _[KeySetNamespacedRef](#keysetnamespacedref)_ | NamespacedRef is a reference to a KeySet entity inside the cluster. This field is required when the Type is namespacedRef. |
+| `namespacedRef` _[NameRef](#nameref)_ | NamespacedRef is a reference to a KeySet entity inside the cluster. This field is required when the Type is namespacedRef. |
 
 
 _Appears in:_
@@ -1218,22 +1203,6 @@ _Appears in:_
 
 
 
-#### KongObjectRef
-
-
-KongObjectRef is a reference to another object representing a Kong entity with deterministic type.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the entity. |
-
-
-_Appears in:_
-- [KongSNISpec](#kongsnispec)
-- [ServiceRef](#serviceref)
-
 #### KongPluginBindingScope
 _Underlying type:_ `string`
 
@@ -1380,7 +1349,7 @@ KongSNISpec defines specification of a Kong SNI.
 
 | Field | Description |
 | --- | --- |
-| `certificateRef` _[KongObjectRef](#kongobjectref)_ | CertificateRef is the reference to the certificate to which the KongSNI is attached. |
+| `certificateRef` _[NameRef](#nameref)_ | CertificateRef is the reference to the certificate to which the KongSNI is attached. |
 | `name` _string_ | Name is the name of the SNI. Required and must be a host or wildcard host. |
 | `tags` _[Tags](#tags)_ | Tags is an optional set of strings associated with the SNI for grouping and filtering. |
 
@@ -1475,7 +1444,7 @@ KongTargetSpec defines the spec of KongTarget.
 
 | Field | Description |
 | --- | --- |
-| `upstreamRef` _[TargetRef](#targetref)_ | UpstreamRef is a reference to a KongUpstream this KongTarget is attached to. |
+| `upstreamRef` _[NameRef](#nameref)_ | UpstreamRef is a reference to a KongUpstream this KongTarget is attached to. |
 | `target` _string_ | Target is the target address of the upstream. |
 | `weight` _integer_ | Weight is the weight this target gets within the upstream loadbalancer. |
 | `tags` _[Tags](#tags)_ | Tags is an optional set of strings associated with the Target for grouping and filtering. |
@@ -1678,7 +1647,7 @@ ServiceRef is a reference to a KongService.
 | Field | Description |
 | --- | --- |
 | `type` _string_ | Type can be one of: - namespacedRef |
-| `namespacedRef` _[KongObjectRef](#kongobjectref)_ | NamespacedRef is a reference to a KongService. |
+| `namespacedRef` _[NameRef](#nameref)_ | NamespacedRef is a reference to a KongService. |
 
 
 _Appears in:_
@@ -1698,7 +1667,6 @@ TargetRef is a reference based on the object's name.
 
 _Appears in:_
 - [KongPluginBindingTargets](#kongpluginbindingtargets)
-- [KongTargetSpec](#kongtargetspec)
 
 #### TargetRefWithGroupKind
 
