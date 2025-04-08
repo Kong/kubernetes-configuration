@@ -39,32 +39,17 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 		},
 	}
 
+	var namespacedNetworkRef = commonv1alpha1.ObjectRef{
+		Type: commonv1alpha1.ObjectRefTypeNamespacedRef,
+		NamespacedRef: &commonv1alpha1.NamespacedRef{
+			Name: "konnect-network",
+		},
+	}
+
 	t.Run("spec", func(t *testing.T) {
 		common.TestCasesGroup[*konnectv1alpha1.KonnectCloudGatewayTransitGateway]{
-			specFieldsUnsupportedValueTestCaseForKonnectTransitGateway(
-				"spec.networkRef.type",
-				konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
-					KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
-						Type:              konnectv1alpha1.TransitGatewayTypeAWSTransitGateway,
-						AWSTransitGateway: testAWSTransitGatewayConfig,
-					},
-				},
-			),
-			specFieldsUnsupportedValueTestCaseForKonnectTransitGateway(
-				"spec.type",
-				konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
-					NetworkRef: commonv1alpha1.ObjectRef{
-						Type:      commonv1alpha1.ObjectRefTypeKonnectID,
-						KonnectID: lo.ToPtr("konnect-id"),
-					},
-					KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
-						Type:              konnectv1alpha1.TransitGatewayType("unsupported-type"),
-						AWSTransitGateway: testAWSTransitGatewayConfig,
-					},
-				},
-			),
 			{
-				Name: "spec.awsTransitGateway.name cannot be empty",
+				Name: "spec.networkRef can only use namespaced ref",
 				TestObject: &konnectv1alpha1.KonnectCloudGatewayTransitGateway{
 					TypeMeta:   konnectTransitGatewayTypeMeta,
 					ObjectMeta: common.CommonObjectMeta,
@@ -73,6 +58,35 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 							Type:      commonv1alpha1.ObjectRefTypeKonnectID,
 							KonnectID: lo.ToPtr("konnect-id"),
 						},
+						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
+							Type:              konnectv1alpha1.TransitGatewayTypeAWSTransitGateway,
+							AWSTransitGateway: testAWSTransitGatewayConfig,
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("only namespacedRef is supported currently"),
+			},
+			{
+				Name: "spec.type must in supported value",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayTransitGateway{
+					TypeMeta:   konnectTransitGatewayTypeMeta,
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
+						NetworkRef: namespacedNetworkRef,
+						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
+							Type: konnectv1alpha1.TransitGatewayType("unsupported-type"),
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("spec.type: Unsupported value"),
+			},
+			{
+				Name: "spec.awsTransitGateway.name cannot be empty",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayTransitGateway{
+					TypeMeta:   konnectTransitGatewayTypeMeta,
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
+						NetworkRef: namespacedNetworkRef,
 						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
 							Type: konnectv1alpha1.TransitGatewayTypeAWSTransitGateway,
 							AWSTransitGateway: &konnectv1alpha1.AWSTransitGateway{
@@ -96,10 +110,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 					TypeMeta:   konnectTransitGatewayTypeMeta,
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
-						NetworkRef: commonv1alpha1.ObjectRef{
-							Type:      commonv1alpha1.ObjectRefTypeKonnectID,
-							KonnectID: lo.ToPtr("konnect-id"),
-						},
+						NetworkRef: namespacedNetworkRef,
 						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
 							Type: konnectv1alpha1.TransitGatewayTypeAWSTransitGateway,
 							AWSTransitGateway: &konnectv1alpha1.AWSTransitGateway{
@@ -120,10 +131,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 					TypeMeta:   konnectTransitGatewayTypeMeta,
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
-						NetworkRef: commonv1alpha1.ObjectRef{
-							Type:      commonv1alpha1.ObjectRefTypeKonnectID,
-							KonnectID: lo.ToPtr("konnect-id"),
-						},
+						NetworkRef: namespacedNetworkRef,
 						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
 							Type: konnectv1alpha1.TransitGatewayTypeAzureTransitGateway,
 							AzureTransitGateway: &konnectv1alpha1.AzureTransitGateway{
@@ -147,10 +155,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 					TypeMeta:   konnectTransitGatewayTypeMeta,
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
-						NetworkRef: commonv1alpha1.ObjectRef{
-							Type:      commonv1alpha1.ObjectRefTypeKonnectID,
-							KonnectID: lo.ToPtr("konnect-id"),
-						},
+						NetworkRef: namespacedNetworkRef,
 						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
 							Type: konnectv1alpha1.TransitGatewayTypeAWSTransitGateway,
 						},
@@ -164,10 +169,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 					TypeMeta:   konnectTransitGatewayTypeMeta,
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
-						NetworkRef: commonv1alpha1.ObjectRef{
-							Type:      commonv1alpha1.ObjectRefTypeKonnectID,
-							KonnectID: lo.ToPtr("konnect-id"),
-						},
+						NetworkRef: namespacedNetworkRef,
 						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
 							Type:                konnectv1alpha1.TransitGatewayTypeAzureTransitGateway,
 							AWSTransitGateway:   testAWSTransitGatewayConfig,
@@ -183,10 +185,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 					TypeMeta:   konnectTransitGatewayTypeMeta,
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
-						NetworkRef: commonv1alpha1.ObjectRef{
-							Type:      commonv1alpha1.ObjectRefTypeKonnectID,
-							KonnectID: lo.ToPtr("konnect-id"),
-						},
+						NetworkRef: namespacedNetworkRef,
 						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
 							Type: konnectv1alpha1.TransitGatewayTypeAzureTransitGateway,
 						},
@@ -200,10 +199,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 					TypeMeta:   konnectTransitGatewayTypeMeta,
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
-						NetworkRef: commonv1alpha1.ObjectRef{
-							Type:      commonv1alpha1.ObjectRefTypeKonnectID,
-							KonnectID: lo.ToPtr("konnect-id"),
-						},
+						NetworkRef: namespacedNetworkRef,
 						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
 							Type:                konnectv1alpha1.TransitGatewayTypeAWSTransitGateway,
 							AWSTransitGateway:   testAWSTransitGatewayConfig,
@@ -219,10 +215,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 					TypeMeta:   konnectTransitGatewayTypeMeta,
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
-						NetworkRef: commonv1alpha1.ObjectRef{
-							Type:      commonv1alpha1.ObjectRefTypeKonnectID,
-							KonnectID: lo.ToPtr("konnect-id"),
-						},
+						NetworkRef: namespacedNetworkRef,
 						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
 							Type:              konnectv1alpha1.TransitGatewayTypeAWSTransitGateway,
 							AWSTransitGateway: testAWSTransitGatewayConfig,
@@ -238,18 +231,4 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 			},
 		}.Run(t)
 	})
-}
-
-func specFieldsUnsupportedValueTestCaseForKonnectTransitGateway(
-	fieldName string, spec konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec,
-) common.TestCase[*konnectv1alpha1.KonnectCloudGatewayTransitGateway] {
-	return common.TestCase[*konnectv1alpha1.KonnectCloudGatewayTransitGateway]{
-		Name: "unsppoted value for field in spec: " + fieldName,
-		TestObject: &konnectv1alpha1.KonnectCloudGatewayTransitGateway{
-			TypeMeta:   konnectTransitGatewayTypeMeta,
-			ObjectMeta: common.CommonObjectMeta,
-			Spec:       spec,
-		},
-		ExpectedErrorMessage: lo.ToPtr(fieldName + ": Unsupported value"),
-	}
 }

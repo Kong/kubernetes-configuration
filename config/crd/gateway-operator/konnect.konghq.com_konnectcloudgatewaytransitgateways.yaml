@@ -231,6 +231,8 @@ spec:
             - type
             type: object
             x-kubernetes-validations:
+            - message: only namespacedRef is supported currently
+              rule: self.networkRef.type == 'namespacedRef'
             - message: spec.type is immutable
               rule: self.type == oldSelf.type
             - message: must set spec.awsTransitGateway when spec.type is 'awsTransitGateway'

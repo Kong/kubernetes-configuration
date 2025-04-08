@@ -36,6 +36,8 @@ type KonnectCloudGatewayTransitGateway struct {
 }
 
 // KonnectCloudGatewayTransitGatewaySpec defines the desired state of KonnectCloudGatewayTransitGateway.
+//
+// +kubebuilder:validation:XValidation:rule="self.networkRef.type == 'namespacedRef'", message = "only namespacedRef is supported currently"
 type KonnectCloudGatewayTransitGatewaySpec struct {
 	// NetworkRef is the schema for the NetworkRef type.
 	//
