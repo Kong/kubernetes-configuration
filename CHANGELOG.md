@@ -19,6 +19,10 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
+- Change validation rules for `KongRoute` to allow its migration from serviceless
+  (`KonnectGatewayControlPlane` bound) to `KongService` bound and vice versa.
+  [#386](https://github.com/Kong/kubernetes-configuration/pull/386)
+
 ## [v1.3.1]
 
 [v1.3.1]: https://github.com/Kong/kubernetes-configuration/compare/v1.3.0...v1.3.1
