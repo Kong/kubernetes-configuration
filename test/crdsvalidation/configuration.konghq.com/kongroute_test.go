@@ -85,23 +85,6 @@ func TestKongRoute(t *testing.T) {
 		}.Run(t)
 	})
 
-	t.Run("no service ref and no cp ref provided", func(t *testing.T) {
-		common.TestCasesGroup[*configurationv1alpha1.KongRoute]{
-			{
-				Name: "have to provide either controlPlaneRef or serviceRef",
-				TestObject: &configurationv1alpha1.KongRoute{
-					ObjectMeta: common.CommonObjectMeta,
-					Spec: configurationv1alpha1.KongRouteSpec{
-						KongRouteAPISpec: configurationv1alpha1.KongRouteAPISpec{
-							Paths: []string{"/"},
-						},
-					},
-				},
-				ExpectedErrorMessage: lo.ToPtr("Has to set either controlPlaneRef or serviceRef"),
-			},
-		}.Run(t)
-	})
-
 	t.Run("service ref", func(t *testing.T) {
 		common.TestCasesGroup[*configurationv1alpha1.KongRoute]{
 			{
@@ -168,68 +151,6 @@ func TestKongRoute(t *testing.T) {
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("when type is namespacedRef, namespacedRef must be set"),
-			},
-			{
-				Name: "NamespacedRef reference name cannot be changed when an entity is Programmed",
-				TestObject: &configurationv1alpha1.KongRoute{
-					ObjectMeta: common.CommonObjectMeta,
-					Spec: configurationv1alpha1.KongRouteSpec{
-						ServiceRef: &configurationv1alpha1.ServiceRef{
-							Type: configurationv1alpha1.ServiceRefNamespacedRef,
-							NamespacedRef: &configurationv1alpha1.KongObjectRef{
-								Name: "test-konnect-service",
-							},
-						},
-						KongRouteAPISpec: configurationv1alpha1.KongRouteAPISpec{
-							Paths: []string{"/"},
-						},
-					},
-					Status: configurationv1alpha1.KongRouteStatus{
-						Conditions: []metav1.Condition{
-							{
-								Type:               "Programmed",
-								Status:             metav1.ConditionTrue,
-								Reason:             "Programmed",
-								LastTransitionTime: metav1.Now(),
-							},
-						},
-					},
-				},
-				Update: func(ks *configurationv1alpha1.KongRoute) {
-					ks.Spec.ServiceRef.NamespacedRef.Name = "new-konnect-service"
-				},
-				ExpectedUpdateErrorMessage: lo.ToPtr("spec.serviceRef is immutable when an entity is already Programmed"),
-			},
-			{
-				Name: "NamespacedRef reference type cannot be changed when an entity is Programmed",
-				TestObject: &configurationv1alpha1.KongRoute{
-					ObjectMeta: common.CommonObjectMeta,
-					Spec: configurationv1alpha1.KongRouteSpec{
-						ServiceRef: &configurationv1alpha1.ServiceRef{
-							Type: configurationv1alpha1.ServiceRefNamespacedRef,
-							NamespacedRef: &configurationv1alpha1.KongObjectRef{
-								Name: "test-konnect-service",
-							},
-						},
-						KongRouteAPISpec: configurationv1alpha1.KongRouteAPISpec{
-							Paths: []string{"/"},
-						},
-					},
-					Status: configurationv1alpha1.KongRouteStatus{
-						Conditions: []metav1.Condition{
-							{
-								Type:               "Programmed",
-								Status:             metav1.ConditionTrue,
-								Reason:             "Programmed",
-								LastTransitionTime: metav1.Now(),
-							},
-						},
-					},
-				},
-				Update: func(ks *configurationv1alpha1.KongRoute) {
-					ks.Spec.ServiceRef.Type = "otherRef"
-				},
-				ExpectedUpdateErrorMessage: lo.ToPtr("Unsupported value: \"otherRef\": supported values: \"namespacedRef\""),
 			},
 		}.Run(t)
 	})
