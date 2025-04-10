@@ -58,11 +58,12 @@ spec:
                       the AWS side.
                     properties:
                       ram_share_arn:
-                        description: Resource Share ARN to verify request to create
-                          transit gateway attachment.
+                        description: RAMShareArn is the resource share ARN to verify
+                          request to create transit gateway attachment.
                         type: string
                       transit_gateway_id:
-                        description: AWS Transit Gateway ID to create attachment to.
+                        description: TransitGatewayID is the AWS transit gateway ID
+                          to create attachment to.
                         type: string
                     required:
                     - ram_share_arn
@@ -85,14 +86,15 @@ spec:
                       properties:
                         domain_proxy_list:
                           description: |-
-                            Internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses,
+                            DomainProxyList is the list of internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses,
                             for a transit gateway.
                           items:
                             type: string
                           type: array
                         remote_dns_server_ip_addresses:
-                          description: Remote DNS Server IP Addresses to connect to
-                            for resolving internal DNS via a transit gateway.
+                          description: RemoteDNSServerIPAddresses is the list of remote
+                            DNS server IP Addresses to connect to for resolving internal
+                            DNS via a transit gateway.
                           items:
                             type: string
                           type: array
@@ -117,17 +119,20 @@ spec:
                     description: configuration to attach to Azure VNET peering gateway.
                     properties:
                       resource_group_name:
-                        description: Resource Group Name for the Azure VNET Peering
-                          attachment.
+                        description: ResourceGroupName is the resource group name
+                          for the Azure VNET Peering attachment.
                         type: string
                       subscription_id:
-                        description: Subscription ID for the Azure VNET Peering attachment.
+                        description: SubscriptionID is the subscription ID for the
+                          Azure VNET Peering attachment.
                         type: string
                       tenant_id:
-                        description: Tenant ID for the Azure VNET Peering attachment.
+                        description: TenantID is the tenant ID for the Azure VNET
+                          Peering attachment.
                         type: string
                       vnet_name:
-                        description: VNET Name for the Azure VNET Peering attachment.
+                        description: VnetName is the VNET Name for the Azure VNET
+                          Peering attachment.
                         type: string
                     required:
                     - resource_group_name
@@ -145,14 +150,15 @@ spec:
                       properties:
                         domain_proxy_list:
                           description: |-
-                            Internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses,
+                            DomainProxyList is the list of internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses,
                             for a transit gateway.
                           items:
                             type: string
                           type: array
                         remote_dns_server_ip_addresses:
-                          description: Remote DNS Server IP Addresses to connect to
-                            for resolving internal DNS via a transit gateway.
+                          description: RemoteDNSServerIPAddresses is the list of remote
+                            DNS server IP Addresses to connect to for resolving internal
+                            DNS via a transit gateway.
                           items:
                             type: string
                           type: array

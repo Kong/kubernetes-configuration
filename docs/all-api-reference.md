@@ -3504,8 +3504,8 @@ AwsTransitGatewayAttachmentConfig is the configuration to attach to a AWS transi
 
 | Field | Description |
 | --- | --- |
-| `transit_gateway_id` _string_ | AWS Transit Gateway ID to create attachment to. |
-| `ram_share_arn` _string_ | Resource Share ARN to verify request to create transit gateway attachment. |
+| `transit_gateway_id` _string_ | TransitGatewayID is the AWS transit gateway ID to create attachment to. |
+| `ram_share_arn` _string_ | RAMShareArn is the resource share ARN to verify request to create transit gateway attachment. |
 
 
 _Appears in:_
@@ -3538,10 +3538,10 @@ AzureVNETPeeringAttachmentConfig is the configuration to attach to a Azure VNET 
 
 | Field | Description |
 | --- | --- |
-| `tenant_id` _string_ | Tenant ID for the Azure VNET Peering attachment. |
-| `subscription_id` _string_ | Subscription ID for the Azure VNET Peering attachment. |
-| `resource_group_name` _string_ | Resource Group Name for the Azure VNET Peering attachment. |
-| `vnet_name` _string_ | VNET Name for the Azure VNET Peering attachment. |
+| `tenant_id` _string_ | TenantID is the tenant ID for the Azure VNET Peering attachment. |
+| `subscription_id` _string_ | SubscriptionID is the subscription ID for the Azure VNET Peering attachment. |
+| `resource_group_name` _string_ | ResourceGroupName is the resource group name for the Azure VNET Peering attachment. |
+| `vnet_name` _string_ | VnetName is the VNET Name for the Azure VNET Peering attachment. |
 
 
 _Appears in:_
@@ -4163,9 +4163,7 @@ _Appears in:_
 
 
 KonnectTransitGatewayAPISpec specifies a transit gateway on the Konnect side.
-The type and all the types it referenced are mostly copied github.com/Kong/sdk-konnect-go/models/components.CreateTransitGatewayRequest.<br /><br />
-TODO: add more constraints on attachment_config based on type.
-REVIEW: should we set "immutable after programmed" on spec.*TransitGateway.name?
+The type and all the types it referenced are mostly copied github.com/Kong/sdk-konnect-go/models/components.CreateTransitGatewayRequest.
 
 
 
@@ -4216,8 +4214,8 @@ TransitGatewayDNSConfig is the DNS configuration of a tansit gateway.
 
 | Field | Description |
 | --- | --- |
-| `remote_dns_server_ip_addresses` _string array_ | Remote DNS Server IP Addresses to connect to for resolving internal DNS via a transit gateway. |
-| `domain_proxy_list` _string array_ | Internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses, for a transit gateway. |
+| `remote_dns_server_ip_addresses` _string array_ | RemoteDNSServerIPAddresses is the list of remote DNS server IP Addresses to connect to for resolving internal DNS via a transit gateway. |
+| `domain_proxy_list` _string array_ | DomainProxyList is the list of internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses, for a transit gateway. |
 
 
 _Appears in:_

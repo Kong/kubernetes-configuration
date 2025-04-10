@@ -67,8 +67,6 @@ const (
 // +kubebuilder:validation:XValidation:rule="self.type != 'awsTransitGateway' ? !has(self.awsTransitGateway) : true", message="must not set spec.awsTransitGateway when spec.type is not 'awsTransitGateway'"
 // +kubebuilder:validation:XValidation:rule="self.type == 'azureTransitGateway' ? has(self.azureTransitGateway) : true", message = "must set spec.azureTransitGateway when spec.type is 'azureTransitGateway'"
 // +kubebuilder:validation:XValidation:rule="self.type != 'azureTransitGateway' ? !has(self.azureTransitGateway) : true", message = "must not set spec.azureTransitGateway when spec.type is not 'azureTransitGateway'"
-// TODO: add more constraints on attachment_config based on type.
-// REVIEW: should we set "immutable after programmed" on spec.*TransitGateway.name?
 type KonnectTransitGatewayAPISpec struct {
 	// Type is the type of the Konnect transit gateway.
 	//
@@ -133,20 +131,24 @@ type AzureTransitGateway struct {
 
 // TransitGatewayDNSConfig is the DNS configuration of a tansit gateway.
 type TransitGatewayDNSConfig struct {
-	// Remote DNS Server IP Addresses to connect to for resolving internal DNS via a transit gateway.
+	// RemoteDNSServerIPAddresses is the list of remote DNS server IP Addresses to connect to for resolving internal DNS via a transit gateway.
+	//
+	// +kubebuilder:validation:Optional
 	RemoteDNSServerIPAddresses []string `json:"remote_dns_server_ip_addresses,omitempty"`
-	// Internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses,
+	// DomainProxyList is the list of internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses,
 	// for a transit gateway.
+	//
+	// +kubebuilder:validation:Optional
 	DomainProxyList []string `json:"domain_proxy_list,omitempty"`
 }
 
 // AwsTransitGatewayAttachmentConfig is the configuration to attach to a AWS transit gateway.
 type AwsTransitGatewayAttachmentConfig struct {
-	// AWS Transit Gateway ID to create attachment to.
+	// TransitGatewayID is the AWS transit gateway ID to create attachment to.
 	//
 	// +kubebuilder:validation:Required
 	TransitGatewayID string `json:"transit_gateway_id"`
-	// Resource Share ARN to verify request to create transit gateway attachment.
+	// RAMShareArn is the resource share ARN to verify request to create transit gateway attachment.
 	//
 	// +kubebuilder:validation:Required
 	RAMShareArn string `json:"ram_share_arn"`
@@ -154,19 +156,19 @@ type AwsTransitGatewayAttachmentConfig struct {
 
 // AzureVNETPeeringAttachmentConfig is the configuration to attach to a Azure VNET peering gateway.
 type AzureVNETPeeringAttachmentConfig struct {
-	// Tenant ID for the Azure VNET Peering attachment.
+	// TenantID is the tenant ID for the Azure VNET Peering attachment.
 	//
 	// +kubebuilder:validation:Required
 	TenantID string `json:"tenant_id"`
-	// Subscription ID for the Azure VNET Peering attachment.
+	// SubscriptionID is the subscription ID for the Azure VNET Peering attachment.
 	//
 	// +kubebuilder:validation:Required
 	SubscriptionID string `json:"subscription_id"`
-	// Resource Group Name for the Azure VNET Peering attachment.
+	// ResourceGroupName is the resource group name for the Azure VNET Peering attachment.
 	//
 	// +kubebuilder:validation:Required
 	ResourceGroupName string `json:"resource_group_name"`
-	// VNET Name for the Azure VNET Peering attachment.
+	// VnetName is the VNET Name for the Azure VNET Peering attachment.
 	//
 	// +kubebuilder:validation:Required
 	VnetName string `json:"vnet_name"`

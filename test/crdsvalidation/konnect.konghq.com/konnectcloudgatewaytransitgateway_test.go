@@ -11,12 +11,11 @@ import (
 	"github.com/kong/kubernetes-configuration/test/crdsvalidation/common"
 )
 
-var konnectTransitGatewayTypeMeta = metav1.TypeMeta{
-	APIVersion: konnectv1alpha1.GroupVersion.String(),
-	Kind:       "KonnectCloudGatewayTransitGateway",
-}
-
 func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
+	var konnectTransitGatewayTypeMeta = metav1.TypeMeta{
+		APIVersion: konnectv1alpha1.GroupVersion.String(),
+		Kind:       "KonnectCloudGatewayTransitGateway",
+	}
 
 	var testAWSTransitGatewayConfig = &konnectv1alpha1.AWSTransitGateway{
 		Name: "aws-transit-gateway",
