@@ -23,6 +23,8 @@ func init() {
 // +kubebuilder:subresource:finalizer
 // +apireference:kgo:include
 // +kubebuilder:printcolumn:name="State",type=string,JSONPath=`.status.state`,description="State of the transit gateway in Konnect"
+// +kubebuilder:validation:XValidation:rule="(!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : (!has(self.spec.awsTransitGateway) ? true : oldSelf.spec.awsTransitGateway.name == self.spec.awsTransitGateway.name)",message="spec.awsTransitGateway.name is immutable when transit gateway is already Programmed"
+// +kubebuilder:validation:XValidation:rule="(!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : (!has(self.spec.azureTransitGateway) ? true : oldSelf.spec.azureTransitGateway.name == self.spec.azureTransitGateway.name)",message="spec.azureTransitGateway.name is immutable when transit gateway is already Programmed"
 // +kong:channels=gateway-operator
 type KonnectCloudGatewayTransitGateway struct {
 	metav1.TypeMeta   `json:",inline"`

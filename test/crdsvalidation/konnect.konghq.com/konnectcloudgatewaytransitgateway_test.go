@@ -46,6 +46,13 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 		},
 	}
 
+	var programmedCondition = metav1.Condition{
+		Type:               "Programmed",
+		Status:             metav1.ConditionTrue,
+		Reason:             "Valid",
+		LastTransitionTime: metav1.Now(),
+	}
+
 	t.Run("spec", func(t *testing.T) {
 		common.TestCasesGroup[*konnectv1alpha1.KonnectCloudGatewayTransitGateway]{
 			{
@@ -228,6 +235,82 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 					ktg.Spec.AzureTransitGateway = testAzureTransitGatewayConfig
 				},
 				ExpectedUpdateErrorMessage: lo.ToPtr("spec.type is immutable"),
+			},
+			{
+				Name: "spec.awsTransitGateway.name is mutable when not programmed",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayTransitGateway{
+					TypeMeta:   konnectTransitGatewayTypeMeta,
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
+						NetworkRef: namespacedNetworkRef,
+						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
+							Type:              konnectv1alpha1.TransitGatewayTypeAWSTransitGateway,
+							AWSTransitGateway: testAWSTransitGatewayConfig,
+						},
+					},
+				},
+				Update: func(ktg *konnectv1alpha1.KonnectCloudGatewayTransitGateway) {
+					ktg.Spec.AWSTransitGateway.Name = "yet-another-name"
+				},
+			},
+			{
+				Name: "spec.awsTransitGateway.name is immutable when programmed",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayTransitGateway{
+					TypeMeta:   konnectTransitGatewayTypeMeta,
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
+						NetworkRef: namespacedNetworkRef,
+						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
+							Type:              konnectv1alpha1.TransitGatewayTypeAWSTransitGateway,
+							AWSTransitGateway: testAWSTransitGatewayConfig,
+						},
+					},
+					Status: konnectv1alpha1.KonnectCloudGatewayTransitGatewayStatus{
+						Conditions: []metav1.Condition{programmedCondition},
+					},
+				},
+				Update: func(ktg *konnectv1alpha1.KonnectCloudGatewayTransitGateway) {
+					ktg.Spec.AWSTransitGateway.Name = "yet-another-name"
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("spec.awsTransitGateway.name is immutable when transit gateway is already Programmed"),
+			},
+			{
+				Name: "spec.azureTransitGateway.name is mutable when not programmed",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayTransitGateway{
+					TypeMeta:   konnectTransitGatewayTypeMeta,
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
+						NetworkRef: namespacedNetworkRef,
+						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
+							Type:                konnectv1alpha1.TransitGatewayTypeAzureTransitGateway,
+							AzureTransitGateway: testAzureTransitGatewayConfig,
+						},
+					},
+				},
+				Update: func(ktg *konnectv1alpha1.KonnectCloudGatewayTransitGateway) {
+					ktg.Spec.AzureTransitGateway.Name = "yet-another-name"
+				},
+			},
+			{
+				Name: "spec.azureTransitGateway.name is immutable when programmed",
+				TestObject: &konnectv1alpha1.KonnectCloudGatewayTransitGateway{
+					TypeMeta:   konnectTransitGatewayTypeMeta,
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: konnectv1alpha1.KonnectCloudGatewayTransitGatewaySpec{
+						NetworkRef: namespacedNetworkRef,
+						KonnectTransitGatewayAPISpec: konnectv1alpha1.KonnectTransitGatewayAPISpec{
+							Type:                konnectv1alpha1.TransitGatewayTypeAzureTransitGateway,
+							AzureTransitGateway: testAzureTransitGatewayConfig,
+						},
+					},
+					Status: konnectv1alpha1.KonnectCloudGatewayTransitGatewayStatus{
+						Conditions: []metav1.Condition{programmedCondition},
+					},
+				},
+				Update: func(ktg *konnectv1alpha1.KonnectCloudGatewayTransitGateway) {
+					ktg.Spec.AzureTransitGateway.Name = "yet-another-name"
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("spec.azureTransitGateway.name is immutable when transit gateway is already Programmed"),
 			},
 		}.Run(t)
 	})
