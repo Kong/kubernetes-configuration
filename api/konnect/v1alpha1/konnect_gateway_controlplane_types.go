@@ -49,33 +49,42 @@ type KonnectGatewayControlPlane struct {
 // +kubebuilder:validation:XValidation:message="spec.members is only applicable for ControlPlanes that are created as groups", rule="(has(self.cluster_type) && self.cluster_type != 'CLUSTER_TYPE_CONTROL_PLANE_GROUP') ? !has(self.members) : true"
 // +kubebuilder:validation:XValidation:message="spec.cluster_type is immutable", rule="!has(self.cluster_type) ? !has(oldSelf.cluster_type) : self.cluster_type == oldSelf.cluster_type"
 // +kubebuilder:validation:XValidation:message="cloud_gateway cannot be set for cluster_type 'CLUSTER_TYPE_K8S_INGRESS_CONTROLLER'", rule="has(self.cluster_type) && self.cluster_type == 'CLUSTER_TYPE_K8S_INGRESS_CONTROLLER' ? !has(self.cloud_gateway) : true"
-// +kubebuilder:validation:XValidation:message="createControlPlaneRequest fields cannot be set for type Mirror", rule="self.type == 'Mirror' ? !has(self.name) && !has(self.description) && !has(self.cluster_type) && !has(self.auth_type) && !has(self.cloud_gateway) && !has(self.proxy_urls) && !has(self.labels) : true"
-// +kubebuilder:validation:XValidation:message="spec.type is immutable", rule="self.type == oldSelf.type"
-// +kubebuilder:validation:XValidation:message="konnectID field must be set for type Mirror", rule="self.type == 'Mirror' ? has(self.konnectID) : true"
-// +kubebuilder:validation:XValidation:message="konnectID field cannot be set for type Origin", rule="self.type == 'Origin' ? !has(self.konnectID) : true"
-// +kubebuilder:validation:XValidation:message="Name must be set for type Origin", rule="self.type == 'Origin' ? has(self.name) : true"
+// +kubebuilder:validation:XValidation:message="createControlPlaneRequest fields cannot be set for type Mirror", rule="self.sourceType == 'Mirror' ? !has(self.name) && !has(self.description) && !has(self.cluster_type) && !has(self.auth_type) && !has(self.cloud_gateway) && !has(self.proxy_urls) && !has(self.labels) : true"
+// +kubebuilder:validation:XValidation:message="spec.sourceType is immutable", rule="self.sourceType == oldSelf.sourceType"
+// +kubebuilder:validation:XValidation:message="konnectID field must be set for type Mirror", rule="self.sourceType == 'Mirror' ? has(self.mirror) : true"
+// +kubebuilder:validation:XValidation:message="konnectID field cannot be set for type Origin", rule="self.sourceType == 'Origin' ? !has(self.mirror) : true"
+// +kubebuilder:validation:XValidation:message="Name must be set for type Origin", rule="self.sourceType == 'Origin' ? has(self.name) : true"
 // +apireference:kgo:include
 type KonnectGatewayControlPlaneSpec struct {
 	CreateControlPlaneRequest `json:",inline"`
 
-	// Type is the type of the control plane. It can be either Origin or Mirror.
+	// Mirror is the Konnect Mirror configuration.
+	// It is only applicable for ControlPlanes that are created as Mirrors.
+	//
+	// +kubebuilder:validation:Optional
+	Mirror *MirrorSpec `json:"mirror,omitempty"`
+
+	// SourceType is the type of the control plane. It can be either Origin or Mirror.
 	//
 	// +kubebuilder:validation:Enum=Origin;Mirror
 	// +kubebuilder:validation:Optional
 	// +kubebuilder:default=Origin
-	Type *commonv1alpha1.EntityType `json:"type,omitempty"`
-
-	// KonnectID is the ID of the Konnect entity. It can be set only in case
-	// the ControlPlane type is Mirror.
-	//
-	// +kubebuilder:validation:Optional
-	KonnectID *commonv1alpha1.KonnectIDType `json:"konnectID,omitempty"`
+	SourceType *commonv1alpha1.EntitySource `json:"sourceType,omitempty"`
 
 	// Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group.
 	// Only applicable for ControlPlanes that are created as groups.
 	Members []corev1.LocalObjectReference `json:"members,omitempty"`
 
 	KonnectConfiguration KonnectConfiguration `json:"konnect,omitempty"`
+}
+
+// MirrorSpec contains the Konnect Mirror configuration.
+type MirrorSpec struct {
+	// KonnectID is the ID of the Konnect entity. It can be set only in case
+	// the ControlPlane type is Mirror.
+	//
+	// +kubebuilder:validation:Required
+	KonnectID commonv1alpha1.KonnectIDType `json:"konnectID"`
 }
 
 // CreateControlPlaneRequest - The request schema for the create control plane request.
