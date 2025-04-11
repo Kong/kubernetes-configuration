@@ -3369,6 +3369,7 @@ Package v1alpha1 contains API Schema definitions for the konnect.konghq.com v1al
 - [KonnectAPIAuthConfiguration](#konnectapiauthconfiguration)
 - [KonnectCloudGatewayDataPlaneGroupConfiguration](#konnectcloudgatewaydataplanegroupconfiguration)
 - [KonnectCloudGatewayNetwork](#konnectcloudgatewaynetwork)
+- [KonnectCloudGatewayTransitGateway](#konnectcloudgatewaytransitgateway)
 - [KonnectExtension](#konnectextension)
 - [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
 ### KonnectAPIAuthConfiguration
@@ -3419,6 +3420,22 @@ KonnectCloudGatewayNetwork is the Schema for the Konnect Network API.
 
 
 
+### KonnectCloudGatewayTransitGateway
+
+
+KonnectCloudGatewayTransitGateway is the Schema for the Konnect Transit Gateway API.
+
+<!-- konnect_cloud_gateway_transit_gateway description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
+| `kind` _string_ | `KonnectCloudGatewayTransitGateway`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)_ | Spec defines the desired state of KonnectCloudGatewayTransitGateway. |
+
+
+
 ### KonnectExtension
 
 
@@ -3458,6 +3475,77 @@ KonnectGatewayControlPlane is the Schema for the KonnectGatewayControlplanes API
 
 In this section you will find types that the CRDs rely on.
 
+
+#### AWSTransitGateway
+
+
+AWSTransitGateway is the configuration of an AWS transit gateway.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Human-readable name of the transit gateway. |
+| `dns_config` _[TransitGatewayDNSConfig](#transitgatewaydnsconfig) array_ | List of mappings from remote DNS server IP address sets to proxied internal domains, for a transit gateway attachment. |
+| `cidr_blocks` _string array_ | CIDR blocks for constructing a route table for the transit gateway, when attaching to the owning network. |
+| `attachment_config` _[AwsTransitGatewayAttachmentConfig](#awstransitgatewayattachmentconfig)_ | configuration to attach to AWS transit gateway on the AWS side. |
+
+
+_Appears in:_
+- [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
+- [KonnectTransitGatewayAPISpec](#konnecttransitgatewayapispec)
+
+#### AwsTransitGatewayAttachmentConfig
+
+
+AwsTransitGatewayAttachmentConfig is the configuration to attach to a AWS transit gateway.
+
+
+
+| Field | Description |
+| --- | --- |
+| `transit_gateway_id` _string_ | TransitGatewayID is the AWS transit gateway ID to create attachment to. |
+| `ram_share_arn` _string_ | RAMShareArn is the resource share ARN to verify request to create transit gateway attachment. |
+
+
+_Appears in:_
+- [AWSTransitGateway](#awstransitgateway)
+
+#### AzureTransitGateway
+
+
+AzureTransitGateway is the configuration of an Azure transit gateway.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Human-readable name of the transit gateway. |
+| `dns_config` _[TransitGatewayDNSConfig](#transitgatewaydnsconfig) array_ | List of mappings from remote DNS server IP address sets to proxied internal domains, for a transit gateway attachment. |
+| `attachment_config` _[AzureVNETPeeringAttachmentConfig](#azurevnetpeeringattachmentconfig)_ | configuration to attach to Azure VNET peering gateway. |
+
+
+_Appears in:_
+- [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
+- [KonnectTransitGatewayAPISpec](#konnecttransitgatewayapispec)
+
+#### AzureVNETPeeringAttachmentConfig
+
+
+AzureVNETPeeringAttachmentConfig is the configuration to attach to a Azure VNET peering gateway.
+
+
+
+| Field | Description |
+| --- | --- |
+| `tenant_id` _string_ | TenantID is the tenant ID for the Azure VNET Peering attachment. |
+| `subscription_id` _string_ | SubscriptionID is the subscription ID for the Azure VNET Peering attachment. |
+| `resource_group_name` _string_ | ResourceGroupName is the resource group name for the Azure VNET Peering attachment. |
+| `vnet_name` _string_ | VnetName is the VNET Name for the Azure VNET Peering attachment. |
+
+
+_Appears in:_
+- [AzureTransitGateway](#azuretransitgateway)
 
 #### CertificateSecret
 
@@ -3690,6 +3778,26 @@ _Appears in:_
 
 
 
+#### KonnectCloudGatewayTransitGatewaySpec
+
+
+KonnectCloudGatewayTransitGatewaySpec defines the desired state of KonnectCloudGatewayTransitGateway.
+
+
+
+| Field | Description |
+| --- | --- |
+| `networkRef` _[ObjectRef](#objectref)_ | NetworkRef is the schema for the NetworkRef type. |
+| `type` _[TransitGatewayType](#transitgatewaytype)_ | Type is the type of the Konnect transit gateway. |
+| `awsTransitGateway` _[AWSTransitGateway](#awstransitgateway)_ | AWSTransitGateway is the configuration of an AWS transit gateway. Used when type is "AWS Transit Gateway". |
+| `azureTransitGateway` _[AzureTransitGateway](#azuretransitgateway)_ | AzureTransitGateway is the configuration of an Azure transit gateway. Used when type is "Azure Transit Gateway". |
+
+
+_Appears in:_
+- [KonnectCloudGatewayTransitGateway](#konnectcloudgatewaytransitgateway)
+
+
+
 #### KonnectConfiguration
 
 
@@ -3760,12 +3868,14 @@ KonnectEntityStatus represents the status of a Konnect entity.
 _Appears in:_
 - [KonnectCloudGatewayDataPlaneGroupConfigurationStatus](#konnectcloudgatewaydataplanegroupconfigurationstatus)
 - [KonnectCloudGatewayNetworkStatus](#konnectcloudgatewaynetworkstatus)
+- [KonnectCloudGatewayTransitGatewayStatus](#konnectcloudgatewaytransitgatewaystatus)
 - [KonnectEntityStatusWithControlPlaneAndCertificateRefs](#konnectentitystatuswithcontrolplaneandcertificaterefs)
 - [KonnectEntityStatusWithControlPlaneAndConsumerRefs](#konnectentitystatuswithcontrolplaneandconsumerrefs)
 - [KonnectEntityStatusWithControlPlaneAndKeySetRef](#konnectentitystatuswithcontrolplaneandkeysetref)
 - [KonnectEntityStatusWithControlPlaneAndServiceRefs](#konnectentitystatuswithcontrolplaneandservicerefs)
 - [KonnectEntityStatusWithControlPlaneAndUpstreamRefs](#konnectentitystatuswithcontrolplaneandupstreamrefs)
 - [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
+- [KonnectEntityStatusWithNetworkRef](#konnectentitystatuswithnetworkref)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 
 #### KonnectEntityStatusWithControlPlaneAndCertificateRefs
@@ -3894,6 +4004,24 @@ _Appears in:_
 - [KongUpstreamStatus](#kongupstreamstatus)
 - [KongVaultStatus](#kongvaultstatus)
 - [KonnectCloudGatewayDataPlaneGroupConfigurationStatus](#konnectcloudgatewaydataplanegroupconfigurationstatus)
+
+#### KonnectEntityStatusWithNetworkRef
+
+
+KonnectEntityStatusWithNetworkRef represents the status of a Konnect entity with reference to a Konnect cloud gateway network.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `networkID` _string_ | NetworkID is the Konnect ID of the Konnect cloud gateway network this entity is associated with. |
+
+
+_Appears in:_
+- [KonnectCloudGatewayTransitGatewayStatus](#konnectcloudgatewaytransitgatewaystatus)
 
 #### KonnectExtensionClientAuth
 
@@ -4031,6 +4159,24 @@ _Appears in:_
 
 
 
+#### KonnectTransitGatewayAPISpec
+
+
+KonnectTransitGatewayAPISpec specifies a transit gateway on the Konnect side.
+The type and all the types it referenced are mostly copied github.com/Kong/sdk-konnect-go/models/components.CreateTransitGatewayRequest.
+
+
+
+| Field | Description |
+| --- | --- |
+| `type` _[TransitGatewayType](#transitgatewaytype)_ | Type is the type of the Konnect transit gateway. |
+| `awsTransitGateway` _[AWSTransitGateway](#awstransitgateway)_ | AWSTransitGateway is the configuration of an AWS transit gateway. Used when type is "AWS Transit Gateway". |
+| `azureTransitGateway` _[AzureTransitGateway](#azuretransitgateway)_ | AzureTransitGateway is the configuration of an Azure transit gateway. Used when type is "Azure Transit Gateway". |
+
+
+_Appears in:_
+- [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
+
 #### ProvisioningMethod
 _Underlying type:_ `string`
 
@@ -4058,4 +4204,34 @@ SecretRef contains the reference to the Secret containing the Konnect Control Pl
 _Appears in:_
 - [CertificateSecret](#certificatesecret)
 - [DataPlaneClientAuthStatus](#dataplaneclientauthstatus)
+
+#### TransitGatewayDNSConfig
+
+
+TransitGatewayDNSConfig is the DNS configuration of a tansit gateway.
+
+
+
+| Field | Description |
+| --- | --- |
+| `remote_dns_server_ip_addresses` _string array_ | RemoteDNSServerIPAddresses is the list of remote DNS server IP Addresses to connect to for resolving internal DNS via a transit gateway. |
+| `domain_proxy_list` _string array_ | DomainProxyList is the list of internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses, for a transit gateway. |
+
+
+_Appears in:_
+- [AWSTransitGateway](#awstransitgateway)
+- [AzureTransitGateway](#azuretransitgateway)
+
+#### TransitGatewayType
+_Underlying type:_ `string`
+
+TransitGatewayType defines the type of Konnect transit gateway.
+
+
+
+
+
+_Appears in:_
+- [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
+- [KonnectTransitGatewayAPISpec](#konnecttransitgatewayapispec)
 
