@@ -4171,8 +4171,8 @@ KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayContro
 | `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
 | `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
 | `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
-| `type` _[EntityType](#entitytype)_ | Type is the type of the control plane. It can be either Origin or Mirror. |
-| `konnectID` _[KonnectIDType](#konnectidtype)_ | KonnectID is the ID of the Konnect entity. It can be set only in case the ControlPlane type is Mirror. |
+| `mirror` _[MirrorSpec](#mirrorspec)_ | Mirror is the Konnect Mirror configuration. It is only applicable for ControlPlanes that are created as Mirrors. |
+| `sourceType` _[EntitySource](#entitysource)_ | SourceType is the type of the control plane. It can be either Origin or Mirror. |
 | `members` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core) array_ | Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group. Only applicable for ControlPlanes that are created as groups. |
 | `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
 
@@ -4199,6 +4199,21 @@ The type and all the types it referenced are mostly copied github.com/Kong/sdk-k
 
 _Appears in:_
 - [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
+
+#### MirrorSpec
+
+
+MirrorSpec contains the Konnect Mirror configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `konnectID` _[KonnectIDType](#konnectidtype)_ | KonnectID is the ID of the Konnect entity. It can be set only in case the ControlPlane type is Mirror. |
+
+
+_Appears in:_
+- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### ProvisioningMethod
 _Underlying type:_ `string`

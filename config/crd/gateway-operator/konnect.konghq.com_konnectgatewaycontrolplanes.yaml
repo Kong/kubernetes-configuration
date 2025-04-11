@@ -89,12 +89,6 @@ spec:
                 required:
                 - authRef
                 type: object
-              konnectID:
-                description: |-
-                  KonnectID is the ID of the Konnect entity. It can be set only in case
-                  the ControlPlane type is Mirror.
-                pattern: ^[0-9a-f]{8}(?:\-[0-9a-f]{4}){3}-[0-9a-f]{12}$
-                type: string
               labels:
                 additionalProperties:
                   type: string
@@ -124,6 +118,20 @@ spec:
                   type: object
                   x-kubernetes-map-type: atomic
                 type: array
+              mirror:
+                description: |-
+                  Mirror is the Konnect Mirror configuration.
+                  It is only applicable for ControlPlanes that are created as Mirrors.
+                properties:
+                  konnectID:
+                    description: |-
+                      KonnectID is the ID of the Konnect entity. It can be set only in case
+                      the ControlPlane type is Mirror.
+                    pattern: ^[0-9a-f]{8}(?:\-[0-9a-f]{4}){3}-[0-9a-f]{12}$
+                    type: string
+                required:
+                - konnectID
+                type: object
               name:
                 description: The name of the control plane.
                 type: string
@@ -150,10 +158,10 @@ spec:
                   - protocol
                   type: object
                 type: array
-              type:
+              sourceType:
                 default: Origin
-                description: Type is the type of the control plane. It can be either
-                  Origin or Mirror.
+                description: SourceType is the type of the control plane. It can be
+                  either Origin or Mirror.
                 enum:
                 - Origin
                 - Mirror
@@ -194,17 +202,17 @@ spec:
               rule: 'has(self.cluster_type) && self.cluster_type == ''CLUSTER_TYPE_K8S_INGRESS_CONTROLLER''
                 ? !has(self.cloud_gateway) : true'
             - message: createControlPlaneRequest fields cannot be set for type Mirror
-              rule: 'self.type == ''Mirror'' ? !has(self.name) && !has(self.description)
+              rule: 'self.sourceType == ''Mirror'' ? !has(self.name) && !has(self.description)
                 && !has(self.cluster_type) && !has(self.auth_type) && !has(self.cloud_gateway)
                 && !has(self.proxy_urls) && !has(self.labels) : true'
-            - message: spec.type is immutable
-              rule: self.type == oldSelf.type
+            - message: spec.sourceType is immutable
+              rule: self.sourceType == oldSelf.sourceType
             - message: konnectID field must be set for type Mirror
-              rule: 'self.type == ''Mirror'' ? has(self.konnectID) : true'
+              rule: 'self.sourceType == ''Mirror'' ? has(self.mirror) : true'
             - message: konnectID field cannot be set for type Origin
-              rule: 'self.type == ''Origin'' ? !has(self.konnectID) : true'
+              rule: 'self.sourceType == ''Origin'' ? !has(self.mirror) : true'
             - message: Name must be set for type Origin
-              rule: 'self.type == ''Origin'' ? has(self.name) : true'
+              rule: 'self.sourceType == ''Origin'' ? has(self.name) : true'
           status:
             description: Status defines the observed state of KonnectGatewayControlPlane.
             properties:

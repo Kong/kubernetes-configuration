@@ -765,7 +765,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						Type: lo.ToPtr(commonv1alpha1.EntityTypeMirror),
+						SourceType: lo.ToPtr(commonv1alpha1.EntityTypeMirror),
 						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
 							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
 								Name: "name-1",
@@ -780,8 +780,10 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						Type:      lo.ToPtr(commonv1alpha1.EntityTypeMirror),
-						KonnectID: lo.ToPtr(commonv1alpha1.KonnectIDType("8ae65120-cdec-4310-84c1-4b19caf67967")),
+						SourceType: lo.ToPtr(commonv1alpha1.EntityTypeMirror),
+						Mirror: &konnectv1alpha1.MirrorSpec{
+							KonnectID: commonv1alpha1.KonnectIDType("8ae65120-cdec-4310-84c1-4b19caf67967"),
+						},
 						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
 							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
 								Name: "name-1",
@@ -795,8 +797,10 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						Type:      lo.ToPtr(commonv1alpha1.EntityTypeMirror),
-						KonnectID: lo.ToPtr(commonv1alpha1.KonnectIDType("malformed-id")),
+						SourceType: lo.ToPtr(commonv1alpha1.EntityTypeMirror),
+						Mirror: &konnectv1alpha1.MirrorSpec{
+							KonnectID: commonv1alpha1.KonnectIDType("malformed-id"),
+						},
 						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
 							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
 								Name: "name-1",
@@ -804,15 +808,17 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.konnectID in body should match '^[0-9a-f]{8}(?:\\-[0-9a-f]{4}){3}-[0-9a-f]{12}$'"),
+				ExpectedErrorMessage: lo.ToPtr("spec.mirror.konnectID in body should match '^[0-9a-f]{8}(?:\\-[0-9a-f]{4}){3}-[0-9a-f]{12}$'"),
 			},
 			{
 				Name: "mirror type, KonnectID specified, controlPlane spec specified",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						Type:      lo.ToPtr(commonv1alpha1.EntityTypeMirror),
-						KonnectID: lo.ToPtr(commonv1alpha1.KonnectIDType("8ae65120-cdec-4310-84c1-4b19caf67967")),
+						SourceType: lo.ToPtr(commonv1alpha1.EntityTypeMirror),
+						Mirror: &konnectv1alpha1.MirrorSpec{
+							KonnectID: commonv1alpha1.KonnectIDType("8ae65120-cdec-4310-84c1-4b19caf67967"),
+						},
 						CreateControlPlaneRequest: konnectv1alpha1.CreateControlPlaneRequest{
 							Name: lo.ToPtr("cp-1"),
 						},
@@ -830,8 +836,10 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						Type:      lo.ToPtr(commonv1alpha1.EntityTypeOrigin),
-						KonnectID: lo.ToPtr(commonv1alpha1.KonnectIDType("8ae65120-cdec-4310-84c1-4b19caf67967")),
+						SourceType: lo.ToPtr(commonv1alpha1.EntityTypeOrigin),
+						Mirror: &konnectv1alpha1.MirrorSpec{
+							KonnectID: commonv1alpha1.KonnectIDType("8ae65120-cdec-4310-84c1-4b19caf67967"),
+						},
 						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
 							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
 								Name: "name-1",
@@ -846,7 +854,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						Type: lo.ToPtr(commonv1alpha1.EntityTypeOrigin),
+						SourceType: lo.ToPtr(commonv1alpha1.EntityTypeOrigin),
 						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
 							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
 								Name: "name-1",
@@ -861,7 +869,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						Type: lo.ToPtr(commonv1alpha1.EntityTypeOrigin),
+						SourceType: lo.ToPtr(commonv1alpha1.EntityTypeOrigin),
 						CreateControlPlaneRequest: konnectv1alpha1.CreateControlPlaneRequest{
 							Name: lo.ToPtr("cp-1"),
 						},
