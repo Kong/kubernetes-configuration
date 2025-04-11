@@ -28,6 +28,8 @@ Adding a new version? You'll need three changes:
 
 - Move `KongObjectRef` to `common/v1alpha1` and rename to `NameRef`.
   [#381](https://github.com/Kong/kubernetes-configuration/pull/381)
+- Add Type and KonnectID fields to the `KonnectGatewayControlPlane` CRD.
+  [#387](https://github.com/Kong/kubernetes-configuration/pull/387)
 
 ## [v1.3.1]
 
