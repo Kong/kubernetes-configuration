@@ -50,7 +50,7 @@ In order to install the CRDs from this repo, you can use the following command, 
 kustomize build github.com/kong/kubernetes-configuration/config/crd/<channel> | kubectl apply -f -
 ```
 
-Optionally you can specify the `ref` to use via the `?rev=<tag>` query parameter.
+Optionally you can specify the `ref` to use via the `?ref=<tag>` query parameter.
 
 For example, to install the CRDs for the Kong Ingress Controller, you can run:
 
@@ -61,7 +61,7 @@ kustomize build github.com/kong/kubernetes-configuration/config/crd/ingress-cont
 To install the CRDs from kubernetes-configuration v1.2.0 tag for the Kong Gateway Operator, you can run:
 
 ```terminal
-kustomize build github.com/kong/kubernetes-configuration/config/crd/gateway-operator\?rev=v1.2.0 | kubectl apply --server-side -f -
+kustomize build github.com/kong/kubernetes-configuration/config/crd/gateway-operator\?ref=v1.2.0 | kubectl apply --server-side -f -
 ```
 
 ## Generate code
