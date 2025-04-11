@@ -54,24 +54,24 @@ type TransitGatewayType string
 
 const (
 	// TransitGatewayTypeAWSTransitGateway defines the the AWS transit gateway type.
-	TransitGatewayTypeAWSTransitGateway TransitGatewayType = "awsTransitGateway"
+	TransitGatewayTypeAWSTransitGateway TransitGatewayType = "AWSTransitGateway"
 	// TransitGatewayTypeAzureTransitGateway defines the Azure transit gateway type.
-	TransitGatewayTypeAzureTransitGateway TransitGatewayType = "azureTransitGateway"
+	TransitGatewayTypeAzureTransitGateway TransitGatewayType = "AzureTransitGateway"
 )
 
 // KonnectTransitGatewayAPISpec specifies a transit gateway on the Konnect side.
 // The type and all the types it referenced are mostly copied github.com/Kong/sdk-konnect-go/models/components.CreateTransitGatewayRequest.
 //
 // +kubebuilder:validation:XValidation:rule="self.type == oldSelf.type", message="spec.type is immutable"
-// +kubebuilder:validation:XValidation:rule="self.type == 'awsTransitGateway' ? has(self.awsTransitGateway) : true", message="must set spec.awsTransitGateway when spec.type is 'awsTransitGateway'"
-// +kubebuilder:validation:XValidation:rule="self.type != 'awsTransitGateway' ? !has(self.awsTransitGateway) : true", message="must not set spec.awsTransitGateway when spec.type is not 'awsTransitGateway'"
-// +kubebuilder:validation:XValidation:rule="self.type == 'azureTransitGateway' ? has(self.azureTransitGateway) : true", message = "must set spec.azureTransitGateway when spec.type is 'azureTransitGateway'"
-// +kubebuilder:validation:XValidation:rule="self.type != 'azureTransitGateway' ? !has(self.azureTransitGateway) : true", message = "must not set spec.azureTransitGateway when spec.type is not 'azureTransitGateway'"
+// +kubebuilder:validation:XValidation:rule="self.type == 'AWSTransitGateway' ? has(self.awsTransitGateway) : true", message="must set spec.awsTransitGateway when spec.type is 'AWSTransitGateway'"
+// +kubebuilder:validation:XValidation:rule="self.type != 'AWSTransitGateway' ? !has(self.awsTransitGateway) : true", message="must not set spec.awsTransitGateway when spec.type is not 'AWSTransitGateway'"
+// +kubebuilder:validation:XValidation:rule="self.type == 'AzureTransitGateway' ? has(self.azureTransitGateway) : true", message = "must set spec.azureTransitGateway when spec.type is 'AzureTransitGateway'"
+// +kubebuilder:validation:XValidation:rule="self.type != 'AzureTransitGateway' ? !has(self.azureTransitGateway) : true", message = "must not set spec.azureTransitGateway when spec.type is not 'AzureTransitGateway'"
 type KonnectTransitGatewayAPISpec struct {
 	// Type is the type of the Konnect transit gateway.
 	//
 	// +kubebuilder:validation:Required
-	// +kubebuilder:validation:Enum=awsTransitGateway;azureTransitGateway
+	// +kubebuilder:validation:Enum=AWSTransitGateway;AzureTransitGateway
 	Type TransitGatewayType `json:"type"`
 
 	// AWSTransitGateway is the configuration of an AWS transit gateway.

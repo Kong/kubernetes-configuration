@@ -229,8 +229,8 @@ spec:
               type:
                 description: Type is the type of the Konnect transit gateway.
                 enum:
-                - awsTransitGateway
-                - azureTransitGateway
+                - AWSTransitGateway
+                - AzureTransitGateway
                 type: string
             required:
             - networkRef
@@ -241,18 +241,18 @@ spec:
               rule: self.networkRef.type == 'namespacedRef'
             - message: spec.type is immutable
               rule: self.type == oldSelf.type
-            - message: must set spec.awsTransitGateway when spec.type is 'awsTransitGateway'
-              rule: 'self.type == ''awsTransitGateway'' ? has(self.awsTransitGateway)
+            - message: must set spec.awsTransitGateway when spec.type is 'AWSTransitGateway'
+              rule: 'self.type == ''AWSTransitGateway'' ? has(self.awsTransitGateway)
                 : true'
-            - message: must not set spec.awsTransitGateway when spec.type is not 'awsTransitGateway'
-              rule: 'self.type != ''awsTransitGateway'' ? !has(self.awsTransitGateway)
+            - message: must not set spec.awsTransitGateway when spec.type is not 'AWSTransitGateway'
+              rule: 'self.type != ''AWSTransitGateway'' ? !has(self.awsTransitGateway)
                 : true'
-            - message: must set spec.azureTransitGateway when spec.type is 'azureTransitGateway'
-              rule: 'self.type == ''azureTransitGateway'' ? has(self.azureTransitGateway)
+            - message: must set spec.azureTransitGateway when spec.type is 'AzureTransitGateway'
+              rule: 'self.type == ''AzureTransitGateway'' ? has(self.azureTransitGateway)
                 : true'
             - message: must not set spec.azureTransitGateway when spec.type is not
-                'azureTransitGateway'
-              rule: 'self.type != ''azureTransitGateway'' ? !has(self.azureTransitGateway)
+                'AzureTransitGateway'
+              rule: 'self.type != ''AzureTransitGateway'' ? !has(self.azureTransitGateway)
                 : true'
           status:
             description: Status defines the observed state of KonnectCloudGatewayTransitGateway.

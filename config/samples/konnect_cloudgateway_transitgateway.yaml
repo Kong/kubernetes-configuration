@@ -31,7 +31,7 @@ spec:
     type: namespacedRef
     namespacedRef:
       name: network1
-  type: awsTransitGateway
+  type: AWSTransitGateway
   awsTransitGateway:
     name: "aws-transit-gateway-us-west-1"
     cidr_blocks:

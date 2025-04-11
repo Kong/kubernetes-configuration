@@ -167,7 +167,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("must set spec.awsTransitGateway when spec.type is 'awsTransitGateway'"),
+				ExpectedErrorMessage: lo.ToPtr("must set spec.awsTransitGateway when spec.type is 'AWSTransitGateway'"),
 			},
 			{
 				Name: "Must not set awsTransitGateway when type != awsTransitConfig",
@@ -183,7 +183,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("must not set spec.awsTransitGateway when spec.type is not 'awsTransitGateway'"),
+				ExpectedErrorMessage: lo.ToPtr("must not set spec.awsTransitGateway when spec.type is not 'AWSTransitGateway'"),
 			},
 			{
 				Name: "Must set azureTransitGatway when spec.type = azureTransitGateway",
@@ -197,7 +197,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("must set spec.azureTransitGateway when spec.type is 'azureTransitGateway'"),
+				ExpectedErrorMessage: lo.ToPtr("must set spec.azureTransitGateway when spec.type is 'AzureTransitGateway'"),
 			},
 			{
 				Name: "Must not set azureTransitGateway when type != azureTransitGateway",
@@ -213,7 +213,7 @@ func TestKonnectCloudGatewayTransitGateway(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("must not set spec.azureTransitGateway when spec.type is not 'azureTransitGateway'"),
+				ExpectedErrorMessage: lo.ToPtr("must not set spec.azureTransitGateway when spec.type is not 'AzureTransitGateway'"),
 			},
 			{
 				Name: "spec.type is immutable",
