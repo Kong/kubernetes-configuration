@@ -64,7 +64,7 @@ type KonnectGatewayControlPlaneSpec struct {
 	// +kubebuilder:validation:Optional
 	Mirror *MirrorSpec `json:"mirror,omitempty"`
 
-	// SourceType is the type of the control plane. It can be either Origin or Mirror.
+	// SourceType represents the source type of the Konnect entity.
 	//
 	// +kubebuilder:validation:Enum=Origin;Mirror
 	// +kubebuilder:validation:Optional

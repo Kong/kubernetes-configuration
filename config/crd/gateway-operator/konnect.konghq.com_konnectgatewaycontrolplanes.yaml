@@ -160,8 +160,8 @@ spec:
                 type: array
               sourceType:
                 default: Origin
-                description: SourceType is the type of the control plane. It can be
-                  either Origin or Mirror.
+                description: SourceType represents the source type of the Konnect
+                  entity.
                 enum:
                 - Origin
                 - Mirror
