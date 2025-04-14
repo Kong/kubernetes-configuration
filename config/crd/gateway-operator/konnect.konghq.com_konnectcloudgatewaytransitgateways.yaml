@@ -18,9 +18,25 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - description: State of the transit gateway in Konnect
+    - description: The Resource is Programmed on Konnect
+      jsonPath: .status.conditions[?(@.type=='Programmed')].status
+      name: Programmed
+      type: string
+    - description: The state the transit gateway is in
       jsonPath: .status.state
       name: State
+      type: string
+    - description: Konnect ID
+      jsonPath: .status.id
+      name: ID
+      type: string
+    - description: Network ID
+      jsonPath: .status.networkID
+      name: NetworkID
+      type: string
+    - description: Konnect Organization ID this resource belongs to.
+      jsonPath: .status.organizationID
+      name: OrgID
       type: string
     name: v1alpha1
     schema:
