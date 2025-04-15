@@ -19,11 +19,6 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
-### Added
-
-- Added `KonnectCloudGatewayTransitGateway` to support Konnect transit gateways.
-  [#375](https://github.com/Kong/kubernetes-configuration/pull/375)
-
 ### Changes
 
 - Move `KongObjectRef` to `common/v1alpha1` and rename to `NameRef`.

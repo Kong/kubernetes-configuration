@@ -191,20 +191,6 @@ var supportedKonnectTypesStandalone = []supportedTypesT{
 	},
 }
 
-var supportedKonnectV1Alpha1TypesWithNetworkRef = []supportedTypesT{
-	{
-		PackageVersion: "v1alpha1",
-		Types: []templateDataT{
-			{
-				Type:                       "KonnectCloudGatewayTransitGateway",
-				KonnectStatusType:          "KonnectEntityStatusWithNetworkRef",
-				KonnectStatusEmbedded:      true,
-				GetKonnectStatusReturnType: "*KonnectEntityStatus",
-			},
-		},
-	},
-}
-
 var supportedGatewayOperatorTypes = []supportedTypesT{
 	{
 		PackageVersion: "v1alpha1",
@@ -241,7 +227,6 @@ var supportedKonnectPackageTypesWithList = func() []supportedTypesT {
 		supportedKonnectTypesStandalone,
 		supportedKonnectV1Alpha1TypesWithControlPlaneRef...,
 	)
-	base = append(base, supportedKonnectV1Alpha1TypesWithNetworkRef...)
 
 	m := make(map[string]supportedTypesT)
 	for _, t := range base {

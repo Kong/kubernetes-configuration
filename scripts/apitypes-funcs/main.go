@@ -92,11 +92,6 @@ func main() {
 					supportedTypes:  supportedKonnectTypesStandalone,
 				},
 				{
-					templateContent: konnectFuncNetworkRefTemplate,
-					outputFile:      konnectFuncOutputCloudGatewayFilename,
-					supportedTypes:  supportedKonnectV1Alpha1TypesWithNetworkRef,
-				},
-				{
 					templateContent: listFuncTemplate,
 					outputFile:      listFuncOutputFileNamme,
 					supportedTypes:  supportedKonnectPackageTypesWithList,
