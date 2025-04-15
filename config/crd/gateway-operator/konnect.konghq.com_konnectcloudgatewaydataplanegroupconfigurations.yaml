@@ -231,8 +231,12 @@ spec:
                         type: object
                       type: array
                     networkRef:
-                      description: NetworkRef is the reference to the network that
-                        this data-plane group will be deployed on.
+                      description: |-
+                        NetworkRef is the reference to the network that this data-plane group will be deployed on.
+
+                        Cross namespace references are not supported for networkRef of type namespacedRef.
+                        This will be enforced in the future but currently (due to limitation in CEL validation
+                        in Kubernetes 1.31 and older) it is not.
                       properties:
                         konnectID:
                           description: |-
@@ -275,10 +279,6 @@ spec:
                       - type
                       type: object
                       x-kubernetes-validations:
-                      - message: cross namespace references are not supported for
-                          networkRef of type namespacedRef
-                        rule: 'self.type == ''namespacedRef'' && has(self.namespacedRef)
-                          ? !has(self.namespacedRef.namespace) : true'
                       - message: when type is namespacedRef, namespacedRef must be
                           set
                         rule: 'self.type == ''namespacedRef'' ? has(self.namespacedRef)
