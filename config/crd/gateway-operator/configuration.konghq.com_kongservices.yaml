@@ -69,7 +69,6 @@ spec:
                     description: |-
                       KonnectID is the schema for the KonnectID type.
                       This field is required when the Type is konnectID.
-                    pattern: ^[0-9a-f]{8}(?:\-[0-9a-f]{4}){3}-[0-9a-f]{12}$
                     type: string
                   konnectNamespacedRef:
                     description: |-

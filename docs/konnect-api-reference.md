@@ -282,27 +282,6 @@ ConfigurationDataPlaneGroupEnvironmentField specifies an environment variable fi
 _Appears in:_
 - [KonnectConfigurationDataPlaneGroup](#konnectconfigurationdataplanegroup)
 
-#### CreateControlPlaneRequest
-
-
-CreateControlPlaneRequest - The request schema for the create control plane request.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | The name of the control plane. |
-| `description` _string_ | The description of the control plane in Konnect. |
-| `cluster_type` _[CreateControlPlaneRequestClusterType](#createcontrolplanerequestclustertype)_ | The ClusterType value of the cluster associated with the Control Plane. |
-| `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
-| `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
-| `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
-| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
-
-
-_Appears in:_
-- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
-
 #### DataPlaneClientAuthStatus
 
 
@@ -712,10 +691,8 @@ KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayContro
 | `cluster_type` _[CreateControlPlaneRequestClusterType](#createcontrolplanerequestclustertype)_ | The ClusterType value of the cluster associated with the Control Plane. |
 | `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
 | `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
-| `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
+| `proxy_urls` _[ProxyURL](#proxyurl) array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
 | `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
-| `mirror` _[MirrorSpec](#mirrorspec)_ | Mirror is the Konnect Mirror configuration. It is only applicable for ControlPlanes that are created as Mirrors. |
-| `sourceType` _[EntitySource](#entitysource)_ | SourceType represents the source type of the Konnect entity. |
 | `members` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.28/#localobjectreference-v1-core) array_ | Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group. Only applicable for ControlPlanes that are created as groups. |
 | `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
 
@@ -742,21 +719,6 @@ The type and all the types it referenced are mostly copied github.com/Kong/sdk-k
 
 _Appears in:_
 - [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
-
-#### MirrorSpec
-
-
-MirrorSpec contains the Konnect Mirror configuration.
-
-
-
-| Field | Description |
-| --- | --- |
-| `konnectID` _[KonnectIDType](#konnectidtype)_ | KonnectID is the ID of the Konnect entity. It can be set only in case the ControlPlane type is Mirror. |
-
-
-_Appears in:_
-- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### ProvisioningMethod
 _Underlying type:_ `string`
