@@ -743,6 +743,21 @@ The type and all the types it referenced are mostly copied github.com/Kong/sdk-k
 _Appears in:_
 - [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
 
+#### MirrorKonnect
+
+
+MirrorKonnect contains the Konnect Mirror configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `ID` _[KonnectIDType](#konnectidtype)_ | KonnectID is the ID of the Konnect entity. It can be set only in case the ControlPlane type is Mirror. |
+
+
+_Appears in:_
+- [MirrorSpec](#mirrorspec)
+
 #### MirrorSpec
 
 
@@ -752,7 +767,7 @@ MirrorSpec contains the Konnect Mirror configuration.
 
 | Field | Description |
 | --- | --- |
-| `konnectID` _[KonnectIDType](#konnectidtype)_ | KonnectID is the ID of the Konnect entity. It can be set only in case the ControlPlane type is Mirror. |
+| `konnect` _[MirrorKonnect](#mirrorkonnect)_ |  |
 
 
 _Appears in:_

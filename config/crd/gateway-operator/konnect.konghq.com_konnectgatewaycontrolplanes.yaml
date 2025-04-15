@@ -123,14 +123,20 @@ spec:
                   Mirror is the Konnect Mirror configuration.
                   It is only applicable for ControlPlanes that are created as Mirrors.
                 properties:
-                  konnectID:
-                    description: |-
-                      KonnectID is the ID of the Konnect entity. It can be set only in case
-                      the ControlPlane type is Mirror.
-                    pattern: ^[0-9a-f]{8}(?:\-[0-9a-f]{4}){3}-[0-9a-f]{12}$
-                    type: string
+                  konnect:
+                    description: MirrorKonnect contains the Konnect Mirror configuration.
+                    properties:
+                      ID:
+                        description: |-
+                          KonnectID is the ID of the Konnect entity. It can be set only in case
+                          the ControlPlane type is Mirror.
+                        pattern: ^[0-9a-f]{8}(?:\-[0-9a-f]{4}){3}-[0-9a-f]{12}$
+                        type: string
+                    required:
+                    - ID
+                    type: object
                 required:
-                - konnectID
+                - konnect
                 type: object
               name:
                 description: The name of the control plane.
@@ -207,9 +213,9 @@ spec:
                 && !has(self.proxy_urls) && !has(self.labels) : true'
             - message: spec.sourceType is immutable
               rule: self.sourceType == oldSelf.sourceType
-            - message: konnectID field must be set for type Mirror
+            - message: mirrorSpec field must be set for type Mirror
               rule: 'self.sourceType == ''Mirror'' ? has(self.mirror) : true'
-            - message: konnectID field cannot be set for type Origin
+            - message: mirrorSpec field cannot be set for type Origin
               rule: 'self.sourceType == ''Origin'' ? !has(self.mirror) : true'
             - message: Name must be set for type Origin
               rule: 'self.sourceType == ''Origin'' ? has(self.name) : true'
