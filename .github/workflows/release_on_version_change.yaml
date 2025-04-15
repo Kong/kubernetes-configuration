@@ -5,7 +5,8 @@ on:
     paths:
       - VERSION
     branches:
-      - main
+      - 'main'
+      - 'release/*'
 
 jobs:
   version:
