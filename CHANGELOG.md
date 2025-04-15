@@ -6,6 +6,7 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.3.2](#v132)
 - [v1.3.1](#v131)
 - [v1.3.0](#v130)
 - [v1.2.0](#v120)
@@ -30,6 +31,13 @@ Adding a new version? You'll need three changes:
   [#381](https://github.com/Kong/kubernetes-configuration/pull/381)
 - Add Type and KonnectID fields to the `KonnectGatewayControlPlane` CRD.
   [#387](https://github.com/Kong/kubernetes-configuration/pull/387)
+
+## [v1.3.2]
+
+[v1.3.2]: https://github.com/Kong/kubernetes-configuration/compare/v1.3.1...v1.3.2
+
+### Changes
+
 - Removed `namespace` field validation on `KonnectConfigurationDataPlaneGroup` `networkRef` field.
   Using CEL reserved keywords is only available in Kubernetes 1.32+.
   Added CRD validation test for all supported Kubernetes versions.
