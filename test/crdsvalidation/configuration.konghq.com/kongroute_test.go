@@ -27,6 +27,56 @@ func TestKongRoute(t *testing.T) {
 		common.NewCRDValidationTestCasesGroupCPRefChange(t, obj, common.NotSupportedByKIC, common.ControlPlaneRefNotRequired).Run(t)
 	})
 
+	t.Run("service ref", func(t *testing.T) {
+		common.TestCasesGroup[*configurationv1alpha1.KongRoute]{
+			{
+				Name: "bind servicebound to controlplane too",
+				TestObject: &configurationv1alpha1.KongRoute{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: configurationv1alpha1.KongRouteSpec{
+						ServiceRef: &configurationv1alpha1.ServiceRef{
+							Type: configurationv1alpha1.ServiceRefNamespacedRef,
+							NamespacedRef: &commonv1alpha1.NameRef{
+								Name: "test-konnect-service",
+							},
+						},
+					},
+				},
+				Update: func(kr *configurationv1alpha1.KongRoute) {
+					kr.Spec.ControlPlaneRef = &commonv1alpha1.ControlPlaneRef{
+						Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+						KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+							Name: "test-konnect-control-plane",
+						},
+					}
+				},
+			},
+			{
+				Name: "make serviceless",
+				TestObject: &configurationv1alpha1.KongRoute{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: configurationv1alpha1.KongRouteSpec{
+						ServiceRef: &configurationv1alpha1.ServiceRef{
+							Type: configurationv1alpha1.ServiceRefNamespacedRef,
+							NamespacedRef: &commonv1alpha1.NameRef{
+								Name: "test-konnect-service",
+							},
+						},
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+					},
+				},
+				Update: func(kr *configurationv1alpha1.KongRoute) {
+					kr.Spec.ServiceRef = nil
+				},
+			},
+		}.Run(t)
+	})
+
 	t.Run("protocols", func(t *testing.T) {
 		common.TestCasesGroup[*configurationv1alpha1.KongRoute]{
 			{
