@@ -31,6 +31,9 @@ Adding a new version? You'll need three changes:
   [#381](https://github.com/Kong/kubernetes-configuration/pull/381)
 - Add Type and KonnectID fields to the `KonnectGatewayControlPlane` CRD.
   [#387](https://github.com/Kong/kubernetes-configuration/pull/387)
+- Change validation rules for `KongRoute` to allow its migration from serviceless
+  (`KonnectGatewayControlPlane` bound) to `KongService` bound and vice versa.
+  [#386](https://github.com/Kong/kubernetes-configuration/pull/386)
 
 ## [v1.3.2]
 
