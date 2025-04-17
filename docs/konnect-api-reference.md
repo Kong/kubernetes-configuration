@@ -767,7 +767,7 @@ MirrorSpec contains the Konnect Mirror configuration.
 
 | Field | Description |
 | --- | --- |
-| `konnect` _[MirrorKonnect](#mirrorkonnect)_ |  |
+| `konnect` _[MirrorKonnect](#mirrorkonnect)_ | Konnect contains the KonnectID of the KonnectGatewayControlPlane that is mirrored. |
 
 
 _Appears in:_

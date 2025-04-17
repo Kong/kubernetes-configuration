@@ -80,6 +80,8 @@ type KonnectGatewayControlPlaneSpec struct {
 
 // MirrorSpec contains the Konnect Mirror configuration.
 type MirrorSpec struct {
+	// Konnect contains the KonnectID of the KonnectGatewayControlPlane that
+	// is mirrored.
 	Konnect MirrorKonnect `json:"konnect"`
 }
 
