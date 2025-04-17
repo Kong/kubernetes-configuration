@@ -765,7 +765,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						SourceType: lo.ToPtr(commonv1alpha1.EntitySourceMirror),
+						Source: lo.ToPtr(commonv1alpha1.EntitySourceMirror),
 						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
 							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
 								Name: "name-1",
@@ -773,14 +773,14 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("mirrorSpec field must be set for type Mirror"),
+				ExpectedErrorMessage: lo.ToPtr("mirror field must be set for type Mirror"),
 			},
 			{
 				Name: "mirror type, well-formed KonnectID specified",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						SourceType: lo.ToPtr(commonv1alpha1.EntitySourceMirror),
+						Source: lo.ToPtr(commonv1alpha1.EntitySourceMirror),
 						Mirror: &konnectv1alpha1.MirrorSpec{
 							Konnect: konnectv1alpha1.MirrorKonnect{
 								ID: commonv1alpha1.KonnectIDType("8ae65120-cdec-4310-84c1-4b19caf67967"),
@@ -799,7 +799,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						SourceType: lo.ToPtr(commonv1alpha1.EntitySourceMirror),
+						Source: lo.ToPtr(commonv1alpha1.EntitySourceMirror),
 						Mirror: &konnectv1alpha1.MirrorSpec{
 							Konnect: konnectv1alpha1.MirrorKonnect{
 								ID: commonv1alpha1.KonnectIDType("malformed-id"),
@@ -819,7 +819,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						SourceType: lo.ToPtr(commonv1alpha1.EntitySourceMirror),
+						Source: lo.ToPtr(commonv1alpha1.EntitySourceMirror),
 						Mirror: &konnectv1alpha1.MirrorSpec{
 							Konnect: konnectv1alpha1.MirrorKonnect{
 								ID: commonv1alpha1.KonnectIDType("8ae65120-cdec-4310-84c1-4b19caf67967"),
@@ -842,7 +842,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						SourceType: lo.ToPtr(commonv1alpha1.EntitySourceOrigin),
+						Source: lo.ToPtr(commonv1alpha1.EntitySourceOrigin),
 						Mirror: &konnectv1alpha1.MirrorSpec{
 							Konnect: konnectv1alpha1.MirrorKonnect{
 								ID: commonv1alpha1.KonnectIDType("8ae65120-cdec-4310-84c1-4b19caf67967"),
@@ -855,14 +855,14 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("mirrorSpec field cannot be set for type Origi"),
+				ExpectedErrorMessage: lo.ToPtr("mirror field cannot be set for type Origin"),
 			},
 			{
 				Name: "origin type, no KonnectID specified, empty controlPlane spec",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						SourceType: lo.ToPtr(commonv1alpha1.EntitySourceOrigin),
+						Source: lo.ToPtr(commonv1alpha1.EntitySourceOrigin),
 						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
 							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
 								Name: "name-1",
@@ -877,7 +877,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
-						SourceType: lo.ToPtr(commonv1alpha1.EntitySourceOrigin),
+						Source: lo.ToPtr(commonv1alpha1.EntitySourceOrigin),
 						CreateControlPlaneRequest: konnectv1alpha1.CreateControlPlaneRequest{
 							Name: lo.ToPtr("cp-1"),
 						},

@@ -1200,8 +1200,8 @@ func (in *KonnectGatewayControlPlaneSpec) DeepCopyInto(out *KonnectGatewayContro
 		*out = new(MirrorSpec)
 		**out = **in
 	}
-	if in.SourceType != nil {
-		in, out := &in.SourceType, &out.SourceType
+	if in.Source != nil {
+		in, out := &in.Source, &out.Source
 		*out = new(commonv1alpha1.EntitySource)
 		**out = **in
 	}

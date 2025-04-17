@@ -223,7 +223,7 @@ const (
 	// ControlPlaneMirroredSucceededConditionReason is the reason used with the
 	// ControlPlaneMirroring condition type indicating that the control plane
 	// mirroring has succeeded.
-	ControlPlaneMirroredSucceededConditionReason = "Succeeded"
+	ControlPlaneMirroredSucceededConditionReason = "Mirrored"
 	// ControlPlaneMirroredFailedConditionReason is the reason used with the
 	// ControlPlaneMirroring condition type indicating that the control plane
 	// mirroring has failed.

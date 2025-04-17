@@ -164,10 +164,9 @@ spec:
                   - protocol
                   type: object
                 type: array
-              sourceType:
+              source:
                 default: Origin
-                description: SourceType represents the source type of the Konnect
-                  entity.
+                description: Source represents the source type of the Konnect entity.
                 enum:
                 - Origin
                 - Mirror
@@ -208,17 +207,17 @@ spec:
               rule: 'has(self.cluster_type) && self.cluster_type == ''CLUSTER_TYPE_K8S_INGRESS_CONTROLLER''
                 ? !has(self.cloud_gateway) : true'
             - message: createControlPlaneRequest fields cannot be set for type Mirror
-              rule: 'self.sourceType == ''Mirror'' ? !has(self.name) && !has(self.description)
+              rule: 'self.source == ''Mirror'' ? !has(self.name) && !has(self.description)
                 && !has(self.cluster_type) && !has(self.auth_type) && !has(self.cloud_gateway)
                 && !has(self.proxy_urls) && !has(self.labels) : true'
-            - message: spec.sourceType is immutable
-              rule: self.sourceType == oldSelf.sourceType
-            - message: mirrorSpec field must be set for type Mirror
-              rule: 'self.sourceType == ''Mirror'' ? has(self.mirror) : true'
-            - message: mirrorSpec field cannot be set for type Origin
-              rule: 'self.sourceType == ''Origin'' ? !has(self.mirror) : true'
+            - message: spec.source is immutable
+              rule: self.source == oldSelf.source
+            - message: mirror field must be set for type Mirror
+              rule: 'self.source == ''Mirror'' ? has(self.mirror) : true'
+            - message: mirror field cannot be set for type Origin
+              rule: 'self.source == ''Origin'' ? !has(self.mirror) : true'
             - message: Name must be set for type Origin
-              rule: 'self.sourceType == ''Origin'' ? has(self.name) : true'
+              rule: 'self.source == ''Origin'' ? has(self.name) : true'
           status:
             description: Status defines the observed state of KonnectGatewayControlPlane.
             properties:
