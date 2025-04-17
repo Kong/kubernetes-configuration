@@ -752,7 +752,7 @@ MirrorKonnect contains the Konnect Mirror configuration.
 
 | Field | Description |
 | --- | --- |
-| `ID` _[KonnectIDType](#konnectidtype)_ | KonnectID is the ID of the Konnect entity. It can be set only in case the ControlPlane type is Mirror. |
+| `id` _[KonnectIDType](#konnectidtype)_ | ID is the ID of the Konnect entity. It can be set only in case the ControlPlane type is Mirror. |
 
 
 _Appears in:_

@@ -128,14 +128,14 @@ spec:
                       Konnect contains the KonnectID of the KonnectGatewayControlPlane that
                       is mirrored.
                     properties:
-                      ID:
+                      id:
                         description: |-
-                          KonnectID is the ID of the Konnect entity. It can be set only in case
+                          ID is the ID of the Konnect entity. It can be set only in case
                           the ControlPlane type is Mirror.
                         pattern: ^[0-9a-f]{8}(?:\-[0-9a-f]{4}){3}-[0-9a-f]{12}$
                         type: string
                     required:
-                    - ID
+                    - id
                     type: object
                 required:
                 - konnect

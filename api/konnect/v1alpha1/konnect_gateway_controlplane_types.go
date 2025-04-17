@@ -82,16 +82,18 @@ type KonnectGatewayControlPlaneSpec struct {
 type MirrorSpec struct {
 	// Konnect contains the KonnectID of the KonnectGatewayControlPlane that
 	// is mirrored.
+	//
+	// +kubebuilder:validation:Required
 	Konnect MirrorKonnect `json:"konnect"`
 }
 
 // MirrorKonnect contains the Konnect Mirror configuration.
 type MirrorKonnect struct {
-	// KonnectID is the ID of the Konnect entity. It can be set only in case
+	// ID is the ID of the Konnect entity. It can be set only in case
 	// the ControlPlane type is Mirror.
 	//
 	// +kubebuilder:validation:Required
-	ID commonv1alpha1.KonnectIDType `json:"ID"`
+	ID commonv1alpha1.KonnectIDType `json:"id"`
 }
 
 // CreateControlPlaneRequest - The request schema for the create control plane request.

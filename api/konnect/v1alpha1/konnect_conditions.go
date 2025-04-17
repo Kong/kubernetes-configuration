@@ -220,12 +220,12 @@ const (
 	// the status for the control plane mirroring.
 	ControlPlaneMirroredConditionType = "Mirrored"
 
-	// ControlPlaneMirroredSucceededConditionReason is the reason used with the
-	// ControlPlaneMirroring condition type indicating that the control plane
+	// ControlPlaneMirroredReasonMirrored is the reason used with the
+	// Mirrored condition type indicating that the control plane
 	// mirroring has succeeded.
-	ControlPlaneMirroredSucceededConditionReason = "Mirrored"
-	// ControlPlaneMirroredFailedConditionReason is the reason used with the
-	// ControlPlaneMirroring condition type indicating that the control plane
+	ControlPlaneMirroredReasonMirrored = "Mirrored"
+	// ControlPlaneMirroredReasonFailed is the reason used with the
+	// Mirrored condition type indicating that the control plane
 	// mirroring has failed.
-	ControlPlaneMirroredFailedConditionReason = "Failed"
+	ControlPlaneMirroredReasonFailed = "Failed"
 )
