@@ -812,7 +812,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.mirror.konnect.ID in body should match '^[0-9a-f]{8}(?:\\-[0-9a-f]{4}){3}-[0-9a-f]{12}$'"),
+				ExpectedErrorMessage: lo.ToPtr("spec.mirror.konnect.id in body should match '^[0-9a-f]{8}(?:\\-[0-9a-f]{4}){3}-[0-9a-f]{12}$'"),
 			},
 			{
 				Name: "mirror type, KonnectID specified, controlPlane spec specified",
