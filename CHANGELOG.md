@@ -24,6 +24,8 @@ Adding a new version? You'll need three changes:
 
 - Added `KonnectCloudGatewayTransitGateway` to support Konnect transit gateways.
   [#375](https://github.com/Kong/kubernetes-configuration/pull/375)
+- Allow setting `DataPlane`'s `NodePort` port number
+  [#401](https://github.com/Kong/kubernetes-configuration/pull/401)
 
 ### Changes
 
