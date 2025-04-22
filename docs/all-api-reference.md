@@ -2972,12 +2972,29 @@ configure and deploy a DataPlane object.
 | --- | --- |
 | `deployment` _[DataPlaneDeploymentOptions](#dataplanedeploymentoptions)_ |  |
 | `network` _[GatewayConfigDataPlaneNetworkOptions](#gatewayconfigdataplanenetworkoptions)_ |  |
+| `resources` _[GatewayConfigDataPlaneResources](#gatewayconfigdataplaneresources)_ |  |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the DataPlane resources to influence or enhance functionality. NOTE: since we have one extension only (KonnectExtension), we limit the amount of extensions to 1. |
 | `pluginsToInstall` _[NamespacedName](#namespacedname) array_ | PluginsToInstall is a list of KongPluginInstallation resources that will be installed and available in the Gateways (DataPlanes) that use this GatewayConfig. |
 
 
 _Appears in:_
 - [GatewayConfigurationSpec](#gatewayconfigurationspec)
+
+#### GatewayConfigDataPlaneResources
+
+
+GatewayConfigDataPlaneResources defines the resources that will be
+created and managed for Gateway's DataPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `podDisruptionBudget` _[PodDisruptionBudget](#poddisruptionbudget)_ | PodDisruptionBudget is the configuration for the PodDisruptionBudget that will be created for the DataPlane. |
+
+
+_Appears in:_
+- [GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)
 
 #### GatewayConfigDataPlaneServices
 
@@ -3103,6 +3120,7 @@ PodDisruptionBudget defines the configuration for the PodDisruptionBudget.
 
 _Appears in:_
 - [DataPlaneResources](#dataplaneresources)
+- [GatewayConfigDataPlaneResources](#gatewayconfigdataplaneresources)
 
 #### PodDisruptionBudgetSpec
 
