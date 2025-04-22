@@ -44,6 +44,10 @@ func (c *FakeGatewayOperatorV1alpha1) KonnectExtensions(namespace string) v1alph
 	return newFakeKonnectExtensions(c, namespace)
 }
 
+func (c *FakeGatewayOperatorV1alpha1) WatchNamespaceGrants(namespace string) v1alpha1.WatchNamespaceGrantInterface {
+	return newFakeWatchNamespaceGrants(c, namespace)
+}
+
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeGatewayOperatorV1alpha1) RESTClient() rest.Interface {
