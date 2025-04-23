@@ -46,8 +46,6 @@ spec:
                 description: |-
                   From describes the trusted namespaces and kinds that can reference the
                   namespace this grant exists in.
-
-                  Support: Core
                 items:
                   description: WatchNamespaceGrantFrom describes trusted namespaces.
                   properties:

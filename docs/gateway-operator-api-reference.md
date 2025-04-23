@@ -527,7 +527,7 @@ WatchNamespaceGrantSpec defines the desired state of an WatchNamespaceGrant.
 
 | Field | Description |
 | --- | --- |
-| `from` _[WatchNamespaceGrantFrom](#watchnamespacegrantfrom) array_ | From describes the trusted namespaces and kinds that can reference the namespace this grant exists in.<br /><br /> Support: Core |
+| `from` _[WatchNamespaceGrantFrom](#watchnamespacegrantfrom) array_ | From describes the trusted namespaces and kinds that can reference the namespace this grant exists in. |
 
 
 _Appears in:_
