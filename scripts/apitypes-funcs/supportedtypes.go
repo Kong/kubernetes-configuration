@@ -135,6 +135,7 @@ var supportedKonnectTypesControlPlaneConfig = []supportedTypesT{
 				KonnectStatusType:          "*konnectv1alpha1.KonnectEntityStatusWithControlPlaneAndServiceRefs",
 				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
 				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
+				ServiceRefType:             "ServiceRef",
 			},
 			{
 				Type:                       "KongUpstream",
