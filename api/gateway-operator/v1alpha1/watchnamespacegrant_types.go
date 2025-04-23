@@ -33,8 +33,6 @@ type WatchNamespaceGrantSpec struct {
 	// From describes the trusted namespaces and kinds that can reference the
 	// namespace this grant exists in.
 	//
-	// Support: Core
-	//
 	// +kubebuilder:validation:MinItems=1
 	// +kubebuilder:validation:MaxItems=16
 	From []WatchNamespaceGrantFrom `json:"from"`
