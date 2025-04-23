@@ -32,6 +32,7 @@ type GatewayOperatorV1alpha1Interface interface {
 	DataPlaneMetricsExtensionsGetter
 	KongPluginInstallationsGetter
 	KonnectExtensionsGetter
+	WatchNamespaceGrantsGetter
 }
 
 // GatewayOperatorV1alpha1Client is used to interact with features provided by the gateway-operator.konghq.com group.
@@ -53,6 +54,10 @@ func (c *GatewayOperatorV1alpha1Client) KongPluginInstallations(namespace string
 
 func (c *GatewayOperatorV1alpha1Client) KonnectExtensions(namespace string) KonnectExtensionInterface {
 	return newKonnectExtensions(c, namespace)
+}
+
+func (c *GatewayOperatorV1alpha1Client) WatchNamespaceGrants(namespace string) WatchNamespaceGrantInterface {
+	return newWatchNamespaceGrants(c, namespace)
 }
 
 // NewForConfig creates a new GatewayOperatorV1alpha1Client for the given config.

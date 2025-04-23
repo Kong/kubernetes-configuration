@@ -1,0 +1,10 @@
+apiVersion: gateway-operator.konghq.com/v1alpha1
+kind: WatchNamespaceGrant
+metadata:
+  name: watchnamespacegrant
+  namespace: default
+spec:
+  from:
+  - group: gateway-operator.konghq.com
+    kind: ControlPlane
+    namespace: test

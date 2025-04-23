@@ -30,6 +30,10 @@ Adding a new version? You'll need three changes:
   [#402](https://github.com/Kong/kubernetes-configuration/pull/402)
 - Added support for setting `PodDisruptionBudget` in `GatewayConfiguration`'s `DataPlane` options.
   [#405](https://github.com/Kong/kubernetes-configuration/pull/405)
+- Add methods `SetServiceRef` and `GetServiceRef` to `KongRoute` object.
+  [#404](https://github.com/Kong/kubernetes-configuration/pull/404)
+- Added `WatchNamespaceGrant` CRD.
+  [#403](https://github.com/Kong/kubernetes-configuration/pull/403)
 
 ### Changes
 
