@@ -43,6 +43,10 @@ type templateDataT struct {
 	// ControlPlaneRefFieldPath is the field path to the ControlPlaneRef in the type.
 	// If unspecified, the default is Spec.ControlPlaneRef.
 	ControlPlaneRefFieldPath string
+
+	// ServiceRefType is the ServiceRef type to be used in the template (with the package name if it's outside
+	// the type's package).
+	ServiceRefType string
 }
 
 const (
@@ -73,7 +77,7 @@ func main() {
 				},
 				{
 					templateContent: listFuncTemplate,
-					outputFile:      listFuncOutputFileNamme,
+					outputFile:      listFuncOutputFileName,
 					supportedTypes:  supportedConfigurationPackageTypesWithList,
 				},
 			},
@@ -98,7 +102,7 @@ func main() {
 				},
 				{
 					templateContent: listFuncTemplate,
-					outputFile:      listFuncOutputFileNamme,
+					outputFile:      listFuncOutputFileName,
 					supportedTypes:  supportedKonnectPackageTypesWithList,
 				},
 			},
@@ -108,7 +112,7 @@ func main() {
 			renders: []render{
 				{
 					templateContent: listFuncTemplate,
-					outputFile:      listFuncOutputFileNamme,
+					outputFile:      listFuncOutputFileName,
 					supportedTypes:  supportedGatewayOperatorPackageTypesWithList,
 				},
 			},
