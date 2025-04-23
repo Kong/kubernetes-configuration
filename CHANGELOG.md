@@ -28,6 +28,8 @@ Adding a new version? You'll need three changes:
   [#401](https://github.com/Kong/kubernetes-configuration/pull/401)
 - Added `scale` subresource to `DataPlane` CRD.
   [#402](https://github.com/Kong/kubernetes-configuration/pull/402)
+- Added support for setting `PodDisruptionBudget` in `GatewayConfiguration`'s `DataPlane` options.
+  [#405](https://github.com/Kong/kubernetes-configuration/pull/405)
 - Add methods `SetServiceRef` and `GetServiceRef` to `KongRoute` object.
   [#404](https://github.com/Kong/kubernetes-configuration/pull/404)
 - Added `WatchNamespaceGrant` CRD.
