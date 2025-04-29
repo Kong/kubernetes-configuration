@@ -2748,6 +2748,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 | `deployment` _[ControlPlaneDeploymentOptions](#controlplanedeploymentoptions)_ |  |
 | `dataplane` _string_ | DataPlanes refers to the named DataPlane objects which this ControlPlane is responsible for. Currently they must be in the same namespace as the DataPlane. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
+| `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 
 
 _Appears in:_
@@ -2766,9 +2767,9 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `deployment` _[ControlPlaneDeploymentOptions](#controlplanedeploymentoptions)_ |  |
 | `dataplane` _string_ | DataPlanes refers to the named DataPlane objects which this ControlPlane is responsible for. Currently they must be in the same namespace as the DataPlane. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
+| `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `gatewayClass` _[ObjectName](#objectname)_ | GatewayClass indicates the Gateway resources which this ControlPlane should be responsible for configuring routes for (e.g. HTTPRoute, TCPRoute, UDPRoute, TLSRoute, e.t.c.).<br /><br /> Required for the ControlPlane to have any effect: at least one Gateway must be present for configuration to be pushed to the data-plane and only Gateway resources can be used to identify data-plane entities. |
 | `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> Routing configured this way will be applied to the Gateway resources indicated by GatewayClass.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
-| `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 
 
 _Appears in:_
@@ -3351,6 +3352,7 @@ WatchNamespaces defines the namespaces to watch for resources
 
 
 _Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
 - [ControlPlaneSpec](#controlplanespec)
 
 #### WatchNamespacesType
