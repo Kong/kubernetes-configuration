@@ -7,7 +7,7 @@ kustomize: "5.6.0"
 # renovate: datasource=github-releases depName=elastic/crd-ref-docs
 crd-ref-docs: "0.1.0"
 # renovate: datasource=github-releases depName=mikefarah/yq
-yq: "4.45.1"
+yq: "4.45.2"
 # renovate: datasource=github-releases depName=gotestyourself/gotestsum
 gotestsum: "1.12.1"
 # renovate: datasource=github-releases depName=golangci/golangci-lint
