@@ -13,7 +13,7 @@ require (
 	k8s.io/apimachinery v0.33.0
 	k8s.io/client-go v0.33.0
 	sigs.k8s.io/controller-runtime v0.20.4
-	sigs.k8s.io/controller-tools v0.17.3
+	sigs.k8s.io/controller-tools v0.18.0
 	sigs.k8s.io/gateway-api v1.3.0
 )
 
@@ -29,9 +29,9 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	golang.org/x/crypto v0.37.0 // indirect
-	golang.org/x/mod v0.23.0 // indirect
+	golang.org/x/mod v0.24.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
-	golang.org/x/tools v0.30.0 // indirect
+	golang.org/x/tools v0.32.0 // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.12.0 // indirect
 	sigs.k8s.io/randfill v1.0.0 // indirect
 )
