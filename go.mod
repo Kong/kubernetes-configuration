@@ -6,7 +6,7 @@ retract v1.2.0-rc.2
 
 require (
 	github.com/Kong/sdk-konnect-go v0.2.28
-	github.com/kong/go-kong v0.66.0
+	github.com/kong/go-kong v0.66.1
 	github.com/stretchr/testify v1.10.0
 	k8s.io/api v0.33.0
 	k8s.io/apiextensions-apiserver v0.33.0
