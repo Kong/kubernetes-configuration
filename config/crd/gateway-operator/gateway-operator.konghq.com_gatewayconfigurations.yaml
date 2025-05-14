@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     kubernetes-configuration.konghq.com/channels: gateway-operator
-    kubernetes-configuration.konghq.com/version: v1.4.0
+    kubernetes-configuration.konghq.com/version: v1.4.1
   name: gatewayconfigurations.gateway-operator.konghq.com
 spec:
   group: gateway-operator.konghq.com
@@ -17448,8 +17448,6 @@ spec:
                                 description: |-
                                   Type determines how the Service is exposed.
                                   Defaults to `LoadBalancer`.
-
-                                  Valid options are `LoadBalancer` and `ClusterIP`.
 
                                   `ClusterIP` allocates a cluster-internal IP address for load-balancing
                                   to endpoints.
