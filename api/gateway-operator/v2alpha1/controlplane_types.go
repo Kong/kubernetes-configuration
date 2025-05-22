@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package v1beta1
+package v2alpha1
 
 import (
-	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	gatewayv1 "sigs.k8s.io/gateway-api/apis/v1"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
+	operatorv1beta1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v1beta1"
 )
 
 func init() {
@@ -31,14 +31,11 @@ func init() {
 // ControlPlane is the Schema for the controlplanes API
 //
 // +genclient
-// +kubebuilder:storageversion
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:shortName=kocp,categories=kong;all
 // +kubebuilder:printcolumn:name="Ready",description="The Resource is ready",type=string,JSONPath=`.status.conditions[?(@.type=='Ready')].status`
-// +kubebuilder:printcolumn:name="Provisioned",description="The Resource is provisioned",type=string,JSONPath=`.status.conditions[?(@.type=='Provisioned')].status`
-// +kubebuilder:validation:XValidation:message="ControlPlane requires an image to be set on controller container",rule="has(self.spec.deployment.podTemplateSpec) && has(self.spec.deployment.podTemplateSpec.spec.containers) && self.spec.deployment.podTemplateSpec.spec.containers.exists(c, c.name == 'controller' && has(c.image))"
 // +apireference:kgo:include
 // +kong:channels=gateway-operator
 type ControlPlane struct {
@@ -49,9 +46,9 @@ type ControlPlane struct {
 	Status ControlPlaneStatus `json:"status,omitempty"`
 }
 
-// +kubebuilder:object:root=true
-
 // ControlPlaneList contains a list of ControlPlane
+//
+// +kubebuilder:object:root=true
 // +apireference:kgo:include
 type ControlPlaneList struct {
 	metav1.TypeMeta `json:",inline"`
@@ -60,6 +57,7 @@ type ControlPlaneList struct {
 }
 
 // ControlPlaneSpec defines the desired state of ControlPlane
+//
 // +apireference:kgo:include
 type ControlPlaneSpec struct {
 	ControlPlaneOptions `json:",inline"`
@@ -89,18 +87,18 @@ type ControlPlaneSpec struct {
 
 // ControlPlaneOptions indicates the specific information needed to
 // deploy and connect a ControlPlane to a DataPlane object.
+//
 // +apireference:kgo:include
 // +kubebuilder:validation:XValidation:message="Extension not allowed for ControlPlane",rule="has(self.extensions) ? self.extensions.all(e, (e.group == 'konnect.konghq.com' && e.kind == 'KonnectExtension') || (e.group == 'gateway-operator.konghq.com' && e.kind == 'DataPlaneMetricsExtension')) : true"
 type ControlPlaneOptions struct {
-	// +optional
-	Deployment ControlPlaneDeploymentOptions `json:"deployment"`
-
-	// DataPlanes refers to the named DataPlane objects which this ControlPlane
-	// is responsible for. Currently they must be in the same namespace as the
-	// DataPlane.
+	// DataPlanes designates the target data plane to configure.
 	//
-	// +optional
-	DataPlane *string `json:"dataplane,omitempty"`
+	// It can be either a URL to an externally managed DataPlane (e.g. installed
+	// independently with Helm) or a name of a DataPlane resource that is
+	// managed by the operator.
+	//
+	// +required
+	DataPlane ControlPlaneDataPlaneTarget `json:"dataplane,omitempty"`
 
 	// Extensions provide additional or replacement features for the ControlPlane
 	// resources to influence or enhance functionality.
@@ -114,32 +112,102 @@ type ControlPlaneOptions struct {
 	//
 	// +optional
 	// +kubebuilder:default={type: all}
-	WatchNamespaces *WatchNamespaces `json:"watchNamespaces,omitempty"`
+	WatchNamespaces *operatorv1beta1.WatchNamespaces `json:"watchNamespaces,omitempty"`
+
+	// FeatureGates is a list of feature gates that are enabled for this ControlPlane.
+	//
+	// +optional
+	// +listType=map
+	// +listMapKey=name
+	// +kubebuilder:validation:MaxItems=32
+	FeatureGates []ControlPlaneFeatureGate `json:"featureGates,omitempty"`
+
+	// Controllers defines the controllers that are enabled for this ControlPlane.
+	//
+	// +optional
+	// +listType=map
+	// +listMapKey=name
+	// +kubebuilder:validation:MaxItems=32
+	Controllers []ControlPlaneController `json:"controllers,omitempty"`
+
+	// AdminAPI defines the configuration for the Kong Admin API.
+	//
+	// +optional
+	AdminAPI *ControlPlaneAdminAPI `json:"adminAPI,omitempty"`
 }
 
-// ControlPlaneDeploymentOptions is a shared type used on objects to indicate that their
-// configuration results in a Deployment which is managed by the Operator and
-// includes options for managing Deployments such as the the number of replicas
-// or pod options like container image and resource requirements.
-// version, as well as Env variable overrides.
-// +apireference:kgo:include
-type ControlPlaneDeploymentOptions struct {
-	// Replicas describes the number of desired pods.
-	// This is a pointer to distinguish between explicit zero and not specified.
-	// This only affects the DataPlane deployments for now, for more details on
-	// ControlPlane scaling please see https://github.com/Kong/gateway-operator/issues/736.
+// ControlPlaneDataPlaneTarget defines the target for the DataPlane that the ControlPlane
+// is responsible for configuring.
+//
+// +kubebuilder:validation:XValidation:message="URL has to be provided when type is set to url",rule="self.type != 'url' || has(self.url)"
+// +kubebuilder:validation:XValidation:message="Name cannot be provided when type is set to url",rule="self.type != 'url' || !has(self.name)"
+// +kubebuilder:validation:XValidation:message="Name has to be provided when type is set to name",rule="self.type != 'name' || has(self.name)"
+// +kubebuilder:validation:XValidation:message="URL cannot be provided when type is set to name",rule="self.type != 'name' || !has(self.url)"
+type ControlPlaneDataPlaneTarget struct {
+	// Type indicates the type of the DataPlane target.
 	//
-	// +optional
-	// +kubebuilder:default=1
-	Replicas *int32 `json:"replicas,omitempty"`
+	// +kubebuilder:validation:Enum=url;name
+	// +kubebuilder:validation:Required
+	Type string `json:"type,omitempty"`
 
-	// PodTemplateSpec defines PodTemplateSpec for Deployment's pods.
+	// URL is the URL of the DataPlane target. This is used for configuring
+	// externally managed DataPlanes like those installed independently with Helm.
 	//
 	// +optional
-	PodTemplateSpec *corev1.PodTemplateSpec `json:"podTemplateSpec,omitempty"`
+	URL string `json:"url,omitempty"`
+
+	// Name is the name of the DataPlane to configure.
+	//
+	// +optional
+	Name string `json:"name,omitempty"`
+}
+
+// ControlPlaneAdminAPI defines the configuration for the Kong Admin API that
+// a ControlPlane when configuring the DataPlane.
+type ControlPlaneAdminAPI struct {
+	// Workspace indicates the Kong Workspace to use for the ControlPlane.
+	// If left empty then no Kong workspace will be used.
+	//
+	// +optional
+	Workspace string `json:"workspace,omitempty"`
+}
+
+// ControlPlaneController defines a controller state for the ControlPlane.
+// It overrides the default behavior as defined in the deployed operator version.
+//
+// +apireference:kgo:include
+type ControlPlaneController struct {
+	// Name is the name of the controller.
+	//
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:MinLength=1
+	Name string `json:"name,omitempty"`
+
+	// Enabled indicates whether the controller is enabled or not.
+	//
+	// +kubebuilder:validation:Required
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
+// ControlPlaneFeatureGate defines a feature gate state for the ControlPlane.
+// It overrides the default behavior as defined in the deployed operator version.
+//
+// +apireference:kgo:include
+type ControlPlaneFeatureGate struct {
+	// Name is the name of the feature gate.
+	//
+	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:MinLength=1
+	Name string `json:"name,omitempty"`
+
+	// Enabled indicates whether the feature gate is enabled or not.
+	//
+	// +kubebuilder:validation:Required
+	Enabled *bool `json:"enabled,omitempty"`
 }
 
 // ControlPlaneStatus defines the observed state of ControlPlane
+//
 // +apireference:kgo:include
 type ControlPlaneStatus struct {
 	// Conditions describe the current conditions of the Gateway.

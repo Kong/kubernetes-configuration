@@ -176,6 +176,7 @@ generate.clientsets: client-gen
 		--input incubator/v1alpha1 \
 		--input gateway-operator/v1alpha1 \
 		--input gateway-operator/v1beta1 \
+		--input gateway-operator/v2alpha1 \
 		--output-dir pkg/ \
 		--output-pkg $(REPO_URL)/pkg/
 

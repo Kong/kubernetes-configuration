@@ -27,6 +27,7 @@ import (
 	configurationv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/configuration/v1beta1"
 	gatewayoperatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1alpha1"
 	gatewayoperatorv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1beta1"
+	gatewayoperatorv2alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v2alpha1"
 	incubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha1"
 	discovery "k8s.io/client-go/discovery"
@@ -41,6 +42,7 @@ type Interface interface {
 	ConfigurationV1beta1() configurationv1beta1.ConfigurationV1beta1Interface
 	GatewayOperatorV1alpha1() gatewayoperatorv1alpha1.GatewayOperatorV1alpha1Interface
 	GatewayOperatorV1beta1() gatewayoperatorv1beta1.GatewayOperatorV1beta1Interface
+	GatewayOperatorV2alpha1() gatewayoperatorv2alpha1.GatewayOperatorV2alpha1Interface
 	IncubatorV1alpha1() incubatorv1alpha1.IncubatorV1alpha1Interface
 	KonnectV1alpha1() konnectv1alpha1.KonnectV1alpha1Interface
 }
@@ -53,6 +55,7 @@ type Clientset struct {
 	configurationV1beta1    *configurationv1beta1.ConfigurationV1beta1Client
 	gatewayOperatorV1alpha1 *gatewayoperatorv1alpha1.GatewayOperatorV1alpha1Client
 	gatewayOperatorV1beta1  *gatewayoperatorv1beta1.GatewayOperatorV1beta1Client
+	gatewayOperatorV2alpha1 *gatewayoperatorv2alpha1.GatewayOperatorV2alpha1Client
 	incubatorV1alpha1       *incubatorv1alpha1.IncubatorV1alpha1Client
 	konnectV1alpha1         *konnectv1alpha1.KonnectV1alpha1Client
 }
@@ -80,6 +83,11 @@ func (c *Clientset) GatewayOperatorV1alpha1() gatewayoperatorv1alpha1.GatewayOpe
 // GatewayOperatorV1beta1 retrieves the GatewayOperatorV1beta1Client
 func (c *Clientset) GatewayOperatorV1beta1() gatewayoperatorv1beta1.GatewayOperatorV1beta1Interface {
 	return c.gatewayOperatorV1beta1
+}
+
+// GatewayOperatorV2alpha1 retrieves the GatewayOperatorV2alpha1Client
+func (c *Clientset) GatewayOperatorV2alpha1() gatewayoperatorv2alpha1.GatewayOperatorV2alpha1Interface {
+	return c.gatewayOperatorV2alpha1
 }
 
 // IncubatorV1alpha1 retrieves the IncubatorV1alpha1Client
@@ -156,6 +164,10 @@ func NewForConfigAndClient(c *rest.Config, httpClient *http.Client) (*Clientset,
 	if err != nil {
 		return nil, err
 	}
+	cs.gatewayOperatorV2alpha1, err = gatewayoperatorv2alpha1.NewForConfigAndClient(&configShallowCopy, httpClient)
+	if err != nil {
+		return nil, err
+	}
 	cs.incubatorV1alpha1, err = incubatorv1alpha1.NewForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
 		return nil, err
@@ -190,6 +202,7 @@ func New(c rest.Interface) *Clientset {
 	cs.configurationV1beta1 = configurationv1beta1.New(c)
 	cs.gatewayOperatorV1alpha1 = gatewayoperatorv1alpha1.New(c)
 	cs.gatewayOperatorV1beta1 = gatewayoperatorv1beta1.New(c)
+	cs.gatewayOperatorV2alpha1 = gatewayoperatorv2alpha1.New(c)
 	cs.incubatorV1alpha1 = incubatorv1alpha1.New(c)
 	cs.konnectV1alpha1 = konnectv1alpha1.New(c)
 
