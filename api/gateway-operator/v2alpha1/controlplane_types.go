@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package v1beta1
+package v2alpha1
 
 import (
-	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	gatewayv1 "sigs.k8s.io/gateway-api/apis/v1"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
+	operatorv1beta1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v1beta1"
 )
 
 func init() {
@@ -31,14 +31,12 @@ func init() {
 // ControlPlane is the Schema for the controlplanes API
 //
 // +genclient
-// +kubebuilder:storageversion
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:shortName=kocp,categories=kong;all
 // +kubebuilder:printcolumn:name="Ready",description="The Resource is ready",type=string,JSONPath=`.status.conditions[?(@.type=='Ready')].status`
 // +kubebuilder:printcolumn:name="Provisioned",description="The Resource is provisioned",type=string,JSONPath=`.status.conditions[?(@.type=='Provisioned')].status`
-// +kubebuilder:validation:XValidation:message="ControlPlane requires an image to be set on controller container",rule="has(self.spec.deployment.podTemplateSpec) && has(self.spec.deployment.podTemplateSpec.spec.containers) && self.spec.deployment.podTemplateSpec.spec.containers.exists(c, c.name == 'controller' && has(c.image))"
 // +apireference:kgo:include
 // +kong:channels=gateway-operator
 type ControlPlane struct {
@@ -92,9 +90,6 @@ type ControlPlaneSpec struct {
 // +apireference:kgo:include
 // +kubebuilder:validation:XValidation:message="Extension not allowed for ControlPlane",rule="has(self.extensions) ? self.extensions.all(e, (e.group == 'konnect.konghq.com' && e.kind == 'KonnectExtension') || (e.group == 'gateway-operator.konghq.com' && e.kind == 'DataPlaneMetricsExtension')) : true"
 type ControlPlaneOptions struct {
-	// +optional
-	Deployment ControlPlaneDeploymentOptions `json:"deployment"`
-
 	// DataPlanes refers to the named DataPlane objects which this ControlPlane
 	// is responsible for. Currently they must be in the same namespace as the
 	// DataPlane.
@@ -114,29 +109,7 @@ type ControlPlaneOptions struct {
 	//
 	// +optional
 	// +kubebuilder:default={type: all}
-	WatchNamespaces *WatchNamespaces `json:"watchNamespaces,omitempty"`
-}
-
-// ControlPlaneDeploymentOptions is a shared type used on objects to indicate that their
-// configuration results in a Deployment which is managed by the Operator and
-// includes options for managing Deployments such as the the number of replicas
-// or pod options like container image and resource requirements.
-// version, as well as Env variable overrides.
-// +apireference:kgo:include
-type ControlPlaneDeploymentOptions struct {
-	// Replicas describes the number of desired pods.
-	// This is a pointer to distinguish between explicit zero and not specified.
-	// This only affects the DataPlane deployments for now, for more details on
-	// ControlPlane scaling please see https://github.com/Kong/gateway-operator/issues/736.
-	//
-	// +optional
-	// +kubebuilder:default=1
-	Replicas *int32 `json:"replicas,omitempty"`
-
-	// PodTemplateSpec defines PodTemplateSpec for Deployment's pods.
-	//
-	// +optional
-	PodTemplateSpec *corev1.PodTemplateSpec `json:"podTemplateSpec,omitempty"`
+	WatchNamespaces *operatorv1beta1.WatchNamespaces `json:"watchNamespaces,omitempty"`
 }
 
 // ControlPlaneStatus defines the observed state of ControlPlane
