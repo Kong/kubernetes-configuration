@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     kubernetes-configuration.konghq.com/channels: gateway-operator
-    kubernetes-configuration.konghq.com/version: v1.4.1
+    kubernetes-configuration.konghq.com/version: v1.4.2
   name: dataplanes.gateway-operator.konghq.com
 spec:
   group: gateway-operator.konghq.com
@@ -9536,9 +9536,9 @@ spec:
             e.name != ''KONG_DATABASE'' || e.value == ''off'' || size(e.value)==0))
             : true)'
         - message: DataPlane spec cannot be updated when promotion is in progress
-          rule: '(self.spec != oldSelf.spec && has(self.status) && has (self.status.rollout))
-            ? self.status.rollout.conditions.all(c, c.type != ''RolledOut'' || c.reason
-            != ''PromotionInProgress'') : true'
+          rule: '(self.spec != oldSelf.spec && has(self.status) && has(self.status.rollout)
+            && has(self.status.rollout.conditions)) ? self.status.rollout.conditions.all(c,
+            c.type != ''RolledOut'' || c.reason != ''PromotionInProgress'') : true'
     served: true
     storage: true
     subresources:
