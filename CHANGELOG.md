@@ -6,6 +6,7 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.4.1](#v141)
 - [v1.4.0](#v140)
 - [v1.3.2](#v132)
 - [v1.3.1](#v131)
@@ -20,6 +21,20 @@ Adding a new version? You'll need three changes:
 - [v1.0.0](#v100)
 
 ## Unreleased
+
+### Fixes
+
+- Fix `DataPlane` CEL CEL validation rule during blue green rollout
+  [#439](https://github.com/Kong/kubernetes-configuration/pull/439)
+
+## [v1.4.1]
+
+[v1.4.1]: https://github.com/Kong/kubernetes-configuration/compare/v1.4.0...v1.4.1
+
+### Changes
+
+- Clarified the comment in `DataPlane` CRD on the allowed values for `Service` types.
+  [#429](https://github.com/Kong/kubernetes-configuration/pull/429)
 
 ## [v1.4.0]
 
