@@ -30,6 +30,8 @@ import (
 	fakegatewayoperatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1alpha1/fake"
 	gatewayoperatorv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1beta1"
 	fakegatewayoperatorv1beta1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v1beta1/fake"
+	gatewayoperatorv2alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v2alpha1"
+	fakegatewayoperatorv2alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v2alpha1/fake"
 	incubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1"
 	fakeincubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1/fake"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha1"
@@ -123,6 +125,11 @@ func (c *Clientset) GatewayOperatorV1alpha1() gatewayoperatorv1alpha1.GatewayOpe
 // GatewayOperatorV1beta1 retrieves the GatewayOperatorV1beta1Client
 func (c *Clientset) GatewayOperatorV1beta1() gatewayoperatorv1beta1.GatewayOperatorV1beta1Interface {
 	return &fakegatewayoperatorv1beta1.FakeGatewayOperatorV1beta1{Fake: &c.Fake}
+}
+
+// GatewayOperatorV2alpha1 retrieves the GatewayOperatorV2alpha1Client
+func (c *Clientset) GatewayOperatorV2alpha1() gatewayoperatorv2alpha1.GatewayOperatorV2alpha1Interface {
+	return &fakegatewayoperatorv2alpha1.FakeGatewayOperatorV2alpha1{Fake: &c.Fake}
 }
 
 // IncubatorV1alpha1 retrieves the IncubatorV1alpha1Client

@@ -6,6 +6,7 @@
 - [configuration.konghq.com/v1beta1](#configurationkonghqcomv1beta1)
 - [gateway-operator.konghq.com/v1alpha1](#gateway-operatorkonghqcomv1alpha1)
 - [gateway-operator.konghq.com/v1beta1](#gateway-operatorkonghqcomv1beta1)
+- [gateway-operator.konghq.com/v2alpha1](#gateway-operatorkonghqcomv2alpha1)
 - [incubator.ingress-controller.konghq.com/v1alpha1](#incubatoringress-controllerkonghqcomv1alpha1)
 - [konnect.konghq.com/v1alpha1](#konnectkonghqcomv1alpha1)
 
@@ -3353,6 +3354,8 @@ WatchNamespaces defines the namespaces to watch for resources
 
 _Appears in:_
 - [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
 - [ControlPlaneSpec](#controlplanespec)
 
 #### WatchNamespacesType
@@ -3366,6 +3369,72 @@ WatchNamespacesType indicates the type of namespace watching to be done.
 
 _Appears in:_
 - [WatchNamespaces](#watchnamespaces)
+
+
+## gateway-operator.konghq.com/v2alpha1
+
+Package v2alpha1 contains API Schema definitions for the gateway-operator.konghq.com v2alpha1 API group.
+
+Package v2alpha1 contains API Schema definitions for the gateway-operator.konghq.com v2alpha1 API group
+
+- [ControlPlane](#controlplane)
+### ControlPlane
+
+
+ControlPlane is the Schema for the controlplanes API
+
+<!-- control_plane description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `gateway-operator.konghq.com/v2alpha1`
+| `kind` _string_ | `ControlPlane`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[ControlPlaneSpec](#controlplanespec)_ |  |
+
+
+
+### Types
+
+In this section you will find types that the CRDs rely on.
+#### ControlPlaneOptions
+
+
+ControlPlaneOptions indicates the specific information needed to
+deploy and connect a ControlPlane to a DataPlane object.
+
+
+
+| Field | Description |
+| --- | --- |
+| `dataplane` _string_ | DataPlanes refers to the named DataPlane objects which this ControlPlane is responsible for. Currently they must be in the same namespace as the DataPlane. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
+| `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
+
+
+_Appears in:_
+- [ControlPlaneSpec](#controlplanespec)
+
+#### ControlPlaneSpec
+
+
+ControlPlaneSpec defines the desired state of ControlPlane
+
+
+
+| Field | Description |
+| --- | --- |
+| `dataplane` _string_ | DataPlanes refers to the named DataPlane objects which this ControlPlane is responsible for. Currently they must be in the same namespace as the DataPlane. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
+| `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
+| `gatewayClass` _[ObjectName](#objectname)_ | GatewayClass indicates the Gateway resources which this ControlPlane should be responsible for configuring routes for (e.g. HTTPRoute, TCPRoute, UDPRoute, TLSRoute, e.t.c.).<br /><br /> Required for the ControlPlane to have any effect: at least one Gateway must be present for configuration to be pushed to the data-plane and only Gateway resources can be used to identify data-plane entities. |
+| `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> Routing configured this way will be applied to the Gateway resources indicated by GatewayClass.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+
+
+_Appears in:_
+- [ControlPlane](#controlplane)
+
+
 
 
 ## incubator.ingress-controller.konghq.com/v1alpha1
