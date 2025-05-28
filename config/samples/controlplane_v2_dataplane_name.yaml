@@ -1,0 +1,19 @@
+apiVersion: gateway-operator.konghq.com/v2alpha1
+kind: ControlPlane
+metadata:
+  name: controlplane-v2-example
+spec:
+  dataplane:
+    type: name
+    name: dataplane-name
+  gatewayClass: kong
+  featureGates:
+  - name: GatewayAlpha
+    enabled: true
+  controllers:
+  - name: TCPIngress
+    enabled: false
+  - name: Konnect
+    enabled: true
+  adminAPI:
+    workspace: my_custom_workspace

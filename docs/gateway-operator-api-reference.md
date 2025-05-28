@@ -3,6 +3,7 @@
 ## Packages
 - [gateway-operator.konghq.com/v1alpha1](#gateway-operatorkonghqcomv1alpha1)
 - [gateway-operator.konghq.com/v1beta1](#gateway-operatorkonghqcomv1beta1)
+- [gateway-operator.konghq.com/v2alpha1](#gateway-operatorkonghqcomv2alpha1)
 
 
 ## gateway-operator.konghq.com/v1alpha1
@@ -1299,6 +1300,8 @@ WatchNamespaces defines the namespaces to watch for resources
 
 _Appears in:_
 - [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
 - [ControlPlaneSpec](#controlplanespec)
 
 #### WatchNamespacesType
@@ -1312,4 +1315,148 @@ WatchNamespacesType indicates the type of namespace watching to be done.
 
 _Appears in:_
 - [WatchNamespaces](#watchnamespaces)
+
+
+## gateway-operator.konghq.com/v2alpha1
+
+Package v2alpha1 contains API Schema definitions for the gateway-operator.konghq.com v2alpha1 API group.
+
+Package v2alpha1 contains API Schema definitions for the gateway-operator.konghq.com v2alpha1 API group
+
+- [ControlPlane](#controlplane)
+### ControlPlane
+
+
+ControlPlane is the Schema for the controlplanes API
+
+<!-- control_plane description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `gateway-operator.konghq.com/v2alpha1`
+| `kind` _string_ | `ControlPlane`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[ControlPlaneSpec](#controlplanespec)_ |  |
+
+
+
+### Types
+
+In this section you will find types that the CRDs rely on.
+#### ControlPlaneAdminAPI
+
+
+ControlPlaneAdminAPI defines the configuration for the Kong Admin API that
+a ControlPlane when configuring the DataPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `workspace` _string_ | Workspace indicates the Kong Workspace to use for the ControlPlane. If left empty then no Kong workspace will be used. |
+
+
+_Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
+
+#### ControlPlaneController
+
+
+ControlPlaneController defines a controller state for the ControlPlane.
+It overrides the default behavior as defined in the deployed operator version.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the controller. |
+| `enabled` _boolean_ | Enabled indicates whether the controller is enabled or not. |
+
+
+_Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
+
+#### ControlPlaneDataPlaneTarget
+
+
+ControlPlaneDataPlaneTarget defines the target for the DataPlane that the ControlPlane
+is responsible for configuring.
+
+
+
+| Field | Description |
+| --- | --- |
+| `type` _string_ | Type indicates the type of the DataPlane target. |
+| `url` _string_ | URL is the URL of the DataPlane target. This is used for configuring externally managed DataPlanes like those installed independently with Helm. |
+| `name` _string_ | Name is the name of the DataPlane to configure. |
+
+
+_Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
+
+#### ControlPlaneFeatureGate
+
+
+ControlPlaneFeatureGate defines a feature gate state for the ControlPlane.
+It overrides the default behavior as defined in the deployed operator version.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the feature gate. |
+| `enabled` _boolean_ | Enabled indicates whether the feature gate is enabled or not. |
+
+
+_Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
+
+#### ControlPlaneOptions
+
+
+ControlPlaneOptions indicates the specific information needed to
+deploy and connect a ControlPlane to a DataPlane object.
+
+
+
+| Field | Description |
+| --- | --- |
+| `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlanes designates the target data plane to configure.<br /><br /> It can be either a URL to an externally managed DataPlane (e.g. installed independently with Helm) or a name of a DataPlane resource that is managed by the operator. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
+| `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
+| `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
+| `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
+| `adminAPI` _[ControlPlaneAdminAPI](#controlplaneadminapi)_ | AdminAPI defines the configuration for the Kong Admin API. |
+
+
+_Appears in:_
+- [ControlPlaneSpec](#controlplanespec)
+
+#### ControlPlaneSpec
+
+
+ControlPlaneSpec defines the desired state of ControlPlane
+
+
+
+| Field | Description |
+| --- | --- |
+| `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlanes designates the target data plane to configure.<br /><br /> It can be either a URL to an externally managed DataPlane (e.g. installed independently with Helm) or a name of a DataPlane resource that is managed by the operator. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
+| `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
+| `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
+| `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
+| `adminAPI` _[ControlPlaneAdminAPI](#controlplaneadminapi)_ | AdminAPI defines the configuration for the Kong Admin API. |
+| `gatewayClass` _[ObjectName](#objectname)_ | GatewayClass indicates the Gateway resources which this ControlPlane should be responsible for configuring routes for (e.g. HTTPRoute, TCPRoute, UDPRoute, TLSRoute, e.t.c.).<br /><br /> Required for the ControlPlane to have any effect: at least one Gateway must be present for configuration to be pushed to the data-plane and only Gateway resources can be used to identify data-plane entities. |
+| `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> Routing configured this way will be applied to the Gateway resources indicated by GatewayClass.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+
+
+_Appears in:_
+- [ControlPlane](#controlplane)
+
+
 

@@ -1,0 +1,14 @@
+apiVersion: gateway-operator.konghq.com/v2alpha1
+kind: ControlPlane
+metadata:
+  name: controlplane-v2-example
+spec:
+  dataplane:
+    type: url
+    url: https://dataplane.example.com:8100/api
+  gatewayClass: kong
+  featureGates:
+  - name: GatewayAlpha
+    enabled: true
+  adminAPI:
+    workspace: my_custom_workspace
