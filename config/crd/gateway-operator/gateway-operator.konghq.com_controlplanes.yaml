@@ -8548,7 +8548,7 @@ spec:
                 description: |-
                   GatewayClass indicates the Gateway resources which this ControlPlane
                   should be responsible for configuring routes for (e.g. HTTPRoute,
-                  TCPRoute, UDPRoute, TLSRoute, e.t.c.).
+                  TCPRoute, UDPRoute, TLSRoute, etc.).
 
                   Required for the ControlPlane to have any effect: at least one Gateway
                   must be present for configuration to be pushed to the data-plane and
