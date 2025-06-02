@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Kong Inc.
+Copyright 2025 Kong Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ type ControlPlaneSpec struct {
 
 	// GatewayClass indicates the Gateway resources which this ControlPlane
 	// should be responsible for configuring routes for (e.g. HTTPRoute,
-	// TCPRoute, UDPRoute, TLSRoute, e.t.c.).
+	// TCPRoute, UDPRoute, TLSRoute, etc.).
 	//
 	// Required for the ControlPlane to have any effect: at least one Gateway
 	// must be present for configuration to be pushed to the data-plane and
