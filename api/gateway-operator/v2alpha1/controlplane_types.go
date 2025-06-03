@@ -154,6 +154,7 @@ type ControlPlaneDataPlaneTarget struct {
 	// externally managed DataPlanes like those installed independently with Helm.
 	//
 	// +optional
+	// +kubebuilder:validation:Pattern=`^https?://[a-zA-Z0-9.-]+(:[0-9]+)?(/.*)?$`
 	URL string `json:"url,omitempty"`
 
 	// Name is the name of the DataPlane to configure.

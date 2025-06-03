@@ -102,6 +102,106 @@ func TestControlPlaneV2(t *testing.T) {
 		}.Run(t)
 	})
 
+	t.Run("dataplane", func(t *testing.T) {
+		common.TestCasesGroup[*operatorv2alpha1.ControlPlane]{
+			{
+				Name: "missing dataplane causes an error",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("spec.dataplane.type: Required value"),
+			},
+			{
+				Name: "when dataplane.type is set to name, name must be specified",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
+								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetName,
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("Name has to be provided when type is set to name"),
+			},
+			{
+				Name: "when dataplane.type is set to url, url must be specified",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
+								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetURL,
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("URL has to be provided when type is set to url"),
+			},
+			{
+				Name: "specifying dataplane name when type is name passes",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
+								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetName,
+								Name: "dataplane",
+							},
+						},
+					},
+				},
+			},
+			{
+				Name: "specifying dataplane url when type is url passes: https",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
+								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetURL,
+								URL:  "https://dataplane.example.com:8444/admin",
+							},
+						},
+					},
+				},
+			},
+			{
+				Name: "specifying dataplane url when type is url passes: http, no port",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
+								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetURL,
+								URL:  "http://dataplane.example.com/admin",
+							},
+						},
+					},
+				},
+			},
+			{
+				Name: "dataplane url must be a valid URL, otherwise it fails",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
+								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetURL,
+								URL:  "not-a-valid-url",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("invalid: spec.dataplane.url: Invalid value: \"not-a-valid-url\": spec.dataplane.url in body should match '^https?://[a-zA-Z0-9.-]+(:[0-9]+)?(/.*)?$'"),
+			},
+		}.Run(t)
+	})
+
 	t.Run("feature gates", func(t *testing.T) {
 		common.TestCasesGroup[*operatorv2alpha1.ControlPlane]{
 			{

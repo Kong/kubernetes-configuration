@@ -8469,6 +8469,7 @@ spec:
                     description: |-
                       URL is the URL of the DataPlane target. This is used for configuring
                       externally managed DataPlanes like those installed independently with Helm.
+                    pattern: ^https?://[a-zA-Z0-9.-]+(:[0-9]+)?(/.*)?$
                     type: string
                 required:
                 - type
