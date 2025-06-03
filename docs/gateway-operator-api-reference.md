@@ -1346,8 +1346,7 @@ In this section you will find types that the CRDs rely on.
 #### ControlPlaneAdminAPI
 
 
-ControlPlaneAdminAPI defines the configuration for the Kong Admin API that
-a ControlPlane when configuring the DataPlane.
+ControlPlaneAdminAPI defines the configuration for the DataPlane Kong Admin API.
 
 
 

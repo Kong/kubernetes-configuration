@@ -176,8 +176,7 @@ const (
 	ControlPlaneDataPlaneTargetName ControlPlaneDataPlaneTargetType = "name"
 )
 
-// ControlPlaneAdminAPI defines the configuration for the Kong Admin API that
-// a ControlPlane when configuring the DataPlane.
+// ControlPlaneAdminAPI defines the configuration for the DataPlane Kong Admin API.
 type ControlPlaneAdminAPI struct {
 	// Workspace indicates the Kong Workspace to use for the ControlPlane.
 	// If left empty then no Kong workspace will be used.
