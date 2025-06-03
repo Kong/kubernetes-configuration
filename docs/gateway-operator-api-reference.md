@@ -1376,6 +1376,7 @@ It overrides the default behavior as defined in the deployed operator version.
 _Appears in:_
 - [ControlPlaneOptions](#controlplaneoptions)
 - [ControlPlaneSpec](#controlplanespec)
+- [ControlPlaneStatus](#controlplanestatus)
 
 #### ControlPlaneDataPlaneTarget
 
@@ -1426,6 +1427,7 @@ It overrides the default behavior as defined in the deployed operator version.
 _Appears in:_
 - [ControlPlaneOptions](#controlplaneoptions)
 - [ControlPlaneSpec](#controlplanespec)
+- [ControlPlaneStatus](#controlplanestatus)
 
 #### ControlPlaneOptions
 

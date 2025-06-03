@@ -231,6 +231,22 @@ type ControlPlaneStatus struct {
 	// +kubebuilder:validation:MaxItems=8
 	// +kubebuilder:default={{type: "Scheduled", status: "Unknown", reason:"NotReconciled", message:"Waiting for controller", lastTransitionTime: "1970-01-01T00:00:00Z"}}
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
+
+	// FeatureGates is a list of effective feature gates for this ControlPlane.
+	//
+	// +optional
+	// +listType=map
+	// +listMapKey=name
+	// +kubebuilder:validation:MaxItems=32
+	FeatureGates []ControlPlaneFeatureGate `json:"featureGates,omitempty"`
+
+	// Controllers is a list of enabled and disabled controllers for this ControlPlane.
+	//
+	// +optional
+	// +listType=map
+	// +listMapKey=name
+	// +kubebuilder:validation:MaxItems=32
+	Controllers []ControlPlaneController `json:"controllers,omitempty"`
 }
 
 // GetConditions returns the ControlPlane Status Conditions
