@@ -91,7 +91,7 @@ type ControlPlaneSpec struct {
 // +apireference:kgo:include
 // +kubebuilder:validation:XValidation:message="Extension not allowed for ControlPlane",rule="has(self.extensions) ? self.extensions.all(e, (e.group == 'konnect.konghq.com' && e.kind == 'KonnectExtension') || (e.group == 'gateway-operator.konghq.com' && e.kind == 'DataPlaneMetricsExtension')) : true"
 type ControlPlaneOptions struct {
-	// DataPlanes designates the target data plane to configure.
+	// DataPlane designates the target data plane to configure.
 	//
 	// It can be either a URL to an externally managed DataPlane (e.g. installed
 	// independently with Helm) or a name of a DataPlane resource that is
