@@ -3442,7 +3442,7 @@ is responsible for configuring.
 
 | Field | Description |
 | --- | --- |
-| `type` _string_ | Type indicates the type of the DataPlane target. |
+| `type` _[ControlPlaneDataPlaneTargetType](#controlplanedataplanetargettype)_ | Type indicates the type of the DataPlane target. |
 | `url` _string_ | URL is the URL of the DataPlane target. This is used for configuring externally managed DataPlanes like those installed independently with Helm. |
 | `name` _string_ | Name is the name of the DataPlane to configure. |
 
@@ -3450,6 +3450,19 @@ is responsible for configuring.
 _Appears in:_
 - [ControlPlaneOptions](#controlplaneoptions)
 - [ControlPlaneSpec](#controlplanespec)
+
+#### ControlPlaneDataPlaneTargetType
+_Underlying type:_ `string`
+
+ControlPlaneDataPlaneTargetType defines the type of the DataPlane target
+that the ControlPlane is responsible for configuring.
+
+
+
+
+
+_Appears in:_
+- [ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)
 
 #### ControlPlaneFeatureGate
 

@@ -148,7 +148,7 @@ type ControlPlaneDataPlaneTarget struct {
 	//
 	// +kubebuilder:validation:Enum=url;name
 	// +kubebuilder:validation:Required
-	Type string `json:"type,omitempty"`
+	Type ControlPlaneDataPlaneTargetType `json:"type,omitempty"`
 
 	// URL is the URL of the DataPlane target. This is used for configuring
 	// externally managed DataPlanes like those installed independently with Helm.
@@ -161,6 +161,19 @@ type ControlPlaneDataPlaneTarget struct {
 	// +optional
 	Name string `json:"name,omitempty"`
 }
+
+// ControlPlaneDataPlaneTargetType defines the type of the DataPlane target
+// that the ControlPlane is responsible for configuring.
+type ControlPlaneDataPlaneTargetType string
+
+const (
+	// ControlPlaneDataPlaneTargetURL indicates that the DataPlane target is a URL.
+	ControlPlaneDataPlaneTargetURL ControlPlaneDataPlaneTargetType = "url"
+
+	// ControlPlaneDataPlaneTargetName indicates that the DataPlane target is a name
+	// of a DataPlane resource managed by the operator.
+	ControlPlaneDataPlaneTargetName ControlPlaneDataPlaneTargetType = "name"
+)
 
 // ControlPlaneAdminAPI defines the configuration for the Kong Admin API that
 // a ControlPlane when configuring the DataPlane.
