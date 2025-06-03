@@ -155,12 +155,12 @@ type ControlPlaneDataPlaneTarget struct {
 	//
 	// +optional
 	// +kubebuilder:validation:Pattern=`^https?://[a-zA-Z0-9.-]+(:[0-9]+)?(/.*)?$`
-	URL string `json:"url,omitempty"`
+	URL *string `json:"url,omitempty"`
 
 	// Name is the name of the DataPlane to configure.
 	//
 	// +optional
-	Name string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 }
 
 // ControlPlaneDataPlaneTargetType defines the type of the DataPlane target

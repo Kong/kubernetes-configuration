@@ -13,7 +13,7 @@ import (
 func TestControlPlaneV2(t *testing.T) {
 	validDataPlaneTarget := operatorv2alpha1.ControlPlaneDataPlaneTarget{
 		Type: operatorv2alpha1.ControlPlaneDataPlaneTargetName,
-		Name: "dataplane",
+		Name: lo.ToPtr("dataplane"),
 	}
 
 	validControlPlaneOptions := operatorv2alpha1.ControlPlaneOptions{
@@ -150,7 +150,7 @@ func TestControlPlaneV2(t *testing.T) {
 						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
 								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetName,
-								Name: "dataplane",
+								Name: lo.ToPtr("dataplane"),
 							},
 						},
 					},
@@ -164,7 +164,7 @@ func TestControlPlaneV2(t *testing.T) {
 						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
 								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetURL,
-								URL:  "https://dataplane.example.com:8444/admin",
+								URL:  lo.ToPtr("https://dataplane.example.com:8444/admin"),
 							},
 						},
 					},
@@ -178,7 +178,7 @@ func TestControlPlaneV2(t *testing.T) {
 						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
 								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetURL,
-								URL:  "http://dataplane.example.com/admin",
+								URL:  lo.ToPtr("http://dataplane.example.com/admin"),
 							},
 						},
 					},
@@ -192,7 +192,7 @@ func TestControlPlaneV2(t *testing.T) {
 						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
 								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetURL,
-								URL:  "not-a-valid-url",
+								URL:  lo.ToPtr("not-a-valid-url"),
 							},
 						},
 					},
