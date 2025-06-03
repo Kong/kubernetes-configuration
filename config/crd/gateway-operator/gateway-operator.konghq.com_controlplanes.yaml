@@ -8450,7 +8450,7 @@ spec:
                 x-kubernetes-list-type: map
               dataplane:
                 description: |-
-                  DataPlanes designates the target data plane to configure.
+                  DataPlane designates the target data plane to configure.
 
                   It can be either a URL to an externally managed DataPlane (e.g. installed
                   independently with Helm) or a name of a DataPlane resource that is
