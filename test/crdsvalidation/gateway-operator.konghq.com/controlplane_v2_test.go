@@ -267,6 +267,23 @@ func TestControlPlaneV2(t *testing.T) {
 					cp.Spec.ControlPlaneOptions = validControlPlaneOptions
 				},
 			},
+			{
+				Name: "cannot provide a feature gate with enabled unset",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+							DataPlane: validDataPlaneTarget,
+							FeatureGates: []operatorv2alpha1.ControlPlaneFeatureGate{
+								{
+									Name: "KongCustomEntity",
+								},
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("spec.featureGates[0].enabled: Required value"),
+			},
 		}.Run(t)
 	})
 
@@ -334,6 +351,23 @@ func TestControlPlaneV2(t *testing.T) {
 				Update: func(cp *operatorv2alpha1.ControlPlane) {
 					cp.Spec.ControlPlaneOptions = validControlPlaneOptions
 				},
+			},
+			{
+				Name: "cannot provide a controller with enabled unset",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+							DataPlane: validDataPlaneTarget,
+							Controllers: []operatorv2alpha1.ControlPlaneController{
+								{
+									Name: "GatewayAPI",
+								},
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("spec.controllers[0].enabled: Required value"),
 			},
 		}.Run(t)
 	})
