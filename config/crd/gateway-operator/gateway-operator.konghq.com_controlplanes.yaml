@@ -8520,7 +8520,6 @@ spec:
                   - name
                   type: object
                 maxItems: 2
-                minItems: 0
                 type: array
               featureGates:
                 description: FeatureGates is a list of feature gates that are enabled
