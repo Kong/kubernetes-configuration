@@ -198,7 +198,7 @@ type ControlPlaneController struct {
 	// Enabled indicates whether the controller is enabled or not.
 	//
 	// +kubebuilder:validation:Required
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled"`
 }
 
 // ControlPlaneFeatureGate defines a feature gate state for the ControlPlane.
@@ -215,7 +215,7 @@ type ControlPlaneFeatureGate struct {
 	// Enabled indicates whether the feature gate is enabled or not.
 	//
 	// +kubebuilder:validation:Required
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled"`
 }
 
 // ControlPlaneStatus defines the observed state of ControlPlane
