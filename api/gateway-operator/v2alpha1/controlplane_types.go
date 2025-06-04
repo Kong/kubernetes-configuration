@@ -104,7 +104,6 @@ type ControlPlaneOptions struct {
 	// resources to influence or enhance functionality.
 	//
 	// +optional
-	// +kubebuilder:validation:MinItems=0
 	// +kubebuilder:validation:MaxItems=2
 	Extensions []commonv1alpha1.ExtensionRef `json:"extensions,omitempty"`
 
@@ -154,7 +153,7 @@ type ControlPlaneDataPlaneTarget struct {
 	// externally managed DataPlanes like those installed independently with Helm.
 	//
 	// +optional
-	// +kubebuilder:validation:Pattern=`^https?://[a-zA-Z0-9.-]+(:[0-9]+)?(/.*)?$`
+	// +kubebuilder:validation:XValidation:message="URL has to be a valid URL",rule="isURL(self)"
 	URL *string `json:"url,omitempty"`
 
 	// Name is the name of the DataPlane to configure.

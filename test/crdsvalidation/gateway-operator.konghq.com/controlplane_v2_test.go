@@ -197,7 +197,7 @@ func TestControlPlaneV2(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("invalid: spec.dataplane.url: Invalid value: \"not-a-valid-url\": spec.dataplane.url in body should match '^https?://[a-zA-Z0-9.-]+(:[0-9]+)?(/.*)?$'"),
+				ExpectedErrorMessage: lo.ToPtr("URL has to be a valid URL"),
 			},
 		}.Run(t)
 	})
