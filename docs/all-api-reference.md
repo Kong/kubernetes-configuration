@@ -2063,8 +2063,6 @@ _Appears in:_
 
 Package v1alpha1 contains API Schema definitions for the gateway-operator.konghq.com v1alpha1 API group.
 
-Package v1alpha1 contains API Schema definitions for the operator v1alpha1 API group
-
 - [AIGateway](#aigateway)
 - [DataPlaneMetricsExtension](#dataplanemetricsextension)
 - [KongPluginInstallation](#kongplugininstallation)
@@ -2591,8 +2589,6 @@ _Appears in:_
 ## gateway-operator.konghq.com/v1beta1
 
 Package v1beta1 contains API Schema definitions for the gateway-operator.konghq.com v1beta1 API group.
-
-Package v1beta1 contains API Schema definitions for the gateway-operator.konghq.com v1beta1 API group
 
 - [ControlPlane](#controlplane)
 - [DataPlane](#dataplane)
