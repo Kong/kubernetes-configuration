@@ -7,6 +7,22 @@ spec:
   token: kpat_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   serverURL: us.api.konghq.com
 ---
+kind: KonnectGatewayControlPlane
+apiVersion: konnect.konghq.com/v1alpha1
+metadata:
+  name: cp-cloud-gateway-test1
+  namespace: default
+spec:
+  cloud_gateway: true
+  cluster_type: CLUSTER_TYPE_CONTROL_PLANE
+  name: cp-konnectextension
+  labels:
+    app: test1
+    key1: test1
+  konnect:
+    authRef:
+      name: konnect-api-auth
+---
 apiVersion: konnect.konghq.com/v1alpha1
 kind: KonnectExtension
 metadata:
@@ -15,16 +31,14 @@ spec:
   konnect:
     controlPlane:
       ref:
-        type: konnectID
-        konnectID: 12345678-1234-1234-1234-123456789abc
+        type: konnectNamespacedRef
+        konnectNamespacedRef:
+          name: cp-konnectextension
     dataPlane:
       labels:
         environment: "production"
         team: "platform"
         application: "payments"
-    configuration:
-      authRef:
-        name: konnect-api-auth   
   clientAuth:
     certificateSecret:
       provisioning: Automatic 

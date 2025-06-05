@@ -22,6 +22,12 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
+### Breaking Changes
+
+- `KonnectExtension` `v1alpha2` has been introduced as the API does not allow anymore to
+  reference Konnect Gateway `ControlPlane`s via plain KonnectID. Use Mirror `ControlPlane`s instead.
+  [#449](https://github.com/Kong/kubernetes-configuration/pull/449)
+
 ### Fixes
 
 - Fix `DataPlane` CEL CEL validation rule during blue green rollout

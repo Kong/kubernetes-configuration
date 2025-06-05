@@ -30,6 +30,7 @@ import (
 	gatewayoperatorv2alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v2alpha1"
 	incubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha1"
+	konnectv1alpha2 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha2"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"
@@ -45,6 +46,7 @@ type Interface interface {
 	GatewayOperatorV2alpha1() gatewayoperatorv2alpha1.GatewayOperatorV2alpha1Interface
 	IncubatorV1alpha1() incubatorv1alpha1.IncubatorV1alpha1Interface
 	KonnectV1alpha1() konnectv1alpha1.KonnectV1alpha1Interface
+	KonnectV1alpha2() konnectv1alpha2.KonnectV1alpha2Interface
 }
 
 // Clientset contains the clients for groups.
@@ -58,6 +60,7 @@ type Clientset struct {
 	gatewayOperatorV2alpha1 *gatewayoperatorv2alpha1.GatewayOperatorV2alpha1Client
 	incubatorV1alpha1       *incubatorv1alpha1.IncubatorV1alpha1Client
 	konnectV1alpha1         *konnectv1alpha1.KonnectV1alpha1Client
+	konnectV1alpha2         *konnectv1alpha2.KonnectV1alpha2Client
 }
 
 // ConfigurationV1 retrieves the ConfigurationV1Client
@@ -98,6 +101,11 @@ func (c *Clientset) IncubatorV1alpha1() incubatorv1alpha1.IncubatorV1alpha1Inter
 // KonnectV1alpha1 retrieves the KonnectV1alpha1Client
 func (c *Clientset) KonnectV1alpha1() konnectv1alpha1.KonnectV1alpha1Interface {
 	return c.konnectV1alpha1
+}
+
+// KonnectV1alpha2 retrieves the KonnectV1alpha2Client
+func (c *Clientset) KonnectV1alpha2() konnectv1alpha2.KonnectV1alpha2Interface {
+	return c.konnectV1alpha2
 }
 
 // Discovery retrieves the DiscoveryClient
@@ -176,6 +184,10 @@ func NewForConfigAndClient(c *rest.Config, httpClient *http.Client) (*Clientset,
 	if err != nil {
 		return nil, err
 	}
+	cs.konnectV1alpha2, err = konnectv1alpha2.NewForConfigAndClient(&configShallowCopy, httpClient)
+	if err != nil {
+		return nil, err
+	}
 
 	cs.DiscoveryClient, err = discovery.NewDiscoveryClientForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
@@ -205,6 +217,7 @@ func New(c rest.Interface) *Clientset {
 	cs.gatewayOperatorV2alpha1 = gatewayoperatorv2alpha1.New(c)
 	cs.incubatorV1alpha1 = incubatorv1alpha1.New(c)
 	cs.konnectV1alpha1 = konnectv1alpha1.New(c)
+	cs.konnectV1alpha2 = konnectv1alpha2.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
 	return &cs

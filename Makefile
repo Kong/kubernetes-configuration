@@ -173,6 +173,7 @@ generate.clientsets: client-gen
 		--input configuration/v1alpha1 \
 		--input configuration/v1beta1 \
 		--input konnect/v1alpha1 \
+		--input konnect/v1alpha2 \
 		--input incubator/v1alpha1 \
 		--input gateway-operator/v1alpha1 \
 		--input gateway-operator/v1beta1 \

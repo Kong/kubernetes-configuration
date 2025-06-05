@@ -27,6 +27,7 @@ import (
 	gatewayoperatorv2alpha1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v2alpha1"
 	incubatorv1alpha1 "github.com/kong/kubernetes-configuration/api/incubator/v1alpha1"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
+	konnectv1alpha2 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha2"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -46,6 +47,7 @@ var localSchemeBuilder = runtime.SchemeBuilder{
 	gatewayoperatorv2alpha1.AddToScheme,
 	incubatorv1alpha1.AddToScheme,
 	konnectv1alpha1.AddToScheme,
+	konnectv1alpha2.AddToScheme,
 }
 
 // AddToScheme adds all types of this clientset into the given scheme. This allows composition
