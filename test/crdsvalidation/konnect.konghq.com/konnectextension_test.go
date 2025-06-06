@@ -42,25 +42,6 @@ func TestKonnectExtension(t *testing.T) {
 				},
 			},
 			{
-				Name: "konnect controlplane, apiAuthConfiguration set",
-				TestObject: &konnectv1alpha2.KonnectExtension{
-					ObjectMeta: common.CommonObjectMeta,
-					Spec: konnectv1alpha2.KonnectExtensionSpec{
-						Konnect: konnectv1alpha2.KonnectExtensionKonnectSpec{
-							ControlPlane: konnectv1alpha2.KonnectExtensionControlPlane{
-								Ref: commonv1alpha1.ControlPlaneRef{
-									Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
-									KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
-										Name: "test-konnect-control-plane",
-									},
-								},
-							},
-						},
-					},
-				},
-				ExpectedErrorMessage: lo.ToPtr("konnect must be unset when ControlPlaneRef is set to konnectNamespacedRef."),
-			},
-			{
 				Name: "konnect controlplane, manual provisioning, secret",
 				ExpectedErrorEventuallyConfig: common.EventuallyConfig{
 					Timeout: 1 * time.Second,

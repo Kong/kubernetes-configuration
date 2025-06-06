@@ -23,7 +23,7 @@ spec:
     authRef:
       name: konnect-api-auth
 ---
-apiVersion: konnect.konghq.com/v1alpha1
+apiVersion: konnect.konghq.com/v1alpha2
 kind: KonnectExtension
 metadata:
   name: my-konnect-extension
