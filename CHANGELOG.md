@@ -25,7 +25,7 @@ Adding a new version? You'll need three changes:
 ### Breaking Changes
 
 - `KonnectExtension` `v1alpha2` has been introduced as the API does not allow anymore to
-  reference Konnect Gateway `ControlPlane`s via plain KonnectID. Use Mirror `ControlPlane`s instead.
+  reference Konnect Gateway ControlPlanes via plain KonnectID. Use Mirror `KonnectGatewayControlPlane`s instead.
   [#449](https://github.com/Kong/kubernetes-configuration/pull/449)
 
 ### Fixes
