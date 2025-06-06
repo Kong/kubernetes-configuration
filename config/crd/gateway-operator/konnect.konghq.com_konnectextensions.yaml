@@ -22,7 +22,7 @@ spec:
       jsonPath: .status.conditions[?(@.type=='Ready')].status
       name: Ready
       type: string
-    name: v1alpha1
+    name: v1alpha2
     schema:
       openAPIV3Schema:
         description: |-
@@ -55,10 +55,8 @@ spec:
                 default:
                   certificateSecret:
                     provisioning: Automatic
-                description: |-
-                  ClientAuth is the configuration for the client certificate authentication.
-                  In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the
-                  Konnect Platform.
+                description: ClientAuth is the configuration for the client certificate
+                  authentication.
                 properties:
                   certificateSecret:
                     description: CertificateSecret contains the information to access
@@ -99,25 +97,6 @@ spec:
               konnect:
                 description: Konnect holds the konnect-related configuration
                 properties:
-                  configuration:
-                    description: Configuration holds the information needed to set
-                      up the Konnect Configuration.
-                    properties:
-                      authRef:
-                        description: |-
-                          APIAuthConfigurationRef is the reference to the API Auth Configuration
-                          that should be used for this Konnect Configuration.
-                        properties:
-                          name:
-                            description: Name is the name of the KonnectAPIAuthConfiguration
-                              resource.
-                            type: string
-                        required:
-                        - name
-                        type: object
-                    required:
-                    - authRef
-                    type: object
                   controlPlane:
                     description: ControlPlane is the configuration for the Konnect
                       Control Plane.
@@ -389,12 +368,6 @@ spec:
         x-kubernetes-validations:
         - message: spec.konnect.controlPlane.ref is immutable.
           rule: oldSelf.spec.konnect.controlPlane.ref == self.spec.konnect.controlPlane.ref
-        - message: konnect must be set when ControlPlaneRef is set to KonnectID.
-          rule: 'self.spec.konnect.controlPlane.ref.type == ''konnectID'' ? has(self.spec.konnect.configuration)
-            : true'
-        - message: konnect must be unset when ControlPlaneRef is set to konnectNamespacedRef.
-          rule: 'self.spec.konnect.controlPlane.ref.type == ''konnectNamespacedRef''
-            ? !has(self.spec.konnect.configuration) : true'
     served: true
     storage: true
     subresources:
