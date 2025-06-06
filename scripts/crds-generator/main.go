@@ -60,6 +60,7 @@ func main() {
 
 		// konnect.konghq.com
 		"github.com/kong/kubernetes-configuration/api/konnect/v1alpha1",
+		"github.com/kong/kubernetes-configuration/api/konnect/v1alpha2",
 
 		// gateway-operator.konghq.com
 		"github.com/kong/kubernetes-configuration/api/gateway-operator/v1alpha1",
