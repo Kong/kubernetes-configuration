@@ -216,6 +216,9 @@ const (
 	ClusterTypeK8sIngressController KonnectExtensionClusterType = "K8SIngressController"
 )
 
+// KonnectEndpoints is an alias for the Konnect endpoints v1alpha1.
+type KonnectEndpoints konnectv1alpha1.KonnectEndpoints
+
 // KonnectExtensionControlPlaneStatus contains the Konnect Control Plane status information.
 type KonnectExtensionControlPlaneStatus struct {
 	// ControlPlaneID is the Konnect ID of the ControlPlane this KonnectExtension is associated with.
@@ -232,7 +235,7 @@ type KonnectExtensionControlPlaneStatus struct {
 	// Endpoints defines the Konnect endpoints for the control plane.
 	//
 	// +kubebuilder:validation:Required
-	Endpoints konnectv1alpha1.KonnectEndpoints `json:"endpoints"`
+	Endpoints KonnectEndpoints `json:"endpoints"`
 }
 
 // DataPlaneClientAuthStatus contains the status information related to the ClientAuth configuration.

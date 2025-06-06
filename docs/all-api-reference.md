@@ -4088,7 +4088,7 @@ KonnectEndpoints defines the Konnect endpoints for the control plane.
 
 
 _Appears in:_
-- [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
+- [KonnectEndpoints](#konnectendpoints)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 
 #### KonnectEntityStatus
@@ -4438,6 +4438,22 @@ DataPlaneLabelValue is the type that defines the value of a label that will be a
 
 _Appears in:_
 - [KonnectExtensionDataPlane](#konnectextensiondataplane)
+
+#### KonnectEndpoints
+_Underlying type:_ `[KonnectEndpoints](#konnectendpoints)`
+
+KonnectEndpoints is an alias for the Konnect endpoints v1alpha1.
+
+
+
+| Field | Description |
+| --- | --- |
+| `telemetry` _string_ | TelemetryEndpoint is the endpoint for telemetry. |
+| `controlPlane` _string_ | ControlPlaneEndpoint is the endpoint for the control plane. |
+
+
+_Appears in:_
+- [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
 
 #### KonnectExtensionClientAuth
 
