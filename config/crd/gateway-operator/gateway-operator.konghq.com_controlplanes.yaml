@@ -8497,10 +8497,14 @@ spec:
                   rule: self.type != 'external' || has(self.external)
                 - message: External cannot be provided when type is set to managedByOwner
                   rule: self.type != 'managedByOwner' || !has(self.external)
+                - message: External cannot be provided when type is set to ref
+                  rule: self.type != 'ref' || !has(self.external)
                 - message: Ref has to be provided when type is set to ref
                   rule: self.type != 'ref' || has(self.ref)
                 - message: Ref cannot be provided when type is set to managedByOwner
                   rule: self.type != 'managedByOwner' || !has(self.ref)
+                - message: Ref cannot be provided when type is set to external
+                  rule: self.type != 'external' || !has(self.ref)
               extensions:
                 description: |-
                   Extensions provide additional or replacement features for the ControlPlane

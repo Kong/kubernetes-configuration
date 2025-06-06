@@ -131,7 +131,27 @@ func TestControlPlaneV2(t *testing.T) {
 				ExpectedErrorMessage: lo.ToPtr("Ref has to be provided when type is set to ref"),
 			},
 			{
-				Name: "when dataplane.type is set to external, url must be specified",
+				Name: "when dataplane.type is set to ref, external must not be specified",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
+								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetRefType,
+								Ref: &operatorv2alpha1.ControlPlaneDataPlaneTargetRef{
+									Name: "dataplane-1",
+								},
+								External: &operatorv2alpha1.ControlPlaneDataPlaneTargetExternal{
+									URL: "https://dataplane.example.com:8444/admin",
+								},
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("spec.dataplane: Invalid value: \"object\": External cannot be provided when type is set to ref"),
+			},
+			{
+				Name: "when dataplane.type is set to external, external.url must be specified",
 				TestObject: &operatorv2alpha1.ControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv2alpha1.ControlPlaneSpec{
@@ -143,6 +163,26 @@ func TestControlPlaneV2(t *testing.T) {
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("External has to be provided when type is set to external"),
+			},
+			{
+				Name: "when dataplane.type is set to external, ref cannot be specified",
+				TestObject: &operatorv2alpha1.ControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.ControlPlaneSpec{
+						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+							DataPlane: operatorv2alpha1.ControlPlaneDataPlaneTarget{
+								Type: operatorv2alpha1.ControlPlaneDataPlaneTargetExternalType,
+								Ref: &operatorv2alpha1.ControlPlaneDataPlaneTargetRef{
+									Name: "dataplane-1",
+								},
+								External: &operatorv2alpha1.ControlPlaneDataPlaneTargetExternal{
+									URL: "https://dataplane.example.com:8444/admin",
+								},
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("Invalid value: \"object\": Ref cannot be provided when type is set to external"),
 			},
 			{
 				Name: "specifying dataplane ref name when type is ref passes",

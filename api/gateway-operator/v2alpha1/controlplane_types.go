@@ -125,8 +125,10 @@ type ControlPlaneOptions struct {
 //
 // +kubebuilder:validation:XValidation:message="External has to be provided when type is set to external",rule="self.type != 'external' || has(self.external)"
 // +kubebuilder:validation:XValidation:message="External cannot be provided when type is set to managedByOwner",rule="self.type != 'managedByOwner' || !has(self.external)"
+// +kubebuilder:validation:XValidation:message="External cannot be provided when type is set to ref",rule="self.type != 'ref' || !has(self.external)"
 // +kubebuilder:validation:XValidation:message="Ref has to be provided when type is set to ref",rule="self.type != 'ref' || has(self.ref)"
 // +kubebuilder:validation:XValidation:message="Ref cannot be provided when type is set to managedByOwner",rule="self.type != 'managedByOwner' || !has(self.ref)"
+// +kubebuilder:validation:XValidation:message="Ref cannot be provided when type is set to external",rule="self.type != 'external' || !has(self.ref)"
 type ControlPlaneDataPlaneTarget struct {
 	// Type indicates the type of the DataPlane target.
 	//
