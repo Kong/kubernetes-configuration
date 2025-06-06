@@ -114,7 +114,7 @@ func TestControlPlaneV2(t *testing.T) {
 						ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.dataplane.type: Required value"),
+				ExpectedErrorMessage: lo.ToPtr("spec.dataplane.type: Unsupported value: \"\""),
 			},
 			{
 				Name: "when dataplane.type is set to name, name must be specified",
@@ -232,8 +232,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							FeatureGates: []operatorv2alpha1.ControlPlaneFeatureGate{
 								{
-									Name:    "KongCustomEntity",
-									Enabled: lo.ToPtr(true),
+									Name:  "KongCustomEntity",
+									State: operatorv2alpha1.FeatureGateStateEnabled,
 								},
 							},
 						},
@@ -249,8 +249,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							FeatureGates: []operatorv2alpha1.ControlPlaneFeatureGate{
 								{
-									Name:    "KongCustomEntity",
-									Enabled: lo.ToPtr(false),
+									Name:  "KongCustomEntity",
+									State: operatorv2alpha1.FeatureGateStateDisabled,
 								},
 							},
 						},
@@ -266,8 +266,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							FeatureGates: []operatorv2alpha1.ControlPlaneFeatureGate{
 								{
-									Name:    "KongCustomEntity",
-									Enabled: lo.ToPtr(true),
+									Name:  "KongCustomEntity",
+									State: operatorv2alpha1.FeatureGateStateEnabled,
 								},
 							},
 						},
@@ -292,7 +292,7 @@ func TestControlPlaneV2(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.featureGates[0].enabled: Required value"),
+				ExpectedErrorMessage: lo.ToPtr("spec.featureGates[0].state: Unsupported value: \"\": supported values: \"enabled\", \"disabled\""),
 			},
 		}.Run(t)
 	})
@@ -317,8 +317,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							Controllers: []operatorv2alpha1.ControlPlaneController{
 								{
-									Name:    "GatewayAPI",
-									Enabled: lo.ToPtr(true),
+									Name:  "GatewayAPI",
+									State: operatorv2alpha1.ControllerStateEnabled,
 								},
 							},
 						},
@@ -334,8 +334,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							Controllers: []operatorv2alpha1.ControlPlaneController{
 								{
-									Name:    "GatewayAPI",
-									Enabled: lo.ToPtr(false),
+									Name:  "GatewayAPI",
+									State: operatorv2alpha1.ControllerStateDisabled,
 								},
 							},
 						},
@@ -351,8 +351,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							Controllers: []operatorv2alpha1.ControlPlaneController{
 								{
-									Name:    "GatewayAPI",
-									Enabled: lo.ToPtr(true),
+									Name:  "GatewayAPI",
+									State: operatorv2alpha1.ControllerStateEnabled,
 								},
 							},
 						},
@@ -377,7 +377,7 @@ func TestControlPlaneV2(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("spec.controllers[0].enabled: Required value"),
+				ExpectedErrorMessage: lo.ToPtr("spec.controllers[0].state: Unsupported value: \"\": supported values: \"enabled\", \"disabled\""),
 			},
 		}.Run(t)
 	})

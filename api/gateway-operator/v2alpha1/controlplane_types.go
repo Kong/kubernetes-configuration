@@ -199,6 +199,16 @@ type ControlPlaneAdminAPI struct {
 	Workspace string `json:"workspace,omitempty"`
 }
 
+// ControllerState defines the state of a feature gate.
+type ControllerState string
+
+const (
+	// ControllerStateEnabled indicates that the feature gate is enabled.
+	ControllerStateEnabled ControllerState = "enabled"
+	// ControllerStateDisabled indicates that the feature gate is disabled.
+	ControllerStateDisabled ControllerState = "disabled"
+)
+
 // ControlPlaneController defines a controller state for the ControlPlane.
 // It overrides the default behavior as defined in the deployed operator version.
 //
@@ -210,11 +220,22 @@ type ControlPlaneController struct {
 	// +kubebuilder:validation:MinLength=1
 	Name string `json:"name"`
 
-	// Enabled indicates whether the controller is enabled or not.
+	// State indicates whether the feature gate is enabled or disabled.
 	//
 	// +required
-	Enabled *bool `json:"enabled"`
+	// +kubebuilder:validation:Enum=enabled;disabled
+	State ControllerState `json:"state"`
 }
+
+// FeatureGateState defines the state of a feature gate.
+type FeatureGateState string
+
+const (
+	// FeatureGateStateEnabled indicates that the feature gate is enabled.
+	FeatureGateStateEnabled FeatureGateState = "enabled"
+	// FeatureGateStateDisabled indicates that the feature gate is disabled.
+	FeatureGateStateDisabled FeatureGateState = "disabled"
+)
 
 // ControlPlaneFeatureGate defines a feature gate state for the ControlPlane.
 // It overrides the default behavior as defined in the deployed operator version.
@@ -227,10 +248,11 @@ type ControlPlaneFeatureGate struct {
 	// +kubebuilder:validation:MinLength=1
 	Name string `json:"name"`
 
-	// Enabled indicates whether the feature gate is enabled or not.
+	// State indicates whether the feature gate is enabled or disabled.
 	//
 	// +required
-	Enabled *bool `json:"enabled"`
+	// +kubebuilder:validation:Enum=enabled;disabled
+	State FeatureGateState `json:"state"`
 }
 
 // ControlPlaneStatus defines the observed state of ControlPlane

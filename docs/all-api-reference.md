@@ -3420,7 +3420,7 @@ It overrides the default behavior as defined in the deployed operator version.
 | Field | Description |
 | --- | --- |
 | `name` _string_ | Name is the name of the controller. |
-| `enabled` _boolean_ | Enabled indicates whether the controller is enabled or not. |
+| `state` _[ControllerState](#controllerstate)_ | State indicates whether the feature gate is enabled or disabled. |
 
 
 _Appears in:_
@@ -3503,7 +3503,7 @@ It overrides the default behavior as defined in the deployed operator version.
 | Field | Description |
 | --- | --- |
 | `name` _string_ | Name is the name of the feature gate. |
-| `enabled` _boolean_ | Enabled indicates whether the feature gate is enabled or not. |
+| `state` _[FeatureGateState](#featuregatestate)_ | State indicates whether the feature gate is enabled or disabled. |
 
 
 _Appears in:_
@@ -3554,6 +3554,30 @@ _Appears in:_
 - [ControlPlane](#controlplane)
 
 
+
+#### ControllerState
+_Underlying type:_ `string`
+
+ControllerState defines the state of a feature gate.
+
+
+
+
+
+_Appears in:_
+- [ControlPlaneController](#controlplanecontroller)
+
+#### FeatureGateState
+_Underlying type:_ `string`
+
+FeatureGateState defines the state of a feature gate.
+
+
+
+
+
+_Appears in:_
+- [ControlPlaneFeatureGate](#controlplanefeaturegate)
 
 
 ## incubator.ingress-controller.konghq.com/v1alpha1

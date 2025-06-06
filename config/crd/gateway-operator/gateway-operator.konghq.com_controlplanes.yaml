@@ -8431,17 +8431,20 @@ spec:
                     ControlPlaneController defines a controller state for the ControlPlane.
                     It overrides the default behavior as defined in the deployed operator version.
                   properties:
-                    enabled:
-                      description: Enabled indicates whether the controller is enabled
-                        or not.
-                      type: boolean
                     name:
                       description: Name is the name of the controller.
                       minLength: 1
                       type: string
+                    state:
+                      description: State indicates whether the feature gate is enabled
+                        or disabled.
+                      enum:
+                      - enabled
+                      - disabled
+                      type: string
                   required:
-                  - enabled
                   - name
+                  - state
                   type: object
                 maxItems: 32
                 type: array
@@ -8542,17 +8545,20 @@ spec:
                     ControlPlaneFeatureGate defines a feature gate state for the ControlPlane.
                     It overrides the default behavior as defined in the deployed operator version.
                   properties:
-                    enabled:
-                      description: Enabled indicates whether the feature gate is enabled
-                        or not.
-                      type: boolean
                     name:
                       description: Name is the name of the feature gate.
                       minLength: 1
                       type: string
+                    state:
+                      description: State indicates whether the feature gate is enabled
+                        or disabled.
+                      enum:
+                      - enabled
+                      - disabled
+                      type: string
                   required:
-                  - enabled
                   - name
+                  - state
                   type: object
                 maxItems: 32
                 type: array
@@ -8682,17 +8688,20 @@ spec:
                     ControlPlaneController defines a controller state for the ControlPlane.
                     It overrides the default behavior as defined in the deployed operator version.
                   properties:
-                    enabled:
-                      description: Enabled indicates whether the controller is enabled
-                        or not.
-                      type: boolean
                     name:
                       description: Name is the name of the controller.
                       minLength: 1
                       type: string
+                    state:
+                      description: State indicates whether the feature gate is enabled
+                        or disabled.
+                      enum:
+                      - enabled
+                      - disabled
+                      type: string
                   required:
-                  - enabled
                   - name
+                  - state
                   type: object
                 maxItems: 32
                 type: array
@@ -8707,17 +8716,20 @@ spec:
                     ControlPlaneFeatureGate defines a feature gate state for the ControlPlane.
                     It overrides the default behavior as defined in the deployed operator version.
                   properties:
-                    enabled:
-                      description: Enabled indicates whether the feature gate is enabled
-                        or not.
-                      type: boolean
                     name:
                       description: Name is the name of the feature gate.
                       minLength: 1
                       type: string
+                    state:
+                      description: State indicates whether the feature gate is enabled
+                        or disabled.
+                      enum:
+                      - enabled
+                      - disabled
+                      type: string
                   required:
-                  - enabled
                   - name
+                  - state
                   type: object
                 maxItems: 32
                 type: array
