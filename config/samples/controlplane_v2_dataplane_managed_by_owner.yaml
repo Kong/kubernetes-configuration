@@ -1,0 +1,13 @@
+apiVersion: gateway-operator.konghq.com/v2alpha1
+kind: ControlPlane
+metadata:
+  name: controlplane-v2-example
+spec:
+  dataplane:
+    type: managedByOwner
+  featureGates:
+  - name: GatewayAlpha
+    state: enabled
+  controllers:
+  - name: Konnect
+    state: enabled

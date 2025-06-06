@@ -1,0 +1,14 @@
+apiVersion: gateway-operator.konghq.com/v2alpha1
+kind: ControlPlane
+metadata:
+  name: controlplane-v2-example
+spec:
+  dataplane:
+    type: external
+    external:
+      url: https://dataplane.example.com:8100/api
+  featureGates:
+  - name: GatewayAlpha
+    state: enabled
+  adminAPI:
+    workspace: my_custom_workspace
