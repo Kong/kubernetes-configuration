@@ -3439,13 +3439,45 @@ is responsible for configuring.
 | Field | Description |
 | --- | --- |
 | `type` _[ControlPlaneDataPlaneTargetType](#controlplanedataplanetargettype)_ | Type indicates the type of the DataPlane target. |
-| `url` _string_ | URL is the URL of the DataPlane target. This is used for configuring externally managed DataPlanes like those installed independently with Helm. |
-| `name` _string_ | Name is the name of the DataPlane to configure. |
+| `external` _[ControlPlaneDataPlaneTargetExternal](#controlplanedataplanetargetexternal)_ | External is the External of the DataPlane target. This is used for configuring externally managed DataPlanes like those installed independently with Helm. |
+| `ref` _[ControlPlaneDataPlaneTargetRef](#controlplanedataplanetargetref)_ | Ref is the name of the DataPlane to configure. |
 
 
 _Appears in:_
 - [ControlPlaneOptions](#controlplaneoptions)
 - [ControlPlaneSpec](#controlplanespec)
+
+#### ControlPlaneDataPlaneTargetExternal
+
+
+ControlPlaneDataPlaneTargetExternal defines the configuration for an external DataPlane
+that the ControlPlane is responsible for configuring.
+
+
+
+| Field | Description |
+| --- | --- |
+| `url` _string_ | URL is the URL of the external DataPlane to configure. |
+
+
+_Appears in:_
+- [ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)
+
+#### ControlPlaneDataPlaneTargetRef
+
+
+ControlPlaneDataPlaneTargetRef defines the reference to a DataPlane resource
+that the ControlPlane is responsible for configuring.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Ref is the name of the DataPlane to configure. |
+
+
+_Appears in:_
+- [ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)
 
 #### ControlPlaneDataPlaneTargetType
 _Underlying type:_ `string`
@@ -3515,8 +3547,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
 | `adminAPI` _[ControlPlaneAdminAPI](#controlplaneadminapi)_ | AdminAPI defines the configuration for the Kong Admin API. |
-| `gatewayClass` _[ObjectName](#objectname)_ | GatewayClass indicates the Gateway resources which this ControlPlane should be responsible for configuring routes for (e.g. HTTPRoute, TCPRoute, UDPRoute, TLSRoute, etc.).<br /><br /> Required for the ControlPlane to have any effect: at least one Gateway must be present for configuration to be pushed to the data-plane and only Gateway resources can be used to identify data-plane entities. |
-| `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> Routing configured this way will be applied to the Gateway resources indicated by GatewayClass.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+| `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
 
 
 _Appears in:_

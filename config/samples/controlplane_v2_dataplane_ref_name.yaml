@@ -4,9 +4,9 @@ metadata:
   name: controlplane-v2-example
 spec:
   dataplane:
-    type: name
-    name: dataplane-name
-  gatewayClass: kong
+    type: ref
+    ref:
+      name: dataplane-name
   featureGates:
   - name: GatewayAlpha
     enabled: true

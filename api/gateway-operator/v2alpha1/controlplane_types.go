@@ -18,7 +18,6 @@ package v2alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	gatewayv1 "sigs.k8s.io/gateway-api/apis/v1"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
 	operatorv1beta1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v1beta1"
@@ -62,22 +61,8 @@ type ControlPlaneList struct {
 type ControlPlaneSpec struct {
 	ControlPlaneOptions `json:",inline"`
 
-	// GatewayClass indicates the Gateway resources which this ControlPlane
-	// should be responsible for configuring routes for (e.g. HTTPRoute,
-	// TCPRoute, UDPRoute, TLSRoute, etc.).
-	//
-	// Required for the ControlPlane to have any effect: at least one Gateway
-	// must be present for configuration to be pushed to the data-plane and
-	// only Gateway resources can be used to identify data-plane entities.
-	//
-	// +optional
-	GatewayClass *gatewayv1.ObjectName `json:"gatewayClass,omitempty"`
-
 	// IngressClass enables support for the older Ingress resource and indicates
 	// which Ingress resources this ControlPlane should be responsible for.
-	//
-	// Routing configured this way will be applied to the Gateway resources
-	// indicated by GatewayClass.
 	//
 	// If omitted, Ingress resources will not be supported by the ControlPlane.
 	//
@@ -98,7 +83,7 @@ type ControlPlaneOptions struct {
 	// managed by the operator.
 	//
 	// +required
-	DataPlane ControlPlaneDataPlaneTarget `json:"dataplane,omitempty"`
+	DataPlane ControlPlaneDataPlaneTarget `json:"dataplane"`
 
 	// Extensions provide additional or replacement features for the ControlPlane
 	// resources to influence or enhance functionality.
@@ -138,28 +123,27 @@ type ControlPlaneOptions struct {
 // ControlPlaneDataPlaneTarget defines the target for the DataPlane that the ControlPlane
 // is responsible for configuring.
 //
-// +kubebuilder:validation:XValidation:message="URL has to be provided when type is set to url",rule="self.type != 'url' || has(self.url)"
-// +kubebuilder:validation:XValidation:message="Name cannot be provided when type is set to url",rule="self.type != 'url' || !has(self.name)"
-// +kubebuilder:validation:XValidation:message="Name has to be provided when type is set to name",rule="self.type != 'name' || has(self.name)"
-// +kubebuilder:validation:XValidation:message="URL cannot be provided when type is set to name",rule="self.type != 'name' || !has(self.url)"
+// +kubebuilder:validation:XValidation:message="External has to be provided when type is set to external",rule="self.type != 'external' || has(self.external)"
+// +kubebuilder:validation:XValidation:message="External cannot be provided when type is set to managedByOwner",rule="self.type != 'managedByOwner' || !has(self.external)"
+// +kubebuilder:validation:XValidation:message="Ref has to be provided when type is set to ref",rule="self.type != 'ref' || has(self.ref)"
+// +kubebuilder:validation:XValidation:message="Ref cannot be provided when type is set to managedByOwner",rule="self.type != 'managedByOwner' || !has(self.ref)"
 type ControlPlaneDataPlaneTarget struct {
 	// Type indicates the type of the DataPlane target.
 	//
-	// +kubebuilder:validation:Enum=url;name
-	// +kubebuilder:validation:Required
-	Type ControlPlaneDataPlaneTargetType `json:"type,omitempty"`
+	// +required
+	// +kubebuilder:validation:Enum=external;ref;managedByOwner
+	Type ControlPlaneDataPlaneTargetType `json:"type"`
 
-	// URL is the URL of the DataPlane target. This is used for configuring
+	// External is the External of the DataPlane target. This is used for configuring
 	// externally managed DataPlanes like those installed independently with Helm.
 	//
 	// +optional
-	// +kubebuilder:validation:XValidation:message="URL has to be a valid URL",rule="isURL(self)"
-	URL *string `json:"url,omitempty"`
+	External *ControlPlaneDataPlaneTargetExternal `json:"external,omitempty"`
 
-	// Name is the name of the DataPlane to configure.
+	// Ref is the name of the DataPlane to configure.
 	//
 	// +optional
-	Name *string `json:"name,omitempty"`
+	Ref *ControlPlaneDataPlaneTargetRef `json:"ref,omitempty"`
 }
 
 // ControlPlaneDataPlaneTargetType defines the type of the DataPlane target
@@ -167,13 +151,44 @@ type ControlPlaneDataPlaneTarget struct {
 type ControlPlaneDataPlaneTargetType string
 
 const (
-	// ControlPlaneDataPlaneTargetURL indicates that the DataPlane target is a URL.
-	ControlPlaneDataPlaneTargetURL ControlPlaneDataPlaneTargetType = "url"
+	// ControlPlaneDataPlaneTargetExternalType indicates that the DataPlane target is external.
+	// This is used for configuring externally managed DataPlanes like those
+	// installed independently with Helm.
+	ControlPlaneDataPlaneTargetExternalType ControlPlaneDataPlaneTargetType = "external"
 
-	// ControlPlaneDataPlaneTargetName indicates that the DataPlane target is a name
+	// ControlPlaneDataPlaneTargetRefType indicates that the DataPlane target is a ref
 	// of a DataPlane resource managed by the operator.
-	ControlPlaneDataPlaneTargetName ControlPlaneDataPlaneTargetType = "name"
+	// This is used for configuring DataPlanes that are managed by the operator.
+	ControlPlaneDataPlaneTargetRefType ControlPlaneDataPlaneTargetType = "ref"
+
+	// ControlPlaneDataPlaneTargetManagedByType indicates that the DataPlane target
+	// is managed by the owner of the ControlPlane.
+	// This is the case when using a Gateway resource to manage the DataPlane
+	// and the ControlPlane is responsible for configuring it.
+	ControlPlaneDataPlaneTargetManagedByType ControlPlaneDataPlaneTargetType = "managedByOwner"
 )
+
+// ControlPlaneDataPlaneTargetExternal defines the configuration for an external DataPlane
+// that the ControlPlane is responsible for configuring.
+type ControlPlaneDataPlaneTargetExternal struct {
+	// URL is the URL of the external DataPlane to configure.
+	//
+	// +required
+	// +kubebuilder:validation:XValidation:message="URL has to be a valid URL",rule="isURL(self)"
+	URL string `json:"url"`
+
+	// TODO: add additional fields for authenticating with the external DataPlane.
+	// ref: https://github.com/Kong/gateway-operator/issues/1366
+}
+
+// ControlPlaneDataPlaneTargetRef defines the reference to a DataPlane resource
+// that the ControlPlane is responsible for configuring.
+type ControlPlaneDataPlaneTargetRef struct {
+	// Ref is the name of the DataPlane to configure.
+	//
+	// +required
+	Name string `json:"name"`
+}
 
 // ControlPlaneAdminAPI defines the configuration for the DataPlane Kong Admin API.
 type ControlPlaneAdminAPI struct {
@@ -191,13 +206,13 @@ type ControlPlaneAdminAPI struct {
 type ControlPlaneController struct {
 	// Name is the name of the controller.
 	//
-	// +kubebuilder:validation:Required
+	// +required
 	// +kubebuilder:validation:MinLength=1
-	Name string `json:"name,omitempty"`
+	Name string `json:"name"`
 
 	// Enabled indicates whether the controller is enabled or not.
 	//
-	// +kubebuilder:validation:Required
+	// +required
 	Enabled *bool `json:"enabled"`
 }
 
@@ -208,13 +223,13 @@ type ControlPlaneController struct {
 type ControlPlaneFeatureGate struct {
 	// Name is the name of the feature gate.
 	//
-	// +kubebuilder:validation:Required
+	// +required
 	// +kubebuilder:validation:MinLength=1
-	Name string `json:"name,omitempty"`
+	Name string `json:"name"`
 
 	// Enabled indicates whether the feature gate is enabled or not.
 	//
-	// +kubebuilder:validation:Required
+	// +required
 	Enabled *bool `json:"enabled"`
 }
 

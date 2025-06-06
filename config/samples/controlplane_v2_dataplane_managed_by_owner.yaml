@@ -4,11 +4,10 @@ metadata:
   name: controlplane-v2-example
 spec:
   dataplane:
-    type: url
-    url: https://dataplane.example.com:8100/api
-  gatewayClass: kong
+    type: managedByOwner
   featureGates:
   - name: GatewayAlpha
     enabled: true
-  adminAPI:
-    workspace: my_custom_workspace
+  controllers:
+  - name: Konnect
+    enabled: true

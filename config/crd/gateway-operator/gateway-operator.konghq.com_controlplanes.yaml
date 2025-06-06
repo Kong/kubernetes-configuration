@@ -8456,35 +8456,48 @@ spec:
                   independently with Helm) or a name of a DataPlane resource that is
                   managed by the operator.
                 properties:
-                  name:
-                    description: Name is the name of the DataPlane to configure.
-                    type: string
+                  external:
+                    description: |-
+                      External is the External of the DataPlane target. This is used for configuring
+                      externally managed DataPlanes like those installed independently with Helm.
+                    properties:
+                      url:
+                        description: URL is the URL of the external DataPlane to configure.
+                        type: string
+                        x-kubernetes-validations:
+                        - message: URL has to be a valid URL
+                          rule: isURL(self)
+                    required:
+                    - url
+                    type: object
+                  ref:
+                    description: Ref is the name of the DataPlane to configure.
+                    properties:
+                      name:
+                        description: Ref is the name of the DataPlane to configure.
+                        type: string
+                    required:
+                    - name
+                    type: object
                   type:
                     description: Type indicates the type of the DataPlane target.
                     enum:
-                    - url
-                    - name
+                    - external
+                    - ref
+                    - managedByOwner
                     type: string
-                  url:
-                    description: |-
-                      URL is the URL of the DataPlane target. This is used for configuring
-                      externally managed DataPlanes like those installed independently with Helm.
-                    type: string
-                    x-kubernetes-validations:
-                    - message: URL has to be a valid URL
-                      rule: isURL(self)
                 required:
                 - type
                 type: object
                 x-kubernetes-validations:
-                - message: URL has to be provided when type is set to url
-                  rule: self.type != 'url' || has(self.url)
-                - message: Name cannot be provided when type is set to url
-                  rule: self.type != 'url' || !has(self.name)
-                - message: Name has to be provided when type is set to name
-                  rule: self.type != 'name' || has(self.name)
-                - message: URL cannot be provided when type is set to name
-                  rule: self.type != 'name' || !has(self.url)
+                - message: External has to be provided when type is set to external
+                  rule: self.type != 'external' || has(self.external)
+                - message: External cannot be provided when type is set to managedByOwner
+                  rule: self.type != 'managedByOwner' || !has(self.external)
+                - message: Ref has to be provided when type is set to ref
+                  rule: self.type != 'ref' || has(self.ref)
+                - message: Ref cannot be provided when type is set to managedByOwner
+                  rule: self.type != 'managedByOwner' || !has(self.ref)
               extensions:
                 description: |-
                   Extensions provide additional or replacement features for the ControlPlane
@@ -8546,25 +8559,10 @@ spec:
                 x-kubernetes-list-map-keys:
                 - name
                 x-kubernetes-list-type: map
-              gatewayClass:
-                description: |-
-                  GatewayClass indicates the Gateway resources which this ControlPlane
-                  should be responsible for configuring routes for (e.g. HTTPRoute,
-                  TCPRoute, UDPRoute, TLSRoute, etc.).
-
-                  Required for the ControlPlane to have any effect: at least one Gateway
-                  must be present for configuration to be pushed to the data-plane and
-                  only Gateway resources can be used to identify data-plane entities.
-                maxLength: 253
-                minLength: 1
-                type: string
               ingressClass:
                 description: |-
                   IngressClass enables support for the older Ingress resource and indicates
                   which Ingress resources this ControlPlane should be responsible for.
-
-                  Routing configured this way will be applied to the Gateway resources
-                  indicated by GatewayClass.
 
                   If omitted, Ingress resources will not be supported by the ControlPlane.
                 type: string
