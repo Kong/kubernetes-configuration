@@ -227,14 +227,6 @@ var supportedGatewayOperatorTypes = []supportedTypesT{
 		},
 	},
 	{
-		PackageVersion: "v1alpha1",
-		Types: []templateDataT{
-			{
-				Type: "KonnectExtension",
-			},
-		},
-	},
-	{
 		PackageVersion: "v1beta1",
 		Types: []templateDataT{
 			{
