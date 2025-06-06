@@ -9,11 +9,11 @@ spec:
       name: dataplane-name
   featureGates:
   - name: GatewayAlpha
-    enabled: true
+    state: enabled
   controllers:
   - name: TCPIngress
-    enabled: false
+    state: disabled
   - name: Konnect
-    enabled: true
+    state: enabled
   adminAPI:
     workspace: my_custom_workspace

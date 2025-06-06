@@ -7,7 +7,7 @@ spec:
     type: managedByOwner
   featureGates:
   - name: GatewayAlpha
-    enabled: true
+    state: enabled
   controllers:
   - name: Konnect
-    enabled: true
+    state: enabled

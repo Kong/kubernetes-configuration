@@ -9,6 +9,6 @@ spec:
       url: https://dataplane.example.com:8100/api
   featureGates:
   - name: GatewayAlpha
-    enabled: true
+    state: enabled
   adminAPI:
     workspace: my_custom_workspace
