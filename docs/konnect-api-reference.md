@@ -448,7 +448,6 @@ KonnectEndpoints defines the Konnect endpoints for the control plane.
 
 
 _Appears in:_
-- [KonnectEndpoints](#konnectendpoints)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 
 #### KonnectEntityStatus
@@ -701,9 +700,9 @@ _Appears in:_
 - [KonnectExtensionDataPlane](#konnectextensiondataplane)
 
 #### KonnectEndpoints
-_Underlying type:_ `[KonnectEndpoints](#konnectendpoints)`
 
-KonnectEndpoints is an alias for the Konnect endpoints v1alpha1.
+
+KonnectEndpoints defines the Konnect endpoints for the control plane.
 
 
 

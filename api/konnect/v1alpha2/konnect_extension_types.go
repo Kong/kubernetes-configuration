@@ -17,7 +17,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
-	konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 )
 
 func init() {
@@ -216,8 +215,18 @@ const (
 	ClusterTypeK8sIngressController KonnectExtensionClusterType = "K8SIngressController"
 )
 
-// KonnectEndpoints is an alias for the Konnect endpoints v1alpha1.
-type KonnectEndpoints konnectv1alpha1.KonnectEndpoints
+// KonnectEndpoints defines the Konnect endpoints for the control plane.
+type KonnectEndpoints struct {
+	// TelemetryEndpoint is the endpoint for telemetry.
+	//
+	// +kubebuilder:validation:Required
+	TelemetryEndpoint string `json:"telemetry"`
+
+	// ControlPlaneEndpoint is the endpoint for the control plane.
+	//
+	// +kubebuilder:validation:Required
+	ControlPlaneEndpoint string `json:"controlPlane"`
+}
 
 // KonnectExtensionControlPlaneStatus contains the Konnect Control Plane status information.
 type KonnectExtensionControlPlaneStatus struct {
