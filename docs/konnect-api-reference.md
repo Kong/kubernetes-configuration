@@ -753,7 +753,7 @@ KonnectExtensionControlPlane is the configuration for the Konnect Control Plane.
 
 | Field | Description |
 | --- | --- |
-| `ref` _[ControlPlaneRef](#controlplaneref)_ | Ref is a reference to a Konnect ControlPlane this KonnectExtension is associated with. |
+| `ref` _[KonnectExtensionControlPlaneRef](#konnectextensioncontrolplaneref)_ | Ref is a reference to a Konnect ControlPlane this KonnectExtension is associated with. |
 
 
 _Appears in:_

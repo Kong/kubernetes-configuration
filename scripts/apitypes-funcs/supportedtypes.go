@@ -27,7 +27,7 @@ var supportedKonnectTypesWithControlPlaneRef = []supportedTypesT{
 		Types: []templateDataT{
 			{
 				Type:                     "KonnectExtension",
-				ControlPlaneRefType:      "commonv1alpha1.ControlPlaneRef",
+				ControlPlaneRefType:      "commonv1alpha1.KonnectExtensionControlPlaneRef",
 				ControlPlaneRefRequired:  true,
 				ControlPlaneRefFieldPath: "Spec.Konnect.ControlPlane.Ref",
 			},
