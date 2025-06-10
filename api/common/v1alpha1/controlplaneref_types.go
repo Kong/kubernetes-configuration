@@ -50,7 +50,7 @@ type ControlPlaneRef struct {
 	KonnectNamespacedRef *KonnectNamespacedRef `json:"konnectNamespacedRef,omitempty"`
 }
 
-// ControlPlaneRef is the schema for the ControlPlaneRef type.
+// KonnectExtensionControlPlaneRef is the schema for the ControlPlaneRef type used by Konnect Extensions.
 // It is used to reference a Control Plane entity.
 //
 // +kubebuilder:object:generate=true

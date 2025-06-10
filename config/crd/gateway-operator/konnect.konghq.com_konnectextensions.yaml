@@ -135,8 +135,6 @@ spec:
                             type: string
                         type: object
                         x-kubernetes-validations:
-                        - message: kic type not supported as controlPlaneRef.
-                          rule: self.type != 'kic'
                         - message: when type is konnectNamespacedRef, konnectNamespacedRef
                             must be set
                           rule: '(has(self.type) && self.type == ''konnectNamespacedRef'')
