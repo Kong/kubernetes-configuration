@@ -124,33 +124,21 @@ spec:
                             - name
                             type: object
                           type:
-                            default: kic
+                            default: konnectNamespacedRef
                             description: |-
                               Type indicates the type of the control plane being referenced. Allowed values:
                               - konnectNamespacedRef
-                              - kic
 
                               The default is kic, which implies that the Control Plane is KIC.
                             enum:
                             - konnectNamespacedRef
-                            - kic
                             type: string
                         type: object
                         x-kubernetes-validations:
-                        - message: kic type not supported as controlPlaneRef.
-                          rule: self.type != 'kic'
                         - message: when type is konnectNamespacedRef, konnectNamespacedRef
                             must be set
                           rule: '(has(self.type) && self.type == ''konnectNamespacedRef'')
                             ? has(self.konnectNamespacedRef) : true'
-                        - message: when type is kic, konnectNamespacedRef must not
-                            be set
-                          rule: '(has(self.type) && self.type == ''kic'') ? !has(self.konnectNamespacedRef)
-                            : true'
-                        - message: when type is unset, konnectNamespacedRef must not
-                            be set
-                          rule: '!has(self.type) ? !has(self.konnectNamespacedRef)
-                            : true'
                     required:
                     - ref
                     type: object
