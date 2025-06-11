@@ -8380,7 +8380,7 @@ spec:
             && self.spec.deployment.podTemplateSpec.spec.containers.exists(c, c.name
             == 'controller' && has(c.image))
     served: true
-    storage: true
+    storage: false
     subresources:
       status: {}
   - additionalPrinterColumns:
@@ -8743,6 +8743,6 @@ spec:
             type: object
         type: object
     served: true
-    storage: false
+    storage: true
     subresources:
       status: {}
