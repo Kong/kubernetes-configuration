@@ -9,6 +9,7 @@
 - [gateway-operator.konghq.com/v2alpha1](#gateway-operatorkonghqcomv2alpha1)
 - [incubator.ingress-controller.konghq.com/v1alpha1](#incubatoringress-controllerkonghqcomv1alpha1)
 - [konnect.konghq.com/v1alpha1](#konnectkonghqcomv1alpha1)
+- [konnect.konghq.com/v1alpha2](#konnectkonghqcomv1alpha2)
 
 
 ## configuration.konghq.com/v1
@@ -680,23 +681,7 @@ See: https://docs.konghq.com/gateway/latest/kong-enterprise/secrets-management/
 ### Types
 
 In this section you will find types that the CRDs rely on.
-#### ControlPlaneRef
-_Underlying type:_ `[ControlPlaneRef](#controlplaneref)`
 
-ControlPlaneRef is the schema for the ControlPlaneRef type.
-It is used to reference a Control Plane entity.
-
-
-
-| Field | Description |
-| --- | --- |
-| `type` _string_ | Type indicates the type of the control plane being referenced. Allowed values: - konnectID - konnectNamespacedRef - kic<br /><br /> The default is kic, which implies that the Control Plane is KIC. |
-| `konnectID` _[KonnectIDType](#konnectidtype)_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
-| `konnectNamespacedRef` _[KonnectNamespacedRef](#konnectnamespacedref)_ | KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster. It contains the name of the Konnect Control Plane. This field is required when the Type is konnectNamespacedRef. |
-
-
-_Appears in:_
-- [KonnectExtensionSpec](#konnectextensionspec)
 
 #### ControllerReference
 
@@ -2067,7 +2052,6 @@ Package v1alpha1 contains API Schema definitions for the gateway-operator.konghq
 - [AIGateway](#aigateway)
 - [DataPlaneMetricsExtension](#dataplanemetricsextension)
 - [KongPluginInstallation](#kongplugininstallation)
-- [KonnectExtension](#konnectextension)
 - [WatchNamespaceGrant](#watchnamespacegrant)
 ### AIGateway
 
@@ -2151,25 +2135,6 @@ and configured with KongPlugin CRD.
 | `kind` _string_ | `KongPluginInstallation`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KongPluginInstallationSpec](#kongplugininstallationspec)_ |  |
-
-
-
-### KonnectExtension
-
-
-KonnectExtension is the Schema for the KonnectExtension API,
-and is intended to be referenced as extension by the DataPlane API.
-If a DataPlane successfully refers a KonnectExtension, the DataPlane
-deployment spec gets customized to include the konnect-related configuration.
-
-<!-- konnect_extension description placeholder -->
-
-| Field | Description |
-| --- | --- |
-| `apiVersion` _string_ | `gateway-operator.konghq.com/v1alpha1`
-| `kind` _string_ | `KonnectExtension`
-| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[KonnectExtensionSpec](#konnectextensionspec)_ | Spec is the specification of the KonnectExtension resource. |
 
 
 
@@ -2317,21 +2282,6 @@ Azure, e.t.c.).
 _Appears in:_
 - [LargeLanguageModels](#largelanguagemodels)
 
-#### ClusterCertificateSecretRef
-
-
-ClusterCertificateSecretRef contains the reference to the Secret containing the Konnect Control Plane's cluster certificate.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the Secret containing the Konnect Control Plane's cluster certificate. |
-
-
-_Appears in:_
-- [KonnectControlPlaneAPIAuthConfiguration](#konnectcontrolplaneapiauthconfiguration)
-
 #### DataPlaneMetricsExtensionSpec
 
 
@@ -2385,42 +2335,6 @@ KongPluginInstallationSpec provides the information necessary to retrieve and in
 
 _Appears in:_
 - [KongPluginInstallation](#kongplugininstallation)
-
-
-
-#### KonnectControlPlaneAPIAuthConfiguration
-
-
-KonnectControlPlaneAPIAuthConfiguration contains the configuration to authenticate with Konnect API ControlPlane.
-
-
-
-| Field | Description |
-| --- | --- |
-| `clusterCertificateSecretRef` _[ClusterCertificateSecretRef](#clustercertificatesecretref)_ | ClusterCertificateSecretRef is the reference to the Secret containing the Konnect Control Plane's cluster certificate. |
-
-
-_Appears in:_
-- [KonnectExtensionSpec](#konnectextensionspec)
-
-#### KonnectExtensionSpec
-
-
-KonnectExtensionSpec defines the desired state of KonnectExtension.
-
-
-
-| Field | Description |
-| --- | --- |
-| `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this KonnectExtension is associated with. |
-| `controlPlaneRegion` _string_ | ControlPlaneRegion is the region of the Konnect Control Plane. |
-| `serverHostname` _string_ | ServerHostname is the fully qualified domain name of the Konnect server. For typical operation a default value doesn't need to be adjusted. It matches the RFC 1123 definition of a hostname with 1 notable exception that numeric IP addresses are not allowed.<br /><br /> Note that as per RFC1035 and RFC1123, a *label* must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. |
-| `konnectControlPlaneAPIAuthConfiguration` _[KonnectControlPlaneAPIAuthConfiguration](#konnectcontrolplaneapiauthconfiguration)_ | AuthConfiguration must be used to configure the Konnect API authentication. |
-| `clusterDataPlaneLabels` _object (keys:string, values:string)_ | ClusterDataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane. |
-
-
-_Appears in:_
-- [KonnectExtension](#konnectextension)
 
 
 
@@ -3653,7 +3567,6 @@ Package v1alpha1 contains API Schema definitions for the konnect.konghq.com v1al
 - [KonnectCloudGatewayDataPlaneGroupConfiguration](#konnectcloudgatewaydataplanegroupconfiguration)
 - [KonnectCloudGatewayNetwork](#konnectcloudgatewaynetwork)
 - [KonnectCloudGatewayTransitGateway](#konnectcloudgatewaytransitgateway)
-- [KonnectExtension](#konnectextension)
 - [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
 ### KonnectAPIAuthConfiguration
 
@@ -3716,25 +3629,6 @@ KonnectCloudGatewayTransitGateway is the Schema for the Konnect Transit Gateway 
 | `kind` _string_ | `KonnectCloudGatewayTransitGateway`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)_ | Spec defines the desired state of KonnectCloudGatewayTransitGateway. |
-
-
-
-### KonnectExtension
-
-
-KonnectExtension is the Schema for the KonnectExtension API, and is intended to be referenced as
-extension by the DataPlane, ControlPlane or GatewayConfiguration APIs.
-If one of the above mentioned resources successfully refers a KonnectExtension, the underlying
-deployment(s) spec gets customized to include the konnect-related configuration.
-
-<!-- konnect_extension description placeholder -->
-
-| Field | Description |
-| --- | --- |
-| `apiVersion` _string_ | `konnect.konghq.com/v1alpha1`
-| `kind` _string_ | `KonnectExtension`
-| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[KonnectExtensionSpec](#konnectextensionspec)_ | Spec is the specification of the KonnectExtension resource. |
 
 
 
@@ -3829,22 +3723,6 @@ AzureVNETPeeringAttachmentConfig is the configuration to attach to a Azure VNET 
 
 _Appears in:_
 - [AzureTransitGateway](#azuretransitgateway)
-
-#### CertificateSecret
-
-
-CertificateSecret contains the information to access the client certificate.
-
-
-
-| Field | Description |
-| --- | --- |
-| `provisioning` _[ProvisioningMethod](#provisioningmethod)_ | Provisioning is the method used to provision the certificate. It can be either Manual or Automatic. In case manual provisioning is used, the certificate must be provided by the user. In case automatic provisioning is used, the certificate will be automatically generated by the system. |
-| `secretRef` _[SecretRef](#secretref)_ | CertificateSecretRef is the reference to the Secret containing the client certificate. |
-
-
-_Appears in:_
-- [KonnectExtensionClientAuth](#konnectextensionclientauth)
 
 #### ConfigurationDataPlaneGroupAutoscale
 
@@ -3943,33 +3821,6 @@ CreateControlPlaneRequest - The request schema for the create control plane requ
 
 _Appears in:_
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
-
-#### DataPlaneClientAuthStatus
-
-
-DataPlaneClientAuthStatus contains the status information related to the ClientAuth configuration.
-
-
-
-| Field | Description |
-| --- | --- |
-| `certificateSecretRef` _[SecretRef](#secretref)_ | CertificateSecretRef is the reference to the Secret containing the client certificate. |
-
-
-_Appears in:_
-- [KonnectExtensionStatus](#konnectextensionstatus)
-
-#### DataPlaneLabelValue
-_Underlying type:_ `string`
-
-DataPlaneLabelValue is the type that defines the value of a label that will be applied to the Konnect DataPlane.
-
-
-
-
-
-_Appears in:_
-- [KonnectExtensionDataPlane](#konnectextensiondataplane)
 
 #### KonnectAPIAuthConfigurationRef
 
@@ -4116,7 +3967,6 @@ KonnectConfiguration is the Schema for the KonnectConfiguration API.
 
 _Appears in:_
 - [KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)
-- [KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### KonnectConfigurationDataPlaneGroup
@@ -4152,7 +4002,6 @@ KonnectEndpoints defines the Konnect endpoints for the control plane.
 
 
 _Appears in:_
-- [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 
 #### KonnectEntityStatus
@@ -4327,6 +4176,198 @@ KonnectEntityStatusWithNetworkRef represents the status of a Konnect entity with
 _Appears in:_
 - [KonnectCloudGatewayTransitGatewayStatus](#konnectcloudgatewaytransitgatewaystatus)
 
+#### KonnectGatewayControlPlaneSpec
+
+
+KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayControlPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | The name of the control plane. |
+| `description` _string_ | The description of the control plane in Konnect. |
+| `cluster_type` _[CreateControlPlaneRequestClusterType](#createcontrolplanerequestclustertype)_ | The ClusterType value of the cluster associated with the Control Plane. |
+| `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
+| `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
+| `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
+| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
+| `mirror` _[MirrorSpec](#mirrorspec)_ | Mirror is the Konnect Mirror configuration. It is only applicable for ControlPlanes that are created as Mirrors. |
+| `source` _[EntitySource](#entitysource)_ | Source represents the source type of the Konnect entity. |
+| `members` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#localobjectreference-v1-core) array_ | Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group. Only applicable for ControlPlanes that are created as groups. |
+| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
+
+
+_Appears in:_
+- [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
+
+
+
+#### KonnectTransitGatewayAPISpec
+
+
+KonnectTransitGatewayAPISpec specifies a transit gateway on the Konnect side.
+The type and all the types it referenced are mostly copied github.com/Kong/sdk-konnect-go/models/components.CreateTransitGatewayRequest.
+
+
+
+| Field | Description |
+| --- | --- |
+| `type` _[TransitGatewayType](#transitgatewaytype)_ | Type is the type of the Konnect transit gateway. |
+| `awsTransitGateway` _[AWSTransitGateway](#awstransitgateway)_ | AWSTransitGateway is the configuration of an AWS transit gateway. Used when type is "AWS Transit Gateway". |
+| `azureTransitGateway` _[AzureTransitGateway](#azuretransitgateway)_ | AzureTransitGateway is the configuration of an Azure transit gateway. Used when type is "Azure Transit Gateway". |
+
+
+_Appears in:_
+- [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
+
+#### MirrorKonnect
+
+
+MirrorKonnect contains the Konnect Mirror configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _[KonnectIDType](#konnectidtype)_ | ID is the ID of the Konnect entity. It can be set only in case the ControlPlane type is Mirror. |
+
+
+_Appears in:_
+- [MirrorSpec](#mirrorspec)
+
+#### MirrorSpec
+
+
+MirrorSpec contains the Konnect Mirror configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `konnect` _[MirrorKonnect](#mirrorkonnect)_ | Konnect contains the KonnectID of the KonnectGatewayControlPlane that is mirrored. |
+
+
+_Appears in:_
+- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
+
+#### TransitGatewayDNSConfig
+
+
+TransitGatewayDNSConfig is the DNS configuration of a tansit gateway.
+
+
+
+| Field | Description |
+| --- | --- |
+| `remote_dns_server_ip_addresses` _string array_ | RemoteDNSServerIPAddresses is the list of remote DNS server IP Addresses to connect to for resolving internal DNS via a transit gateway. |
+| `domain_proxy_list` _string array_ | DomainProxyList is the list of internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses, for a transit gateway. |
+
+
+_Appears in:_
+- [AWSTransitGateway](#awstransitgateway)
+- [AzureTransitGateway](#azuretransitgateway)
+
+#### TransitGatewayType
+_Underlying type:_ `string`
+
+TransitGatewayType defines the type of Konnect transit gateway.
+
+
+
+
+
+_Appears in:_
+- [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
+- [KonnectTransitGatewayAPISpec](#konnecttransitgatewayapispec)
+
+
+## konnect.konghq.com/v1alpha2
+
+Package v1alpha2 contains API Schema definitions for the konnect.konghq.com v1alpha2 API group.
+
+- [KonnectExtension](#konnectextension)
+### KonnectExtension
+
+
+KonnectExtension is the Schema for the KonnectExtension API, and is intended to be referenced as
+extension by the DataPlane, ControlPlane or GatewayConfiguration APIs.
+If one of the above mentioned resources successfully refers a KonnectExtension, the underlying
+deployment(s) spec gets customized to include the konnect-related configuration.
+
+<!-- konnect_extension description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `konnect.konghq.com/v1alpha2`
+| `kind` _string_ | `KonnectExtension`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KonnectExtensionSpec](#konnectextensionspec)_ | Spec is the specification of the KonnectExtension resource. |
+
+
+
+### Types
+
+In this section you will find types that the CRDs rely on.
+#### CertificateSecret
+
+
+CertificateSecret contains the information to access the client certificate.
+
+
+
+| Field | Description |
+| --- | --- |
+| `provisioning` _[ProvisioningMethod](#provisioningmethod)_ | Provisioning is the method used to provision the certificate. It can be either Manual or Automatic. In case manual provisioning is used, the certificate must be provided by the user. In case automatic provisioning is used, the certificate will be automatically generated by the system. |
+| `secretRef` _[SecretRef](#secretref)_ | CertificateSecretRef is the reference to the Secret containing the client certificate. |
+
+
+_Appears in:_
+- [KonnectExtensionClientAuth](#konnectextensionclientauth)
+
+#### DataPlaneClientAuthStatus
+
+
+DataPlaneClientAuthStatus contains the status information related to the ClientAuth configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `certificateSecretRef` _[SecretRef](#secretref)_ | CertificateSecretRef is the reference to the Secret containing the client certificate. |
+
+
+_Appears in:_
+- [KonnectExtensionStatus](#konnectextensionstatus)
+
+#### DataPlaneLabelValue
+_Underlying type:_ `string`
+
+DataPlaneLabelValue is the type that defines the value of a label that will be applied to the Konnect DataPlane.
+
+
+
+
+
+_Appears in:_
+- [KonnectExtensionDataPlane](#konnectextensiondataplane)
+
+#### KonnectEndpoints
+
+
+KonnectEndpoints defines the Konnect endpoints for the control plane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `telemetry` _string_ | TelemetryEndpoint is the endpoint for telemetry. |
+| `controlPlane` _string_ | ControlPlaneEndpoint is the endpoint for the control plane. |
+
+
+_Appears in:_
+- [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
+
 #### KonnectExtensionClientAuth
 
 
@@ -4414,7 +4455,6 @@ KonnectExtensionKonnectSpec holds the konnect-related configuration.
 | --- | --- |
 | `controlPlane` _[KonnectExtensionControlPlane](#konnectextensioncontrolplane)_ | ControlPlane is the configuration for the Konnect Control Plane. |
 | `dataPlane` _[KonnectExtensionDataPlane](#konnectextensiondataplane)_ | DataPlane is the configuration for the Konnect DataPlane. |
-| `configuration` _[KonnectConfiguration](#konnectconfiguration)_ | Configuration holds the information needed to set up the Konnect Configuration. |
 
 
 _Appears in:_
@@ -4430,88 +4470,13 @@ KonnectExtensionSpec defines the desired state of KonnectExtension.
 | Field | Description |
 | --- | --- |
 | `konnect` _[KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)_ | Konnect holds the konnect-related configuration |
-| `clientAuth` _[KonnectExtensionClientAuth](#konnectextensionclientauth)_ | ClientAuth is the configuration for the client certificate authentication. In case the ControlPlaneRef is of type KonnectID, it is required to set up the connection with the Konnect Platform. |
+| `clientAuth` _[KonnectExtensionClientAuth](#konnectextensionclientauth)_ | ClientAuth is the configuration for the client certificate authentication. |
 
 
 _Appears in:_
 - [KonnectExtension](#konnectextension)
 
 
-
-#### KonnectGatewayControlPlaneSpec
-
-
-KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayControlPlane.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | The name of the control plane. |
-| `description` _string_ | The description of the control plane in Konnect. |
-| `cluster_type` _[CreateControlPlaneRequestClusterType](#createcontrolplanerequestclustertype)_ | The ClusterType value of the cluster associated with the Control Plane. |
-| `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
-| `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
-| `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
-| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
-| `mirror` _[MirrorSpec](#mirrorspec)_ | Mirror is the Konnect Mirror configuration. It is only applicable for ControlPlanes that are created as Mirrors. |
-| `source` _[EntitySource](#entitysource)_ | Source represents the source type of the Konnect entity. |
-| `members` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#localobjectreference-v1-core) array_ | Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group. Only applicable for ControlPlanes that are created as groups. |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
-
-
-_Appears in:_
-- [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
-
-
-
-#### KonnectTransitGatewayAPISpec
-
-
-KonnectTransitGatewayAPISpec specifies a transit gateway on the Konnect side.
-The type and all the types it referenced are mostly copied github.com/Kong/sdk-konnect-go/models/components.CreateTransitGatewayRequest.
-
-
-
-| Field | Description |
-| --- | --- |
-| `type` _[TransitGatewayType](#transitgatewaytype)_ | Type is the type of the Konnect transit gateway. |
-| `awsTransitGateway` _[AWSTransitGateway](#awstransitgateway)_ | AWSTransitGateway is the configuration of an AWS transit gateway. Used when type is "AWS Transit Gateway". |
-| `azureTransitGateway` _[AzureTransitGateway](#azuretransitgateway)_ | AzureTransitGateway is the configuration of an Azure transit gateway. Used when type is "Azure Transit Gateway". |
-
-
-_Appears in:_
-- [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
-
-#### MirrorKonnect
-
-
-MirrorKonnect contains the Konnect Mirror configuration.
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _[KonnectIDType](#konnectidtype)_ | ID is the ID of the Konnect entity. It can be set only in case the ControlPlane type is Mirror. |
-
-
-_Appears in:_
-- [MirrorSpec](#mirrorspec)
-
-#### MirrorSpec
-
-
-MirrorSpec contains the Konnect Mirror configuration.
-
-
-
-| Field | Description |
-| --- | --- |
-| `konnect` _[MirrorKonnect](#mirrorkonnect)_ | Konnect contains the KonnectID of the KonnectGatewayControlPlane that is mirrored. |
-
-
-_Appears in:_
-- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### ProvisioningMethod
 _Underlying type:_ `string`
@@ -4540,34 +4505,4 @@ SecretRef contains the reference to the Secret containing the Konnect Control Pl
 _Appears in:_
 - [CertificateSecret](#certificatesecret)
 - [DataPlaneClientAuthStatus](#dataplaneclientauthstatus)
-
-#### TransitGatewayDNSConfig
-
-
-TransitGatewayDNSConfig is the DNS configuration of a tansit gateway.
-
-
-
-| Field | Description |
-| --- | --- |
-| `remote_dns_server_ip_addresses` _string array_ | RemoteDNSServerIPAddresses is the list of remote DNS server IP Addresses to connect to for resolving internal DNS via a transit gateway. |
-| `domain_proxy_list` _string array_ | DomainProxyList is the list of internal domain names to proxy for DNS resolution from the listed remote DNS server IP addresses, for a transit gateway. |
-
-
-_Appears in:_
-- [AWSTransitGateway](#awstransitgateway)
-- [AzureTransitGateway](#azuretransitgateway)
-
-#### TransitGatewayType
-_Underlying type:_ `string`
-
-TransitGatewayType defines the type of Konnect transit gateway.
-
-
-
-
-
-_Appears in:_
-- [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
-- [KonnectTransitGatewayAPISpec](#konnecttransitgatewayapispec)
 

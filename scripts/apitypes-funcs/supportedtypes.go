@@ -2,7 +2,7 @@ package main
 
 import "github.com/samber/lo"
 
-var supportedKonnectV1Alpha1TypesWithControlPlaneRef = []supportedTypesT{
+var supportedKonnectTypesWithControlPlaneRef = []supportedTypesT{
 	{
 		PackageVersion: "v1alpha1",
 		AdditionalImports: []string{
@@ -17,6 +17,14 @@ var supportedKonnectV1Alpha1TypesWithControlPlaneRef = []supportedTypesT{
 				ControlPlaneRefType:        "commonv1alpha1.ControlPlaneRef",
 				ControlPlaneRefRequired:    true,
 			},
+		},
+	},
+	{
+		PackageVersion: "v1alpha2",
+		AdditionalImports: []string{
+			`commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"`,
+		},
+		Types: []templateDataT{
 			{
 				Type:                     "KonnectExtension",
 				ControlPlaneRefType:      "commonv1alpha1.ControlPlaneRef",
@@ -27,7 +35,7 @@ var supportedKonnectV1Alpha1TypesWithControlPlaneRef = []supportedTypesT{
 	},
 }
 
-var supportedKonnectTypesControlPlaneConfig = []supportedTypesT{
+var supportedKonnectTypesWithControlPlaneConfig = []supportedTypesT{
 	{
 		PackageVersion: "v1",
 		AdditionalImports: []string{
@@ -216,9 +224,6 @@ var supportedGatewayOperatorTypes = []supportedTypesT{
 			{
 				Type: "KongPluginInstallation",
 			},
-			{
-				Type: "KonnectExtension",
-			},
 		},
 	},
 	{
@@ -234,13 +239,13 @@ var supportedGatewayOperatorTypes = []supportedTypesT{
 	},
 }
 
-var supportedConfigurationPackageTypesWithList = supportedKonnectTypesControlPlaneConfig
+var supportedConfigurationPackageTypesWithList = supportedKonnectTypesWithControlPlaneConfig
 
 var supportedKonnectPackageTypesWithList = func() []supportedTypesT {
 	// Make sure that each template is generated once per package version.
 	base := append(
 		supportedKonnectTypesStandalone,
-		supportedKonnectV1Alpha1TypesWithControlPlaneRef...,
+		supportedKonnectTypesWithControlPlaneRef...,
 	)
 	base = append(base, supportedKonnectV1Alpha1TypesWithNetworkRef...)
 

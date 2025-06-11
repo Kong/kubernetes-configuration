@@ -36,6 +36,8 @@ import (
 	fakeincubatorv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/incubator/v1alpha1/fake"
 	konnectv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha1"
 	fakekonnectv1alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha1/fake"
+	konnectv1alpha2 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha2"
+	fakekonnectv1alpha2 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/konnect/v1alpha2/fake"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
@@ -140,4 +142,9 @@ func (c *Clientset) IncubatorV1alpha1() incubatorv1alpha1.IncubatorV1alpha1Inter
 // KonnectV1alpha1 retrieves the KonnectV1alpha1Client
 func (c *Clientset) KonnectV1alpha1() konnectv1alpha1.KonnectV1alpha1Interface {
 	return &fakekonnectv1alpha1.FakeKonnectV1alpha1{Fake: &c.Fake}
+}
+
+// KonnectV1alpha2 retrieves the KonnectV1alpha2Client
+func (c *Clientset) KonnectV1alpha2() konnectv1alpha2.KonnectV1alpha2Interface {
+	return &fakekonnectv1alpha2.FakeKonnectV1alpha2{Fake: &c.Fake}
 }

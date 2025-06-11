@@ -11,8 +11,3 @@ func (obj AIGatewayList) GetItems() []AIGateway {
 func (obj KongPluginInstallationList) GetItems() []KongPluginInstallation {
 	return obj.Items
 }
-
-// GetItems returns the list of KonnectExtension items.
-func (obj KonnectExtensionList) GetItems() []KonnectExtension {
-	return obj.Items
-}

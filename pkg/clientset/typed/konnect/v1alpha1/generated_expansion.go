@@ -26,6 +26,4 @@ type KonnectCloudGatewayNetworkExpansion interface{}
 
 type KonnectCloudGatewayTransitGatewayExpansion interface{}
 
-type KonnectExtensionExpansion interface{}
-
 type KonnectGatewayControlPlaneExpansion interface{}

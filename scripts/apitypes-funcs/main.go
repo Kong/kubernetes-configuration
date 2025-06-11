@@ -73,7 +73,7 @@ func main() {
 				{
 					templateContent: konnectFuncTemplate,
 					outputFile:      konnectFuncOutputFileName,
-					supportedTypes:  supportedKonnectTypesControlPlaneConfig,
+					supportedTypes:  supportedKonnectTypesWithControlPlaneConfig,
 				},
 				{
 					templateContent: listFuncTemplate,
@@ -88,7 +88,7 @@ func main() {
 				{
 					templateContent: konnectFuncTemplate,
 					outputFile:      konnectFuncOutputFileName,
-					supportedTypes:  supportedKonnectV1Alpha1TypesWithControlPlaneRef,
+					supportedTypes:  supportedKonnectTypesWithControlPlaneRef,
 				},
 				{
 					templateContent: konnectFuncStandaloneTemplate,

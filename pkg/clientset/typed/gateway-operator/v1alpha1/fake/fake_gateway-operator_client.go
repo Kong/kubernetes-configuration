@@ -40,10 +40,6 @@ func (c *FakeGatewayOperatorV1alpha1) KongPluginInstallations(namespace string) 
 	return newFakeKongPluginInstallations(c, namespace)
 }
 
-func (c *FakeGatewayOperatorV1alpha1) KonnectExtensions(namespace string) v1alpha1.KonnectExtensionInterface {
-	return newFakeKonnectExtensions(c, namespace)
-}
-
 func (c *FakeGatewayOperatorV1alpha1) WatchNamespaceGrants(namespace string) v1alpha1.WatchNamespaceGrantInterface {
 	return newFakeWatchNamespaceGrants(c, namespace)
 }
