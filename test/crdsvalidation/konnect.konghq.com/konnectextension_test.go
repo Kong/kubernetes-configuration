@@ -127,6 +127,22 @@ func TestKonnectExtension(t *testing.T) {
 				},
 				ExpectedErrorMessage: lo.ToPtr("secretRef must not be set when provisioning is set to Automatic."),
 			},
+			{
+				Name: "kic controlplane",
+				TestObject: &konnectv1alpha2.KonnectExtension{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: konnectv1alpha2.KonnectExtensionSpec{
+						Konnect: konnectv1alpha2.KonnectExtensionKonnectSpec{
+							ControlPlane: konnectv1alpha2.KonnectExtensionControlPlane{
+								Ref: commonv1alpha1.KonnectExtensionControlPlaneRef{
+									Type: configurationv1alpha1.ControlPlaneRefKIC,
+								},
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr(`Unsupported value: "kic"`),
+			},
 		}.Run(t)
 	})
 	t.Run("dataPlane labels", func(t *testing.T) {

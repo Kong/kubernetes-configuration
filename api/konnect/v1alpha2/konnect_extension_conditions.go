@@ -16,5 +16,5 @@ const (
 	// KonnectExtensionReadyReasonProvisioning is the reason used with the
 	// KonnectExtensionReady condition type indicating that the Konnect extension
 	// is provisioning.
-	KonnectExtensionReadyReasonProvisioning = "provisioning"
+	KonnectExtensionReadyReasonProvisioning = "Provisioning"
 )
