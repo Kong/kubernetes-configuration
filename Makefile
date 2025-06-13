@@ -236,9 +236,12 @@ GOLANGCI_LINT_KUBE_API_LINTER = $(PROJECT_DIR)/bin/golangci-kube-api-linter
 
 .PHONY: lint.api
 lint.api: golangci-lint
+# Cannot add konnect/v1alpha2 just yet because: https://github.com/kubernetes-sigs/kube-api-linter/issues/101
+# api/konnect/v1alpha2/konnect_extension_types.go:113:2: nomaps: Labels should not use a map type, use a list type with a unique name/identifier instead (kubeapilinter)
 	@[[ -f $(GOLANGCI_LINT_KUBE_API_LINTER) ]] || $(GOLANGCI_LINT) custom -v
 	$(GOLANGCI_LINT_KUBE_API_LINTER) run --config $(PROJECT_DIR)/.golangci-kube-api.yaml -v \
-		./api/gateway-operator/v2alpha1/...
+		./api/gateway-operator/v2alpha1/... \
+		./api/konnect/v1alpha1/...
 
 .PHONY: test.samples
 test.samples: kustomize
