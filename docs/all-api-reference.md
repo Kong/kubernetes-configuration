@@ -3299,7 +3299,7 @@ ControlPlane is the Schema for the controlplanes API
 | `apiVersion` _string_ | `gateway-operator.konghq.com/v2alpha1`
 | `kind` _string_ | `ControlPlane`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[ControlPlaneSpec](#controlplanespec)_ |  |
+| `spec` _[ControlPlaneSpec](#controlplanespec)_ | Spec is the specification of the ControlPlane resource. |
 
 
 
@@ -4194,7 +4194,7 @@ KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayContro
 | `mirror` _[MirrorSpec](#mirrorspec)_ | Mirror is the Konnect Mirror configuration. It is only applicable for ControlPlanes that are created as Mirrors. |
 | `source` _[EntitySource](#entitysource)_ | Source represents the source type of the Konnect entity. |
 | `members` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#localobjectreference-v1-core) array_ | Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group. Only applicable for ControlPlanes that are created as groups. |
-| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ |  |
+| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration contains the Konnect configuration for the control plane. |
 
 
 _Appears in:_

@@ -8411,7 +8411,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ControlPlaneSpec defines the desired state of ControlPlane
+            description: Spec is the specification of the ControlPlane resource.
             properties:
               adminAPI:
                 description: AdminAPI defines the configuration for the Kong Admin
@@ -8615,7 +8615,7 @@ spec:
                 && e.kind == ''KonnectExtension'') || (e.group == ''gateway-operator.konghq.com''
                 && e.kind == ''DataPlaneMetricsExtension'')) : true'
           status:
-            description: ControlPlaneStatus defines the observed state of ControlPlane
+            description: Status is the status of the ControlPlane resource.
             properties:
               conditions:
                 default:

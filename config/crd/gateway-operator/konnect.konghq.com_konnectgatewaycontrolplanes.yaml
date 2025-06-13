@@ -71,8 +71,8 @@ spec:
                 description: The description of the control plane in Konnect.
                 type: string
               konnect:
-                description: KonnectConfiguration is the Schema for the KonnectConfiguration
-                  API.
+                description: KonnectConfiguration contains the Konnect configuration
+                  for the control plane.
                 properties:
                   authRef:
                     description: |-
