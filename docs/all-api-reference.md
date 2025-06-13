@@ -2106,9 +2106,7 @@ It can be attached to a ControlPlane using its spec.extensions.
 When attached it will make the ControlPlane configure its DataPlane with
 the specified metrics configuration.
 Additionally, it will also make the operator expose DataPlane's metrics
-enriched with metadata required for in-cluster Kubernetes autoscaling.<br /><br />
-NOTE: This is an enterprise feature. In order to use it you need to use
-the EE version of Kong Gateway Operator with a valid license.
+enriched with metadata required for in-cluster Kubernetes autoscaling.
 
 <!-- data_plane_metrics_extension description placeholder -->
 

@@ -234,11 +234,17 @@ GOLANGCI_LINT_KUBE_API_LINTER = $(PROJECT_DIR)/bin/golangci-kube-api-linter
 # .custom-gcl.yml it will not cause a rebuild. Until that changes, we need to
 # manually remove the binary and call `make lint.api` to rebuild it.
 
+.PHONY: lint.api.remove
+lint.api.remove:
+	@rm -f $(GOLANGCI_LINT_KUBE_API_LINTER)
+
 .PHONY: lint.api
 lint.api: golangci-lint
 	@[[ -f $(GOLANGCI_LINT_KUBE_API_LINTER) ]] || $(GOLANGCI_LINT) custom -v
 	$(GOLANGCI_LINT_KUBE_API_LINTER) run --config $(PROJECT_DIR)/.golangci-kube-api.yaml -v \
-		./api/gateway-operator/v2alpha1/...
+		./api/gateway-operator/v2alpha1/... \
+		./api/konnect/v1alpha1/... \
+		./api/konnect/v1alpha2/...
 
 .PHONY: test.samples
 test.samples: kustomize

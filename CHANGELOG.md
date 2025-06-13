@@ -39,6 +39,8 @@ Adding a new version? You'll need three changes:
 - The old `gateway-operator.konghq.com` `KonnectExtension` has been definitely removed
   after its deprecation in v1.5.0.
   [#450](https://github.com/Kong/kubernetes-configuration/pull/450)
+- `DataPlaneMetricsExtension` is not marked as EE only anymore.
+  [#456](https://github.com/Kong/kubernetes-configuration/pull/456)
 
 ## [v1.4.1]
 
