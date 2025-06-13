@@ -15,13 +15,23 @@
   "schedule": "before 5am every weekday",
   "customManagers": [
     {
-      "description": "Match dependencies in .tools_verisons.yaml that are properly annotated with `# renovate: datasource={} depName={}.`",
+      "description": "Match dependencies in .tools_versions.yaml that are properly annotated with `# renovate: datasource={} depName={}.`",
       "customType": "regex",
       "fileMatch": [
         "\\.tools_versions\\.yaml$"
       ],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\n.+\"(?<currentValue>.*?)\""
+      ]
+    },
+    {
+      "description": "Match dependencies in .custom-gcl.yml that are properly annotated with `# renovate: datasource={} depName={}.`",
+      "customType": "regex",
+      "fileMatch": [
+        "\\.custom-gcl\\.yml$"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\nversion: v(?<currentValue>.*)"
       ]
     }
   ],
