@@ -19,3 +19,5 @@ limitations under the License.
 package v2alpha1
 
 type ControlPlaneExpansion interface{}
+
+type GatewayConfigurationExpansion interface{}
