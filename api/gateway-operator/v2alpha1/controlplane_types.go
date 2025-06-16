@@ -68,9 +68,9 @@ type ControlPlaneSpec struct {
 	// DataPlane designates the target data plane to configure.
 	//
 	// It can be:
-	// - a name of a DataPlane resource that is managed by the operator
+	// - a name of a DataPlane resource that is managed by the operator,
 	// - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource)
-	// - a URL to an externally managed DataPlane (e.g. installed independently with Helm)
+	// - a URL to an externally managed DataPlane (e.g. installed independently with Helm),
 	//
 	// +required
 	DataPlane ControlPlaneDataPlaneTarget `json:"dataplane"`
