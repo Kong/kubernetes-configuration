@@ -8455,9 +8455,10 @@ spec:
                 description: |-
                   DataPlane designates the target data plane to configure.
 
-                  It can be either a URL to an externally managed DataPlane (e.g. installed
-                  independently with Helm) or a name of a DataPlane resource that is
-                  managed by the operator.
+                  It can be:
+                  - a name of a DataPlane resource that is managed by the operator,
+                  - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource)
+                  - a URL to an externally managed DataPlane (e.g. installed independently with Helm),
                 properties:
                   external:
                     description: |-
