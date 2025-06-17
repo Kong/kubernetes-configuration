@@ -52,6 +52,8 @@ func init() {
 // +kubebuilder:validation:XValidation:rule="has(self.spec.healthchecks) && has(self.spec.healthchecks.passive) && has(self.spec.healthchecks.passive.healthy) ? !has(self.spec.healthchecks.passive.healthy.interval) : true", message="spec.healthchecks.passive.healthy.interval must not be set."
 // +kubebuilder:validation:XValidation:rule="has(self.spec.healthchecks) && has(self.spec.healthchecks.passive) && has(self.spec.healthchecks.passive.unhealthy) ? !has(self.spec.healthchecks.passive.unhealthy.interval) : true", message="spec.healthchecks.passive.unhealthy.interval must not be set."
 // +kubebuilder:validation:XValidation:rule="has(self.spec.hashOn) && has(self.spec.hashOn.cookie) ? !has(self.spec.hashOnFallback) : true", message="spec.hashOnFallback must not be set when spec.hashOn.cookie is set."
+// +kubebuilder:validation:XValidation:rule="has(self.spec.stickySessions) ? (has(self.spec.hashOn) && has(self.spec.hashOn.input) && self.spec.hashOn.input == 'none' && !has(self.spec.hashOn.cookie) && !has(self.spec.hashOn.cookiePath) && !has(self.spec.hashOn.header) && !has(self.spec.hashOn.uriCapture) && !has(self.spec.hashOn.queryArg)) : true", message="When spec.stickySessions is set, spec.hashOn.input must be set to 'none' (no other hash_on fields allowed)."
+// +kubebuilder:validation:XValidation:rule="has(self.spec.stickySessions) ? has(self.spec.stickySessions.cookie) : true", message="spec.stickySessions.cookie is required when spec.stickySessions is set."
 // +apireference:kic:include
 // +kong:channels=ingress-controller
 type KongUpstreamPolicy struct {
@@ -99,11 +101,18 @@ type KongUpstreamPolicySpec struct {
 
 	// Healthchecks defines the health check configurations in Kong.
 	Healthchecks *KongUpstreamHealthcheck `json:"healthchecks,omitempty"`
+
+	// StickySessions defines the sticky session configuration for the upstream.
+	// When enabled, clients will be routed to the same backend target based on a cookie.
+	// This requires Kong Enterprise Gateway and sets hash_on to "none".
+	//
+	// +optional
+	StickySessions *KongUpstreamStickySessions `json:"stickySessions,omitempty"`
 }
 
 // HashInput is the input for consistent-hashing load balancing algorithm.
-// Can be one of: "ip", "consumer", "path".
-// +kubebuilder:validation:Enum=ip;consumer;path
+// Use "none" to disable hashing, it is required for sticky sessions.
+// +kubebuilder:validation:Enum=ip;consumer;path;none
 // +apireference:kic:include
 type HashInput string
 
@@ -111,7 +120,7 @@ type HashInput string
 // Only one of the fields must be set.
 // +apireference:kic:include
 type KongUpstreamHash struct {
-	// Input allows using one of the predefined inputs (ip, consumer, path).
+	// Input allows using one of the predefined inputs (ip, consumer, path, none).
 	// For other parametrized inputs, use one of the fields below.
 	Input *HashInput `json:"input,omitempty"`
 
@@ -129,6 +138,25 @@ type KongUpstreamHash struct {
 
 	// URICapture is the name of the URI capture group to use as hash input.
 	URICapture *string `json:"uriCapture,omitempty"`
+}
+
+// KongUpstreamStickySessions defines the sticky session configuration for Kong upstream.
+// Sticky sessions ensure that requests from the same client are routed to the same backend target.
+// This is achieved using cookies and requires Kong Enterprise Gateway.
+// +apireference:kic:include
+type KongUpstreamStickySessions struct {
+	// Cookie is the name of the cookie to use for sticky sessions.
+	// Kong will generate this cookie if it doesn't exist in the request.
+	//
+	// +required
+	// +kubebuilder:validation:MinLength=1
+	Cookie string `json:"cookie"`
+
+	// CookiePath is the path to set in the cookie.
+	// +kubebuilder:default="/"
+	//
+	// +optional
+	CookiePath *string `json:"cookiePath,omitempty"`
 }
 
 // KongUpstreamHealthcheck represents a health-check config of an Upstream in Kong.

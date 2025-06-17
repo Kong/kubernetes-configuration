@@ -46,6 +46,11 @@ Adding a new version? You'll need three changes:
   [#449](https://github.com/Kong/kubernetes-configuration/pull/449)
   [#452](https://github.com/Kong/kubernetes-configuration/pull/452)
 
+### Added
+
+- Added sticky sessions support for `KongUpstreamPolicy`.
+  [#463](https://github.com/Kong/kubernetes-configuration/pull/463)
+
 ### Fixes
 
 - Fix `DataPlane` CEL CEL validation rule during blue green rollout
