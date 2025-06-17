@@ -766,6 +766,6 @@ spec:
         - message: spec.konnect.controlPlane.ref is immutable.
           rule: oldSelf.spec.konnect.controlPlane.ref == self.spec.konnect.controlPlane.ref
     served: true
-    storage: false
+    storage: true
     subresources:
       status: {}

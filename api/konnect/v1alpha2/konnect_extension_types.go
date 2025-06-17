@@ -34,6 +34,7 @@ const (
 // deployment(s) spec gets customized to include the konnect-related configuration.
 //
 // +genclient
+// +kubebuilder:storageversion
 // +kubebuilder:resource:scope=Namespaced
 // +kubebuilder:resource:categories=kong
 // +kubebuilder:object:root=true
