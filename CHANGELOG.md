@@ -22,10 +22,21 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
+## Cleanups
+
+- Unsuported `gateway-operator.konghq.com` `KonnectExtension` marked as deprecated
+  ( it's already been since v1.5.0 but now the CRD is marked as such ).
+  The only API version affected is `v1alpha1` which is now marked as unserved.
+  Users should migrate to `v1alpha2` version of `konnect.konghq.com/KonnectExtension` API instead.
+  [#450](https://github.com/Kong/kubernetes-configuration/pull/450)
+- `DataPlaneMetricsExtension` is not marked as EE only anymore.
+  [#456](https://github.com/Kong/kubernetes-configuration/pull/456)
+
 ### Breaking Changes
 
 - `KonnectExtension` `v1alpha2` has been introduced as the API does not allow anymore to
-  reference Konnect Gateway ControlPlanes via plain KonnectID. Use Mirror `KonnectGatewayControlPlane`s instead.
+  reference Konnect Gateway ControlPlanes via plain KonnectID.
+  Use Mirror `KonnectGatewayControlPlane`s instead.
   [#449](https://github.com/Kong/kubernetes-configuration/pull/449)
   [#452](https://github.com/Kong/kubernetes-configuration/pull/452)
 
@@ -33,14 +44,6 @@ Adding a new version? You'll need three changes:
 
 - Fix `DataPlane` CEL CEL validation rule during blue green rollout
   [#439](https://github.com/Kong/kubernetes-configuration/pull/439)
-
-## Cleanups
-
-- The old `gateway-operator.konghq.com` `KonnectExtension` has been definitely removed
-  after its deprecation in v1.5.0.
-  [#450](https://github.com/Kong/kubernetes-configuration/pull/450)
-- `DataPlaneMetricsExtension` is not marked as EE only anymore.
-  [#456](https://github.com/Kong/kubernetes-configuration/pull/456)
 
 ## [v1.4.1]
 
