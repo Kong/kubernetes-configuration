@@ -201,7 +201,10 @@ CHANNELS := ingress-controller ingress-controller-incubator gateway-operator
 
 # Install all CRDs into the K8s cluster specified in ~/.kube/config.
 .PHONY: install
-install: generate.crds kustomize
+install: generate.crds install.only
+
+.PHONY: install.only
+install.only: kustomize
 	@for channel in $(CHANNELS); do \
 		$(KUSTOMIZE) build config/crd/$$channel | kubectl apply --server-side -f -; \
 	done

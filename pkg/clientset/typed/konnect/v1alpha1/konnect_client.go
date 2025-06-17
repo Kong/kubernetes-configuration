@@ -32,6 +32,7 @@ type KonnectV1alpha1Interface interface {
 	KonnectCloudGatewayDataPlaneGroupConfigurationsGetter
 	KonnectCloudGatewayNetworksGetter
 	KonnectCloudGatewayTransitGatewaysGetter
+	KonnectExtensionsGetter
 	KonnectGatewayControlPlanesGetter
 }
 
@@ -54,6 +55,10 @@ func (c *KonnectV1alpha1Client) KonnectCloudGatewayNetworks(namespace string) Ko
 
 func (c *KonnectV1alpha1Client) KonnectCloudGatewayTransitGateways(namespace string) KonnectCloudGatewayTransitGatewayInterface {
 	return newKonnectCloudGatewayTransitGateways(c, namespace)
+}
+
+func (c *KonnectV1alpha1Client) KonnectExtensions(namespace string) KonnectExtensionInterface {
+	return newKonnectExtensions(c, namespace)
 }
 
 func (c *KonnectV1alpha1Client) KonnectGatewayControlPlanes(namespace string) KonnectGatewayControlPlaneInterface {

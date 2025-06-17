@@ -35,6 +35,8 @@ const (
 // deployment spec gets customized to include the konnect-related configuration.
 //
 // +genclient
+// +kubebuilder:deprecatedversion:warning="This API has been deprecated in favor of konnectextensions.konnect.konghq.com and it will be removed in future version."
+// +kubebuilder:unservedversion
 // +kubebuilder:resource:scope=Namespaced
 // +kubebuilder:object:root=true
 // +kubebuilder:object:generate=true
