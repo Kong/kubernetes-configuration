@@ -27,10 +27,14 @@ spec:
       jsonPath: .metadata.creationTimestamp
       name: Age
       type: date
+    deprecated: true
+    deprecationWarning: configuration.konghq.com/v1beta1 UDPIngress is deprecated
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: UDPIngress is the Schema for the udpingresses API.
+        description: |-
+          UDPIngress is the Schema for the udpingresses API.
+          Deprecated: Use Gateway API instead.
         properties:
           apiVersion:
             description: |-
