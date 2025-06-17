@@ -163,7 +163,7 @@ jobs:
         node_image: ${{ matrix.node_image }}
 
     - name: Verify installing CRDs via kustomize works
-      run: make install
+      run: make install.only
 
     - name: Install and delete each sample one by one
       run: make test.samples
@@ -196,10 +196,42 @@ jobs:
         node_image: ${{ matrix.node_image }}
 
     - name: Verify installing CRDs via kustomize works
-      run: make install
+      run: make install.only
 
     - name: Run the crds validation tests
       run: make test.crds-validation
+
+  upgrade-crds-from-latest-release:
+    runs-on: ubuntu-latest
+    needs:
+    - matrix_k8s_node_images
+    strategy:
+      matrix:
+        include: ${{ fromJson(needs.matrix_k8s_node_images.outputs.matrix) }}
+
+    steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+    - uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2.2.3
+      with:
+        install: false
+
+    - name: Create k8s KinD Cluster
+      uses: helm/kind-action@a1b0e391336a6ee6713a0583f8c6240d70863de3 # v1.12.0
+      with:
+        # NOTE: default is 0.26.0 https://github.com/helm/kind-action/blob/a1b0e391336a6ee6713a0583f8c6240d70863de3/kind.sh#L21
+        # so bump this manually
+        version: v0.27.0
+        node_image: ${{ matrix.node_image }}
+
+    - run: make kustomize
+
+    # TODO: Automate bumping the version here.
+    - name: Install last release CRDs
+      run: kustomize build github.com/kong/kubernetes-configuration/config/crd/gateway-operator\?ref=v1.4.2 | kubectl apply --server-side -f -
+
+    - name: Install current CRDs
+      run: make install.only
 
   # We need this step to fail the workflow if any of the previous steps failed or were cancelled.
   # It allows to use this particular job as a required check for PRs.
@@ -216,6 +248,7 @@ jobs:
       - generate
       - apply
       - CRDs-validation
+      - upgrade-crds-from-latest-release
     if: always()
     steps:
       - if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
