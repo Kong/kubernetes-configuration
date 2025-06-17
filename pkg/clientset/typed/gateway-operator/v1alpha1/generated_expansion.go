@@ -24,4 +24,6 @@ type DataPlaneMetricsExtensionExpansion interface{}
 
 type KongPluginInstallationExpansion interface{}
 
+type KonnectExtensionExpansion interface{}
+
 type WatchNamespaceGrantExpansion interface{}

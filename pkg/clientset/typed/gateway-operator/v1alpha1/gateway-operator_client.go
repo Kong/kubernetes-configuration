@@ -31,6 +31,7 @@ type GatewayOperatorV1alpha1Interface interface {
 	AIGatewaysGetter
 	DataPlaneMetricsExtensionsGetter
 	KongPluginInstallationsGetter
+	KonnectExtensionsGetter
 	WatchNamespaceGrantsGetter
 }
 
@@ -49,6 +50,10 @@ func (c *GatewayOperatorV1alpha1Client) DataPlaneMetricsExtensions(namespace str
 
 func (c *GatewayOperatorV1alpha1Client) KongPluginInstallations(namespace string) KongPluginInstallationInterface {
 	return newKongPluginInstallations(c, namespace)
+}
+
+func (c *GatewayOperatorV1alpha1Client) KonnectExtensions(namespace string) KonnectExtensionInterface {
+	return newKonnectExtensions(c, namespace)
 }
 
 func (c *GatewayOperatorV1alpha1Client) WatchNamespaceGrants(namespace string) WatchNamespaceGrantInterface {

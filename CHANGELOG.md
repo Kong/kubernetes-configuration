@@ -34,14 +34,6 @@ Adding a new version? You'll need three changes:
 - Fix `DataPlane` CEL CEL validation rule during blue green rollout
   [#439](https://github.com/Kong/kubernetes-configuration/pull/439)
 
-## Cleanups
-
-- The old `gateway-operator.konghq.com` `KonnectExtension` has been definitely removed
-  after its deprecation in v1.5.0.
-  [#450](https://github.com/Kong/kubernetes-configuration/pull/450)
-- `DataPlaneMetricsExtension` is not marked as EE only anymore.
-  [#456](https://github.com/Kong/kubernetes-configuration/pull/456)
-
 ## [v1.4.1]
 
 [v1.4.1]: https://github.com/Kong/kubernetes-configuration/compare/v1.4.0...v1.4.1
