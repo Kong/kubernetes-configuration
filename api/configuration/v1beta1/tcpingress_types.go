@@ -21,6 +21,10 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+// TODO(Jintao): Add docs link to Deprecated description once we have a
+// documentation page for the migration.
+// https://github.com/Kong/kubernetes-ingress-controller/issues/7496
+
 // TCPIngress is the Schema for the tcpingresses API.
 // Deprecated: Use Gateway API instead.
 //

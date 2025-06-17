@@ -25,6 +25,10 @@ func init() {
 	SchemeBuilder.Register(&UDPIngress{}, &UDPIngressList{})
 }
 
+// TODO(Jintao): Add docs link to Deprecated description once we have a
+// documentation page for the migration.
+// https://github.com/Kong/kubernetes-ingress-controller/issues/7496
+
 // UDPIngressList contains a list of UDPIngress.
 //
 // +kubebuilder:object:root=true
