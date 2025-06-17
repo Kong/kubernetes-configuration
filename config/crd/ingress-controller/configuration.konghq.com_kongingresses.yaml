@@ -19,10 +19,14 @@ spec:
     singular: kongingress
   scope: Namespaced
   versions:
-  - name: v1
+  - deprecated: true
+    deprecationWarning: configuration.konghq.com/v1 KongIngress is deprecated
+    name: v1
     schema:
       openAPIV3Schema:
-        description: KongIngress is the Schema for the kongingresses API.
+        description: |-
+          KongIngress is the Schema for the kongingresses API.
+          Deprecated: Use Gateway API instead.
         properties:
           apiVersion:
             description: |-

@@ -22,6 +22,7 @@ import (
 )
 
 // TCPIngress is the Schema for the tcpingresses API.
+// Deprecated: Use Gateway API instead.
 //
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -30,6 +31,7 @@ import (
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 // +kubebuilder:printcolumn:name="Address",type=string,JSONPath=`.status.loadBalancer.ingress[*].ip`,description="Address of the load balancer"
+// +kubebuilder:deprecatedversion:warning="configuration.konghq.com/v1beta1 TCPIngress is deprecated"
 // +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.metadata.creationTimestamp`,description="Age"
 // +apireference:kic:include
 // +kong:channels=ingress-controller

@@ -30,8 +30,10 @@ import (
 // +kubebuilder:resource:shortName=ki,categories=kong-ingress-controller
 // +kubebuilder:validation:XValidation:rule="!has(self.proxy)", message="'proxy' field is no longer supported, use Service's annotations instead"
 // +kubebuilder:validation:XValidation:rule="!has(self.route)", message="'route' field is no longer supported, use Ingress' annotations instead"
+// +kubebuilder:deprecatedversion:warning="configuration.konghq.com/v1 KongIngress is deprecated"
 
 // KongIngress is the Schema for the kongingresses API.
+// Deprecated: Use Gateway API instead.
 // +apireference:kic:include
 // +kong:channels=ingress-controller
 type KongIngress struct {
