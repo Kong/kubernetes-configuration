@@ -68,17 +68,18 @@ spec:
               algorithm:
                 description: |-
                   Algorithm is the load balancing algorithm to use.
-                  Accepted values are: "round-robin", "consistent-hashing", "least-connections", "latency".
+                  Accepted values are: "round-robin", "consistent-hashing", "least-connections", "latency", "sticky-sessions.
                 enum:
                 - round-robin
                 - consistent-hashing
                 - least-connections
                 - latency
+                - sticky-sessions
                 type: string
               hashOn:
                 description: |-
-                  HashOn defines how to calculate hash for consistent-hashing load balancing algorithm.
-                  Algorithm must be set to "consistent-hashing" for this field to have effect.
+                  HashOn defines how to calculate hash for consistent-hashing or sticky-sessions load balancing algorithm.
+                  Algorithm must be set to "consistent-hashing" or "sticky-sessions" for this field to have effect.
                 properties:
                   cookie:
                     description: Cookie is the name of the cookie to use as hash input.
@@ -92,12 +93,14 @@ spec:
                     type: string
                   input:
                     description: |-
-                      Input allows using one of the predefined inputs (ip, consumer, path).
+                      Input allows using one of the predefined inputs (ip, consumer, path, none).
+                      Set this to `none` if you want to use sticky sessions.
                       For other parametrized inputs, use one of the fields below.
                     enum:
                     - ip
                     - consumer
                     - path
+                    - none
                     type: string
                   queryArg:
                     description: QueryArg is the name of the query argument to use
@@ -126,12 +129,14 @@ spec:
                     type: string
                   input:
                     description: |-
-                      Input allows using one of the predefined inputs (ip, consumer, path).
+                      Input allows using one of the predefined inputs (ip, consumer, path, none).
+                      Set this to `none` if you want to use sticky sessions.
                       For other parametrized inputs, use one of the fields below.
                     enum:
                     - ip
                     - consumer
                     - path
+                    - none
                     type: string
                   queryArg:
                     description: QueryArg is the name of the query argument to use
@@ -340,6 +345,25 @@ spec:
                 maximum: 65536
                 minimum: 10
                 type: integer
+              stickySessions:
+                description: |-
+                  StickySessions defines the sticky session configuration for the upstream.
+                  When enabled, clients will be routed to the same backend target based on a cookie.
+                  This requires Kong Enterprise Gateway and setting `hash_on` to `none`.
+                properties:
+                  cookie:
+                    description: |-
+                      Cookie is the name of the cookie to use for sticky sessions.
+                      Kong will generate this cookie if it doesn't exist in the request.
+                    minLength: 1
+                    type: string
+                  cookiePath:
+                    default: /
+                    description: CookiePath is the path to set in the cookie.
+                    type: string
+                required:
+                - cookie
+                type: object
             type: object
           status:
             description: Status defines the current state of KongUpstreamPolicy
@@ -681,6 +705,17 @@ spec:
         - message: spec.hashOnFallback must not be set when spec.hashOn.cookie is
             set.
           rule: 'has(self.spec.hashOn) && has(self.spec.hashOn.cookie) ? !has(self.spec.hashOnFallback)
+            : true'
+        - message: When spec.stickySessions is set, spec.hashOn.input must be set
+            to 'none' (no other hash_on fields allowed).
+          rule: 'has(self.spec.stickySessions) ? (has(self.spec.hashOn) && has(self.spec.hashOn.input)
+            && self.spec.hashOn.input == ''none'' && !has(self.spec.hashOn.cookie)
+            && !has(self.spec.hashOn.cookiePath) && !has(self.spec.hashOn.header)
+            && !has(self.spec.hashOn.uriCapture) && !has(self.spec.hashOn.queryArg))
+            : true'
+        - message: spec.stickySessions.cookie is required when spec.stickySessions
+            is set.
+          rule: 'has(self.spec.stickySessions) ? has(self.spec.stickySessions.cookie)
             : true'
     served: true
     storage: true

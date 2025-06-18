@@ -1773,7 +1773,7 @@ _Appears in:_
 _Underlying type:_ `string`
 
 HashInput is the input for consistent-hashing load balancing algorithm.
-Can be one of: "ip", "consumer", "path".
+Use "none" to disable hashing, it is required for sticky sessions.
 
 
 
@@ -1885,7 +1885,7 @@ Only one of the fields must be set.
 
 | Field | Description |
 | --- | --- |
-| `input` _[HashInput](#hashinput)_ | Input allows using one of the predefined inputs (ip, consumer, path). For other parametrized inputs, use one of the fields below. |
+| `input` _[HashInput](#hashinput)_ | Input allows using one of the predefined inputs (ip, consumer, path, none). Set this to `none` if you want to use sticky sessions. For other parametrized inputs, use one of the fields below. |
 | `header` _string_ | Header is the name of the header to use as hash input. |
 | `cookie` _string_ | Cookie is the name of the cookie to use as hash input. |
 | `cookiePath` _string_ | CookiePath is cookie path to set in the response headers. |
@@ -1978,15 +1978,34 @@ KongUpstreamPolicySpec contains the specification for KongUpstreamPolicy.
 
 | Field | Description |
 | --- | --- |
-| `algorithm` _string_ | Algorithm is the load balancing algorithm to use. Accepted values are: "round-robin", "consistent-hashing", "least-connections", "latency". |
+| `algorithm` _string_ | Algorithm is the load balancing algorithm to use. Accepted values are: "round-robin", "consistent-hashing", "least-connections", "latency", "sticky-sessions. |
 | `slots` _integer_ | Slots is the number of slots in the load balancer algorithm. If not set, the default value in Kong for the algorithm is used. |
-| `hashOn` _[KongUpstreamHash](#kongupstreamhash)_ | HashOn defines how to calculate hash for consistent-hashing load balancing algorithm. Algorithm must be set to "consistent-hashing" for this field to have effect. |
+| `hashOn` _[KongUpstreamHash](#kongupstreamhash)_ | HashOn defines how to calculate hash for consistent-hashing or sticky-sessions load balancing algorithm. Algorithm must be set to "consistent-hashing" or "sticky-sessions" for this field to have effect. |
 | `hashOnFallback` _[KongUpstreamHash](#kongupstreamhash)_ | HashOnFallback defines how to calculate hash for consistent-hashing load balancing algorithm if the primary hash function fails. Algorithm must be set to "consistent-hashing" for this field to have effect. |
 | `healthchecks` _[KongUpstreamHealthcheck](#kongupstreamhealthcheck)_ | Healthchecks defines the health check configurations in Kong. |
+| `stickySessions` _[KongUpstreamStickySessions](#kongupstreamstickysessions)_ | StickySessions defines the sticky session configuration for the upstream. When enabled, clients will be routed to the same backend target based on a cookie. This requires Kong Enterprise Gateway and setting `hash_on` to `none`. |
 
 
 _Appears in:_
 - [KongUpstreamPolicy](#kongupstreampolicy)
+
+#### KongUpstreamStickySessions
+
+
+KongUpstreamStickySessions defines the sticky session configuration for Kong upstream.
+Sticky sessions ensure that requests from the same client are routed to the same backend target.
+This is achieved using cookies and requires Kong Enterprise Gateway.
+
+
+
+| Field | Description |
+| --- | --- |
+| `cookie` _string_ | Cookie is the name of the cookie to use for sticky sessions. Kong will generate this cookie if it doesn't exist in the request. |
+| `cookiePath` _string_ | CookiePath is the path to set in the cookie. |
+
+
+_Appears in:_
+- [KongUpstreamPolicySpec](#kongupstreampolicyspec)
 
 #### TCPIngressSpec
 
