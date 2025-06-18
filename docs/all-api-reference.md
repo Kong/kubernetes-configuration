@@ -1908,7 +1908,7 @@ Only one of the fields must be set.
 
 | Field | Description |
 | --- | --- |
-| `input` _[HashInput](#hashinput)_ | Input allows using one of the predefined inputs (ip, consumer, path, none). For other parametrized inputs, use one of the fields below. |
+| `input` _[HashInput](#hashinput)_ | Input allows using one of the predefined inputs (ip, consumer, path, none). Set this to `none` if you want to use sticky sessions. For other parametrized inputs, use one of the fields below. |
 | `header` _string_ | Header is the name of the header to use as hash input. |
 | `cookie` _string_ | Cookie is the name of the cookie to use as hash input. |
 | `cookiePath` _string_ | CookiePath is cookie path to set in the response headers. |
@@ -2006,7 +2006,7 @@ KongUpstreamPolicySpec contains the specification for KongUpstreamPolicy.
 | `hashOn` _[KongUpstreamHash](#kongupstreamhash)_ | HashOn defines how to calculate hash for consistent-hashing or sticky-sessions load balancing algorithm. Algorithm must be set to "consistent-hashing" or "sticky-sessions" for this field to have effect. |
 | `hashOnFallback` _[KongUpstreamHash](#kongupstreamhash)_ | HashOnFallback defines how to calculate hash for consistent-hashing load balancing algorithm if the primary hash function fails. Algorithm must be set to "consistent-hashing" for this field to have effect. |
 | `healthchecks` _[KongUpstreamHealthcheck](#kongupstreamhealthcheck)_ | Healthchecks defines the health check configurations in Kong. |
-| `stickySessions` _[KongUpstreamStickySessions](#kongupstreamstickysessions)_ | StickySessions defines the sticky session configuration for the upstream. When enabled, clients will be routed to the same backend target based on a cookie. This requires Kong Enterprise Gateway and sets hash_on to "none". |
+| `stickySessions` _[KongUpstreamStickySessions](#kongupstreamstickysessions)_ | StickySessions defines the sticky session configuration for the upstream. When enabled, clients will be routed to the same backend target based on a cookie. This requires Kong Enterprise Gateway and setting `hash_on` to `none`. |
 
 
 _Appears in:_

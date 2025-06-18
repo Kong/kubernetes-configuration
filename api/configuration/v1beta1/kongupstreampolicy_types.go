@@ -104,7 +104,7 @@ type KongUpstreamPolicySpec struct {
 
 	// StickySessions defines the sticky session configuration for the upstream.
 	// When enabled, clients will be routed to the same backend target based on a cookie.
-	// This requires Kong Enterprise Gateway and sets hash_on to "none".
+	// This requires Kong Enterprise Gateway and setting `hash_on` to `none`.
 	//
 	// +optional
 	StickySessions *KongUpstreamStickySessions `json:"stickySessions,omitempty"`
@@ -121,6 +121,7 @@ type HashInput string
 // +apireference:kic:include
 type KongUpstreamHash struct {
 	// Input allows using one of the predefined inputs (ip, consumer, path, none).
+	// Set this to `none` if you want to use sticky sessions.
 	// For other parametrized inputs, use one of the fields below.
 	Input *HashInput `json:"input,omitempty"`
 
@@ -153,9 +154,9 @@ type KongUpstreamStickySessions struct {
 	Cookie string `json:"cookie"`
 
 	// CookiePath is the path to set in the cookie.
-	// +kubebuilder:default="/"
 	//
 	// +optional
+	// +kubebuilder:default="/"
 	CookiePath *string `json:"cookiePath,omitempty"`
 }
 
