@@ -31,6 +31,17 @@ Adding a new version? You'll need three changes:
   https://github.com/Kong/kubernetes-ingress-controller/issues/7496 --->
   [#464](https://github.com/Kong/kubernetes-configuration/pull/464)
 
+### Added
+
+- Added sticky sessions support for `KongUpstreamPolicy`.
+  It corresponds to the `sticky session` feature of Kong Gateway.
+  In KIC, we have added a `drain support` feature.
+  When both are enabled, sticky session will continue to be bound to Kong Pod
+  when it's marked as terminating.
+  When sticky session is enabled but drain support is not, then sticky session
+  will stop routing traffic to Kong Pods when they are marked as terminating.
+  [#463](https://github.com/Kong/kubernetes-configuration/pull/463)
+
 ### Fixes
 
 - Fix `DataPlane` CEL CEL validation rule during blue green rollout
