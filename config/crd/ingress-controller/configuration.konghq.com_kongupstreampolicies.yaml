@@ -68,17 +68,18 @@ spec:
               algorithm:
                 description: |-
                   Algorithm is the load balancing algorithm to use.
-                  Accepted values are: "round-robin", "consistent-hashing", "least-connections", "latency".
+                  Accepted values are: "round-robin", "consistent-hashing", "least-connections", "latency", "sticky-sessions.
                 enum:
                 - round-robin
                 - consistent-hashing
                 - least-connections
                 - latency
+                - sticky-sessions
                 type: string
               hashOn:
                 description: |-
-                  HashOn defines how to calculate hash for consistent-hashing load balancing algorithm.
-                  Algorithm must be set to "consistent-hashing" for this field to have effect.
+                  HashOn defines how to calculate hash for consistent-hashing or sticky-sessions load balancing algorithm.
+                  Algorithm must be set to "consistent-hashing" or "sticky-sessions" for this field to have effect.
                 properties:
                   cookie:
                     description: Cookie is the name of the cookie to use as hash input.

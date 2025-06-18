@@ -80,8 +80,8 @@ type KongUpstreamPolicyList struct {
 // +apireference:kic:include
 type KongUpstreamPolicySpec struct {
 	// Algorithm is the load balancing algorithm to use.
-	// Accepted values are: "round-robin", "consistent-hashing", "least-connections", "latency".
-	// +kubebuilder:validation:Enum=round-robin;consistent-hashing;least-connections;latency
+	// Accepted values are: "round-robin", "consistent-hashing", "least-connections", "latency", "sticky-sessions.
+	// +kubebuilder:validation:Enum=round-robin;consistent-hashing;least-connections;latency;sticky-sessions
 	Algorithm *string `json:"algorithm,omitempty"`
 
 	// Slots is the number of slots in the load balancer algorithm.
@@ -90,8 +90,8 @@ type KongUpstreamPolicySpec struct {
 	// +kubebuilder:validation:Maximum=65536
 	Slots *int `json:"slots,omitempty"`
 
-	// HashOn defines how to calculate hash for consistent-hashing load balancing algorithm.
-	// Algorithm must be set to "consistent-hashing" for this field to have effect.
+	// HashOn defines how to calculate hash for consistent-hashing or sticky-sessions load balancing algorithm.
+	// Algorithm must be set to "consistent-hashing" or "sticky-sessions" for this field to have effect.
 	HashOn *KongUpstreamHash `json:"hashOn,omitempty"`
 
 	// HashOnFallback defines how to calculate hash for consistent-hashing load balancing algorithm if the primary hash

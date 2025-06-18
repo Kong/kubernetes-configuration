@@ -2001,9 +2001,9 @@ KongUpstreamPolicySpec contains the specification for KongUpstreamPolicy.
 
 | Field | Description |
 | --- | --- |
-| `algorithm` _string_ | Algorithm is the load balancing algorithm to use. Accepted values are: "round-robin", "consistent-hashing", "least-connections", "latency". |
+| `algorithm` _string_ | Algorithm is the load balancing algorithm to use. Accepted values are: "round-robin", "consistent-hashing", "least-connections", "latency", "sticky-sessions. |
 | `slots` _integer_ | Slots is the number of slots in the load balancer algorithm. If not set, the default value in Kong for the algorithm is used. |
-| `hashOn` _[KongUpstreamHash](#kongupstreamhash)_ | HashOn defines how to calculate hash for consistent-hashing load balancing algorithm. Algorithm must be set to "consistent-hashing" for this field to have effect. |
+| `hashOn` _[KongUpstreamHash](#kongupstreamhash)_ | HashOn defines how to calculate hash for consistent-hashing or sticky-sessions load balancing algorithm. Algorithm must be set to "consistent-hashing" or "sticky-sessions" for this field to have effect. |
 | `hashOnFallback` _[KongUpstreamHash](#kongupstreamhash)_ | HashOnFallback defines how to calculate hash for consistent-hashing load balancing algorithm if the primary hash function fails. Algorithm must be set to "consistent-hashing" for this field to have effect. |
 | `healthchecks` _[KongUpstreamHealthcheck](#kongupstreamhealthcheck)_ | Healthchecks defines the health check configurations in Kong. |
 | `stickySessions` _[KongUpstreamStickySessions](#kongupstreamstickysessions)_ | StickySessions defines the sticky session configuration for the upstream. When enabled, clients will be routed to the same backend target based on a cookie. This requires Kong Enterprise Gateway and sets hash_on to "none". |
