@@ -32,6 +32,10 @@ func (c *FakeGatewayOperatorV2alpha1) ControlPlanes(namespace string) v2alpha1.C
 	return newFakeControlPlanes(c, namespace)
 }
 
+func (c *FakeGatewayOperatorV2alpha1) GatewayConfigurations(namespace string) v2alpha1.GatewayConfigurationInterface {
+	return newFakeGatewayConfigurations(c, namespace)
+}
+
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeGatewayOperatorV2alpha1) RESTClient() rest.Interface {
