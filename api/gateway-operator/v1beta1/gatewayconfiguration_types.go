@@ -31,6 +31,7 @@ func init() {
 // +genclient
 // +apireference:kgo:include
 // +kong:channels=gateway-operator
+// +kubebuilder:deprecatedversion:warning="This API has been deprecated in favor of v2alpha1 API version and it will be removed in future."
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:shortName=kogc,categories=kong;all

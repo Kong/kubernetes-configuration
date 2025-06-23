@@ -3564,7 +3564,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 
 | Field | Description |
 | --- | --- |
-| `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
@@ -3586,7 +3586,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | Field | Description |
 | --- | --- |
 | `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlane designates the target data plane to configure.<br /><br /> It can be: - a name of a DataPlane resource that is managed by the operator, - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource) - a URL to an externally managed DataPlane (e.g. installed independently with Helm), |
-| `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
@@ -3633,7 +3633,7 @@ ControlPlane resources that will be managed as part of the Gateway.
 
 | Field | Description |
 | --- | --- |
-| `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |

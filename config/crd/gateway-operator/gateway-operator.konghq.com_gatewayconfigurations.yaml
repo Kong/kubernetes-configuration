@@ -20,7 +20,10 @@ spec:
     singular: gatewayconfiguration
   scope: Namespaced
   versions:
-  - name: v1beta1
+  - deprecated: true
+    deprecationWarning: This API has been deprecated in favor of v2alpha1 API version
+      and it will be removed in future.
+    name: v1beta1
     schema:
       openAPIV3Schema:
         description: GatewayConfiguration is the Schema for the gatewayconfigurations
@@ -17832,7 +17835,7 @@ spec:
                     x-kubernetes-list-type: map
                   ingressClass:
                     description: |-
-                      IngressClass enables support for the older Ingress resource and indicates
+                      IngressClass enables support for the Ingress resources and indicates
                       which Ingress resources this ControlPlane should be responsible for.
 
                       If omitted, Ingress resources will not be supported by the ControlPlane.

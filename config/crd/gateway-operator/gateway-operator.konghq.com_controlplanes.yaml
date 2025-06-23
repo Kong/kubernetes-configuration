@@ -8572,7 +8572,7 @@ spec:
                 x-kubernetes-list-type: map
               ingressClass:
                 description: |-
-                  IngressClass enables support for the older Ingress resource and indicates
+                  IngressClass enables support for the Ingress resources and indicates
                   which Ingress resources this ControlPlane should be responsible for.
 
                   If omitted, Ingress resources will not be supported by the ControlPlane.
