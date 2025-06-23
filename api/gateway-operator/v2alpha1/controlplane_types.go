@@ -68,9 +68,9 @@ type ControlPlaneSpec struct {
 	// DataPlane designates the target data plane to configure.
 	//
 	// It can be:
-	// - a name of a DataPlane resource that is managed by the operator,
+	// - a name of a DataPlane resource that is managed by the operator
 	// - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource)
-	// - a URL to an externally managed DataPlane (e.g. installed independently with Helm),
+	// - a URL to an externally managed DataPlane (e.g. installed independently with Helm)
 	//
 	// +required
 	DataPlane ControlPlaneDataPlaneTarget `json:"dataplane"`
@@ -84,7 +84,7 @@ type ControlPlaneSpec struct {
 // +apireference:kgo:include
 // +kubebuilder:validation:XValidation:message="Extension not allowed for ControlPlane",rule="has(self.extensions) ? self.extensions.all(e, (e.group == 'konnect.konghq.com' && e.kind == 'KonnectExtension') || (e.group == 'gateway-operator.konghq.com' && e.kind == 'DataPlaneMetricsExtension')) : true"
 type ControlPlaneOptions struct {
-	// IngressClass enables support for the older Ingress resource and indicates
+	// IngressClass enables support for the Ingress resources and indicates
 	// which Ingress resources this ControlPlane should be responsible for.
 	//
 	// If omitted, Ingress resources will not be supported by the ControlPlane.
