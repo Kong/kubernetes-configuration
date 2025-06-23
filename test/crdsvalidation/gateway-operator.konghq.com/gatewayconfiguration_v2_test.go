@@ -41,6 +41,23 @@ func TestGatewayConfigurationV2(t *testing.T) {
 				},
 			},
 			{
+				Name: "valid DataPlaneMetricsExtension at the gatewayConfiguration level",
+				TestObject: &operatorv2alpha1.GatewayConfiguration{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2alpha1.GatewayConfigurationSpec{
+						Extensions: []commonv1alpha1.ExtensionRef{
+							{
+								Group: "gateway-operator.konghq.com",
+								Kind:  "DataPlaneMetricsExtension",
+								NamespacedRef: commonv1alpha1.NamespacedRef{
+									Name: "my-dataplane-metrics-extension",
+								},
+							},
+						},
+					},
+				},
+			},
+			{
 				Name: "invalid konnectExtension",
 				TestObject: &operatorv2alpha1.GatewayConfiguration{
 					ObjectMeta: common.CommonObjectMeta,
@@ -57,26 +74,6 @@ func TestGatewayConfigurationV2(t *testing.T) {
 					},
 				},
 				ExpectedErrorMessage: lo.ToPtr("Extension not allowed for GatewayConfiguration"),
-			},
-			{
-				Name: "konnectExtension at the DataPlane level",
-				TestObject: &operatorv2alpha1.GatewayConfiguration{
-					ObjectMeta: common.CommonObjectMeta,
-					Spec: operatorv2alpha1.GatewayConfigurationSpec{
-						DataPlaneOptions: &operatorv2alpha1.GatewayConfigDataPlaneOptions{
-							Extensions: []commonv1alpha1.ExtensionRef{
-								{
-									Group: "konnect.konghq.com",
-									Kind:  "KonnectExtension",
-									NamespacedRef: commonv1alpha1.NamespacedRef{
-										Name: "my-konnect-extension",
-									},
-								},
-							},
-						},
-					},
-				},
-				ExpectedErrorMessage: lo.ToPtr("KonnectExtension must be set at the Gateway level"),
 			},
 		}.Run(t)
 	})

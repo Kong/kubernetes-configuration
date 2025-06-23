@@ -1487,7 +1487,6 @@ deploy and connect a ControlPlane to a DataPlane object.
 | Field | Description |
 | --- | --- |
 | `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
-| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
@@ -1509,11 +1508,11 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | --- | --- |
 | `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlane designates the target data plane to configure.<br /><br /> It can be: - a name of a DataPlane resource that is managed by the operator, - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource) - a URL to an externally managed DataPlane (e.g. installed independently with Helm), |
 | `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
-| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
 | `adminAPI` _[ControlPlaneAdminAPI](#controlplaneadminapi)_ | AdminAPI defines the configuration for the Kong Admin API. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 
 
 _Appears in:_
@@ -1556,7 +1555,6 @@ ControlPlane resources that will be managed as part of the Gateway.
 | Field | Description |
 | --- | --- |
 | `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
-| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
@@ -1594,7 +1592,6 @@ configure and deploy a DataPlane object.
 | `deployment` _[DataPlaneDeploymentOptions](#dataplanedeploymentoptions)_ |  |
 | `network` _[GatewayConfigDataPlaneNetworkOptions](#gatewayconfigdataplanenetworkoptions)_ |  |
 | `resources` _[GatewayConfigDataPlaneResources](#gatewayconfigdataplaneresources)_ |  |
-| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the DataPlane resources to influence or enhance functionality. NOTE: since we have one extension only (KonnectExtension), we limit the amount of extensions to 1. |
 | `pluginsToInstall` _[NamespacedName](#namespacedname) array_ | PluginsToInstall is a list of KongPluginInstallation resources that will be installed and available in the Gateways (DataPlanes) that use this GatewayConfig. |
 
 
@@ -1662,7 +1659,7 @@ GatewayConfigurationSpec defines the desired state of GatewayConfiguration
 | --- | --- |
 | `dataPlaneOptions` _[GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)_ | DataPlaneOptions is the specification for configuration overrides for DataPlane resources that will be created for the Gateway. |
 | `controlPlaneOptions` _[GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)_ | ControlPlaneOptions is the specification for configuration overrides for ControlPlane resources that will be managed as part of the Gateway. |
-| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: currently, there's only 1 extension that can be attached at the Gateway level (KonnectExtension), so the amount of extensions is limited to 1. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: currently, there are only 2 extensions that can be attached at the Gateway level (KonnectExtension, DataPlaneMetricsExtension), so the amount of extensions is limited to 2. |
 
 
 _Appears in:_
