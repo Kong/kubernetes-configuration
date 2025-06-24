@@ -8455,9 +8455,10 @@ spec:
                 description: |-
                   DataPlane designates the target data plane to configure.
 
-                  It can be either a URL to an externally managed DataPlane (e.g. installed
-                  independently with Helm) or a name of a DataPlane resource that is
-                  managed by the operator.
+                  It can be:
+                  - a name of a DataPlane resource that is managed by the operator,
+                  - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource)
+                  - a URL to an externally managed DataPlane (e.g. installed independently with Helm),
                 properties:
                   external:
                     description: |-
@@ -8571,7 +8572,7 @@ spec:
                 x-kubernetes-list-type: map
               ingressClass:
                 description: |-
-                  IngressClass enables support for the older Ingress resource and indicates
+                  IngressClass enables support for the Ingress resources and indicates
                   which Ingress resources this ControlPlane should be responsible for.
 
                   If omitted, Ingress resources will not be supported by the ControlPlane.

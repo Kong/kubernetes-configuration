@@ -22,6 +22,14 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
+### Breaking Changes
+
+- `KonnectExtension` `v1alpha2` has been introduced as the API does not allow anymore to
+  reference Konnect Gateway ControlPlanes via plain KonnectID.
+  Use Mirror `KonnectGatewayControlPlane`s instead.
+  [#449](https://github.com/Kong/kubernetes-configuration/pull/449)
+  [#452](https://github.com/Kong/kubernetes-configuration/pull/452)
+
 ## Cleanups
 
 - Unsuported `gateway-operator.konghq.com` `KonnectExtension` marked as deprecated
@@ -38,13 +46,15 @@ Adding a new version? You'll need three changes:
   https://github.com/Kong/kubernetes-ingress-controller/issues/7496 --->
   [#464](https://github.com/Kong/kubernetes-configuration/pull/464)
 
-### Breaking Changes
+### Added
 
-- `KonnectExtension` `v1alpha2` has been introduced as the API does not allow anymore to
-  reference Konnect Gateway ControlPlanes via plain KonnectID.
-  Use Mirror `KonnectGatewayControlPlane`s instead.
-  [#449](https://github.com/Kong/kubernetes-configuration/pull/449)
-  [#452](https://github.com/Kong/kubernetes-configuration/pull/452)
+- Added `GatewayConfiguration` `v2alpha1` API version.
+  This is now the storage version for `GatewayConfiguration`.
+  [#462](https://github.com/Kong/kubernetes-configuration/pull/462)
+- Added `ControlPlane` `v2alpha1` API version.
+  This is now the storage version for `ControlPlane`.
+  [#441](https://github.com/Kong/kubernetes-configuration/pull/441)
+  [#454](https://github.com/Kong/kubernetes-configuration/pull/454)
 
 ### Added
 

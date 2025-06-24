@@ -2816,6 +2816,7 @@ _Appears in:_
 - [DataPlaneOptions](#dataplaneoptions)
 - [DataPlaneSpec](#dataplanespec)
 - [GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)
+- [GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)
 
 #### DataPlaneNetworkOptions
 
@@ -3375,6 +3376,7 @@ _Appears in:_
 - [ControlPlaneOptions](#controlplaneoptions)
 - [ControlPlaneSpec](#controlplanespec)
 - [ControlPlaneSpec](#controlplanespec)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
 #### WatchNamespacesType
 _Underlying type:_ `string`
@@ -3396,6 +3398,7 @@ Package v2alpha1 contains API Schema definitions for the gateway-operator.konghq
 Package v2alpha1 contains API Schema definitions for the gateway-operator.konghq.com v2alpha1 API group
 
 - [ControlPlane](#controlplane)
+- [GatewayConfiguration](#gatewayconfiguration)
 ### ControlPlane
 
 
@@ -3409,6 +3412,22 @@ ControlPlane is the Schema for the controlplanes API
 | `kind` _string_ | `ControlPlane`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[ControlPlaneSpec](#controlplanespec)_ | Spec is the specification of the ControlPlane resource. |
+
+
+
+### GatewayConfiguration
+
+
+GatewayConfiguration is the Schema for the gatewayconfigurations API.
+
+<!-- gateway_configuration description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `gateway-operator.konghq.com/v2alpha1`
+| `kind` _string_ | `GatewayConfiguration`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[GatewayConfigurationSpec](#gatewayconfigurationspec)_ | Spec defines the desired state of GatewayConfiguration. |
 
 
 
@@ -3430,6 +3449,7 @@ ControlPlaneAdminAPI defines the configuration for the DataPlane Kong Admin API.
 _Appears in:_
 - [ControlPlaneOptions](#controlplaneoptions)
 - [ControlPlaneSpec](#controlplanespec)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
 #### ControlPlaneController
 
@@ -3449,6 +3469,7 @@ _Appears in:_
 - [ControlPlaneOptions](#controlplaneoptions)
 - [ControlPlaneSpec](#controlplanespec)
 - [ControlPlaneStatus](#controlplanestatus)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
 #### ControlPlaneDataPlaneTarget
 
@@ -3466,7 +3487,6 @@ is responsible for configuring.
 
 
 _Appears in:_
-- [ControlPlaneOptions](#controlplaneoptions)
 - [ControlPlaneSpec](#controlplanespec)
 
 #### ControlPlaneDataPlaneTargetExternal
@@ -3532,6 +3552,7 @@ _Appears in:_
 - [ControlPlaneOptions](#controlplaneoptions)
 - [ControlPlaneSpec](#controlplanespec)
 - [ControlPlaneStatus](#controlplanestatus)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
 #### ControlPlaneOptions
 
@@ -3543,7 +3564,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 
 | Field | Description |
 | --- | --- |
-| `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlane designates the target data plane to configure.<br /><br /> It can be either a URL to an externally managed DataPlane (e.g. installed independently with Helm) or a name of a DataPlane resource that is managed by the operator. |
+| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
@@ -3553,6 +3574,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 
 _Appears in:_
 - [ControlPlaneSpec](#controlplanespec)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
 #### ControlPlaneSpec
 
@@ -3563,13 +3585,13 @@ ControlPlaneSpec defines the desired state of ControlPlane
 
 | Field | Description |
 | --- | --- |
-| `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlane designates the target data plane to configure.<br /><br /> It can be either a URL to an externally managed DataPlane (e.g. installed independently with Helm) or a name of a DataPlane resource that is managed by the operator. |
+| `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlane designates the target data plane to configure.<br /><br /> It can be: - a name of a DataPlane resource that is managed by the operator, - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource) - a URL to an externally managed DataPlane (e.g. installed independently with Helm), |
+| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
 | `adminAPI` _[ControlPlaneAdminAPI](#controlplaneadminapi)_ | AdminAPI defines the configuration for the Kong Admin API. |
-| `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
 
 
 _Appears in:_
@@ -3600,6 +3622,198 @@ FeatureGateState defines the state of a feature gate.
 
 _Appears in:_
 - [ControlPlaneFeatureGate](#controlplanefeaturegate)
+
+#### GatewayConfigControlPlaneOptions
+
+
+GatewayConfigControlPlaneOptions contains the options for configuring
+ControlPlane resources that will be managed as part of the Gateway.
+
+
+
+| Field | Description |
+| --- | --- |
+| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
+| `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
+| `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
+| `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
+| `adminAPI` _[ControlPlaneAdminAPI](#controlplaneadminapi)_ | AdminAPI defines the configuration for the Kong Admin API. |
+
+
+_Appears in:_
+- [GatewayConfigurationSpec](#gatewayconfigurationspec)
+
+#### GatewayConfigDataPlaneNetworkOptions
+
+
+GatewayConfigDataPlaneNetworkOptions defines network related options for a DataPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `services` _[GatewayConfigDataPlaneServices](#gatewayconfigdataplaneservices)_ | Services indicates the configuration of Kubernetes Services needed for the topology of various forms of traffic (including ingress, etc.) to and from the DataPlane. |
+
+
+_Appears in:_
+- [GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)
+
+#### GatewayConfigDataPlaneOptions
+
+
+GatewayConfigDataPlaneOptions indicates the specific information needed to
+configure and deploy a DataPlane object.
+
+
+
+| Field | Description |
+| --- | --- |
+| `deployment` _[DataPlaneDeploymentOptions](#dataplanedeploymentoptions)_ |  |
+| `network` _[GatewayConfigDataPlaneNetworkOptions](#gatewayconfigdataplanenetworkoptions)_ |  |
+| `resources` _[GatewayConfigDataPlaneResources](#gatewayconfigdataplaneresources)_ |  |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the DataPlane resources to influence or enhance functionality. NOTE: since we have one extension only (KonnectExtension), we limit the amount of extensions to 1. |
+| `pluginsToInstall` _[NamespacedName](#namespacedname) array_ | PluginsToInstall is a list of KongPluginInstallation resources that will be installed and available in the Gateways (DataPlanes) that use this GatewayConfig. |
+
+
+_Appears in:_
+- [GatewayConfigurationSpec](#gatewayconfigurationspec)
+
+#### GatewayConfigDataPlaneResources
+
+
+GatewayConfigDataPlaneResources defines the resources that will be
+created and managed for Gateway's DataPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `podDisruptionBudget` _[PodDisruptionBudget](#poddisruptionbudget)_ | PodDisruptionBudget is the configuration for the PodDisruptionBudget that will be created for the DataPlane. |
+
+
+_Appears in:_
+- [GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)
+
+#### GatewayConfigDataPlaneServices
+
+
+GatewayConfigDataPlaneServices contains Services related DataPlane configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `ingress` _[GatewayConfigServiceOptions](#gatewayconfigserviceoptions)_ | Ingress is the Kubernetes Service that will be used to expose ingress traffic for the DataPlane. Here you can determine whether the DataPlane will be exposed outside the cluster (e.g. using a LoadBalancer type Services) or only internally (e.g. ClusterIP), and inject any additional annotations you need on the service (for instance, if you need to influence a cloud provider LoadBalancer configuration). |
+
+
+_Appears in:_
+- [GatewayConfigDataPlaneNetworkOptions](#gatewayconfigdataplanenetworkoptions)
+
+#### GatewayConfigServiceOptions
+
+
+GatewayConfigServiceOptions is used to includes options to customize the ingress service,
+such as the annotations.
+
+
+
+| Field | Description |
+| --- | --- |
+| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br /> `ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br /> `NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br /> `LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br /> More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
+| `name` _string_ | Name defines the name of the service. If Name is empty, the controller will generate a service name from the owning object. |
+| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br /> More info: http://kubernetes.io/docs/user-guide/annotations |
+| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br /> More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
+
+
+_Appears in:_
+- [GatewayConfigDataPlaneServices](#gatewayconfigdataplaneservices)
+
+#### GatewayConfigurationSpec
+
+
+GatewayConfigurationSpec defines the desired state of GatewayConfiguration
+
+
+
+| Field | Description |
+| --- | --- |
+| `dataPlaneOptions` _[GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)_ | DataPlaneOptions is the specification for configuration overrides for DataPlane resources that will be created for the Gateway. |
+| `controlPlaneOptions` _[GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)_ | ControlPlaneOptions is the specification for configuration overrides for ControlPlane resources that will be managed as part of the Gateway. |
+| `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: currently, there's only 1 extension that can be attached at the Gateway level (KonnectExtension), so the amount of extensions is limited to 1. |
+
+
+_Appears in:_
+- [GatewayConfiguration](#gatewayconfiguration)
+
+
+
+#### NamespacedName
+
+
+NamespacedName is a resource identified by name and optional namespace.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the resource. |
+| `namespace` _string_ | Namespace is the namespace of the resource. |
+
+
+_Appears in:_
+- [GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)
+
+#### PodDisruptionBudget
+
+
+PodDisruptionBudget defines the configuration for the PodDisruptionBudget.
+
+
+
+| Field | Description |
+| --- | --- |
+| `spec` _[PodDisruptionBudgetSpec](#poddisruptionbudgetspec)_ | Spec defines the specification of the PodDisruptionBudget. Selector is managed by the controller and cannot be set by the user. |
+
+
+_Appears in:_
+- [GatewayConfigDataPlaneResources](#gatewayconfigdataplaneresources)
+
+#### PodDisruptionBudgetSpec
+
+
+PodDisruptionBudgetSpec defines the specification of a PodDisruptionBudget.
+
+
+
+| Field | Description |
+| --- | --- |
+| `minAvailable` _[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#intorstring-intstr-util)_ | An eviction is allowed if at least "minAvailable" pods selected by "selector" will still be available after the eviction, i.e. even in the absence of the evicted pod.  So for example you can prevent all voluntary evictions by specifying "100%". |
+| `maxUnavailable` _[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#intorstring-intstr-util)_ | An eviction is allowed if at most "maxUnavailable" pods selected by "selector" are unavailable after the eviction, i.e. even in absence of the evicted pod. For example, one can prevent all voluntary evictions by specifying 0. This is a mutually exclusive setting with "minAvailable". |
+| `unhealthyPodEvictionPolicy` _[UnhealthyPodEvictionPolicyType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#unhealthypodevictionpolicytype-v1-policy)_ | UnhealthyPodEvictionPolicy defines the criteria for when unhealthy pods should be considered for eviction. Current implementation considers healthy pods, as pods that have status.conditions item with type="Ready",status="True".<br /><br /> Valid policies are IfHealthyBudget and AlwaysAllow. If no policy is specified, the default behavior will be used, which corresponds to the IfHealthyBudget policy.<br /><br /> IfHealthyBudget policy means that running pods (status.phase="Running"), but not yet healthy can be evicted only if the guarded application is not disrupted (status.currentHealthy is at least equal to status.desiredHealthy). Healthy pods will be subject to the PDB for eviction.<br /><br /> AlwaysAllow policy means that all running pods (status.phase="Running"), but not yet healthy are considered disrupted and can be evicted regardless of whether the criteria in a PDB is met. This means perspective running pods of a disrupted application might not get a chance to become healthy. Healthy pods will be subject to the PDB for eviction.<br /><br /> Additional policies may be added in the future. Clients making eviction decisions should disallow eviction of unhealthy pods if they encounter an unrecognized policy in this field.<br /><br /> This field is beta-level. The eviction API uses this field when the feature gate PDBUnhealthyPodEvictionPolicy is enabled (enabled by default). |
+
+
+_Appears in:_
+- [PodDisruptionBudget](#poddisruptionbudget)
+
+#### ServiceOptions
+
+
+ServiceOptions is used to includes options to customize the ingress service,
+such as the annotations.
+
+
+
+| Field | Description |
+| --- | --- |
+| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br /> `ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br /> `NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br /> `LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br /> More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
+| `name` _string_ | Name defines the name of the service. If Name is empty, the controller will generate a service name from the owning object. |
+| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br /> More info: http://kubernetes.io/docs/user-guide/annotations |
+| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br /> More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
+
+
+_Appears in:_
+- [GatewayConfigServiceOptions](#gatewayconfigserviceoptions)
 
 
 ## incubator.ingress-controller.konghq.com/v1alpha1

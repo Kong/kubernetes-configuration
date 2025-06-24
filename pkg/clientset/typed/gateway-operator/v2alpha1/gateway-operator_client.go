@@ -29,6 +29,7 @@ import (
 type GatewayOperatorV2alpha1Interface interface {
 	RESTClient() rest.Interface
 	ControlPlanesGetter
+	GatewayConfigurationsGetter
 }
 
 // GatewayOperatorV2alpha1Client is used to interact with features provided by the gateway-operator.konghq.com group.
@@ -38,6 +39,10 @@ type GatewayOperatorV2alpha1Client struct {
 
 func (c *GatewayOperatorV2alpha1Client) ControlPlanes(namespace string) ControlPlaneInterface {
 	return newControlPlanes(c, namespace)
+}
+
+func (c *GatewayOperatorV2alpha1Client) GatewayConfigurations(namespace string) GatewayConfigurationInterface {
+	return newGatewayConfigurations(c, namespace)
 }
 
 // NewForConfig creates a new GatewayOperatorV2alpha1Client for the given config.
