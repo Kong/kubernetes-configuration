@@ -29,6 +29,9 @@ spec:
       jsonPath: .status.conditions[?(@.type=='Provisioned')].status
       name: Provisioned
       type: string
+    deprecated: true
+    deprecationWarning: This API version has been deprecated in favor of v2alpha1
+      and it will be removed in the future.
     name: v1beta1
     schema:
       openAPIV3Schema:
