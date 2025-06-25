@@ -17769,42 +17769,6 @@ spec:
                     x-kubernetes-list-map-keys:
                     - name
                     x-kubernetes-list-type: map
-                  extensions:
-                    description: |-
-                      Extensions provide additional or replacement features for the ControlPlane
-                      resources to influence or enhance functionality.
-                    items:
-                      description: |-
-                        ExtensionRef corresponds to another resource in the Kubernetes cluster which
-                        defines extended behavior for a resource (e.g. ControlPlane).
-                      properties:
-                        group:
-                          default: gateway-operator.konghq.com
-                          description: Group is the group of the extension resource.
-                          type: string
-                        kind:
-                          description: Kind is kind of the extension resource.
-                          type: string
-                        name:
-                          description: Name is the name of the referred resource.
-                          maxLength: 253
-                          minLength: 1
-                          type: string
-                        namespace:
-                          description: |-
-                            Namespace is the namespace of the referred resource.
-
-                            For namespace-scoped resources if no Namespace is provided then the
-                            namespace of the parent object MUST be used.
-
-                            This field MUST not be set when referring to cluster-scoped resources.
-                          type: string
-                      required:
-                      - kind
-                      - name
-                      type: object
-                    maxItems: 2
-                    type: array
                   featureGates:
                     description: FeatureGates is a list of feature gates that are
                       enabled for this ControlPlane.
@@ -17871,12 +17835,6 @@ spec:
                     - message: list must not be specified when type is not 'list'
                       rule: 'self.type != ''list'' ? !has(self.list) : true'
                 type: object
-                x-kubernetes-validations:
-                - message: Extension not allowed for ControlPlane
-                  rule: 'has(self.extensions) ? self.extensions.all(e, (e.group ==
-                    ''konnect.konghq.com'' && e.kind == ''KonnectExtension'') || (e.group
-                    == ''gateway-operator.konghq.com'' && e.kind == ''DataPlaneMetricsExtension''))
-                    : true'
               dataPlaneOptions:
                 description: |-
                   DataPlaneOptions is the specification for configuration
@@ -26855,44 +26813,6 @@ spec:
                     x-kubernetes-validations:
                     - message: Using both replicas and scaling fields is not allowed.
                       rule: '!(has(self.scaling) && has(self.replicas))'
-                  extensions:
-                    description: |-
-                      Extensions provide additional or replacement features for the DataPlane
-                      resources to influence or enhance functionality.
-                      NOTE: since we have one extension only (KonnectExtension), we limit the amount of extensions to 1.
-                    items:
-                      description: |-
-                        ExtensionRef corresponds to another resource in the Kubernetes cluster which
-                        defines extended behavior for a resource (e.g. ControlPlane).
-                      properties:
-                        group:
-                          default: gateway-operator.konghq.com
-                          description: Group is the group of the extension resource.
-                          type: string
-                        kind:
-                          description: Kind is kind of the extension resource.
-                          type: string
-                        name:
-                          description: Name is the name of the referred resource.
-                          maxLength: 253
-                          minLength: 1
-                          type: string
-                        namespace:
-                          description: |-
-                            Namespace is the namespace of the referred resource.
-
-                            For namespace-scoped resources if no Namespace is provided then the
-                            namespace of the parent object MUST be used.
-
-                            This field MUST not be set when referring to cluster-scoped resources.
-                          type: string
-                      required:
-                      - kind
-                      - name
-                      type: object
-                    maxItems: 1
-                    minItems: 0
-                    type: array
                   network:
                     description: GatewayConfigDataPlaneNetworkOptions defines network
                       related options for a DataPlane.
@@ -27070,18 +26990,13 @@ spec:
                         type: object
                     type: object
                 type: object
-                x-kubernetes-validations:
-                - message: Extension not allowed for DataPlane
-                  rule: 'has(self.extensions) ? self.extensions.all(e, (e.group ==
-                    ''konnect.konghq.com'' || e.group == ''gateway-operator.konghq.com'')
-                    && e.kind == ''KonnectExtension'') : true'
               extensions:
                 description: |-
                   Extensions provide additional or replacement features for the Gateway
                   resource to influence or enhance functionality.
-                  NOTE: currently, there's only 1 extension that can be attached
-                  at the Gateway level (KonnectExtension), so the amount of extensions
-                  is limited to 1.
+                  NOTE: currently, there are only 2 extensions that can be attached
+                  at the Gateway level (KonnectExtension, DataPlaneMetricsExtension),
+                  so the amount of extensions is limited to 2.
                 items:
                   description: |-
                     ExtensionRef corresponds to another resource in the Kubernetes cluster which
@@ -27112,21 +27027,15 @@ spec:
                   - kind
                   - name
                   type: object
-                maxItems: 1
+                maxItems: 2
                 minItems: 0
                 type: array
+                x-kubernetes-validations:
+                - message: Extension not allowed for GatewayConfiguration
+                  rule: self.all(e, (e.group == 'konnect.konghq.com' && e.kind ==
+                    'KonnectExtension') || (e.group == 'gateway-operator.konghq.com'
+                    && e.kind == 'DataPlaneMetricsExtension'))
             type: object
-            x-kubernetes-validations:
-            - message: KonnectExtension must be set at the Gateway level
-              rule: 'has(self.dataPlaneOptions) && has(self.dataPlaneOptions.extensions)
-                ? self.dataPlaneOptions.extensions.all(e, (e.group != ''konnect.konghq.com''
-                && e.group != ''gateway-operator.konghq.com'') || e.kind != ''KonnectExtension'')
-                : true'
-            - message: KonnectExtension must be set at the Gateway level
-              rule: 'has(self.controlPlaneOptions) && has(self.controlPlaneOptions.extensions)
-                ? self.controlPlaneOptions.extensions.all(e, (e.group != ''konnect.konghq.com''
-                && e.group != ''gateway-operator.konghq.com'') || e.kind != ''KonnectExtension'')
-                : true'
           status:
             description: Status defines the observed state of GatewayConfiguration.
             properties:
@@ -27193,12 +27102,6 @@ spec:
                 x-kubernetes-list-type: map
             type: object
         type: object
-        x-kubernetes-validations:
-        - message: Extension not allowed for GatewayConfiguration
-          rule: 'has(self.spec.extensions) ? self.spec.extensions.all(e, (e.group
-            == ''konnect.konghq.com'' && e.kind == ''KonnectExtension'') || (e.group
-            == ''gateway-operator.konghq.com'' && e.kind == ''DataPlaneMetricsExtension''))
-            : true'
     served: true
     storage: true
     subresources:

@@ -29,6 +29,11 @@ Adding a new version? You'll need three changes:
   Use Mirror `KonnectGatewayControlPlane`s instead.
   [#449](https://github.com/Kong/kubernetes-configuration/pull/449)
   [#452](https://github.com/Kong/kubernetes-configuration/pull/452)
+- Extensions can only be set at the `GatewayConfiguration` spec level now or
+  in the `ControlPlane` and `DataPlane` spec fields.
+  `GatewayConfiguration` does not have `ControlPlane` and `DataPlane` extension
+  API fields anymore.
+  [#470](https://github.com/Kong/kubernetes-configuration/pull/470)
 
 ## Cleanups
 
