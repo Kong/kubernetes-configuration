@@ -22,6 +22,15 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
+## Cleanups
+
+- Marked `KongIngress`, `TCPIngress`, and `UDPIngress` as deprecated.
+  You can use Gateway API resources instead.
+  <!--- TODO(Jintao): Add docs link to Deprecated description once we have a
+  documentation page for the migration.
+  https://github.com/Kong/kubernetes-ingress-controller/issues/7496 --->
+  [#464](https://github.com/Kong/kubernetes-configuration/pull/464)
+
 ### Fixes
 
 - Fix `DataPlane` CEL CEL validation rule during blue green rollout

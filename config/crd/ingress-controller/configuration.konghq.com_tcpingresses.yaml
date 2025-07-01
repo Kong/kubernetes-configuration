@@ -27,10 +27,14 @@ spec:
       jsonPath: .metadata.creationTimestamp
       name: Age
       type: date
+    deprecated: true
+    deprecationWarning: configuration.konghq.com/v1beta1 TCPIngress is deprecated
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: TCPIngress is the Schema for the tcpingresses API.
+        description: |-
+          TCPIngress is the Schema for the tcpingresses API.
+          Deprecated: Use Gateway API instead.
         properties:
           apiVersion:
             description: |-
