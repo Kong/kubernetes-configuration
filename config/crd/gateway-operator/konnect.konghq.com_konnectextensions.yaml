@@ -537,8 +537,6 @@ spec:
                             description: |-
                               Type indicates the type of the control plane being referenced. Allowed values:
                               - konnectNamespacedRef
-
-                              The default is kic, which implies that the Control Plane is KIC.
                             enum:
                             - konnectNamespacedRef
                             type: string

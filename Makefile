@@ -247,7 +247,8 @@ lint.api: golangci-lint
 	$(GOLANGCI_LINT_KUBE_API_LINTER) run --config $(PROJECT_DIR)/.golangci-kube-api.yaml -v \
 		./api/gateway-operator/v2alpha1/... \
 		./api/konnect/v1alpha1/... \
-		./api/konnect/v1alpha2/...
+		./api/konnect/v1alpha2/... \
+		./api/common/v1alpha1/...
 
 .PHONY: test.samples
 test.samples: kustomize
