@@ -26,7 +26,7 @@ spec:
       openAPIV3Schema:
         description: |-
           KongIngress is the Schema for the kongingresses API.
-          Deprecated: Use annotations and KongUpstreamPolicy instead.
+          Deprecated: Use annotations and KongUpstreamPolicy instead. See https://developer.konghq.com/kubernetes-ingress-controller/migrate/kongingress/
         properties:
           apiVersion:
             description: |-
