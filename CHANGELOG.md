@@ -6,6 +6,8 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.5.1](#v151)
+- [v1.5.0](#v150)
 - [v1.4.2](#v142)
 - [v1.4.1](#v141)
 - [v1.4.0](#v140)
@@ -36,7 +38,7 @@ Adding a new version? You'll need three changes:
   API fields anymore.
   [#470](https://github.com/Kong/kubernetes-configuration/pull/470)
 
-## Cleanups
+### Cleanups
 
 - Unsuported `gateway-operator.konghq.com` `KonnectExtension` marked as deprecated
   ( it's already been since v1.5.0 but now the CRD is marked as such ).
@@ -45,11 +47,6 @@ Adding a new version? You'll need three changes:
   [#450](https://github.com/Kong/kubernetes-configuration/pull/450)
 - `DataPlaneMetricsExtension` is not marked as EE only anymore.
   [#456](https://github.com/Kong/kubernetes-configuration/pull/456)
-- Marked `KongIngress`, `TCPIngress`, and `UDPIngress` as deprecated.
-  You can use Gateway API resources instead.
-  See the migration guides for [KongIngress](https://developer.konghq.com/kubernetes-ingress-controller/migrate/kongingress/)
-  and [TCPIngress/UDPIngress](https://developer.konghq.com/kubernetes-ingress-controller/migrate/ingress-to-gateway/) for more details.
-  [#464](https://github.com/Kong/kubernetes-configuration/pull/464)
 
 ### Added
 
@@ -60,6 +57,27 @@ Adding a new version? You'll need three changes:
   This is now the storage version for `ControlPlane`.
   [#441](https://github.com/Kong/kubernetes-configuration/pull/441)
   [#454](https://github.com/Kong/kubernetes-configuration/pull/454)
+
+## [v1.5.1]
+
+[v1.5.1]: https://github.com/Kong/kubernetes-configuration/compare/v1.5.0...v1.5.1
+
+### Cleanups
+
+- By updating the VERSION and regenerating the manifests, it ensures that the metadata of the CRDs remains consistent and up-to-date.
+  [#495](https://github.com/Kong/kubernetes-configuration/pull/495)
+
+## [v1.5.0]
+
+[v1.5.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.4.2...v1.5.0
+
+### Cleanups
+
+- Marked `KongIngress`, `TCPIngress`, and `UDPIngress` as deprecated.
+  You can use Gateway API resources instead.
+  See the migration guides for [KongIngress](https://developer.konghq.com/kubernetes-ingress-controller/migrate/kongingress/)
+  and [TCPIngress/UDPIngress](https://developer.konghq.com/kubernetes-ingress-controller/migrate/ingress-to-gateway/) for more details.
+  [#464](https://github.com/Kong/kubernetes-configuration/pull/464)
 
 ### Added
 
