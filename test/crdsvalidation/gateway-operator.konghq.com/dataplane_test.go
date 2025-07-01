@@ -9,6 +9,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
+	commonv1beta1 "github.com/kong/kubernetes-configuration/api/common/v1beta1"
 	"github.com/kong/kubernetes-configuration/api/gateway-operator/dataplane"
 	operatorv1beta1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v1beta1"
 	"github.com/kong/kubernetes-configuration/test/crdsvalidation/common"
@@ -16,8 +17,8 @@ import (
 
 func TestDataplane(t *testing.T) {
 	validDataplaneOptions := operatorv1beta1.DataPlaneOptions{
-		Deployment: operatorv1beta1.DataPlaneDeploymentOptions{
-			DeploymentOptions: operatorv1beta1.DeploymentOptions{
+		Deployment: commonv1beta1.DataPlaneDeploymentOptions{
+			DeploymentOptions: commonv1beta1.DeploymentOptions{
 				PodTemplateSpec: &corev1.PodTemplateSpec{
 					Spec: corev1.PodSpec{
 						Containers: []corev1.Container{
@@ -107,8 +108,8 @@ func TestDataplane(t *testing.T) {
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.DataPlaneSpec{
 						DataPlaneOptions: operatorv1beta1.DataPlaneOptions{
-							Deployment: operatorv1beta1.DataPlaneDeploymentOptions{
-								DeploymentOptions: operatorv1beta1.DeploymentOptions{},
+							Deployment: commonv1beta1.DataPlaneDeploymentOptions{
+								DeploymentOptions: commonv1beta1.DeploymentOptions{},
 							},
 						},
 					},
@@ -121,8 +122,8 @@ func TestDataplane(t *testing.T) {
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.DataPlaneSpec{
 						DataPlaneOptions: operatorv1beta1.DataPlaneOptions{
-							Deployment: operatorv1beta1.DataPlaneDeploymentOptions{
-								DeploymentOptions: operatorv1beta1.DeploymentOptions{
+							Deployment: commonv1beta1.DataPlaneDeploymentOptions{
+								DeploymentOptions: commonv1beta1.DeploymentOptions{
 									PodTemplateSpec: &corev1.PodTemplateSpec{
 										Spec: corev1.PodSpec{
 											Containers: []corev1.Container{
@@ -145,8 +146,8 @@ func TestDataplane(t *testing.T) {
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.DataPlaneSpec{
 						DataPlaneOptions: operatorv1beta1.DataPlaneOptions{
-							Deployment: operatorv1beta1.DataPlaneDeploymentOptions{
-								DeploymentOptions: operatorv1beta1.DeploymentOptions{
+							Deployment: commonv1beta1.DataPlaneDeploymentOptions{
+								DeploymentOptions: commonv1beta1.DeploymentOptions{
 									PodTemplateSpec: &corev1.PodTemplateSpec{
 										Spec: corev1.PodSpec{
 											Containers: []corev1.Container{
@@ -169,8 +170,8 @@ func TestDataplane(t *testing.T) {
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.DataPlaneSpec{
 						DataPlaneOptions: operatorv1beta1.DataPlaneOptions{
-							Deployment: operatorv1beta1.DataPlaneDeploymentOptions{
-								DeploymentOptions: operatorv1beta1.DeploymentOptions{
+							Deployment: commonv1beta1.DataPlaneDeploymentOptions{
+								DeploymentOptions: commonv1beta1.DeploymentOptions{
 									PodTemplateSpec: &corev1.PodTemplateSpec{
 										Spec: corev1.PodSpec{
 											Containers: []corev1.Container{
@@ -197,8 +198,8 @@ func TestDataplane(t *testing.T) {
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.DataPlaneSpec{
 						DataPlaneOptions: operatorv1beta1.DataPlaneOptions{
-							Deployment: operatorv1beta1.DataPlaneDeploymentOptions{
-								DeploymentOptions: operatorv1beta1.DeploymentOptions{
+							Deployment: commonv1beta1.DataPlaneDeploymentOptions{
+								DeploymentOptions: commonv1beta1.DeploymentOptions{
 									PodTemplateSpec: &corev1.PodTemplateSpec{
 										Spec: corev1.PodSpec{
 											Containers: []corev1.Container{

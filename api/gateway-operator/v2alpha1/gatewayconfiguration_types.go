@@ -22,7 +22,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
-	operatorv1beta1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v1beta1"
+	commonv1beta1 "github.com/kong/kubernetes-configuration/api/common/v1beta1"
 )
 
 func init() {
@@ -93,7 +93,7 @@ type GatewayConfigControlPlaneOptions struct {
 // +apireference:kgo:include
 type GatewayConfigDataPlaneOptions struct {
 	// +optional
-	Deployment operatorv1beta1.DataPlaneDeploymentOptions `json:"deployment"`
+	Deployment commonv1beta1.DataPlaneDeploymentOptions `json:"deployment"`
 
 	// +optional
 	Network GatewayConfigDataPlaneNetworkOptions `json:"network"`

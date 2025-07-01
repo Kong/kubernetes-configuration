@@ -8,6 +8,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
+	commonv1beta1 "github.com/kong/kubernetes-configuration/api/common/v1beta1"
 	operatorv1beta1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v1beta1"
 	"github.com/kong/kubernetes-configuration/test/crdsvalidation/common"
 )
@@ -117,8 +118,8 @@ func TestGatewayConfiguration(t *testing.T) {
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.GatewayConfigurationSpec{
 						DataPlaneOptions: &operatorv1beta1.GatewayConfigDataPlaneOptions{
-							Deployment: operatorv1beta1.DataPlaneDeploymentOptions{
-								DeploymentOptions: operatorv1beta1.DeploymentOptions{
+							Deployment: commonv1beta1.DataPlaneDeploymentOptions{
+								DeploymentOptions: commonv1beta1.DeploymentOptions{
 									Replicas: lo.ToPtr(int32(4)),
 								},
 							},
@@ -140,8 +141,8 @@ func TestGatewayConfiguration(t *testing.T) {
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.GatewayConfigurationSpec{
 						DataPlaneOptions: &operatorv1beta1.GatewayConfigDataPlaneOptions{
-							Deployment: operatorv1beta1.DataPlaneDeploymentOptions{
-								DeploymentOptions: operatorv1beta1.DeploymentOptions{
+							Deployment: commonv1beta1.DataPlaneDeploymentOptions{
+								DeploymentOptions: commonv1beta1.DeploymentOptions{
 									Replicas: lo.ToPtr(int32(4)),
 								},
 							},
@@ -178,8 +179,8 @@ func TestGatewayConfiguration(t *testing.T) {
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.GatewayConfigurationSpec{
 						ControlPlaneOptions: &operatorv1beta1.ControlPlaneOptions{
-							WatchNamespaces: &operatorv1beta1.WatchNamespaces{
-								Type: operatorv1beta1.WatchNamespacesTypeAll,
+							WatchNamespaces: &commonv1beta1.WatchNamespaces{
+								Type: commonv1beta1.WatchNamespacesTypeAll,
 							},
 						},
 					},
@@ -191,8 +192,8 @@ func TestGatewayConfiguration(t *testing.T) {
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.GatewayConfigurationSpec{
 						ControlPlaneOptions: &operatorv1beta1.ControlPlaneOptions{
-							WatchNamespaces: &operatorv1beta1.WatchNamespaces{
-								Type: operatorv1beta1.WatchNamespacesTypeOwn,
+							WatchNamespaces: &commonv1beta1.WatchNamespaces{
+								Type: commonv1beta1.WatchNamespacesTypeOwn,
 							},
 						},
 					},
@@ -204,8 +205,8 @@ func TestGatewayConfiguration(t *testing.T) {
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv1beta1.GatewayConfigurationSpec{
 						ControlPlaneOptions: &operatorv1beta1.ControlPlaneOptions{
-							WatchNamespaces: &operatorv1beta1.WatchNamespaces{
-								Type: operatorv1beta1.WatchNamespacesTypeList,
+							WatchNamespaces: &commonv1beta1.WatchNamespaces{
+								Type: commonv1beta1.WatchNamespacesTypeList,
 								List: []string{
 									"namespace1",
 									"namespace2",

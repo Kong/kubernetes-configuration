@@ -639,22 +639,6 @@ Can be one of:<br /><br />
 _Appears in:_
 - [Address](#address)
 
-#### BlueGreenStrategy
-
-
-BlueGreenStrategy defines the Blue Green deployment strategy.
-
-
-
-| Field | Description |
-| --- | --- |
-| `promotion` _[Promotion](#promotion)_ | Promotion defines how the operator handles promotion of resources. |
-| `resources` _[RolloutResources](#rolloutresources)_ | Resources controls what happens to operator managed resources during or after a rollout. |
-
-
-_Appears in:_
-- [RolloutStrategy](#rolloutstrategy)
-
 #### ControlPlaneDeploymentOptions
 
 
@@ -717,28 +701,6 @@ _Appears in:_
 - [ControlPlane](#controlplane)
 
 
-
-#### DataPlaneDeploymentOptions
-
-
-DataPlaneDeploymentOptions specifies options for the Deployments (as in the Kubernetes
-resource "Deployment") which are created and managed for the DataPlane resource.
-
-
-
-| Field | Description |
-| --- | --- |
-| `rollout` _[Rollout](#rollout)_ | Rollout describes a custom rollout strategy. |
-| `replicas` _integer_ | Replicas describes the number of desired pods. This is a pointer to distinguish between explicit zero and not specified. This is effectively shorthand for setting a scaling minimum and maximum to the same value. This field and the scaling field are mutually exclusive: You can only configure one or the other. |
-| `scaling` _[Scaling](#scaling)_ | Scaling defines the scaling options for the deployment. |
-| `podTemplateSpec` _[PodTemplateSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#podtemplatespec-v1-core)_ | PodTemplateSpec defines PodTemplateSpec for Deployment's pods. It's being applied on top of the generated Deployments using [StrategicMergePatch](https://pkg.go.dev/k8s.io/apimachinery/pkg/util/strategicpatch#StrategicMergePatch). |
-
-
-_Appears in:_
-- [DataPlaneOptions](#dataplaneoptions)
-- [DataPlaneSpec](#dataplanespec)
-- [GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)
-- [GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)
 
 #### DataPlaneNetworkOptions
 
@@ -917,27 +879,6 @@ _Appears in:_
 
 
 
-#### DeploymentOptions
-
-
-DeploymentOptions is a shared type used on objects to indicate that their
-configuration results in a Deployment which is managed by the Operator and
-includes options for managing Deployments such as the number of replicas
-or pod options like container image and resource requirements.
-version, as well as Env variable overrides.
-
-
-
-| Field | Description |
-| --- | --- |
-| `replicas` _integer_ | Replicas describes the number of desired pods. This is a pointer to distinguish between explicit zero and not specified. This is effectively shorthand for setting a scaling minimum and maximum to the same value. This field and the scaling field are mutually exclusive: You can only configure one or the other. |
-| `scaling` _[Scaling](#scaling)_ | Scaling defines the scaling options for the deployment. |
-| `podTemplateSpec` _[PodTemplateSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#podtemplatespec-v1-core)_ | PodTemplateSpec defines PodTemplateSpec for Deployment's pods. It's being applied on top of the generated Deployments using [StrategicMergePatch](https://pkg.go.dev/k8s.io/apimachinery/pkg/util/strategicpatch#StrategicMergePatch). |
-
-
-_Appears in:_
-- [DataPlaneDeploymentOptions](#dataplanedeploymentoptions)
-
 #### GatewayConfigDataPlaneNetworkOptions
 
 
@@ -1042,63 +983,6 @@ _Appears in:_
 
 
 
-
-
-#### HorizontalScaling
-
-
-HorizontalScaling defines horizontal scaling options for the deployment.
-It holds all the options from the HorizontalPodAutoscalerSpec besides the
-ScaleTargetRef which is being controlled by the Operator.
-
-
-
-| Field | Description |
-| --- | --- |
-| `minReplicas` _integer_ | minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down.  It defaults to 1 pod.  minReplicas is allowed to be 0 if the alpha feature gate HPAScaleToZero is enabled and at least one Object or External metric is configured.  Scaling is active as long as at least one metric value is available. |
-| `maxReplicas` _integer_ | maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas. |
-| `metrics` _[MetricSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#metricspec-v2-autoscaling) array_ | metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used).  The desired replica count is calculated multiplying the ratio between the target value and the current value by the current number of pods.  Ergo, metrics used must decrease as the pod count is increased, and vice-versa.  See the individual metric source types for more information about how each type of metric must respond. If not set, the default metric will be set to 80% average CPU utilization. |
-| `behavior` _[HorizontalPodAutoscalerBehavior](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#horizontalpodautoscalerbehavior-v2-autoscaling)_ | behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used. |
-
-
-_Appears in:_
-- [Scaling](#scaling)
-
-#### KonnectCertificateOptions
-
-
-KonnectCertificateOptions indicates how the operator should manage the certificates that managed entities will use
-to interact with Konnect.
-
-
-
-| Field | Description |
-| --- | --- |
-| `issuer` _[NamespacedName](#namespacedname)_ | Issuer is the cert-manager Issuer or ClusterIssuer the operator will use to request certificates. When Namespace is set, the operator will retrieve the Issuer with that Name in that Namespace. When Namespace is omitted, the operator will retrieve the ClusterIssuer with that name. |
-
-
-_Appears in:_
-- [DataPlaneNetworkOptions](#dataplanenetworkoptions)
-
-#### NamespacedName
-
-
-NamespacedName is a resource identified by name and optional namespace.
-
-
-
-| Field | Description |
-| --- | --- |
-| `namespace` _string_ |  |
-| `name` _string_ |  |
-
-
-_Appears in:_
-- [DataPlaneOptions](#dataplaneoptions)
-- [DataPlaneSpec](#dataplanespec)
-- [GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)
-- [KonnectCertificateOptions](#konnectcertificateoptions)
-
 #### PodDisruptionBudget
 
 
@@ -1132,86 +1016,6 @@ PodDisruptionBudgetSpec defines the specification of a PodDisruptionBudget.
 _Appears in:_
 - [PodDisruptionBudget](#poddisruptionbudget)
 
-#### Promotion
-
-
-Promotion is a type that contains fields that define how the operator handles
-promotion of resources during a blue/green rollout.
-
-
-
-| Field | Description |
-| --- | --- |
-| `strategy` _[PromotionStrategy](#promotionstrategy)_ | Strategy indicates how you want the operator to handle the promotion of the preview (green) resources (Deployments and Services) after all workflows and tests succeed, OR if you even want it to break before performing the promotion to allow manual inspection. |
-
-
-_Appears in:_
-- [BlueGreenStrategy](#bluegreenstrategy)
-
-#### PromotionStrategy
-_Underlying type:_ `string`
-
-PromotionStrategy is the type of promotion strategy consts.<br /><br />
-Allowed values:<br /><br />
-  - `BreakBeforePromotion` is a promotion strategy which will ensure all new
-    resources are ready and then break, to enable manual inspection.
-    The user must indicate manually when they want the promotion to continue.
-    That can be done by annotating the `DataPlane` object with
-    `"gateway-operator.konghq.com/promote-when-ready": "true"`.
-
-
-
-
-
-_Appears in:_
-- [Promotion](#promotion)
-
-#### Rollout
-
-
-Rollout defines options for rollouts.
-
-
-
-| Field | Description |
-| --- | --- |
-| `strategy` _[RolloutStrategy](#rolloutstrategy)_ | Strategy contains the deployment strategy for rollout. |
-
-
-_Appears in:_
-- [DataPlaneDeploymentOptions](#dataplanedeploymentoptions)
-
-#### RolloutResourcePlan
-_Underlying type:_ `[struct{Deployment RolloutResourcePlanDeployment "json:\"deployment,omitempty\""}](#struct{deployment-rolloutresourceplandeployment-"json:\"deployment,omitempty\""})`
-
-RolloutResourcePlan is a type that holds rollout resource plan related fields
-which control how the operator handles resources during and after a rollout.
-
-
-
-
-
-_Appears in:_
-- [RolloutResources](#rolloutresources)
-
-
-
-#### RolloutResources
-
-
-RolloutResources is the type which contains the fields which control how the operator
-manages the resources it manages during or after the rollout concludes.
-
-
-
-| Field | Description |
-| --- | --- |
-| `plan` _[RolloutResourcePlan](#rolloutresourceplan)_ | Plan defines the resource plan for managing resources during and after a rollout. |
-
-
-_Appears in:_
-- [BlueGreenStrategy](#bluegreenstrategy)
-
 #### RolloutStatusService
 
 
@@ -1228,37 +1032,6 @@ services that are exposed as part of the rollout.
 
 _Appears in:_
 - [DataPlaneRolloutStatusServices](#dataplanerolloutstatusservices)
-
-#### RolloutStrategy
-
-
-RolloutStrategy holds the rollout strategy options.
-
-
-
-| Field | Description |
-| --- | --- |
-| `blueGreen` _[BlueGreenStrategy](#bluegreenstrategy)_ | BlueGreen holds the options specific for Blue Green Deployments. |
-
-
-_Appears in:_
-- [Rollout](#rollout)
-
-#### Scaling
-
-
-Scaling defines the scaling options for the deployment.
-
-
-
-| Field | Description |
-| --- | --- |
-| `horizontal` _[HorizontalScaling](#horizontalscaling)_ | HorizontalScaling defines horizontal scaling options for the deployment. |
-
-
-_Appears in:_
-- [DataPlaneDeploymentOptions](#dataplanedeploymentoptions)
-- [DeploymentOptions](#deploymentoptions)
 
 #### ServiceOptions
 
@@ -1279,38 +1052,6 @@ such as the annotations.
 _Appears in:_
 - [DataPlaneServiceOptions](#dataplaneserviceoptions)
 - [GatewayConfigServiceOptions](#gatewayconfigserviceoptions)
-
-#### WatchNamespaces
-
-
-WatchNamespaces defines the namespaces to watch for resources
-
-
-
-| Field | Description |
-| --- | --- |
-| `type` _[WatchNamespacesType](#watchnamespacestype)_ | Type indicates the type of namespace watching to be done. By default, all namespaces are watched. |
-| `list` _string array_ | List is a list of namespaces to watch for resources. Only used when Type is set to List. |
-
-
-_Appears in:_
-- [ControlPlaneOptions](#controlplaneoptions)
-- [ControlPlaneOptions](#controlplaneoptions)
-- [ControlPlaneSpec](#controlplanespec)
-- [ControlPlaneSpec](#controlplanespec)
-- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
-
-#### WatchNamespacesType
-_Underlying type:_ `string`
-
-WatchNamespacesType indicates the type of namespace watching to be done.
-
-
-
-
-
-_Appears in:_
-- [WatchNamespaces](#watchnamespaces)
 
 
 ## gateway-operator.konghq.com/v2alpha1
