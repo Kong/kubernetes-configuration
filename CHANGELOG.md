@@ -47,9 +47,8 @@ Adding a new version? You'll need three changes:
   [#456](https://github.com/Kong/kubernetes-configuration/pull/456)
 - Marked `KongIngress`, `TCPIngress`, and `UDPIngress` as deprecated.
   You can use Gateway API resources instead.
-  <!--- TODO(Jintao): Add docs link to Deprecated description once we have a
-  documentation page for the migration.
-  https://github.com/Kong/kubernetes-ingress-controller/issues/7496 --->
+  See the migration guides for [KongIngress](https://developer.konghq.com/kubernetes-ingress-controller/migrate/kongingress/)
+  and [TCPIngress/UDPIngress](https://developer.konghq.com/kubernetes-ingress-controller/migrate/ingress-to-gateway/) for more details.
   [#464](https://github.com/Kong/kubernetes-configuration/pull/464)
 
 ### Added
