@@ -20,6 +20,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
+	commonv1beta1 "github.com/kong/kubernetes-configuration/api/common/v1beta1"
 )
 
 func init() {
@@ -79,7 +80,7 @@ type GatewayConfigurationSpec struct {
 // +kubebuilder:validation:XValidation:message="Extension not allowed for DataPlane",rule="has(self.extensions) ? self.extensions.all(e, (e.group == 'konnect.konghq.com' || e.group == 'gateway-operator.konghq.com') && e.kind == 'KonnectExtension') : true"
 type GatewayConfigDataPlaneOptions struct {
 	// +optional
-	Deployment DataPlaneDeploymentOptions `json:"deployment"`
+	Deployment commonv1beta1.DataPlaneDeploymentOptions `json:"deployment"`
 
 	// +optional
 	Network GatewayConfigDataPlaneNetworkOptions `json:"network"`
@@ -100,7 +101,7 @@ type GatewayConfigDataPlaneOptions struct {
 	// will be installed and available in the Gateways (DataPlanes) that
 	// use this GatewayConfig.
 	// +optional
-	PluginsToInstall []NamespacedName `json:"pluginsToInstall,omitempty"`
+	PluginsToInstall []commonv1beta1.NamespacedName `json:"pluginsToInstall,omitempty"`
 }
 
 // GatewayConfigDataPlaneNetworkOptions defines network related options for a DataPlane.

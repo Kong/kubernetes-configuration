@@ -7,6 +7,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
+	commonv1beta1 "github.com/kong/kubernetes-configuration/api/common/v1beta1"
 	operatorv1beta1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v1beta1"
 	"github.com/kong/kubernetes-configuration/test/crdsvalidation/common"
 )
@@ -217,8 +218,8 @@ func TestControlPlane(t *testing.T) {
 					Spec: operatorv1beta1.ControlPlaneSpec{
 						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
 							Deployment: validDeploymentOptions,
-							WatchNamespaces: &operatorv1beta1.WatchNamespaces{
-								Type: operatorv1beta1.WatchNamespacesTypeAll,
+							WatchNamespaces: &commonv1beta1.WatchNamespaces{
+								Type: commonv1beta1.WatchNamespacesTypeAll,
 							},
 						},
 					},
@@ -231,8 +232,8 @@ func TestControlPlane(t *testing.T) {
 					Spec: operatorv1beta1.ControlPlaneSpec{
 						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
 							Deployment: validDeploymentOptions,
-							WatchNamespaces: &operatorv1beta1.WatchNamespaces{
-								Type: operatorv1beta1.WatchNamespacesTypeList,
+							WatchNamespaces: &commonv1beta1.WatchNamespaces{
+								Type: commonv1beta1.WatchNamespacesTypeList,
 								List: []string{
 									"namespace1",
 								},
@@ -248,8 +249,8 @@ func TestControlPlane(t *testing.T) {
 					Spec: operatorv1beta1.ControlPlaneSpec{
 						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
 							Deployment: validDeploymentOptions,
-							WatchNamespaces: &operatorv1beta1.WatchNamespaces{
-								Type: operatorv1beta1.WatchNamespacesTypeList,
+							WatchNamespaces: &commonv1beta1.WatchNamespaces{
+								Type: commonv1beta1.WatchNamespacesTypeList,
 							},
 						},
 					},
@@ -263,8 +264,8 @@ func TestControlPlane(t *testing.T) {
 					Spec: operatorv1beta1.ControlPlaneSpec{
 						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
 							Deployment: validDeploymentOptions,
-							WatchNamespaces: &operatorv1beta1.WatchNamespaces{
-								Type: operatorv1beta1.WatchNamespacesTypeOwn,
+							WatchNamespaces: &commonv1beta1.WatchNamespaces{
+								Type: commonv1beta1.WatchNamespacesTypeOwn,
 							},
 						},
 					},
@@ -277,8 +278,8 @@ func TestControlPlane(t *testing.T) {
 					Spec: operatorv1beta1.ControlPlaneSpec{
 						ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
 							Deployment: validDeploymentOptions,
-							WatchNamespaces: &operatorv1beta1.WatchNamespaces{
-								Type: operatorv1beta1.WatchNamespacesTypeOwn,
+							WatchNamespaces: &commonv1beta1.WatchNamespaces{
+								Type: commonv1beta1.WatchNamespacesTypeOwn,
 								List: []string{
 									"namespace1",
 								},
