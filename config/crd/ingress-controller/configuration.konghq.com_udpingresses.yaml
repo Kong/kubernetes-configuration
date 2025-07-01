@@ -34,7 +34,7 @@ spec:
       openAPIV3Schema:
         description: |-
           UDPIngress is the Schema for the udpingresses API.
-          Deprecated: Use Gateway API instead.
+          Deprecated: Use Gateway API instead. See https://developer.konghq.com/kubernetes-ingress-controller/migrate/ingress-to-gateway/
         properties:
           apiVersion:
             description: |-
