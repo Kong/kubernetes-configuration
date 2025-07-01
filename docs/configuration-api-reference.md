@@ -1773,7 +1773,7 @@ _Appears in:_
 _Underlying type:_ `string`
 
 HashInput is the input for consistent-hashing load balancing algorithm.
-Use "none" to disable hashing, it is required for sticky sessions.
+It is required use "none" to disable hashing when "algorithm" is set to sticky sessions.
 
 
 
