@@ -27,6 +27,11 @@ Adding a new version? You'll need three changes:
 
 [v1.5.1]: https://github.com/Kong/kubernetes-configuration/compare/v1.5.0...v1.5.1
 
+## Cleanups
+
+- By updating the VERSION and regenerating the manifests, it ensures that the metadata of the CRDs remains consistent and up-to-date.
+  [#495](https://github.com/Kong/kubernetes-configuration/pull/495)
+
 ## [v1.5.0]
 
 [v1.5.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.4.2...v1.5.0
