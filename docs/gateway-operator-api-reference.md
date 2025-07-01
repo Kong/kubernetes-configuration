@@ -1404,28 +1404,11 @@ is responsible for configuring.
 | Field | Description |
 | --- | --- |
 | `type` _[ControlPlaneDataPlaneTargetType](#controlplanedataplanetargettype)_ | Type indicates the type of the DataPlane target. |
-| `external` _[ControlPlaneDataPlaneTargetExternal](#controlplanedataplanetargetexternal)_ | External is the External of the DataPlane target. This is used for configuring externally managed DataPlanes like those installed independently with Helm. |
 | `ref` _[ControlPlaneDataPlaneTargetRef](#controlplanedataplanetargetref)_ | Ref is the name of the DataPlane to configure. |
 
 
 _Appears in:_
 - [ControlPlaneSpec](#controlplanespec)
-
-#### ControlPlaneDataPlaneTargetExternal
-
-
-ControlPlaneDataPlaneTargetExternal defines the configuration for an external DataPlane
-that the ControlPlane is responsible for configuring.
-
-
-
-| Field | Description |
-| --- | --- |
-| `url` _string_ | URL is the URL of the external DataPlane to configure. |
-
-
-_Appears in:_
-- [ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)
 
 #### ControlPlaneDataPlaneTargetRef
 
@@ -1506,7 +1489,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 
 | Field | Description |
 | --- | --- |
-| `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlane designates the target data plane to configure.<br /><br /> It can be: - a name of a DataPlane resource that is managed by the operator, - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource) - a URL to an externally managed DataPlane (e.g. installed independently with Helm), |
+| `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlane designates the target data plane to configure.<br /><br /> It can be: - a name of a DataPlane resource that is managed by the operator, - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource) |
 | `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
