@@ -6,6 +6,8 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v1.5.0](#v150)
+- [v1.4.2](#v142)
 - [v1.4.1](#v141)
 - [v1.4.0](#v140)
 - [v1.3.2](#v132)
@@ -20,7 +22,9 @@ Adding a new version? You'll need three changes:
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
-## Unreleased
+## [v1.5.0]
+
+[v1.5.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.4.2...v1.5.0
 
 ## Cleanups
 
@@ -41,9 +45,13 @@ Adding a new version? You'll need three changes:
   will stop routing traffic to Kong Pods when they are marked as terminating.
   [#463](https://github.com/Kong/kubernetes-configuration/pull/463)
 
+## [v1.4.2]
+
+[v1.4.2]: https://github.com/Kong/kubernetes-configuration/compare/v1.4.1...v1.4.2
+
 ### Fixes
 
-- Fix `DataPlane` CEL CEL validation rule during blue green rollout
+- Fix `DataPlane` CEL validation rule during blue green rollout
   [#439](https://github.com/Kong/kubernetes-configuration/pull/439)
 
 ## [v1.4.1]
