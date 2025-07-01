@@ -69,7 +69,7 @@ KongConsumer is the Schema for the kongconsumers API.
 
 
 KongIngress is the Schema for the kongingresses API.
-Deprecated: Use Gateway API instead.
+Deprecated: Use Gateway API instead. See https://developer.konghq.com/kubernetes-ingress-controller/migrate/kongingress/
 
 <!-- kong_ingress description placeholder -->
 
@@ -1746,7 +1746,7 @@ used instead. This is to allow reusing the same KongUpstreamPolicy for multiple 
 
 
 TCPIngress is the Schema for the tcpingresses API.
-Deprecated: Use Gateway API instead.
+Deprecated: Use Gateway API instead. See https://developer.konghq.com/kubernetes-ingress-controller/migrate/ingress-to-gateway/
 
 <!-- tcp_ingress description placeholder -->
 
@@ -1763,7 +1763,7 @@ Deprecated: Use Gateway API instead.
 
 
 UDPIngress is the Schema for the udpingresses API.
-Deprecated: Use Gateway API instead.
+Deprecated: Use Gateway API instead. See https://developer.konghq.com/kubernetes-ingress-controller/migrate/ingress-to-gateway/
 
 <!-- udp_ingress description placeholder -->
 
