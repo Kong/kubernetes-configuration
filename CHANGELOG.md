@@ -64,7 +64,7 @@ Adding a new version? You'll need three changes:
 
 ### Cleanups
 
-- By updating the VERSION and regenerating the manifests, it ensures that the metadata of the CRDs remains consistent and up-to-date.
+- Update the CRDs metadata with up to date version.
   [#495](https://github.com/Kong/kubernetes-configuration/pull/495)
 
 ## [v1.5.0]
