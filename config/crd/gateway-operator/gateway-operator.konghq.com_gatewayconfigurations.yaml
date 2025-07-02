@@ -17731,16 +17731,6 @@ spec:
                   ControlPlaneOptions is the specification for configuration
                   overrides for ControlPlane resources that will be managed as part of the Gateway.
                 properties:
-                  adminAPI:
-                    description: AdminAPI defines the configuration for the Kong Admin
-                      API.
-                    properties:
-                      workspace:
-                        description: |-
-                          Workspace indicates the Kong Workspace to use for the ControlPlane.
-                          If left empty then no Kong workspace will be used.
-                        type: string
-                    type: object
                   controllers:
                     description: Controllers defines the controllers that are enabled
                       for this ControlPlane.
