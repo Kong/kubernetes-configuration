@@ -5,7 +5,7 @@ go 1.24.0
 retract v1.2.0-rc.2
 
 require (
-	github.com/Kong/sdk-konnect-go v0.4.0
+	github.com/Kong/sdk-konnect-go v0.6.0
 	github.com/kong/go-kong v0.67.0
 	github.com/stretchr/testify v1.10.0
 	k8s.io/api v0.33.2
