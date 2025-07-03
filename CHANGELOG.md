@@ -58,6 +58,11 @@ Adding a new version? You'll need three changes:
   [#441](https://github.com/Kong/kubernetes-configuration/pull/441)
   [#454](https://github.com/Kong/kubernetes-configuration/pull/454)
 
+### Fixes
+
+- Fix `KongUpstreamPolicy` CRD CEL validation rules on `hash_on`.
+  [#498](https://github.com/Kong/kubernetes-configuration/pull/498)
+
 ## [v1.5.1]
 
 [v1.5.1]: https://github.com/Kong/kubernetes-configuration/compare/v1.5.0...v1.5.1
