@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     kubernetes-configuration.konghq.com/channels: ingress-controller
-    kubernetes-configuration.konghq.com/version: v1.3.2
+    kubernetes-configuration.konghq.com/version: v1.3.3
   labels:
     gateway.networking.k8s.io/policy: direct
   name: kongupstreampolicies.configuration.konghq.com
@@ -664,11 +664,9 @@ spec:
             is set.
           rule: 'has(self.spec.hashOnFallback) ? has(self.spec.algorithm) && self.spec.algorithm
             == "consistent-hashing" : true'
-        - message: spec.hashOnFallback.cookie must not be set.
-          rule: 'has(self.spec.hashOnFallback) ? !has(self.spec.hashOnFallback.cookie)
-            : true'
-        - message: spec.hashOnFallback.cookiePath must not be set.
-          rule: 'has(self.spec.hashOnFallback) ? !has(self.spec.hashOnFallback.cookiePath)
+        - message: spec.hashOnFallback must not be set when spec.hashOn.cookie is
+            set.
+          rule: 'has(self.spec.hashOn) && has(self.spec.hashOn.cookie) ? !has(self.spec.hashOnFallback)
             : true'
         - message: spec.healthchecks.passive.healthy.interval must not be set.
           rule: 'has(self.spec.healthchecks) && has(self.spec.healthchecks.passive)
@@ -677,10 +675,6 @@ spec:
         - message: spec.healthchecks.passive.unhealthy.interval must not be set.
           rule: 'has(self.spec.healthchecks) && has(self.spec.healthchecks.passive)
             && has(self.spec.healthchecks.passive.unhealthy) ? !has(self.spec.healthchecks.passive.unhealthy.interval)
-            : true'
-        - message: spec.hashOnFallback must not be set when spec.hashOn.cookie is
-            set.
-          rule: 'has(self.spec.hashOn) && has(self.spec.hashOn.cookie) ? !has(self.spec.hashOnFallback)
             : true'
     served: true
     storage: true
