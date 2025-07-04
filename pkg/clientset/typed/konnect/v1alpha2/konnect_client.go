@@ -29,6 +29,7 @@ import (
 type KonnectV1alpha2Interface interface {
 	RESTClient() rest.Interface
 	KonnectExtensionsGetter
+	KonnectGatewayControlPlanesGetter
 }
 
 // KonnectV1alpha2Client is used to interact with features provided by the konnect.konghq.com group.
@@ -38,6 +39,10 @@ type KonnectV1alpha2Client struct {
 
 func (c *KonnectV1alpha2Client) KonnectExtensions(namespace string) KonnectExtensionInterface {
 	return newKonnectExtensions(c, namespace)
+}
+
+func (c *KonnectV1alpha2Client) KonnectGatewayControlPlanes(namespace string) KonnectGatewayControlPlaneInterface {
+	return newKonnectGatewayControlPlanes(c, namespace)
 }
 
 // NewForConfig creates a new KonnectV1alpha2Client for the given config.

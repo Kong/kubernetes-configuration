@@ -4379,6 +4379,7 @@ _Appears in:_
 - [KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)
 - [KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
+- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### KonnectConfigurationDataPlaneGroup
 
@@ -4441,6 +4442,7 @@ _Appears in:_
 - [KonnectEntityStatusWithControlPlaneAndUpstreamRefs](#konnectentitystatuswithcontrolplaneandupstreamrefs)
 - [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
 - [KonnectEntityStatusWithNetworkRef](#konnectentitystatuswithnetworkref)
+- [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 
 #### KonnectEntityStatusWithControlPlaneAndCertificateRefs
@@ -4838,6 +4840,7 @@ _Appears in:_
 Package v1alpha2 contains API Schema definitions for the konnect.konghq.com v1alpha2 API group.
 
 - [KonnectExtension](#konnectextension)
+- [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
 ### KonnectExtension
 
 
@@ -4854,6 +4857,22 @@ deployment(s) spec gets customized to include the konnect-related configuration.
 | `kind` _string_ | `KonnectExtension`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[KonnectExtensionSpec](#konnectextensionspec)_ | Spec is the specification of the KonnectExtension resource. |
+
+
+
+### KonnectGatewayControlPlane
+
+
+KonnectGatewayControlPlane is the Schema for the KonnectGatewayControlplanes API.
+
+<!-- konnect_gateway_control_plane description placeholder -->
+
+| Field | Description |
+| --- | --- |
+| `apiVersion` _string_ | `konnect.konghq.com/v1alpha2`
+| `kind` _string_ | `KonnectGatewayControlPlane`
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
+| `spec` _[KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)_ | Spec defines the desired state of KonnectGatewayControlPlane. |
 
 
 
@@ -4903,6 +4922,23 @@ DataPlaneLabelValue is the type that defines the value of a label that will be a
 _Appears in:_
 - [KonnectExtensionDataPlane](#konnectextensiondataplane)
 
+#### KonnectAPIAuthConfigurationRef
+
+
+KonnectAPIAuthConfigurationRef is a reference to a KonnectAPIAuthConfiguration resource.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the KonnectAPIAuthConfiguration resource. |
+
+
+_Appears in:_
+- [KonnectConfiguration](#konnectconfiguration)
+
+
+
 #### KonnectEndpoints
 
 
@@ -4918,6 +4954,7 @@ KonnectEndpoints defines the Konnect endpoints for the control plane.
 
 _Appears in:_
 - [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
+- [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 
 #### KonnectExtensionClientAuth
 
@@ -5028,6 +5065,57 @@ _Appears in:_
 - [KonnectExtension](#konnectextension)
 
 
+
+#### KonnectGatewayControlPlaneSpec
+
+
+KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayControlPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `createControlPlaneRequest` _[CreateControlPlaneRequest](#createcontrolplanerequest)_ | CreateControlPlaneRequest is the request to create a Konnect Control Plane. |
+| `mirror` _[MirrorSpec](#mirrorspec)_ | Mirror is the Konnect Mirror configuration. It is only applicable for ControlPlanes that are created as Mirrors. |
+| `source` _[EntitySource](#entitysource)_ | Source represents the source type of the Konnect entity. |
+| `members` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#localobjectreference-v1-core) array_ | Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group. Only applicable for ControlPlanes that are created as groups. |
+| `konnect` _[KonnectConfiguration](#konnectconfiguration)_ | KonnectConfiguration contains the Konnect configuration for the control plane. |
+
+
+_Appears in:_
+- [KonnectGatewayControlPlane](#konnectgatewaycontrolplane)
+
+
+
+#### MirrorKonnect
+
+
+MirrorKonnect contains the Konnect Mirror configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _[KonnectIDType](#konnectidtype)_ | ID is the ID of the Konnect entity. It can be set only in case the ControlPlane type is Mirror. |
+
+
+_Appears in:_
+- [MirrorSpec](#mirrorspec)
+
+#### MirrorSpec
+
+
+MirrorSpec contains the Konnect Mirror configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `konnect` _[MirrorKonnect](#mirrorkonnect)_ | Konnect contains the KonnectID of the KonnectGatewayControlPlane that is mirrored. |
+
+
+_Appears in:_
+- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### ProvisioningMethod
 _Underlying type:_ `string`
