@@ -32,6 +32,10 @@ func (c *FakeKonnectV1alpha2) KonnectExtensions(namespace string) v1alpha2.Konne
 	return newFakeKonnectExtensions(c, namespace)
 }
 
+func (c *FakeKonnectV1alpha2) KonnectGatewayControlPlanes(namespace string) v1alpha2.KonnectGatewayControlPlaneInterface {
+	return newFakeKonnectGatewayControlPlanes(c, namespace)
+}
+
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeKonnectV1alpha2) RESTClient() rest.Interface {
