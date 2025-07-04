@@ -183,18 +183,32 @@ var supportedKonnectTypesStandalone = []supportedTypesT{
 		Types: []templateDataT{
 			{
 				Type:                       "KonnectGatewayControlPlane",
-				KonnectStatusType:          "*KonnectEntityStatus",
+				KonnectStatusType:          "KonnectEntityStatus",
 				KonnectStatusEmbedded:      true,
-				GetKonnectStatusReturnType: "KonnectEntityStatus",
+				GetKonnectStatusReturnType: "*KonnectEntityStatus",
 			},
 			{
 				Type: "KonnectAPIAuthConfiguration",
 			},
 			{
 				Type:                       "KonnectCloudGatewayNetwork",
-				KonnectStatusType:          "*KonnectEntityStatus",
+				KonnectStatusType:          "KonnectEntityStatus",
 				KonnectStatusEmbedded:      true,
-				GetKonnectStatusReturnType: "KonnectEntityStatus",
+				GetKonnectStatusReturnType: "*KonnectEntityStatus",
+			},
+		},
+	},
+	{
+		PackageVersion: "v1alpha2",
+		AdditionalImports: []string{
+			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/konnect/v1alpha1"`,
+		},
+		Types: []templateDataT{
+			{
+				Type:                       "KonnectGatewayControlPlane",
+				KonnectStatusType:          "KonnectEntityStatus",
+				KonnectStatusEmbedded:      true,
+				GetKonnectStatusReturnType: "*konnectv1alpha1.KonnectEntityStatus",
 			},
 		},
 	},
