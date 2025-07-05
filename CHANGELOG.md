@@ -26,7 +26,6 @@ Adding a new version? You'll need three changes:
 ## Unreleased
 
 ### Breaking Changes
-
 - `KonnectExtension` `v1alpha2` has been introduced as the API does not allow anymore to
   reference Konnect Gateway ControlPlanes via plain KonnectID.
   Use Mirror `KonnectGatewayControlPlane`s instead.
@@ -37,6 +36,11 @@ Adding a new version? You'll need three changes:
   `GatewayConfiguration` does not have `ControlPlane` and `DataPlane` extension
   API fields anymore.
   [#470](https://github.com/Kong/kubernetes-configuration/pull/470)
+- `KonnectGatewayControlPlane v1alpha2` has been introduced.
+  The `CreateControlPlaneRequest` fields (`name, description, clusterType, authType, cloudGateway, proxyUrls, labels`) have been moved from the top level of `spec` into a new structured field: `spec.createControlPlaneRequest`. The old flat field layout is no longer supported in `v1alpha2`.
+  *Action required*:
+    * Update any manifests or code that reference these fields to use the new nested structure.
+  [#502](https://github.com/Kong/kubernetes-configuration/pull/502)
 
 ### Cleanups
 
