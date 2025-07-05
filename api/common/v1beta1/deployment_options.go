@@ -5,7 +5,19 @@ import (
 	corev1 "k8s.io/api/core/v1"
 )
 
-// +kubebuilder:validation:XValidation:message="Using both replicas and scaling fields is not allowed.",rule="!(has(self.scaling) && has(self.replicas))"
+// DataPlaneDeploymentOptions specifies options for the Deployments (as in the Kubernetes
+// resource "Deployment") which are created and managed for the DataPlane resource.
+//
+// +apireference:kgo:include
+// +kubebuilder:object:generate=true
+type DataPlaneDeploymentOptions struct {
+	// Rollout describes a custom rollout strategy.
+	//
+	// +optional
+	Rollout *Rollout `json:"rollout,omitempty"`
+
+	DeploymentOptions `json:",inline"`
+}
 
 // DeploymentOptions is a shared type used on objects to indicate that their
 // configuration results in a Deployment which is managed by the Operator and
@@ -13,7 +25,9 @@ import (
 // or pod options like container image and resource requirements.
 // version, as well as Env variable overrides.
 //
+// +kubebuilder:object:generate=true
 // +apireference:kgo:include
+// +kubebuilder:validation:XValidation:message="Using both replicas and scaling fields is not allowed.",rule="!(has(self.scaling) && has(self.replicas))"
 type DeploymentOptions struct {
 	// Replicas describes the number of desired pods.
 	// This is a pointer to distinguish between explicit zero and not specified.
@@ -38,6 +52,8 @@ type DeploymentOptions struct {
 }
 
 // Scaling defines the scaling options for the deployment.
+//
+// +kubebuilder:object:generate=true
 // +apireference:kgo:include
 type Scaling struct {
 	// HorizontalScaling defines horizontal scaling options for the deployment.
@@ -48,6 +64,8 @@ type Scaling struct {
 // HorizontalScaling defines horizontal scaling options for the deployment.
 // It holds all the options from the HorizontalPodAutoscalerSpec besides the
 // ScaleTargetRef which is being controlled by the Operator.
+//
+// +kubebuilder:object:generate=true
 // +apireference:kgo:include
 type HorizontalScaling struct {
 	// minReplicas is the lower limit for the number of replicas to which the autoscaler
@@ -82,6 +100,8 @@ type HorizontalScaling struct {
 }
 
 // Rollout defines options for rollouts.
+//
+// +kubebuilder:object:generate=true
 // +apireference:kgo:include
 type Rollout struct {
 	// Strategy contains the deployment strategy for rollout.
@@ -89,6 +109,8 @@ type Rollout struct {
 }
 
 // RolloutStrategy holds the rollout strategy options.
+//
+// +kubebuilder:object:generate=true
 // +apireference:kgo:include
 type RolloutStrategy struct {
 	// BlueGreen holds the options specific for Blue Green Deployments.
@@ -98,6 +120,8 @@ type RolloutStrategy struct {
 }
 
 // BlueGreenStrategy defines the Blue Green deployment strategy.
+//
+// +kubebuilder:object:generate=true
 // +apireference:kgo:include
 type BlueGreenStrategy struct {
 	// Promotion defines how the operator handles promotion of resources.
@@ -113,6 +137,8 @@ type BlueGreenStrategy struct {
 
 // Promotion is a type that contains fields that define how the operator handles
 // promotion of resources during a blue/green rollout.
+//
+// +kubebuilder:object:generate=true
 // +apireference:kgo:include
 type Promotion struct {
 	// TODO: implement AutomaticPromotion https://github.com/Kong/gateway-operator/issues/164

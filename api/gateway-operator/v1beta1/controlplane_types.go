@@ -17,11 +17,16 @@ limitations under the License.
 package v1beta1
 
 import (
+	"fmt"
+
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"sigs.k8s.io/controller-runtime/pkg/conversion"
 	gatewayv1 "sigs.k8s.io/gateway-api/apis/v1"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
+	commonv1beta1 "github.com/kong/kubernetes-configuration/api/common/v1beta1"
+	operatorv2alpha1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v2alpha1"
 )
 
 func init() {
@@ -114,7 +119,7 @@ type ControlPlaneOptions struct {
 	//
 	// +optional
 	// +kubebuilder:default={type: all}
-	WatchNamespaces *WatchNamespaces `json:"watchNamespaces,omitempty"`
+	WatchNamespaces *commonv1beta1.WatchNamespaces `json:"watchNamespaces,omitempty"`
 }
 
 // ControlPlaneDeploymentOptions is a shared type used on objects to indicate that their
@@ -165,4 +170,23 @@ func (c *ControlPlane) SetConditions(conditions []metav1.Condition) {
 // GetExtensions retrieves the ControlPlane Extensions
 func (c *ControlPlane) GetExtensions() []commonv1alpha1.ExtensionRef {
 	return c.Spec.Extensions
+}
+
+// ConvertTo converts this ControlPlane (v1beta1) to the Hub version (v2alpha1).
+func (c *ControlPlane) ConvertTo(dstRaw conversion.Hub) error {
+	// Proper type ensured by Kubernetes machinery.
+	fmt.Println(">> Converting ControlPlane from v1beta1 to v2alpha1")
+	dst := dstRaw.(*operatorv2alpha1.ControlPlane)
+	_ = dst
+
+	return nil
+}
+
+// ConvertFrom converts from the Hub version (v2alpha1) to this version (v1beta1).
+func (c *ControlPlane) ConvertFrom(srcRaw conversion.Hub) error {
+	// Proper type ensured by Kubernetes machinery.
+	fmt.Println(">> Converting ControlPlane from v2alpha1 to v1beta1")
+	dst := srcRaw.(*operatorv2alpha1.ControlPlane)
+	_ = dst
+	return nil
 }
