@@ -3434,23 +3434,6 @@ GatewayConfiguration is the Schema for the gatewayconfigurations API.
 ### Types
 
 In this section you will find types that the CRDs rely on.
-#### ControlPlaneAdminAPI
-
-
-ControlPlaneAdminAPI defines the configuration for the DataPlane Kong Admin API.
-
-
-
-| Field | Description |
-| --- | --- |
-| `workspace` _string_ | Workspace indicates the Kong Workspace to use for the ControlPlane. If left empty then no Kong workspace will be used. |
-
-
-_Appears in:_
-- [ControlPlaneOptions](#controlplaneoptions)
-- [ControlPlaneSpec](#controlplanespec)
-- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
-
 #### ControlPlaneController
 
 
@@ -3551,7 +3534,6 @@ deploy and connect a ControlPlane to a DataPlane object.
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
-| `adminAPI` _[ControlPlaneAdminAPI](#controlplaneadminapi)_ | AdminAPI defines the configuration for the Kong Admin API. |
 
 
 _Appears in:_
@@ -3572,7 +3554,6 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
-| `adminAPI` _[ControlPlaneAdminAPI](#controlplaneadminapi)_ | AdminAPI defines the configuration for the Kong Admin API. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 
 
@@ -3619,7 +3600,6 @@ ControlPlane resources that will be managed as part of the Gateway.
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
-| `adminAPI` _[ControlPlaneAdminAPI](#controlplaneadminapi)_ | AdminAPI defines the configuration for the Kong Admin API. |
 
 
 _Appears in:_
