@@ -1,0 +1,10 @@
+apiVersion: configuration.konghq.com/v1beta1
+kind: KongUpstreamPolicy
+metadata:
+  namespace: default
+  name: kongupstreampolicy-hashon-cookie
+spec:
+  algorithm: consistent-hashing
+  hashOn:
+    cookie: session-cookie-name
+    cookiePath: /session

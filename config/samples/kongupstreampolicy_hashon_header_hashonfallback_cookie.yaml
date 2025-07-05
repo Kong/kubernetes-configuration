@@ -1,0 +1,12 @@
+apiVersion: configuration.konghq.com/v1beta1
+kind: KongUpstreamPolicy
+metadata:
+  namespace: default
+  name: kongupstreampolicy-hashon-header-hashonfallback-cookie
+spec:
+  algorithm: consistent-hashing
+  hashOn:
+    header: X-Session-ID
+  hashOnFallback:
+    cookie: session-cookie-name
+    cookiePath: /session
