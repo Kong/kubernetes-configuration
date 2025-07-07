@@ -16,5 +16,3 @@ spec:
     state: disabled
   - name: Konnect
     state: enabled
-  adminAPI:
-    workspace: my_custom_workspace
