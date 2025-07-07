@@ -43,6 +43,7 @@ type KonnectGatewayControlPlane struct {
 }
 
 // KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayControlPlane.
+//
 // +kubebuilder:validation:XValidation:message="spec.createControlPlaneRequest.labels must not have more than 40 entries", rule="has(self.createControlPlaneRequest) && has(self.createControlPlaneRequest.labels) ? size(self.createControlPlaneRequest.labels) <= 40 : true"
 // +kubebuilder:validation:XValidation:message="spec.createControlPlaneRequest.labels keys must be of length 1-63 characters", rule="has(self.createControlPlaneRequest) && has(self.createControlPlaneRequest.labels) ? self.createControlPlaneRequest.labels.all(key, size(key) >= 1 && size(key) <= 63) : true"
 // +kubebuilder:validation:XValidation:message="spec.createControlPlaneRequest.labels values must be of length 1-63 characters", rule="has(self.createControlPlaneRequest) && has(self.createControlPlaneRequest.labels) ? self.createControlPlaneRequest.labels.all(key, size(self.createControlPlaneRequest.labels[key]) >= 1 && size(self.createControlPlaneRequest.labels[key]) <= 63) : true"
