@@ -198,6 +198,17 @@ var supportedKonnectTypesStandalone = []supportedTypesT{
 			},
 		},
 	},
+	{
+		PackageVersion: "v1alpha2",
+		Types: []templateDataT{
+			{
+				Type:                       "KonnectGatewayControlPlane",
+				KonnectStatusType:          "*KonnectEntityStatus",
+				KonnectStatusEmbedded:      true,
+				GetKonnectStatusReturnType: "KonnectEntityStatus",
+			},
+		},
+	},
 }
 
 var supportedKonnectV1Alpha1TypesWithNetworkRef = []supportedTypesT{
