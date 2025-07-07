@@ -154,6 +154,63 @@ func (c *KonnectGatewayControlPlane) SetKonnectLabels(labels map[string]string) 
 	}
 }
 
+// GetKonnectName gets the Name from CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) GetKonnectName() string {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		return ""
+	}
+	return c.Spec.CreateControlPlaneRequest.Name
+}
+
+// SetKonnectName sets the Name in CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) SetKonnectName(name string) {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
+			Name: name,
+		}
+	} else {
+		c.Spec.CreateControlPlaneRequest.Name = name
+	}
+}
+
+// GetKonnectClusterType gets the ClusterType from CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) GetKonnectClusterType() *sdkkonnectcomp.CreateControlPlaneRequestClusterType {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		return nil
+	}
+	return c.Spec.CreateControlPlaneRequest.ClusterType
+}
+
+// SetKonnectClusterType sets the ClusterType in CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) SetKonnectClusterType(clusterType *sdkkonnectcomp.CreateControlPlaneRequestClusterType) {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
+			ClusterType: clusterType,
+		}
+	} else {
+		c.Spec.CreateControlPlaneRequest.ClusterType = clusterType
+	}
+}
+
+// GetKonnectCloudGateway gets the CloudGateway from CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) GetKonnectCloudGateway() *bool {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		return nil
+	}
+	return c.Spec.CreateControlPlaneRequest.CloudGateway
+}
+
+// SetKonnectCloudGateway sets the CloudGateway in CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) SetKonnectCloudGateway(cloudGateway *bool) {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
+			CloudGateway: cloudGateway,
+		}
+	} else {
+		c.Spec.CreateControlPlaneRequest.CloudGateway = cloudGateway
+	}
+}
+
 // GetKonnectAPIAuthConfigurationRef returns the Konnect API Auth Configuration Ref.
 func (c *KonnectGatewayControlPlane) GetKonnectAPIAuthConfigurationRef() KonnectAPIAuthConfigurationRef {
 	return c.Spec.KonnectConfiguration.APIAuthConfigurationRef
