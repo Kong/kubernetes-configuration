@@ -40,7 +40,7 @@ func init() {
 // +kong:channels=gateway-operator
 type ControlPlane struct {
 	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty"`
+	metav1.ObjectMeta `json:"metadata"`
 
 	// Spec is the specification of the ControlPlane resource.
 	Spec ControlPlaneSpec `json:"spec,omitempty"`
@@ -48,7 +48,7 @@ type ControlPlane struct {
 	// Status is the status of the ControlPlane resource.
 	//
 	// +optional
-	Status ControlPlaneStatus `json:"status,omitempty"`
+	Status ControlPlaneStatus `json:"status"`
 }
 
 // ControlPlaneList contains a list of ControlPlane
@@ -57,7 +57,7 @@ type ControlPlane struct {
 // +apireference:kgo:include
 type ControlPlaneList struct {
 	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty"`
+	metav1.ListMeta `json:"metadata"`
 	Items           []ControlPlane `json:"items"`
 }
 
