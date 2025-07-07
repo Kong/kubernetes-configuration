@@ -3520,6 +3520,25 @@ _Appears in:_
 - [ControlPlaneStatus](#controlplanestatus)
 - [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
+#### ControlPlaneGatewayDiscovery
+
+
+ControlPlaneGatewayDiscovery defines the configuration for the Gateway Discovery
+feature of the ControlPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `readinessCheckInterval` _[Duration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#duration-v1-meta)_ | ReadinessCheckInterval defines the interval at which the ControlPlane checks the readiness of the DataPlanes it is responsible for. If not specified, the default interval as defined by the operator will be used. |
+| `readinessCheckTimeout` _[Duration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#duration-v1-meta)_ | ReadinessCheckTimeout defines the timeout for the DataPlane readiness check. If not specified, the default interval as defined by the operator will be used. |
+
+
+_Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
+
 #### ControlPlaneOptions
 
 
@@ -3534,6 +3553,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
+| `gatewayDiscovery` _[ControlPlaneGatewayDiscovery](#controlplanegatewaydiscovery)_ | GatewayDiscovery defines the configuration for the Gateway Discovery feature. |
 
 
 _Appears in:_
@@ -3554,6 +3574,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
+| `gatewayDiscovery` _[ControlPlaneGatewayDiscovery](#controlplanegatewaydiscovery)_ | GatewayDiscovery defines the configuration for the Gateway Discovery feature. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 
 
@@ -3600,6 +3621,7 @@ ControlPlane resources that will be managed as part of the Gateway.
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
+| `gatewayDiscovery` _[ControlPlaneGatewayDiscovery](#controlplanegatewaydiscovery)_ | GatewayDiscovery defines the configuration for the Gateway Discovery feature. |
 
 
 _Appears in:_
