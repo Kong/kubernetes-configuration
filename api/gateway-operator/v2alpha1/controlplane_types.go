@@ -43,7 +43,7 @@ type ControlPlane struct {
 	metav1.ObjectMeta `json:"metadata"`
 
 	// Spec is the specification of the ControlPlane resource.
-	Spec ControlPlaneSpec `json:"spec,omitempty"`
+	Spec ControlPlaneSpec `json:"spec"`
 
 	// Status is the status of the ControlPlane resource.
 	//
