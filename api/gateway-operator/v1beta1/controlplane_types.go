@@ -268,7 +268,6 @@ func (c *ControlPlane) ConvertTo(dstRaw conversion.Hub) error {
 	}
 
 	// Convert Status
-	// dst.Status.Conditions = c.Status.Conditions
 	dst.Status = operatorv2alpha1.ControlPlaneStatus{
 		Conditions:   c.Status.Conditions,
 		FeatureGates: nil,
