@@ -25,17 +25,8 @@ spec:
             readinessProbe:
               initialDelaySeconds: 1
               periodSeconds: 1
-    network:
-      services:
-        ingress:
-          annotations:
-            foo: bar
   controlPlaneOptions:
-    featureGates:
-    - name: GatewayAlpha
-      state: enabled
-    controllers:
-    - name: TCPIngress
-      state: disabled
-    - name: Konnect
-      state: enabled
+    gatewayDiscovery:
+      readinessCheckInterval: 15s
+      readinessCheckTimeout: 10s
+
