@@ -7,6 +7,7 @@ import (
 	sdkkonnectcomp "github.com/Kong/sdk-konnect-go/models/components"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
+	konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"
 )
 
 func init() {
@@ -87,7 +88,7 @@ type KonnectGatewayControlPlaneSpec struct {
 	// KonnectConfiguration contains the Konnect configuration for the control plane.
 	//
 	// +optional
-	KonnectConfiguration KonnectConfiguration `json:"konnect,omitempty"`
+	KonnectConfiguration konnectv1alpha1.KonnectConfiguration `json:"konnect,omitempty"`
 }
 
 // MirrorSpec contains the Konnect Mirror configuration.
@@ -111,7 +112,7 @@ type MirrorKonnect struct {
 // KonnectGatewayControlPlaneStatus defines the observed state of KonnectGatewayControlPlane.
 // +apireference:kgo:include
 type KonnectGatewayControlPlaneStatus struct {
-	KonnectEntityStatus `json:",inline"`
+	konnectv1alpha1.KonnectEntityStatus `json:",inline"`
 
 	// Endpoints defines the Konnect endpoints for the control plane.
 	// They are required by the DataPlane to be properly configured in
@@ -211,8 +212,65 @@ func (c *KonnectGatewayControlPlane) SetKonnectCloudGateway(cloudGateway *bool) 
 	}
 }
 
+// GetKonnectAuthType gets the AuthType from CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) GetKonnectAuthType() *sdkkonnectcomp.AuthType {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		return nil
+	}
+	return c.Spec.CreateControlPlaneRequest.AuthType
+}
+
+// SetKonnectAuthType sets the AuthType in CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) SetKonnectAuthType(authType *sdkkonnectcomp.AuthType) {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
+			AuthType: authType,
+		}
+	} else {
+		c.Spec.CreateControlPlaneRequest.AuthType = authType
+	}
+}
+
+// GetKonnectProxyURLs gets the ProxyUrls from CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) GetKonnectProxyURLs() []sdkkonnectcomp.ProxyURL {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		return nil
+	}
+	return c.Spec.CreateControlPlaneRequest.ProxyUrls
+}
+
+// SetKonnectProxyURLs sets the ProxyUrls in CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) SetKonnectProxyURLs(proxyURLs []sdkkonnectcomp.ProxyURL) {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
+			ProxyUrls: proxyURLs,
+		}
+	} else {
+		c.Spec.CreateControlPlaneRequest.ProxyUrls = proxyURLs
+	}
+}
+
+// GetKonnectDescription gets the Description from CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) GetKonnectDescription() *string {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		return nil
+	}
+	return c.Spec.CreateControlPlaneRequest.Description
+}
+
+// SetKonnectDescription sets the Description in CreateControlPlaneRequest.
+func (c *KonnectGatewayControlPlane) SetKonnectDescription(description *string) {
+	if c.Spec.CreateControlPlaneRequest == nil {
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
+			Description: description,
+		}
+	} else {
+		c.Spec.CreateControlPlaneRequest.Description = description
+	}
+}
+
 // GetKonnectAPIAuthConfigurationRef returns the Konnect API Auth Configuration Ref.
-func (c *KonnectGatewayControlPlane) GetKonnectAPIAuthConfigurationRef() KonnectAPIAuthConfigurationRef {
+func (c *KonnectGatewayControlPlane) GetKonnectAPIAuthConfigurationRef() konnectv1alpha1.KonnectAPIAuthConfigurationRef {
 	return c.Spec.KonnectConfiguration.APIAuthConfigurationRef
 }
 

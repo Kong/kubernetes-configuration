@@ -115,7 +115,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 	t.Run("updates not allowed for status conditions", func(t *testing.T) {
 		common.TestCasesGroup[*konnectv1alpha1.KonnectGatewayControlPlane]{
 			{
-				Name: "konnect.authRef change is not allowed for Programmed=True",
+				Name:       "konnect.authRef change is not allowed for Programmed=True",
 				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
@@ -147,7 +147,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				ExpectedUpdateErrorMessage: lo.ToPtr("spec.konnect.authRef is immutable when an entity is already Programme"),
 			},
 			{
-				Name: "konnect.authRef change is not allowed for APIAuthValid=True",
+				Name:       "konnect.authRef change is not allowed for APIAuthValid=True",
 				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
@@ -179,7 +179,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				ExpectedUpdateErrorMessage: lo.ToPtr("spec.konnect.authRef is immutable when an entity refers to a Valid API Auth Configuration"),
 			},
 			{
-				Name: "konnect.authRef change is allowed when cp is not Programmed=True nor APIAuthValid=True",
+				Name:       "konnect.authRef change is allowed when cp is not Programmed=True nor APIAuthValid=True",
 				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
@@ -667,7 +667,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 				ExpectedUpdateErrorMessage: lo.ToPtr("spec.cluster_type is immutable"),
 			},
 			{
-				Name: "cluster type is immutable when having it set and then trying to unset it",
+				Name:       "cluster type is immutable when having it set and then trying to unset it",
 				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook.",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,

@@ -478,6 +478,7 @@ _Appears in:_
 - [KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)
 - [KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)
 - [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
+- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### KonnectConfigurationDataPlaneGroup
 
@@ -540,6 +541,7 @@ _Appears in:_
 - [KonnectEntityStatusWithControlPlaneAndUpstreamRefs](#konnectentitystatuswithcontrolplaneandupstreamrefs)
 - [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
 - [KonnectEntityStatusWithNetworkRef](#konnectentitystatuswithnetworkref)
+- [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 
 
@@ -935,20 +937,7 @@ KonnectAPIAuthConfigurationRef is a reference to a KonnectAPIAuthConfiguration r
 _Appears in:_
 - [KonnectConfiguration](#konnectconfiguration)
 
-#### KonnectConfiguration
 
-
-KonnectConfiguration is the Schema for the KonnectConfiguration API.
-
-
-
-| Field | Description |
-| --- | --- |
-| `authRef` _[KonnectAPIAuthConfigurationRef](#konnectapiauthconfigurationref)_ | APIAuthConfigurationRef is the reference to the API Auth Configuration that should be used for this Konnect Configuration. |
-
-
-_Appears in:_
-- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### KonnectEndpoints
 
@@ -965,23 +954,6 @@ KonnectEndpoints defines the Konnect endpoints for the control plane.
 
 _Appears in:_
 - [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
-- [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
-
-#### KonnectEntityStatus
-
-
-KonnectEntityStatus represents the status of a Konnect entity.
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-
-
-_Appears in:_
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
 
 #### KonnectExtensionClientAuth
