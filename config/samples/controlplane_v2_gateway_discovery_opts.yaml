@@ -3,16 +3,10 @@ kind: ControlPlane
 metadata:
   name: controlplane-v2-example
 spec:
-  ingressClass: kong
   dataplane:
     type: ref
     ref:
       name: dataplane-name
-  featureGates:
-  - name: GatewayAlpha
-    state: enabled
-  controllers:
-  - name: TCPIngress
-    state: disabled
-  - name: Konnect
-    state: enabled
+  gatewayDiscovery:
+    readinessCheckInterval: 15s
+    readinessCheckTimeout: 10s

@@ -57,6 +57,11 @@ Adding a new version? You'll need three changes:
   This is now the storage version for `ControlPlane`.
   [#441](https://github.com/Kong/kubernetes-configuration/pull/441)
   [#454](https://github.com/Kong/kubernetes-configuration/pull/454)
+- `ControlPlane` (and by extension `GatewayConfiguration`) now allows configuration
+  of the following fields:
+  - under `spec.gatewayDiscovery`:
+    - `readinessCheckTimeout` and `readinessCheckInterval`
+    [#503](https://github.com/Kong/kubernetes-configuration/pull/503)
 
 ## [v1.5.2]
 

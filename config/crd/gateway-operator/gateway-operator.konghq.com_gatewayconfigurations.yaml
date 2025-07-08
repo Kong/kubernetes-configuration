@@ -17787,6 +17787,22 @@ spec:
                     x-kubernetes-list-map-keys:
                     - name
                     x-kubernetes-list-type: map
+                  gatewayDiscovery:
+                    description: GatewayDiscovery defines the configuration for the
+                      Gateway Discovery feature.
+                    properties:
+                      readinessCheckInterval:
+                        description: |-
+                          ReadinessCheckInterval defines the interval at which the ControlPlane
+                          checks the readiness of the DataPlanes it is responsible for.
+                          If not specified, the default interval as defined by the operator will be used.
+                        type: string
+                      readinessCheckTimeout:
+                        description: |-
+                          ReadinessCheckTimeout defines the timeout for the DataPlane readiness check.
+                          If not specified, the default interval as defined by the operator will be used.
+                        type: string
+                    type: object
                   ingressClass:
                     description: |-
                       IngressClass enables support for the Ingress resources and indicates
