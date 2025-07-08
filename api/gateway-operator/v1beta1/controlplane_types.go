@@ -52,7 +52,12 @@ type ControlPlane struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ControlPlaneSpec   `json:"spec,omitempty"`
+	// Spec is the specification of the ControlPlane resource.
+	Spec ControlPlaneSpec `json:"spec,omitempty"`
+
+	// Status is the status of the ControlPlane resource.
+	//
+	// +optional
 	Status ControlPlaneStatus `json:"status,omitempty"`
 }
 
@@ -147,6 +152,7 @@ type ControlPlaneDeploymentOptions struct {
 }
 
 // ControlPlaneStatus defines the observed state of ControlPlane
+//
 // +apireference:kgo:include
 type ControlPlaneStatus struct {
 	// Conditions describe the current conditions of the Gateway.

@@ -550,7 +550,7 @@ ControlPlane is the Schema for the controlplanes API
 | `apiVersion` _string_ | `gateway-operator.konghq.com/v1beta1`
 | `kind` _string_ | `ControlPlane`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
-| `spec` _[ControlPlaneSpec](#controlplanespec)_ |  |
+| `spec` _[ControlPlaneSpec](#controlplanespec)_ | Spec is the specification of the ControlPlane resource. |
 
 
 
@@ -1058,7 +1058,6 @@ _Appears in:_
 
 Package v2alpha1 contains API Schema definitions for the gateway-operator.konghq.com v2alpha1 API group.
 
-Package v2alpha1 contains API Schema definitions for the gateway-operator.konghq.com v2alpha1 API group
 
 - [ControlPlane](#controlplane)
 - [GatewayConfiguration](#gatewayconfiguration)

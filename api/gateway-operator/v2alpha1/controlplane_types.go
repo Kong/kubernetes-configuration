@@ -40,15 +40,15 @@ func init() {
 // +kong:channels=gateway-operator
 type ControlPlane struct {
 	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec is the specification of the ControlPlane resource.
-	Spec ControlPlaneSpec `json:"spec"`
+	Spec ControlPlaneSpec `json:"spec,omitempty"`
 
 	// Status is the status of the ControlPlane resource.
 	//
 	// +optional
-	Status ControlPlaneStatus `json:"status"`
+	Status ControlPlaneStatus `json:"status,omitempty"`
 }
 
 // ControlPlaneList contains a list of ControlPlane
