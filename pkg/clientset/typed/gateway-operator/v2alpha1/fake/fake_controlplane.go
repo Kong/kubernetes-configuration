@@ -19,8 +19,8 @@ limitations under the License.
 package fake
 
 import (
-	v2alpha1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v2alpha1"
-	gatewayoperatorv2alpha1 "github.com/kong/kubernetes-configuration/pkg/clientset/typed/gateway-operator/v2alpha1"
+	v2alpha1 "github.com/kong/kubernetes-configuration/v2/api/gateway-operator/v2alpha1"
+	gatewayoperatorv2alpha1 "github.com/kong/kubernetes-configuration/v2/pkg/clientset/typed/gateway-operator/v2alpha1"
 	gentype "k8s.io/client-go/gentype"
 )
 
