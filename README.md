@@ -32,6 +32,7 @@ of CRDs that is meant to be used by a designated product or project. Manifests f
 are stored in a separate directory under `config/crd/<channel>` (each has a generated `kustomize.yaml` file as well).
 
 The following channels are supported:
+
 - `ingress-controller` - CRDs for [Kong Ingress Controller][kic]
 - `ingress-controller-incubator` - experimental CRDs for [Kong Ingress Controller][kic]
 - `gateway-operator` - CRDs for [Kong Gateway Operator][kgo]
@@ -43,7 +44,7 @@ A single CRD can be included in multiple channels. See [available custom markers
 
 ## Install CRDs
 
-In order to install the CRDs from this repo, you can use the following command, replacing 
+In order to install the CRDs from this repo, you can use the following command, replacing
 `<channel>` with one of the supported [channel names](#channels).
 
 ```terminal
@@ -79,10 +80,9 @@ When you add a new CRD make sure to
   add it to [supported type list][apitypes_funcs_gen_list].
 - If this CRD is meant to have Konnect helpers functions generated for it,
   add it in [supported type list][apitypes_funcs_gen].
-- Annotate the CRD and any new type it depends on with the right markers to make sure it will be included 
+- Annotate the CRD and any new type it depends on with the right markers to make sure it will be included
   in the generated documentation. See [available markers](#Available custom markers).
 
-[crd_kustomization]: ./config/crd/kustomization.yaml
 [apitypes_funcs_gen]: ./scripts/apitypes-funcs/supportedtypes.go
 [apitypes_funcs_gen_list]: ./scripts/apitypes-funcs/supportedtypes.go#L112-114
 

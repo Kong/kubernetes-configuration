@@ -106,8 +106,8 @@ gotestsum: mise yq ## Download gotestsum locally if necessary.
 
 GOLANGCI_LINT_VERSION = $(shell $(YQ) -r '.golangci-lint' < $(TOOLS_VERSIONS_FILE))
 GOLANGCI_LINT = $(PROJECT_DIR)/bin/installs/golangci-lint/$(GOLANGCI_LINT_VERSION)/bin/golangci-lint
-.PHONY: golangci-lint
-golangci-lint: mise yq ## Download golangci-lint locally if necessary.
+.PHONY: download.golangci-lint
+download.golangci-lint: mise yq ## Download golangci-lint locally if necessary.
 	@$(MISE) plugin install --yes -q golangci-lint
 	@$(MISE) install -q golangci-lint@$(GOLANGCI_LINT_VERSION)
 
@@ -124,6 +124,13 @@ SHELLCHECK = $(PROJECT_DIR)/bin/installs/shellcheck/$(SHELLCHECK_VERSION)/bin/sh
 download.shellcheck: mise yq ## Download shellcheck locally if necessary.
 	@$(MISE) plugin install --yes -q shellcheck
 	@$(MISE) install -q shellcheck@$(SHELLCHECK_VERSION)
+
+MARKDOWNLINT_VERSION = $(shell $(YQ) -r '.markdownlint-cli2' < $(TOOLS_VERSIONS_FILE))
+MARKDOWNLINT = $(PROJECT_DIR)/bin/installs/markdownlint-cli2/$(MARKDOWNLINT_VERSION)/bin/markdownlint-cli2
+.PHONY: download.markdownlint-cli2
+download.markdownlint-cli2: mise yq ## Download markdownlint-cli2 locally if necessary.
+	@$(MISE) plugin install --yes -q markdownlint-cli2
+	@$(MISE) install -q markdownlint-cli2@$(MARKDOWNLINT_VERSION)
 
 # ------------------------------------------------------------------------------
 # Verify steps
@@ -215,14 +222,24 @@ uninstall: generate.crds kustomize
 		$(KUSTOMIZE) build config/crd/$$channel | kubectl delete -f -; \
 	done
 
-GOLANGCI_LINT_CONFIG ?= $(PROJECT_DIR)/.golangci.yaml
+# lint target runs all linters.
 .PHONY: lint
-lint: golangci-lint
+lint: lint.golangci-lint lint.markdownlint lint.actions
+
+GOLANGCI_LINT_CONFIG ?= $(PROJECT_DIR)/.golangci.yaml
+.PHONY: lint.golangci-lint
+lint.golangci-lint: download.golangci-lint
 	$(GOLANGCI_LINT) run -v --config $(GOLANGCI_LINT_CONFIG) $(GOLANGCI_LINT_FLAGS)
 
 .PHONY: lint.actions
 lint.actions: download.actionlint download.shellcheck
 	$(ACTIONLINT) -shellcheck $(SHELLCHECK) ./.github/workflows/*
+
+.PHONY: lint.markdownlint
+lint.markdownlint: download.markdownlint-cli2
+	$(MARKDOWNLINT) \
+		CHANGELOG.md \
+		README.md
 
 # Currently kube-api-linter can only be run with golangci-lint as custom linter.
 # There have been some discussions about making it possible to be run as a standalone tool
@@ -242,7 +259,7 @@ lint.api.remove:
 	@rm -f $(GOLANGCI_LINT_KUBE_API_LINTER)
 
 .PHONY: lint.api
-lint.api: golangci-lint
+lint.api: download.golangci-lint
 	@[[ -f $(GOLANGCI_LINT_KUBE_API_LINTER) ]] || $(GOLANGCI_LINT) custom -v
 	$(GOLANGCI_LINT_KUBE_API_LINTER) run --config $(PROJECT_DIR)/.golangci-kube-api.yaml -v \
 		./api/gateway-operator/v2alpha1/... \

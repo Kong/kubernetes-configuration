@@ -1,0 +1,16 @@
+# Config schema:
+# https://github.com/DavidAnson/markdownlint-cli2/blob/main/test/markdownlint-cli2-yaml-example/.markdownlint-cli2.yaml
+
+config:
+
+  # All available checks options:
+  # https://github.com/DavidAnson/markdownlint/blob/v0.32.1/schema/.markdownlint.yaml
+
+  MD013:
+    line_length: 310
+
+  # MD024/no-duplicate-heading : Multiple headings with the same content :
+  # https://github.com/DavidAnson/markdownlint/blob/v0.32.1/doc/md024.md
+  MD024:
+    # Only check sibling headings
+    siblings_only: true
