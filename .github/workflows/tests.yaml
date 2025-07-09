@@ -47,7 +47,7 @@ jobs:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - uses: zgosalvez/github-actions-ensure-sha-pinned-actions@fc87bb5b5a97953d987372e74478de634726b3e5 # v3.0.25
 
-  actionlint:
+  lint-actions:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -58,6 +58,18 @@ jobs:
 
     - name: Run lint.actions
       run: make lint.actions
+
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+    - uses: jdx/mise-action@5cb1df66ed5e1fb3c670ea0b62fd17a76979826a # v2.3.1
+      with:
+        install: false
+
+    - name: Run lint.markdownlint
+      run: make lint.markdownlint
 
   test-unit:
     runs-on: ubuntu-latest
@@ -94,7 +106,7 @@ jobs:
     - name: Verify
       run: make verify.diff
 
-  lint:
+  golangci-lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -107,7 +119,7 @@ jobs:
       with:
         install: false
 
-    - run: make lint
+    - run: make lint.golangci-lint
 
   kube-api-linter:
     runs-on: ubuntu-latest
@@ -244,9 +256,10 @@ jobs:
     needs:
       - ensure-actions-sha-pin
       - version
-      - lint
+      - golangci-lint
       - kube-api-linter
-      - actionlint
+      - lint-markdown
+      - lint-actions
       - test-unit
       - generate
       - apply
