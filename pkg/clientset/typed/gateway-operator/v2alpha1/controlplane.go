@@ -21,8 +21,8 @@ package v2alpha1
 import (
 	context "context"
 
-	gatewayoperatorv2alpha1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v2alpha1"
-	scheme "github.com/kong/kubernetes-configuration/pkg/clientset/scheme"
+	gatewayoperatorv2alpha1 "github.com/kong/kubernetes-configuration/v2/api/gateway-operator/v2alpha1"
+	scheme "github.com/kong/kubernetes-configuration/v2/pkg/clientset/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"

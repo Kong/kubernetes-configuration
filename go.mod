@@ -1,8 +1,6 @@
-module github.com/kong/kubernetes-configuration
+module github.com/kong/kubernetes-configuration/v2
 
 go 1.24.0
-
-retract v1.2.0-rc.2
 
 require (
 	github.com/Kong/sdk-konnect-go v0.6.0

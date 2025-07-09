@@ -12,8 +12,7 @@ SHELL := bash
 
 MAKEFLAGS += --no-print-directory
 REPO_URL ?= github.com/kong/kubernetes-configuration
-# NOTE: this is not neeed now before v2, but will be needed in the future.
-#GO_MOD_MAJOR_VERSION ?= $(subst $(REPO_URL)/,,$(shell go list -m))
+GO_MOD_MAJOR_VERSION ?= $(subst $(REPO_URL)/,,$(shell go list -m))
 REPO_INFO ?= $(shell git config --get remote.origin.url)
 VERSION ?= $(shell head -1 VERSION)
 
@@ -175,7 +174,7 @@ generate.clientsets: client-gen
 		--go-header-file ./hack/boilerplate.go.txt \
 		--logtostderr \
 		--clientset-name clientset \
-		--input-base $(REPO_URL)/$(API_DIR)/ \
+		--input-base $(REPO_URL)/$(GO_MOD_MAJOR_VERSION)/$(API_DIR) \
 		--input configuration/v1 \
 		--input configuration/v1alpha1 \
 		--input configuration/v1beta1 \
@@ -186,7 +185,7 @@ generate.clientsets: client-gen
 		--input gateway-operator/v1beta1 \
 		--input gateway-operator/v2alpha1 \
 		--output-dir pkg/ \
-		--output-pkg $(REPO_URL)/pkg/
+		--output-pkg $(REPO_URL)/$(GO_MOD_MAJOR_VERSION)/pkg/
 
 .PHONY: generate.docs
 generate.docs: generate.apidocs

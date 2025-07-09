@@ -6,7 +6,7 @@ var supportedKonnectTypesWithControlPlaneRef = []supportedTypesT{
 	{
 		PackageVersion: "v1alpha1",
 		AdditionalImports: []string{
-			`commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"`,
+			`commonv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/common/v1alpha1"`,
 		},
 		Types: []templateDataT{
 			{
@@ -22,7 +22,7 @@ var supportedKonnectTypesWithControlPlaneRef = []supportedTypesT{
 	{
 		PackageVersion: "v1alpha2",
 		AdditionalImports: []string{
-			`commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"`,
+			`commonv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/common/v1alpha1"`,
 		},
 		Types: []templateDataT{
 			{
@@ -39,8 +39,8 @@ var supportedKonnectTypesWithControlPlaneConfig = []supportedTypesT{
 	{
 		PackageVersion: "v1",
 		AdditionalImports: []string{
-			`commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"`,
-			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"`,
+			`commonv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/common/v1alpha1"`,
+			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/konnect/v1alpha1"`,
 		},
 		Types: []templateDataT{
 			{
@@ -57,8 +57,8 @@ var supportedKonnectTypesWithControlPlaneConfig = []supportedTypesT{
 	{
 		PackageVersion: "v1beta1",
 		AdditionalImports: []string{
-			`commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"`,
-			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"`,
+			`commonv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/common/v1alpha1"`,
+			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/konnect/v1alpha1"`,
 		},
 		Types: []templateDataT{
 			{
@@ -72,8 +72,8 @@ var supportedKonnectTypesWithControlPlaneConfig = []supportedTypesT{
 	{
 		PackageVersion: "v1alpha1",
 		AdditionalImports: []string{
-			`commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"`,
-			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"`,
+			`commonv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/common/v1alpha1"`,
+			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/konnect/v1alpha1"`,
 		},
 		Types: []templateDataT{
 			{
