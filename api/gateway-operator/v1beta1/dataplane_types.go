@@ -23,6 +23,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
+	commonv1beta1 "github.com/kong/kubernetes-configuration/api/common/v1beta1"
 )
 
 func init() {
@@ -73,7 +74,7 @@ type DataPlaneSpec struct {
 // +kubebuilder:validation:XValidation:message="Extension not allowed for DataPlane",rule="has(self.extensions) ? self.extensions.all(e, (e.group == 'konnect.konghq.com' || e.group == 'gateway-operator.konghq.com') && e.kind == 'KonnectExtension') : true"
 type DataPlaneOptions struct {
 	// +optional
-	Deployment DataPlaneDeploymentOptions `json:"deployment"`
+	Deployment commonv1beta1.DataPlaneDeploymentOptions `json:"deployment"`
 
 	// +optional
 	Network DataPlaneNetworkOptions `json:"network"`
@@ -93,7 +94,7 @@ type DataPlaneOptions struct {
 	// PluginsToInstall is a list of KongPluginInstallation resources that
 	// will be installed and available in the DataPlane.
 	// +optional
-	PluginsToInstall []NamespacedName `json:"pluginsToInstall,omitempty"`
+	PluginsToInstall []commonv1beta1.NamespacedName `json:"pluginsToInstall,omitempty"`
 }
 
 // DataPlaneResources defines the resources that will be created and managed
@@ -161,18 +162,6 @@ type PodDisruptionBudgetSpec struct {
 	UnhealthyPodEvictionPolicy *policyv1.UnhealthyPodEvictionPolicyType `json:"unhealthyPodEvictionPolicy,omitempty" protobuf:"bytes,4,opt,name=unhealthyPodEvictionPolicy"`
 }
 
-// DataPlaneDeploymentOptions specifies options for the Deployments (as in the Kubernetes
-// resource "Deployment") which are created and managed for the DataPlane resource.
-// +apireference:kgo:include
-type DataPlaneDeploymentOptions struct {
-	// Rollout describes a custom rollout strategy.
-	//
-	// +optional
-	Rollout *Rollout `json:"rollout,omitempty"`
-
-	DeploymentOptions `json:",inline"`
-}
-
 // DataPlaneNetworkOptions defines network related options for a DataPlane.
 // +apireference:kgo:include
 type DataPlaneNetworkOptions struct {
@@ -185,7 +174,7 @@ type DataPlaneNetworkOptions struct {
 	// will use to authenticate itself to the Konnect API. Requires Enterprise.
 	//
 	// +optional
-	KonnectCertificateOptions *KonnectCertificateOptions `json:"konnectCertificate,omitempty"`
+	KonnectCertificateOptions *commonv1beta1.KonnectCertificateOptions `json:"konnectCertificate,omitempty"`
 }
 
 // DataPlaneServices contains Services related DataPlane configuration, shared with the GatewayConfiguration.

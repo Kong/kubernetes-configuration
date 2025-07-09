@@ -17,11 +17,18 @@ limitations under the License.
 package v1beta1
 
 import (
+	"fmt"
+	"strings"
+
+	"github.com/samber/lo"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"sigs.k8s.io/controller-runtime/pkg/conversion"
 	gatewayv1 "sigs.k8s.io/gateway-api/apis/v1"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/api/common/v1alpha1"
+	commonv1beta1 "github.com/kong/kubernetes-configuration/api/common/v1beta1"
+	operatorv2alpha1 "github.com/kong/kubernetes-configuration/api/gateway-operator/v2alpha1"
 )
 
 func init() {
@@ -45,7 +52,12 @@ type ControlPlane struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ControlPlaneSpec   `json:"spec,omitempty"`
+	// Spec is the specification of the ControlPlane resource.
+	Spec ControlPlaneSpec `json:"spec,omitempty"`
+
+	// Status is the status of the ControlPlane resource.
+	//
+	// +optional
 	Status ControlPlaneStatus `json:"status,omitempty"`
 }
 
@@ -55,7 +67,7 @@ type ControlPlane struct {
 // +apireference:kgo:include
 type ControlPlaneList struct {
 	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty"`
+	metav1.ListMeta `json:"metadata"`
 	Items           []ControlPlane `json:"items"`
 }
 
@@ -114,7 +126,7 @@ type ControlPlaneOptions struct {
 	//
 	// +optional
 	// +kubebuilder:default={type: all}
-	WatchNamespaces *WatchNamespaces `json:"watchNamespaces,omitempty"`
+	WatchNamespaces *commonv1beta1.WatchNamespaces `json:"watchNamespaces,omitempty"`
 }
 
 // ControlPlaneDeploymentOptions is a shared type used on objects to indicate that their
@@ -140,6 +152,7 @@ type ControlPlaneDeploymentOptions struct {
 }
 
 // ControlPlaneStatus defines the observed state of ControlPlane
+//
 // +apireference:kgo:include
 type ControlPlaneStatus struct {
 	// Conditions describe the current conditions of the Gateway.
@@ -165,4 +178,132 @@ func (c *ControlPlane) SetConditions(conditions []metav1.Condition) {
 // GetExtensions retrieves the ControlPlane Extensions
 func (c *ControlPlane) GetExtensions() []commonv1alpha1.ExtensionRef {
 	return c.Spec.Extensions
+}
+
+func getFeatureGates(envs []corev1.EnvVar) ([]operatorv2alpha1.ControlPlaneFeatureGate, error) {
+	fg, _ := lo.Find(envs, func(fg corev1.EnvVar) bool {
+		return fg.Name == "CONTROLLER_FEATURE_GATES"
+	})
+
+	parts := strings.Split(fg.Value, ",")
+	featureGates := make([]operatorv2alpha1.ControlPlaneFeatureGate, 0, len(parts))
+	for _, part := range parts {
+		part = strings.TrimSpace(part)
+		if part == "" {
+			continue
+		}
+		parts := strings.Split(part, "=")
+		if len(parts) != 2 {
+			continue
+		}
+		key, value := strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1])
+		if key == "" || value == "" {
+			continue
+		}
+		var state operatorv2alpha1.FeatureGateState
+		switch strings.ToLower(value) {
+		case "true":
+			state = operatorv2alpha1.FeatureGateStateEnabled
+		case "false":
+			state = operatorv2alpha1.FeatureGateStateDisabled
+		default:
+			return nil, fmt.Errorf("invalid value for feature gate %q: %q, expected 'true' or 'false'", key, value)
+		}
+		featureGates = append(featureGates, operatorv2alpha1.ControlPlaneFeatureGate{
+			Name:  key,
+			State: state,
+		})
+	}
+	return featureGates, nil
+}
+
+func getControllers(envs []corev1.EnvVar) ([]operatorv2alpha1.ControlPlaneController, error) { //nolint:unparam
+	controllersEnvs := lo.Filter(envs, func(env corev1.EnvVar, _ int) bool {
+		return strings.HasPrefix(env.Name, "CONTROLLER_") && strings.HasSuffix(env.Name, "_ENABLED")
+	})
+	_ = controllersEnvs
+	//TODO:
+	return nil, nil
+}
+
+// ConvertTo converts this ControlPlane (v1beta1) to the Hub version (v2alpha1).
+func (c *ControlPlane) ConvertTo(dstRaw conversion.Hub) error {
+	// Proper type ensured by Kubernetes machinery.
+	dst := dstRaw.(*operatorv2alpha1.ControlPlane)
+
+	dst.ObjectMeta = c.ObjectMeta
+
+	var (
+		fgs   []operatorv2alpha1.ControlPlaneFeatureGate
+		ctrls []operatorv2alpha1.ControlPlaneController
+	)
+	if pts := c.Spec.Deployment.PodTemplateSpec; pts != nil {
+		if len(pts.Spec.Containers) > 0 {
+			var err error
+			fgs, err = getFeatureGates(c.Spec.Deployment.PodTemplateSpec.Spec.Containers[0].Env)
+			if err != nil {
+				return err
+			}
+			ctrls, err = getControllers(c.Spec.Deployment.PodTemplateSpec.Spec.Containers[0].Env)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	// Convert Spec
+	dst.Spec.ControlPlaneOptions = operatorv2alpha1.ControlPlaneOptions{
+		IngressClass:    c.Spec.IngressClass,
+		WatchNamespaces: c.Spec.WatchNamespaces,
+		FeatureGates:    fgs,
+		Controllers:     ctrls,
+	}
+	dst.Spec.Extensions = c.Spec.Extensions
+
+	if dp := lo.FromPtr(c.Spec.DataPlane); dp != "" {
+		dst.Spec.DataPlane = operatorv2alpha1.ControlPlaneDataPlaneTarget{
+			Type: operatorv2alpha1.ControlPlaneDataPlaneTargetRefType,
+			Ref: &operatorv2alpha1.ControlPlaneDataPlaneTargetRef{
+				Name: dp,
+			},
+		}
+	} else {
+		dst.Spec.DataPlane = operatorv2alpha1.ControlPlaneDataPlaneTarget{
+			Type: operatorv2alpha1.ControlPlaneDataPlaneTargetManagedByType,
+		}
+	}
+
+	// Convert Status
+	dst.Status = operatorv2alpha1.ControlPlaneStatus{
+		Conditions:   c.Status.Conditions,
+		FeatureGates: nil,
+		Controllers:  nil,
+	}
+
+	return nil
+}
+
+// ConvertFrom converts from the Hub version (v2alpha1) to this version (v1beta1).
+func (c *ControlPlane) ConvertFrom(srcRaw conversion.Hub) error {
+	// Proper type ensured by Kubernetes machinery.
+	src := srcRaw.(*operatorv2alpha1.ControlPlane)
+
+	c.ObjectMeta = src.ObjectMeta
+
+	// Convert Spec
+	c.Spec.IngressClass = src.Spec.IngressClass
+	c.Spec.WatchNamespaces = src.Spec.WatchNamespaces
+	c.Spec.Extensions = src.Spec.Extensions
+
+	// Convert DataPlane reference
+	if src.Spec.DataPlane.Type == operatorv2alpha1.ControlPlaneDataPlaneTargetRefType && src.Spec.DataPlane.Ref != nil {
+		c.Spec.DataPlane = &src.Spec.DataPlane.Ref.Name
+	}
+
+	// Convert Status
+	c.Status = ControlPlaneStatus{
+		Conditions: src.Status.Conditions,
+	}
+
+	return nil
 }
