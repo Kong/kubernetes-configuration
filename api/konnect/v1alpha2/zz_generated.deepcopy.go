@@ -22,8 +22,8 @@ package v1alpha2
 
 import (
 	"github.com/Kong/sdk-konnect-go/models/components"
-	corev1 "k8s.io/api/core/v1"
 	"github.com/kong/kubernetes-configuration/v2/api/common/v1alpha1"
+	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )

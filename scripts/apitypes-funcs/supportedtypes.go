@@ -201,7 +201,7 @@ var supportedKonnectTypesStandalone = []supportedTypesT{
 	{
 		PackageVersion: "v1alpha2",
 		AdditionalImports: []string{
-			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/api/konnect/v1alpha1"`,
+			`konnectv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/konnect/v1alpha1"`,
 		},
 		Types: []templateDataT{
 			{
