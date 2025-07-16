@@ -66,6 +66,9 @@ Adding a new version? You'll need three changes:
   - under `spec.gatewayDiscovery`:
     - `readinessCheckTimeout` and `readinessCheckInterval`
     [#503](https://github.com/Kong/kubernetes-configuration/pull/503)
+  - under `spec.cache`:
+    - `initSyncDuration`
+    [#512](https://github.com/Kong/kubernetes-configuration/pull/512)
 
 ## [v1.5.2]
 
