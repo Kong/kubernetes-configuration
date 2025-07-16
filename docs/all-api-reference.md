@@ -3454,6 +3454,25 @@ _Appears in:_
 - [ControlPlaneStatus](#controlplanestatus)
 - [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
+#### ControlPlaneDataPlaneSync
+
+
+ControlPlaneDataPlaneSync defines the configuration to sync translated Kong configuration
+with the Dataplanes managed by this ControlPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `interval` _[Duration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#duration-v1-meta)_ | Interval is the interval between two rounds of syncing Kong configuration with dataplanes. |
+| `timeout` _[Duration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#duration-v1-meta)_ | Timeout is the timeout of a single run of syncing Kong configuration with dataplanes. |
+
+
+_Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
+
 #### ControlPlaneDataPlaneTarget
 
 
@@ -3573,6 +3592,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
 | `gatewayDiscovery` _[ControlPlaneGatewayDiscovery](#controlplanegatewaydiscovery)_ | GatewayDiscovery defines the configuration for the Gateway Discovery feature. |
 | `cache` _[ControlPlaneK8sCache](#controlplanek8scache)_ | Cache defines the configuration related to the kubernetes object caches. |
+| `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration of syncing configuration with managed DataPlanes. |
 
 
 _Appears in:_
@@ -3595,6 +3615,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
 | `gatewayDiscovery` _[ControlPlaneGatewayDiscovery](#controlplanegatewaydiscovery)_ | GatewayDiscovery defines the configuration for the Gateway Discovery feature. |
 | `cache` _[ControlPlaneK8sCache](#controlplanek8scache)_ | Cache defines the configuration related to the kubernetes object caches. |
+| `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration of syncing configuration with managed DataPlanes. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 
 
@@ -3643,6 +3664,7 @@ ControlPlane resources that will be managed as part of the Gateway.
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
 | `gatewayDiscovery` _[ControlPlaneGatewayDiscovery](#controlplanegatewaydiscovery)_ | GatewayDiscovery defines the configuration for the Gateway Discovery feature. |
 | `cache` _[ControlPlaneK8sCache](#controlplanek8scache)_ | Cache defines the configuration related to the kubernetes object caches. |
+| `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration of syncing configuration with managed DataPlanes. |
 
 
 _Appears in:_
