@@ -8485,6 +8485,17 @@ spec:
                   rule: self.type != 'ref' || has(self.ref)
                 - message: Ref cannot be provided when type is set to managedByOwner
                   rule: self.type != 'managedByOwner' || !has(self.ref)
+              dataplaneSync:
+                description: DataPlaneSync defines the configuration for syncing data
+                  to the DataPlane.
+                properties:
+                  enableReverse:
+                    default: false
+                    description: EnableReverse sends configuration to DataPlane (Kong
+                      Gateway) even if the configuration checksum has not changed
+                      since previous update.
+                    type: boolean
+                type: object
               extensions:
                 description: |-
                   Extensions provide additional or replacement features for the ControlPlane
