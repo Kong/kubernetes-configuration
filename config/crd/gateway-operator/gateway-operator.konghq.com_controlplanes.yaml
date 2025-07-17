@@ -8485,6 +8485,19 @@ spec:
                   rule: self.type != 'ref' || has(self.ref)
                 - message: Ref cannot be provided when type is set to managedByOwner
                   rule: self.type != 'managedByOwner' || !has(self.ref)
+              dataplaneSync:
+                description: DataPlaneSync defines the configuration of syncing configuration
+                  with managed DataPlanes.
+                properties:
+                  interval:
+                    description: Interval is the interval between two rounds of syncing
+                      Kong configuration with dataplanes.
+                    type: string
+                  timeout:
+                    description: Timeout is the timeout of a single run of syncing
+                      Kong configuration with dataplanes.
+                    type: string
+                type: object
               extensions:
                 description: |-
                   Extensions provide additional or replacement features for the ControlPlane

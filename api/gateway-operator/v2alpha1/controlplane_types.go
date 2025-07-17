@@ -131,6 +131,11 @@ type ControlPlaneOptions struct {
 	//
 	// +optional
 	Cache *ControlPlaneK8sCache `json:"cache,omitempty"`
+
+	// DataPlaneSync defines the configuration of syncing configuration with managed DataPlanes.
+	//
+	// +optional
+	DataPlaneSync *ControlPlaneDataPlaneSync `json:"dataplaneSync,omitempty"`
 }
 
 // ControlPlaneDataPlaneTarget defines the target for the DataPlane that the ControlPlane
@@ -175,6 +180,19 @@ type ControlPlaneDataPlaneTargetRef struct {
 	//
 	// +required
 	Name string `json:"name"`
+}
+
+// ControlPlaneDataPlaneSync defines the configuration to sync translated Kong configuration
+// with the Dataplanes managed by this ControlPlane.
+type ControlPlaneDataPlaneSync struct {
+	// Interval is the interval between two rounds of syncing Kong configuration with dataplanes.
+	//
+	// +optional
+	Interval *metav1.Duration `json:"interval,omitempty"` // REVIEW: should we set a lower bound of the interval to prevent frequent syncs?
+	// Timeout is the timeout of a single run of syncing Kong configuration with dataplanes.
+	//
+	// +optional
+	Timeout *metav1.Duration `json:"timeout,omitempty"`
 }
 
 // ControlPlaneGatewayDiscovery defines the configuration for the Gateway Discovery
