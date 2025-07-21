@@ -69,6 +69,9 @@ Adding a new version? You'll need three changes:
   - under `spec.cache`:
     - `initSyncDuration`
     [#512](https://github.com/Kong/kubernetes-configuration/pull/512)
+  - under `spec.dataplaneSync`:
+    - `interval` and `timeout`
+    [#513](https://github.com/Kong/kubernetes-configuration/pull/513)
 
 ## [v1.5.2]
 
