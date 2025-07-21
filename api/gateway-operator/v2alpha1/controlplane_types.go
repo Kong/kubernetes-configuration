@@ -76,11 +76,6 @@ type ControlPlaneSpec struct {
 	// +required
 	DataPlane ControlPlaneDataPlaneTarget `json:"dataplane"`
 
-	// DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane.
-	//
-	// +optional
-	DataPlaneSync *ControlPlaneDataPlaneSync `json:"dataplaneSync,omitempty"`
-
 	ControlPlaneOptions `json:",inline"`
 
 	// Extensions provide additional or replacement features for the ControlPlane
@@ -137,7 +132,7 @@ type ControlPlaneOptions struct {
 	// +optional
 	Cache *ControlPlaneK8sCache `json:"cache,omitempty"`
 
-	// DataPlaneSync defines the configuration of syncing configuration with managed DataPlanes.
+	// DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane.
 	//
 	// +optional
 	DataPlaneSync *ControlPlaneDataPlaneSync `json:"dataplaneSync,omitempty"`
@@ -155,7 +150,7 @@ type ControlPlaneDataPlaneSync struct {
 	// Interval is the interval between two rounds of syncing Kong configuration with dataplanes.
 	//
 	// +optional
-	Interval *metav1.Duration `json:"interval,omitempty"` // REVIEW: should we set a lower bound of the interval to prevent frequent syncs?
+	Interval *metav1.Duration `json:"interval,omitempty"`
 	// Timeout is the timeout of a single run of syncing Kong configuration with dataplanes.
 	//
 	// +optional

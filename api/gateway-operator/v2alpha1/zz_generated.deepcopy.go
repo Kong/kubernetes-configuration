@@ -282,11 +282,6 @@ func (in *ControlPlaneOptions) DeepCopy() *ControlPlaneOptions {
 func (in *ControlPlaneSpec) DeepCopyInto(out *ControlPlaneSpec) {
 	*out = *in
 	in.DataPlane.DeepCopyInto(&out.DataPlane)
-	if in.DataPlaneSync != nil {
-		in, out := &in.DataPlaneSync, &out.DataPlaneSync
-		*out = new(ControlPlaneDataPlaneSync)
-		(*in).DeepCopyInto(*out)
-	}
 	in.ControlPlaneOptions.DeepCopyInto(&out.ControlPlaneOptions)
 	if in.Extensions != nil {
 		in, out := &in.Extensions, &out.Extensions

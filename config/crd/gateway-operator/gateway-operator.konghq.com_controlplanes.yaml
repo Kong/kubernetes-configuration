@@ -8486,8 +8486,8 @@ spec:
                 - message: Ref cannot be provided when type is set to managedByOwner
                   rule: self.type != 'managedByOwner' || !has(self.ref)
               dataplaneSync:
-                description: DataPlaneSync defines the configuration of syncing configuration
-                  with managed DataPlanes.
+                description: DataPlaneSync defines the configuration for syncing Kong
+                  configuration to the DataPlane.
                 properties:
                   enableReverse:
                     default: false

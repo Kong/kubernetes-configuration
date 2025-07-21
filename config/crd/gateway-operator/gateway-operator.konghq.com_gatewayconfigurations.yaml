@@ -17770,8 +17770,8 @@ spec:
                     - name
                     x-kubernetes-list-type: map
                   dataplaneSync:
-                    description: DataPlaneSync defines the configuration of syncing
-                      configuration with managed DataPlanes.
+                    description: DataPlaneSync defines the configuration for syncing
+                      Kong configuration to the DataPlane.
                     properties:
                       enableReverse:
                         default: false
