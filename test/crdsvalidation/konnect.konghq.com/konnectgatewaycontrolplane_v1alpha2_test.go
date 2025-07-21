@@ -741,44 +741,43 @@ func TestKonnectGatewayControlPlaneV1alpha2(t *testing.T) {
 				},
 			},
 			{
-    			Name: "update status with CreateControlPlaneRequest nil, validation should pass",
-    			TestObject: &konnectv1alpha2.KonnectGatewayControlPlane{
-    			    ObjectMeta: common.CommonObjectMeta,
-    			    Spec: konnectv1alpha2.KonnectGatewayControlPlaneSpec{
-    			        CreateControlPlaneRequest: nil,
-    			        KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
-    			            APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
-    			                Name: "name-1",
-    			            },
-    			        },
+				Name: "update status with CreateControlPlaneRequest nil, validation should pass",
+				TestObject: &konnectv1alpha2.KonnectGatewayControlPlane{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: konnectv1alpha2.KonnectGatewayControlPlaneSpec{
+						CreateControlPlaneRequest: nil,
+						KonnectConfiguration: konnectv1alpha1.KonnectConfiguration{
+							APIAuthConfigurationRef: konnectv1alpha1.KonnectAPIAuthConfigurationRef{
+								Name: "name-1",
+							},
+						},
 						Source: lo.ToPtr(commonv1alpha1.EntitySourceMirror),
 						Mirror: &konnectv1alpha2.MirrorSpec{
 							Konnect: konnectv1alpha2.MirrorKonnect{
 								ID: commonv1alpha1.KonnectIDType("8ae65120-cdec-4310-84c1-4b19caf67967"),
 							},
 						},
-    			    },
-    			    Status: konnectv1alpha2.KonnectGatewayControlPlaneStatus{
-    			        Conditions: []metav1.Condition{
-    			            {
-    			                Type:               "Programmed",
-    			                Status:             metav1.ConditionTrue,
-    			                Reason:             "Valid",
-    			                LastTransitionTime: metav1.Now(),
-    			            },
-    			        },
-    			    },
-    			},
-    			Update: func(cp *konnectv1alpha2.KonnectGatewayControlPlane) {
-    			    cp.Status.Conditions = append(cp.Status.Conditions, metav1.Condition{
-    			        Type:               "APIAuthValid",
-    			        Status:             metav1.ConditionTrue,
-    			        Reason:             "Valid",
-    			        LastTransitionTime: metav1.Now(),
-    			    })
-    			},
-
-},
+					},
+					Status: konnectv1alpha2.KonnectGatewayControlPlaneStatus{
+						Conditions: []metav1.Condition{
+							{
+								Type:               "Programmed",
+								Status:             metav1.ConditionTrue,
+								Reason:             "Valid",
+								LastTransitionTime: metav1.Now(),
+							},
+						},
+					},
+				},
+				Update: func(cp *konnectv1alpha2.KonnectGatewayControlPlane) {
+					cp.Status.Conditions = append(cp.Status.Conditions, metav1.Condition{
+						Type:               "APIAuthValid",
+						Status:             metav1.ConditionTrue,
+						Reason:             "Valid",
+						LastTransitionTime: metav1.Now(),
+					})
+				},
+			},
 		}.Run(t)
 	})
 

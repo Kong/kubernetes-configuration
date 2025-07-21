@@ -117,7 +117,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 			{
 				Name: "konnect.authRef change is not allowed for Programmed=True",
 				// Tracking issue: https://github.com/Kong/kubernetes-configuration/issues/504
-				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook",
+				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook: https://github.com/Kong/kubernetes-configuration/issues/504",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
@@ -150,7 +150,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 			{
 				Name: "konnect.authRef change is not allowed for APIAuthValid=True",
 				// Tracking issue: https://github.com/Kong/kubernetes-configuration/issues/504
-				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook",
+				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook: https://github.com/Kong/kubernetes-configuration/issues/504",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
@@ -183,7 +183,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 			{
 				Name: "konnect.authRef change is allowed when cp is not Programmed=True nor APIAuthValid=True",
 				// Tracking issue: https://github.com/Kong/kubernetes-configuration/issues/504
-				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook",
+				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook: https://github.com/Kong/kubernetes-configuration/issues/504",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{
@@ -672,7 +672,7 @@ func TestKonnectGatewayControlPlane(t *testing.T) {
 			{
 				Name: "cluster type is immutable when having it set and then trying to unset it",
 				// Tracking issue: https://github.com/Kong/kubernetes-configuration/issues/504
-				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook.",
+				SkipReason: "Fails when v1alpha2 is the storage version due to missing conversion logic. This test could be re-enabled by implementing conversion logic using a conversion webhook: https://github.com/Kong/kubernetes-configuration/issues/504",
 				TestObject: &konnectv1alpha1.KonnectGatewayControlPlane{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: konnectv1alpha1.KonnectGatewayControlPlaneSpec{

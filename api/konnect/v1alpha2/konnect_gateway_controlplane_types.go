@@ -147,12 +147,9 @@ func (c *KonnectGatewayControlPlane) GetKonnectLabels() map[string]string {
 // SetKonnectLabels sets the Konnect Labels in object's spec.
 func (c *KonnectGatewayControlPlane) SetKonnectLabels(labels map[string]string) {
 	if c.Spec.CreateControlPlaneRequest == nil {
-		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
-			Labels: labels,
-		}
-	} else {
-		c.Spec.CreateControlPlaneRequest.Labels = labels
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{}
 	}
+	c.Spec.CreateControlPlaneRequest.Labels = labels
 }
 
 // GetKonnectName gets the Name from CreateControlPlaneRequest.
@@ -166,12 +163,9 @@ func (c *KonnectGatewayControlPlane) GetKonnectName() string {
 // SetKonnectName sets the Name in CreateControlPlaneRequest.
 func (c *KonnectGatewayControlPlane) SetKonnectName(name string) {
 	if c.Spec.CreateControlPlaneRequest == nil {
-		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
-			Name: name,
-		}
-	} else {
-		c.Spec.CreateControlPlaneRequest.Name = name
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{}
 	}
+	c.Spec.CreateControlPlaneRequest.Name = name
 }
 
 // GetKonnectClusterType gets the ClusterType from CreateControlPlaneRequest.
@@ -185,12 +179,9 @@ func (c *KonnectGatewayControlPlane) GetKonnectClusterType() *sdkkonnectcomp.Cre
 // SetKonnectClusterType sets the ClusterType in CreateControlPlaneRequest.
 func (c *KonnectGatewayControlPlane) SetKonnectClusterType(clusterType *sdkkonnectcomp.CreateControlPlaneRequestClusterType) {
 	if c.Spec.CreateControlPlaneRequest == nil {
-		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
-			ClusterType: clusterType,
-		}
-	} else {
-		c.Spec.CreateControlPlaneRequest.ClusterType = clusterType
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{}
 	}
+	c.Spec.CreateControlPlaneRequest.ClusterType = clusterType
 }
 
 // GetKonnectCloudGateway gets the CloudGateway from CreateControlPlaneRequest.
@@ -204,12 +195,9 @@ func (c *KonnectGatewayControlPlane) GetKonnectCloudGateway() *bool {
 // SetKonnectCloudGateway sets the CloudGateway in CreateControlPlaneRequest.
 func (c *KonnectGatewayControlPlane) SetKonnectCloudGateway(cloudGateway *bool) {
 	if c.Spec.CreateControlPlaneRequest == nil {
-		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
-			CloudGateway: cloudGateway,
-		}
-	} else {
-		c.Spec.CreateControlPlaneRequest.CloudGateway = cloudGateway
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{}
 	}
+	c.Spec.CreateControlPlaneRequest.CloudGateway = cloudGateway
 }
 
 // GetKonnectAuthType gets the AuthType from CreateControlPlaneRequest.
@@ -223,12 +211,9 @@ func (c *KonnectGatewayControlPlane) GetKonnectAuthType() *sdkkonnectcomp.AuthTy
 // SetKonnectAuthType sets the AuthType in CreateControlPlaneRequest.
 func (c *KonnectGatewayControlPlane) SetKonnectAuthType(authType *sdkkonnectcomp.AuthType) {
 	if c.Spec.CreateControlPlaneRequest == nil {
-		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
-			AuthType: authType,
-		}
-	} else {
-		c.Spec.CreateControlPlaneRequest.AuthType = authType
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{}
 	}
+	c.Spec.CreateControlPlaneRequest.AuthType = authType
 }
 
 // GetKonnectProxyURLs gets the ProxyUrls from CreateControlPlaneRequest.
@@ -242,12 +227,9 @@ func (c *KonnectGatewayControlPlane) GetKonnectProxyURLs() []sdkkonnectcomp.Prox
 // SetKonnectProxyURLs sets the ProxyUrls in CreateControlPlaneRequest.
 func (c *KonnectGatewayControlPlane) SetKonnectProxyURLs(proxyURLs []sdkkonnectcomp.ProxyURL) {
 	if c.Spec.CreateControlPlaneRequest == nil {
-		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
-			ProxyUrls: proxyURLs,
-		}
-	} else {
-		c.Spec.CreateControlPlaneRequest.ProxyUrls = proxyURLs
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{}
 	}
+	c.Spec.CreateControlPlaneRequest.ProxyUrls = proxyURLs
 }
 
 // GetKonnectDescription gets the Description from CreateControlPlaneRequest.
@@ -261,12 +243,9 @@ func (c *KonnectGatewayControlPlane) GetKonnectDescription() *string {
 // SetKonnectDescription sets the Description in CreateControlPlaneRequest.
 func (c *KonnectGatewayControlPlane) SetKonnectDescription(description *string) {
 	if c.Spec.CreateControlPlaneRequest == nil {
-		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{
-			Description: description,
-		}
-	} else {
-		c.Spec.CreateControlPlaneRequest.Description = description
+		c.Spec.CreateControlPlaneRequest = &sdkkonnectcomp.CreateControlPlaneRequest{}
 	}
+	c.Spec.CreateControlPlaneRequest.Description = description
 }
 
 // GetKonnectAPIAuthConfigurationRef returns the Konnect API Auth Configuration Ref.
