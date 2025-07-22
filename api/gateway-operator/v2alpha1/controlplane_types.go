@@ -141,6 +141,10 @@ type ControlPlaneOptions struct {
 	//
 	// +optional
 	Translation *ControlPlaneTranslationOptions `json:"translation,omitempty"`
+	// ConfigDump defines the options for dumping generated Kong configuration from a diagnostics server.
+	//
+	// +optional
+	ConfigDump *ControlPlaneConfigDump `json:"configDump,omitempty"`
 }
 
 // ControlPlaneTranslationOptions defines the configuration for translating
@@ -261,12 +265,33 @@ type ControlPlaneGatewayDiscovery struct {
 
 // ControlPlaneK8sCache defines the configuration related to Kubernetes object caches
 // of the ControlPlane.
+//
+// +apireference:kgo:include
 type ControlPlaneK8sCache struct {
 	// InitSyncDuration defines the initial delay to wait for Kubernetes object caches to be synced before the initial configuration.
 	// If omitted, the default value (5s) is used.
 	//
 	// +optional
 	InitSyncDuration *metav1.Duration `json:"initSyncDuration,omitempty"`
+}
+
+// ControlPlaneConfigDump defines the options for dumping translated Kong configuration from a diagnostics server.
+//
+// +apireference:kgo:include
+// +kubebuilder:validation:XValidation:message="Cannot enable dumpSensitive when enabled is set to false",rule="self.enabled || !self.dumpSensitive"
+type ControlPlaneConfigDump struct {
+	// When Enabled is true, Operator will dump the translated Kong configuration by it from a diagnostics server.
+	//
+	// +required
+	// +kubebuilder:default=false
+	Enabled bool `json:"enabled"`
+
+	// When DumpSensitive is true, the configuration will be dumped unchanged, including sensitive parts like private keys and credentials.
+	// When DumpSensitive is false, the sensitive configuration parts like private keys and credentials are redacted.
+	//
+	// +required
+	// +kubebuilder:default=false
+	DumpSensitive bool `json:"dumpSensitive"`
 }
 
 // DefaultControlPlaneInitialCacheSyncDelay defines the default initial delay

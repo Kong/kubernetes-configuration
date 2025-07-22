@@ -1352,6 +1352,24 @@ feature that allows the ControlPlane to combine services from different HTTPRout
 _Appears in:_
 - [ControlPlaneTranslationOptions](#controlplanetranslationoptions)
 
+#### ControlPlaneConfigDump
+
+
+ControlPlaneConfigDump defines the options for dumping translated Kong configuration from a diagnostics server.
+
+
+
+| Field | Description |
+| --- | --- |
+| `enabled` _boolean_ | When Enabled is true, Operator will dump the translated Kong configuration by it from a diagnostics server. |
+| `dumpSensitive` _boolean_ | When DumpSensitive is true, the configuration will be dumped unchanged, including sensitive parts like private keys and credentials. When DumpSensitive is false, the sensitive configuration parts like private keys and credentials are redacted. |
+
+
+_Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
+
 #### ControlPlaneController
 
 
@@ -1512,6 +1530,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 | `cache` _[ControlPlaneK8sCache](#controlplanek8scache)_ | Cache defines the configuration related to the kubernetes object caches. |
 | `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane. |
 | `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
+| `configDump` _[ControlPlaneConfigDump](#controlplaneconfigdump)_ | ConfigDump defines the options for dumping generated Kong configuration from a diagnostics server. |
 
 
 _Appears in:_
@@ -1548,6 +1567,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `cache` _[ControlPlaneK8sCache](#controlplanek8scache)_ | Cache defines the configuration related to the kubernetes object caches. |
 | `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane. |
 | `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
+| `configDump` _[ControlPlaneConfigDump](#controlplaneconfigdump)_ | ConfigDump defines the options for dumping generated Kong configuration from a diagnostics server. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 
 
@@ -1616,6 +1636,7 @@ ControlPlane resources that will be managed as part of the Gateway.
 | `cache` _[ControlPlaneK8sCache](#controlplanek8scache)_ | Cache defines the configuration related to the kubernetes object caches. |
 | `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane. |
 | `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
+| `configDump` _[ControlPlaneConfigDump](#controlplaneconfigdump)_ | ConfigDump defines the options for dumping generated Kong configuration from a diagnostics server. |
 
 
 _Appears in:_
