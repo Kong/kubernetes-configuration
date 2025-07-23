@@ -5,7 +5,7 @@ controller-tools: "0.18.0"
 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
 kustomize: "5.7.0"
 # renovate: datasource=github-releases depName=elastic/crd-ref-docs
-crd-ref-docs: "0.1.0"
+crd-ref-docs: "0.2.0"
 # renovate: datasource=github-releases depName=mikefarah/yq
 yq: "4.46.1"
 # renovate: datasource=github-releases depName=gotestyourself/gotestsum
