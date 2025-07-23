@@ -692,7 +692,7 @@ It is used to reference a Control Plane entity.
 
 | Field | Description |
 | --- | --- |
-| `type` _string_ | Type indicates the type of the control plane being referenced. Allowed values: - konnectID - konnectNamespacedRef - kic<br /><br /> The default is kic, which implies that the Control Plane is KIC. |
+| `type` _string_ | Type indicates the type of the control plane being referenced. Allowed values: - konnectID - konnectNamespacedRef - kic<br /><br />The default is kic, which implies that the Control Plane is KIC. |
 | `konnectID` _[KonnectIDType](#konnectidtype)_ | KonnectID is the schema for the KonnectID type. This field is required when the Type is konnectID. |
 | `konnectNamespacedRef` _[KonnectNamespacedRef](#konnectnamespacedref)_ | KonnectNamespacedRef is a reference to a Konnect Control Plane entity inside the cluster. It contains the name of the Konnect Control Plane. This field is required when the Type is konnectNamespacedRef. |
 
@@ -1231,7 +1231,7 @@ KongPluginBindingSpec defines specification of a KongPluginBinding.
 | Field | Description |
 | --- | --- |
 | `pluginRef` _[PluginRef](#pluginref)_ | PluginReference is a reference to the KongPlugin or KongClusterPlugin resource. |
-| `targets` _[KongPluginBindingTargets](#kongpluginbindingtargets)_ | Targets contains the targets references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br /> 1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service |
+| `targets` _[KongPluginBindingTargets](#kongpluginbindingtargets)_ | Targets contains the targets references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br />1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this KongPluginBinding is associated with. |
 | `scope` _[KongPluginBindingScope](#kongpluginbindingscope)_ | Scope defines the scope of the plugin binding. |
 
@@ -1262,8 +1262,7 @@ _Appears in:_
 #### KongRouteAPISpec
 
 
-KongRouteAPISpec represents the configuration of a Route in Kong as defined by the Konnect API.<br /><br />
-These fields are mostly copied from sdk-konnect-go but some modifications have been made
+KongRouteAPISpec represents the configuration of a Route in Kong as defined by the Konnect API.<br /><br />These fields are mostly copied from sdk-konnect-go but some modifications have been made
 to make the code generation required for Kubernetes CRDs work.
 
 
@@ -1547,22 +1546,7 @@ _Appears in:_
 
 
 
-#### KonnectNamespacedRef
 
-
-KonnectNamespacedRef is the schema for the KonnectNamespacedRef type.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the Konnect Control Plane. |
-| `namespace` _string_ | Namespace is the namespace where the Konnect Control Plane is in. Currently only cluster scoped resources (KongVault) are allowed to set `konnectNamespacedRef.namespace`. |
-
-
-_Appears in:_
-- [ControlPlaneRef](#controlplaneref)
-- [KonnectExtensionControlPlaneRef](#konnectextensioncontrolplaneref)
 
 #### Namespace
 _Underlying type:_ `string`
@@ -1718,16 +1702,11 @@ KongConsumerGroup is the Schema for the kongconsumergroups API.
 
 
 KongUpstreamPolicy allows configuring algorithm that should be used for load balancing traffic between Kong
-Upstream's Targets. It also allows configuring health checks for Kong Upstream's Targets.<br /><br />
-Its configuration is similar to Kong Upstream object (https://docs.konghq.com/gateway/latest/admin-api/#upstream-object),
-and it is applied to Kong Upstream objects created by the controller.<br /><br />
-It can be attached to Services. To attach it to a Service, it has to be annotated with
+Upstream's Targets. It also allows configuring health checks for Kong Upstream's Targets.<br /><br />Its configuration is similar to Kong Upstream object (https://docs.konghq.com/gateway/latest/admin-api/#upstream-object),
+and it is applied to Kong Upstream objects created by the controller.<br /><br />It can be attached to Services. To attach it to a Service, it has to be annotated with
 `konghq.com/upstream-policy: <name>`, where `<name>` is the name of the KongUpstreamPolicy
-object in the same namespace as the Service.<br /><br />
-When attached to a Service, it will affect all Kong Upstreams created for the Service.<br /><br />
-When attached to a Service used in a Gateway API *Route rule with multiple BackendRefs, all of its Services MUST
-be configured with the same KongUpstreamPolicy. Otherwise, the controller will *ignore* the KongUpstreamPolicy.<br /><br />
-Note: KongUpstreamPolicy doesn't implement Gateway API's GEP-713 strictly.
+object in the same namespace as the Service.<br /><br />When attached to a Service, it will affect all Kong Upstreams created for the Service.<br /><br />When attached to a Service used in a Gateway API *Route rule with multiple BackendRefs, all of its Services MUST
+be configured with the same KongUpstreamPolicy. Otherwise, the controller will *ignore* the KongUpstreamPolicy.<br /><br />Note: KongUpstreamPolicy doesn't implement Gateway API's GEP-713 strictly.
 In particular, it doesn't use the TargetRef for attaching to Services and Gateway API *Routes - annotations are
 used instead. This is to allow reusing the same KongUpstreamPolicy for multiple Services and Gateway API *Routes.
 
@@ -2097,34 +2076,26 @@ Package v1alpha1 contains API Schema definitions for the gateway-operator.konghq
 
 
 AIGateway is a network Gateway enabling access and management for AI &
-Machine Learning models such as Large Language Models (LLM).<br /><br />
-The underlying technology for the AIGateway is the Kong Gateway configured
-with a variety of plugins which provide the the AI featureset.<br /><br />
-This is a list of the plugins, which are available in Kong Gateway v3.6.x+:<br /><br />
-  - ai-proxy (https://github.com/kong/kong/tree/master/kong/plugins/ai-proxy)
+Machine Learning models such as Large Language Models (LLM).<br /><br />The underlying technology for the AIGateway is the Kong Gateway configured
+with a variety of plugins which provide the the AI featureset.<br /><br />This is a list of the plugins, which are available in Kong Gateway v3.6.x+:<br /><br />  - ai-proxy (https://github.com/kong/kong/tree/master/kong/plugins/ai-proxy)
   - ai-request-transformer (https://github.com/kong/kong/tree/master/kong/plugins/ai-request-transformer)
   - ai-response-transformers (https://github.com/kong/kong/tree/master/kong/plugins/ai-response-transformer)
   - ai-prompt-template (https://github.com/kong/kong/tree/master/kong/plugins/ai-prompt-template)
   - ai-prompt-guard-plugin (https://github.com/kong/kong/tree/master/kong/plugins/ai-prompt-guard)
-  - ai-prompt-decorator-plugin (https://github.com/kong/kong/tree/master/kong/plugins/ai-prompt-decorator)<br /><br />
-So effectively the AIGateway resource provides a bespoke Gateway resource
+  - ai-prompt-decorator-plugin (https://github.com/kong/kong/tree/master/kong/plugins/ai-prompt-decorator)<br /><br />So effectively the AIGateway resource provides a bespoke Gateway resource
 (which it owns and manages) with the gateway, consumers and plugin
-configurations automated and configurable via Kubernetes APIs.<br /><br />
-The current iteration only supports the proxy itself, but the API is being
-built with room for future growth in several dimensions. For instance:<br /><br />
-  - Supporting auxiliary functions (e.g. decorator, guard, templater, token-rate-limit)
+configurations automated and configurable via Kubernetes APIs.<br /><br />The current iteration only supports the proxy itself, but the API is being
+built with room for future growth in several dimensions. For instance:<br /><br />  - Supporting auxiliary functions (e.g. decorator, guard, templater, token-rate-limit)
   - Supporting request/response transformers
   - Supporting more than just LLMs (e.g. CCNs, GANs, e.t.c.)
   - Supporting more hosting options for LLMs (e.g. self hosted)
   - Supporting more AI cloud providers
-  - Supporting more AI cloud provider features<br /><br />
-The validation rules throughout are set up to ensure at least one
+  - Supporting more AI cloud provider features<br /><br />The validation rules throughout are set up to ensure at least one
 cloud-provider-based LLM is specified, but in the future when we have more
 model types and more hosting options for those types so we may want to look
 into using CEL validation to ensure that at least one model configuration is
 provided. We may also want to use CEL to validate things like identifier
-unique-ness, e.t.c.<br /><br />
-See: https://kubernetes.io/docs/reference/using-api/cel/
+unique-ness, e.t.c.<br /><br />See: https://kubernetes.io/docs/reference/using-api/cel/
 
 <!-- ai_gateway description placeholder -->
 
@@ -2242,8 +2213,8 @@ the API token for an AI cloud provider.
 | Field | Description |
 | --- | --- |
 | `name` _string_ | Name is the name of the reference object. |
-| `namespace` _string_ | Namespace is the namespace of the reference object.<br /><br /> If not specified, it will be assumed to be the same namespace as the object which references it. |
-| `kind` _string_ | Kind is the API object kind<br /><br /> If not specified, it will be assumed to be "Secret". If a Secret is used as the Kind, the secret must contain a single key-value pair where the value is the secret API token. The key can be named anything, as long as there's only one entry, but by convention it should be "apiToken". |
+| `namespace` _string_ | Namespace is the namespace of the reference object.<br /><br />If not specified, it will be assumed to be the same namespace as the object which references it. |
+| `kind` _string_ | Kind is the API object kind<br /><br />If not specified, it will be assumed to be "Secret". If a Secret is used as the Kind, the secret must contain a single key-value pair where the value is the secret API token. The key can be named anything, as long as there's only one entry, but by convention it should be "apiToken". |
 
 
 _Appears in:_
@@ -2292,7 +2263,7 @@ AIGatewayEndpoint is a network endpoint for accessing an AIGateway.
 | `url` _string_ | URL is the URL to access the endpoint from the network indicated by the NetworkAccessHint. |
 | `models` _string array_ | AvailableModels is a list of the identifiers of all the AI models that are accessible from this endpoint. |
 | `consumer` _[AIGatewayConsumerRef](#aigatewayconsumerref)_ | Consumer is a reference to the Secret that contains the credentials for the Kong consumer that is allowed to access this endpoint. |
-| `conditions` _[Condition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#condition-v1-meta) array_ | Conditions describe the current conditions of the AIGatewayEndpoint.<br /><br /> Known condition types are:<br /><br />   - "Provisioning"   - "EndpointReady" |
+| `conditions` _[Condition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#condition-v1-meta) array_ | Conditions describe the current conditions of the AIGatewayEndpoint.<br /><br />Known condition types are:<br /><br />  - "Provisioning"   - "EndpointReady" |
 
 
 _Appears in:_
@@ -2308,8 +2279,8 @@ AIGatewaySpec defines the desired state of an AIGateway.
 | Field | Description |
 | --- | --- |
 | `gatewayClassName` _string_ | GatewayClassName is the name of the GatewayClass which is responsible for the AIGateway. |
-| `largeLanguageModels` _[LargeLanguageModels](#largelanguagemodels)_ | LargeLanguageModels is a list of Large Language Models (LLMs) to be managed by the AI Gateway.<br /><br /> This is a required field because we only support LLMs at the moment. In future iterations we may support other model types. |
-| `cloudProviderCredentials` _[AICloudProviderAPITokenRef](#aicloudproviderapitokenref)_ | CloudProviderCredentials is a reference to an object (e.g. a Kubernetes Secret) which contains the credentials needed to access the APIs of cloud providers.<br /><br /> This is the global configuration that will be used by DEFAULT for all model configurations. A secret configured this way MAY include any number of key-value pairs equal to the number of providers you have, but used this way the keys MUST be named according to their providers (e.g. "openai", "azure", "cohere", e.t.c.). For example:<br /><br />   apiVersion: v1   kind: Secret   metadata:     name: devteam-ai-cloud-providers   type: Opaque   data:     openai: *****************     azure: *****************     cohere: *****************<br /><br /> See AICloudProviderName for a list of known and valid cloud providers.<br /><br /> Note that the keys are NOT case-sensitive (e.g. "OpenAI", "openai", and "openAI" are all valid and considered the same keys) but if there are duplicates endpoints failures conditions will be emitted and endpoints will not be configured until the duplicates are resolved.<br /><br /> This is currently considered required, but in future iterations will be optional as we do things like enable configuring credentials at the model level. |
+| `largeLanguageModels` _[LargeLanguageModels](#largelanguagemodels)_ | LargeLanguageModels is a list of Large Language Models (LLMs) to be managed by the AI Gateway.<br /><br />This is a required field because we only support LLMs at the moment. In future iterations we may support other model types. |
+| `cloudProviderCredentials` _[AICloudProviderAPITokenRef](#aicloudproviderapitokenref)_ | CloudProviderCredentials is a reference to an object (e.g. a Kubernetes Secret) which contains the credentials needed to access the APIs of cloud providers.<br /><br />This is the global configuration that will be used by DEFAULT for all model configurations. A secret configured this way MAY include any number of key-value pairs equal to the number of providers you have, but used this way the keys MUST be named according to their providers (e.g. "openai", "azure", "cohere", e.t.c.). For example:<br /><br />  apiVersion: v1   kind: Secret   metadata:     name: devteam-ai-cloud-providers   type: Opaque   data:     openai: *****************     azure: *****************     cohere: *****************<br /><br />See AICloudProviderName for a list of known and valid cloud providers.<br /><br />Note that the keys are NOT case-sensitive (e.g. "OpenAI", "openai", and "openAI" are all valid and considered the same keys) but if there are duplicates endpoints failures conditions will be emitted and endpoints will not be configured until the duplicates are resolved.<br /><br />This is currently considered required, but in future iterations will be optional as we do things like enable configuring credentials at the model level. |
 
 
 _Appears in:_
@@ -2329,10 +2300,10 @@ Azure, e.t.c.).
 | Field | Description |
 | --- | --- |
 | `identifier` _string_ | Identifier is the unique name which identifies the LLM. This will be used as part of the requests made to an AIGateway endpoint. For instance: if you provided the identifier "devteam-gpt-access", then you would access this model via "https://${endpoint}/devteam-gpt-access" and supply it with your consumer credentials to authenticate requests. |
-| `model` _string_ | Model is the model name of the LLM (e.g. gpt-3.5-turbo, phi-2, e.t.c.).<br /><br /> If not specified, whatever the cloud provider specifies as the default model will be used. |
-| `promptType` _[LLMPromptType](#llmprompttype)_ | PromptType is the type of prompt to be used for inference requests to the LLM (e.g. "chat", "completions").<br /><br /> If "chat" is specified, prompts sent by the user will be interactive, contextual and stateful. The LLM will dynamically answer questions and simulate a dialogue, while also keeping track of the conversation to provide contextually relevant responses.<br /><br /> If "completions" is specified, prompts sent by the user will be stateless and "one-shot". The LLM will provide a single response to the prompt, without any context from previous prompts.<br /><br /> If not specified, "completions" will be used as the default. |
+| `model` _string_ | Model is the model name of the LLM (e.g. gpt-3.5-turbo, phi-2, e.t.c.).<br /><br />If not specified, whatever the cloud provider specifies as the default model will be used. |
+| `promptType` _[LLMPromptType](#llmprompttype)_ | PromptType is the type of prompt to be used for inference requests to the LLM (e.g. "chat", "completions").<br /><br />If "chat" is specified, prompts sent by the user will be interactive, contextual and stateful. The LLM will dynamically answer questions and simulate a dialogue, while also keeping track of the conversation to provide contextually relevant responses.<br /><br />If "completions" is specified, prompts sent by the user will be stateless and "one-shot". The LLM will provide a single response to the prompt, without any context from previous prompts.<br /><br />If not specified, "completions" will be used as the default. |
 | `defaultPrompts` _[LLMPrompt](#llmprompt) array_ | DefaultPrompts is a list of prompts that should be provided to the LLM by default. This is generally used to influence inference behavior, for instance by providing a "system" role prompt that instructs the LLM to take on a certain persona. |
-| `defaultPromptParams` _[LLMPromptParams](#llmpromptparams)_ | DefaultPromptParams configures the parameters which will be sent with any and every inference request.<br /><br /> If this is set, there is currently no way to override these parameters at the individual prompt level. This is an expected feature from later releases of our AI plugins. |
+| `defaultPromptParams` _[LLMPromptParams](#llmpromptparams)_ | DefaultPromptParams configures the parameters which will be sent with any and every inference request.<br /><br />If this is set, there is currently no way to override these parameters at the individual prompt level. This is an expected feature from later releases of our AI plugins. |
 | `aiCloudProvider` _[AICloudProvider](#aicloudprovider)_ | AICloudProvider defines the cloud provider that will fulfill the LLM requests for this CloudHostedLargeLanguageModel |
 
 
@@ -2376,8 +2347,7 @@ _Appears in:_
 _Underlying type:_ `string`
 
 EndpointNetworkAccessHint provides a human readable indication of what kind
-of network access is expected for a Gateway.<br /><br />
-This isn't meant to reflect knowledge of any specific network by name, which
+of network access is expected for a Gateway.<br /><br />This isn't meant to reflect knowledge of any specific network by name, which
 is why it includes "hint" in the name. It's meant to be a hint to the user
 such as "internet-accessible", "internal-only".
 
@@ -2436,7 +2406,7 @@ KonnectExtensionSpec defines the desired state of KonnectExtension.
 | --- | --- |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this KonnectExtension is associated with. |
 | `controlPlaneRegion` _string_ | ControlPlaneRegion is the region of the Konnect Control Plane. |
-| `serverHostname` _string_ | ServerHostname is the fully qualified domain name of the Konnect server. For typical operation a default value doesn't need to be adjusted. It matches the RFC 1123 definition of a hostname with 1 notable exception that numeric IP addresses are not allowed.<br /><br /> Note that as per RFC1035 and RFC1123, a *label* must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. |
+| `serverHostname` _string_ | ServerHostname is the fully qualified domain name of the Konnect server. For typical operation a default value doesn't need to be adjusted. It matches the RFC 1123 definition of a hostname with 1 notable exception that numeric IP addresses are not allowed.<br /><br />Note that as per RFC1035 and RFC1123, a *label* must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character. No other punctuation is allowed. |
 | `konnectControlPlaneAPIAuthConfiguration` _[KonnectControlPlaneAPIAuthConfiguration](#konnectcontrolplaneapiauthconfiguration)_ | AuthConfiguration must be used to configure the Konnect API authentication. |
 | `clusterDataPlaneLabels` _object (keys:string, values:string)_ | ClusterDataPlaneLabels is a set of labels that will be applied to the Konnect DataPlane. |
 
@@ -2449,10 +2419,8 @@ _Appears in:_
 #### LLMPrompt
 
 
-LLMPrompt is a text prompt that includes parameters, a role and content.<br /><br />
-This is intended for situations like when you need to provide roles in a
-prompt to an LLM in order to influence its behavior and responses.<br /><br />
-For example, you might want to provide a "system" role and tell the LLM
+LLMPrompt is a text prompt that includes parameters, a role and content.<br /><br />This is intended for situations like when you need to provide roles in a
+prompt to an LLM in order to influence its behavior and responses.<br /><br />For example, you might want to provide a "system" role and tell the LLM
 something like "you are a helpful assistant who responds in the style of
 Sherlock Holmes".
 
@@ -2461,7 +2429,7 @@ Sherlock Holmes".
 | Field | Description |
 | --- | --- |
 | `content` _string_ | Content is the prompt text sent for inference. |
-| `role` _[LLMPromptRole](#llmpromptrole)_ | Role indicates the role of the prompt. This is used to identify the prompt's purpose, such as "system" or "user" and can influence the behavior of the LLM.<br /><br /> If not specified, "user" will be used as the default. |
+| `role` _[LLMPromptRole](#llmpromptrole)_ | Role indicates the role of the prompt. This is used to identify the prompt's purpose, such as "system" or "user" and can influence the behavior of the LLM.<br /><br />If not specified, "user" will be used as the default. |
 
 
 _Appears in:_
@@ -2522,7 +2490,7 @@ serve and manage traffic for.
 
 | Field | Description |
 | --- | --- |
-| `cloudHosted` _[CloudHostedLargeLanguageModel](#cloudhostedlargelanguagemodel) array_ | CloudHosted configures LLMs hosted and served by cloud providers.<br /><br /> This is currently a required field, requiring at least one cloud-hosted LLM be specified, however in future iterations we may add other hosting options such as self-hosted LLMs as separate fields. |
+| `cloudHosted` _[CloudHostedLargeLanguageModel](#cloudhostedlargelanguagemodel) array_ | CloudHosted configures LLMs hosted and served by cloud providers.<br /><br />This is currently a required field, requiring at least one cloud-hosted LLM be specified, however in future iterations we may add other hosting options such as self-hosted LLMs as separate fields. |
 
 
 _Appears in:_
@@ -2677,7 +2645,7 @@ Address describes an address which can be either an IP address or a hostname.
 | Field | Description |
 | --- | --- |
 | `type` _[AddressType](#addresstype)_ | Type of the address. |
-| `value` _string_ | Value of the address. The validity of the values will depend on the type and support by the controller.<br /><br /> Examples: `1.2.3.4`, `128::1`, `my-ip-address`. |
+| `value` _string_ | Value of the address. The validity of the values will depend on the type and support by the controller.<br /><br />Examples: `1.2.3.4`, `128::1`, `my-ip-address`. |
 | `sourceType` _[AddressSourceType](#addresssourcetype)_ | Source type of the address. |
 
 
@@ -2688,9 +2656,7 @@ _Appears in:_
 #### AddressSourceType
 _Underlying type:_ `string`
 
-AddressSourceType defines the type of source this address represents.<br /><br />
-Can be one of:<br /><br />
-* `PublicLoadBalancer`
+AddressSourceType defines the type of source this address represents.<br /><br />Can be one of:<br /><br />* `PublicLoadBalancer`
 * `PrivateLoadBalancer`
 * `PublicIP`
 * `PrivateIP`
@@ -2705,9 +2671,7 @@ _Appears in:_
 #### AddressType
 _Underlying type:_ `string`
 
-AddressType defines how a network address is represented as a text string.<br /><br />
-Can be one of:<br /><br />
-* `IPAddress`
+AddressType defines how a network address is represented as a text string.<br /><br />Can be one of:<br /><br />* `IPAddress`
 * `Hostname`
 
 
@@ -2787,8 +2751,8 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `dataplane` _string_ | DataPlanes refers to the named DataPlane objects which this ControlPlane is responsible for. Currently they must be in the same namespace as the DataPlane. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
-| `gatewayClass` _[ObjectName](#objectname)_ | GatewayClass indicates the Gateway resources which this ControlPlane should be responsible for configuring routes for (e.g. HTTPRoute, TCPRoute, UDPRoute, TLSRoute, e.t.c.).<br /><br /> Required for the ControlPlane to have any effect: at least one Gateway must be present for configuration to be pushed to the data-plane and only Gateway resources can be used to identify data-plane entities. |
-| `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> Routing configured this way will be applied to the Gateway resources indicated by GatewayClass.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+| `gatewayClass` _[ObjectName](#objectname)_ | GatewayClass indicates the Gateway resources which this ControlPlane should be responsible for configuring routes for (e.g. HTTPRoute, TCPRoute, UDPRoute, TLSRoute, e.t.c.).<br /><br />Required for the ControlPlane to have any effect: at least one Gateway must be present for configuration to be pushed to the data-plane and only Gateway resources can be used to identify data-plane entities. |
+| `ingressClass` _string_ | IngressClass enables support for the older Ingress resource and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br />Routing configured this way will be applied to the Gateway resources indicated by GatewayClass.<br /><br />If omitted, Ingress resources will not be supported by the ControlPlane. |
 
 
 _Appears in:_
@@ -2932,10 +2896,10 @@ DataPlaneServiceOptions contains Services related DataPlane configuration.
 | Field | Description |
 | --- | --- |
 | `ports` _[DataPlaneServicePort](#dataplaneserviceport) array_ | Ports defines the list of ports that are exposed by the service. The ports field allows defining the name, port and targetPort of the underlying service ports, while the protocol is defaulted to TCP, as it is the only protocol currently supported. |
-| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br /> `ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br /> `NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br /> `LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br /> More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
+| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br />`ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br />`NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br />`LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
 | `name` _string_ | Name defines the name of the service. If Name is empty, the controller will generate a service name from the owning object. |
-| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br /> More info: http://kubernetes.io/docs/user-guide/annotations |
-| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br /> More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
+| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br />More info: http://kubernetes.io/docs/user-guide/annotations |
+| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br />More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
 
 
 _Appears in:_
@@ -2953,7 +2917,7 @@ DataPlaneServicePort contains information on service's port.
 | `name` _string_ | The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service. |
 | `port` _integer_ | The port that will be exposed by this service. |
 | `targetPort` _[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#intorstring-intstr-util)_ | Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service |
-| `nodePort` _integer_ | The port on each node on which this service is exposed when type is NodePort or LoadBalancer. Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail. If not specified, a port will be allocated if this Service requires one. If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP).<br /><br /> More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport<br /><br /> Can only be specified if type is NodePort or LoadBalancer. |
+| `nodePort` _integer_ | The port on each node on which this service is exposed when type is NodePort or LoadBalancer. Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail. If not specified, a port will be allocated if this Service requires one. If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP).<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport<br /><br />Can only be specified if type is NodePort or LoadBalancer. |
 
 
 _Appears in:_
@@ -3092,10 +3056,10 @@ such as the annotations.
 
 | Field | Description |
 | --- | --- |
-| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br /> `ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br /> `NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br /> `LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br /> More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
+| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br />`ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br />`NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br />`LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
 | `name` _string_ | Name defines the name of the service. If Name is empty, the controller will generate a service name from the owning object. |
-| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br /> More info: http://kubernetes.io/docs/user-guide/annotations |
-| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br /> More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
+| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br />More info: http://kubernetes.io/docs/user-guide/annotations |
+| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br />More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
 
 
 _Appears in:_
@@ -3204,7 +3168,7 @@ PodDisruptionBudgetSpec defines the specification of a PodDisruptionBudget.
 | --- | --- |
 | `minAvailable` _[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#intorstring-intstr-util)_ | An eviction is allowed if at least "minAvailable" pods selected by "selector" will still be available after the eviction, i.e. even in the absence of the evicted pod.  So for example you can prevent all voluntary evictions by specifying "100%". |
 | `maxUnavailable` _[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#intorstring-intstr-util)_ | An eviction is allowed if at most "maxUnavailable" pods selected by "selector" are unavailable after the eviction, i.e. even in absence of the evicted pod. For example, one can prevent all voluntary evictions by specifying 0. This is a mutually exclusive setting with "minAvailable". |
-| `unhealthyPodEvictionPolicy` _[UnhealthyPodEvictionPolicyType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#unhealthypodevictionpolicytype-v1-policy)_ | UnhealthyPodEvictionPolicy defines the criteria for when unhealthy pods should be considered for eviction. Current implementation considers healthy pods, as pods that have status.conditions item with type="Ready",status="True".<br /><br /> Valid policies are IfHealthyBudget and AlwaysAllow. If no policy is specified, the default behavior will be used, which corresponds to the IfHealthyBudget policy.<br /><br /> IfHealthyBudget policy means that running pods (status.phase="Running"), but not yet healthy can be evicted only if the guarded application is not disrupted (status.currentHealthy is at least equal to status.desiredHealthy). Healthy pods will be subject to the PDB for eviction.<br /><br /> AlwaysAllow policy means that all running pods (status.phase="Running"), but not yet healthy are considered disrupted and can be evicted regardless of whether the criteria in a PDB is met. This means perspective running pods of a disrupted application might not get a chance to become healthy. Healthy pods will be subject to the PDB for eviction.<br /><br /> Additional policies may be added in the future. Clients making eviction decisions should disallow eviction of unhealthy pods if they encounter an unrecognized policy in this field.<br /><br /> This field is beta-level. The eviction API uses this field when the feature gate PDBUnhealthyPodEvictionPolicy is enabled (enabled by default). |
+| `unhealthyPodEvictionPolicy` _[UnhealthyPodEvictionPolicyType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#unhealthypodevictionpolicytype-v1-policy)_ | UnhealthyPodEvictionPolicy defines the criteria for when unhealthy pods should be considered for eviction. Current implementation considers healthy pods, as pods that have status.conditions item with type="Ready",status="True".<br /><br />Valid policies are IfHealthyBudget and AlwaysAllow. If no policy is specified, the default behavior will be used, which corresponds to the IfHealthyBudget policy.<br /><br />IfHealthyBudget policy means that running pods (status.phase="Running"), but not yet healthy can be evicted only if the guarded application is not disrupted (status.currentHealthy is at least equal to status.desiredHealthy). Healthy pods will be subject to the PDB for eviction.<br /><br />AlwaysAllow policy means that all running pods (status.phase="Running"), but not yet healthy are considered disrupted and can be evicted regardless of whether the criteria in a PDB is met. This means perspective running pods of a disrupted application might not get a chance to become healthy. Healthy pods will be subject to the PDB for eviction.<br /><br />Additional policies may be added in the future. Clients making eviction decisions should disallow eviction of unhealthy pods if they encounter an unrecognized policy in this field.<br /><br />This field is beta-level. The eviction API uses this field when the feature gate PDBUnhealthyPodEvictionPolicy is enabled (enabled by default). |
 
 
 _Appears in:_
@@ -3229,9 +3193,7 @@ _Appears in:_
 #### PromotionStrategy
 _Underlying type:_ `string`
 
-PromotionStrategy is the type of promotion strategy consts.<br /><br />
-Allowed values:<br /><br />
-  - `BreakBeforePromotion` is a promotion strategy which will ensure all new
+PromotionStrategy is the type of promotion strategy consts.<br /><br />Allowed values:<br /><br />  - `BreakBeforePromotion` is a promotion strategy which will ensure all new
     resources are ready and then break, to enable manual inspection.
     The user must indicate manually when they want the promotion to continue.
     That can be done by annotating the `DataPlane` object with
@@ -3348,10 +3310,10 @@ such as the annotations.
 
 | Field | Description |
 | --- | --- |
-| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br /> `ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br /> `NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br /> `LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br /> More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
+| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br />`ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br />`NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br />`LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
 | `name` _string_ | Name defines the name of the service. If Name is empty, the controller will generate a service name from the owning object. |
-| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br /> More info: http://kubernetes.io/docs/user-guide/annotations |
-| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br /> More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
+| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br />More info: http://kubernetes.io/docs/user-guide/annotations |
+| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br />More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
 
 
 _Appears in:_
@@ -3586,7 +3548,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 
 | Field | Description |
 | --- | --- |
-| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br />If omitted, Ingress resources will not be supported by the ControlPlane. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
@@ -3608,8 +3570,8 @@ ControlPlaneSpec defines the desired state of ControlPlane
 
 | Field | Description |
 | --- | --- |
-| `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlane designates the target data plane to configure.<br /><br /> It can be: - a name of a DataPlane resource that is managed by the operator, - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource) |
-| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+| `dataplane` _[ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)_ | DataPlane designates the target data plane to configure.<br /><br />It can be: - a name of a DataPlane resource that is managed by the operator, - a DataPlane that is managed by the owner of the ControlPlane (e.g. a Gateway resource) |
+| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br />If omitted, Ingress resources will not be supported by the ControlPlane. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
@@ -3658,7 +3620,7 @@ ControlPlane resources that will be managed as part of the Gateway.
 
 | Field | Description |
 | --- | --- |
-| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br /> If omitted, Ingress resources will not be supported by the ControlPlane. |
+| `ingressClass` _string_ | IngressClass enables support for the Ingress resources and indicates which Ingress resources this ControlPlane should be responsible for.<br /><br />If omitted, Ingress resources will not be supported by the ControlPlane. |
 | `watchNamespaces` _[WatchNamespaces](#watchnamespaces)_ | WatchNamespaces indicates the namespaces to watch for resources. |
 | `featureGates` _[ControlPlaneFeatureGate](#controlplanefeaturegate) array_ | FeatureGates is a list of feature gates that are enabled for this ControlPlane. |
 | `controllers` _[ControlPlaneController](#controlplanecontroller) array_ | Controllers defines the controllers that are enabled for this ControlPlane. |
@@ -3745,10 +3707,10 @@ such as the annotations.
 
 | Field | Description |
 | --- | --- |
-| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br /> `ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br /> `NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br /> `LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br /> More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
+| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br />`ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br />`NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br />`LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
 | `name` _string_ | Name defines the name of the service. If Name is empty, the controller will generate a service name from the owning object. |
-| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br /> More info: http://kubernetes.io/docs/user-guide/annotations |
-| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br /> More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
+| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br />More info: http://kubernetes.io/docs/user-guide/annotations |
+| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br />More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
 
 
 _Appears in:_
@@ -3815,7 +3777,7 @@ PodDisruptionBudgetSpec defines the specification of a PodDisruptionBudget.
 | --- | --- |
 | `minAvailable` _[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#intorstring-intstr-util)_ | An eviction is allowed if at least "minAvailable" pods selected by "selector" will still be available after the eviction, i.e. even in the absence of the evicted pod.  So for example you can prevent all voluntary evictions by specifying "100%". |
 | `maxUnavailable` _[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#intorstring-intstr-util)_ | An eviction is allowed if at most "maxUnavailable" pods selected by "selector" are unavailable after the eviction, i.e. even in absence of the evicted pod. For example, one can prevent all voluntary evictions by specifying 0. This is a mutually exclusive setting with "minAvailable". |
-| `unhealthyPodEvictionPolicy` _[UnhealthyPodEvictionPolicyType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#unhealthypodevictionpolicytype-v1-policy)_ | UnhealthyPodEvictionPolicy defines the criteria for when unhealthy pods should be considered for eviction. Current implementation considers healthy pods, as pods that have status.conditions item with type="Ready",status="True".<br /><br /> Valid policies are IfHealthyBudget and AlwaysAllow. If no policy is specified, the default behavior will be used, which corresponds to the IfHealthyBudget policy.<br /><br /> IfHealthyBudget policy means that running pods (status.phase="Running"), but not yet healthy can be evicted only if the guarded application is not disrupted (status.currentHealthy is at least equal to status.desiredHealthy). Healthy pods will be subject to the PDB for eviction.<br /><br /> AlwaysAllow policy means that all running pods (status.phase="Running"), but not yet healthy are considered disrupted and can be evicted regardless of whether the criteria in a PDB is met. This means perspective running pods of a disrupted application might not get a chance to become healthy. Healthy pods will be subject to the PDB for eviction.<br /><br /> Additional policies may be added in the future. Clients making eviction decisions should disallow eviction of unhealthy pods if they encounter an unrecognized policy in this field.<br /><br /> This field is beta-level. The eviction API uses this field when the feature gate PDBUnhealthyPodEvictionPolicy is enabled (enabled by default). |
+| `unhealthyPodEvictionPolicy` _[UnhealthyPodEvictionPolicyType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#unhealthypodevictionpolicytype-v1-policy)_ | UnhealthyPodEvictionPolicy defines the criteria for when unhealthy pods should be considered for eviction. Current implementation considers healthy pods, as pods that have status.conditions item with type="Ready",status="True".<br /><br />Valid policies are IfHealthyBudget and AlwaysAllow. If no policy is specified, the default behavior will be used, which corresponds to the IfHealthyBudget policy.<br /><br />IfHealthyBudget policy means that running pods (status.phase="Running"), but not yet healthy can be evicted only if the guarded application is not disrupted (status.currentHealthy is at least equal to status.desiredHealthy). Healthy pods will be subject to the PDB for eviction.<br /><br />AlwaysAllow policy means that all running pods (status.phase="Running"), but not yet healthy are considered disrupted and can be evicted regardless of whether the criteria in a PDB is met. This means perspective running pods of a disrupted application might not get a chance to become healthy. Healthy pods will be subject to the PDB for eviction.<br /><br />Additional policies may be added in the future. Clients making eviction decisions should disallow eviction of unhealthy pods if they encounter an unrecognized policy in this field.<br /><br />This field is beta-level. The eviction API uses this field when the feature gate PDBUnhealthyPodEvictionPolicy is enabled (enabled by default). |
 
 
 _Appears in:_
@@ -3831,10 +3793,10 @@ such as the annotations.
 
 | Field | Description |
 | --- | --- |
-| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br /> `ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br /> `NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br /> `LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br /> More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
+| `type` _[ServiceType](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#servicetype-v1-core)_ | Type determines how the Service is exposed. Defaults to `LoadBalancer`.<br /><br />`ClusterIP` allocates a cluster-internal IP address for load-balancing to endpoints.<br /><br />`NodePort` exposes the Service on each Node's IP at a static port (the NodePort). To make the node port available, Kubernetes sets up a cluster IP address, the same as if you had requested a Service of type: ClusterIP.<br /><br />`LoadBalancer` builds on NodePort and creates an external load-balancer (if supported in the current cloud) which routes to the same endpoints as the clusterIP.<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types |
 | `name` _string_ | Name defines the name of the service. If Name is empty, the controller will generate a service name from the owning object. |
-| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br /> More info: http://kubernetes.io/docs/user-guide/annotations |
-| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br /> More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
+| `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br />More info: http://kubernetes.io/docs/user-guide/annotations |
+| `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br />More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
 
 
 _Appears in:_
@@ -3853,8 +3815,7 @@ KongServiceFacade allows creating separate Kong Services for a single Kubernetes
 Service. It can be used as Kubernetes Ingress' backend (via its path's `backend.resource`
 field). It's designed to enable creating two "virtual" Services in Kong that will point
 to the same Kubernetes Service, but will have different configuration (e.g. different
-set of plugins, different load balancing algorithm, etc.).<br /><br />
-KongServiceFacade requires `kubernetes.io/ingress.class` annotation with a value
+set of plugins, different load balancing algorithm, etc.).<br /><br />KongServiceFacade requires `kubernetes.io/ingress.class` annotation with a value
 matching the ingressClass of the Kong Ingress Controller (`kong` by default) to be reconciled.
 
 <!-- kong_service_facade description placeholder -->
@@ -4199,7 +4160,7 @@ CreateControlPlaneRequest - The request schema for the create control plane requ
 | `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
 | `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
 | `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
-| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
+| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br />Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
 
 
 _Appears in:_
@@ -4392,7 +4353,7 @@ KonnectConfigurationDataPlaneGroup is the schema for the KonnectConfiguration ty
 | --- | --- |
 | `provider` _[ProviderName](#providername)_ | Name of cloud provider. |
 | `region` _string_ | Region for cloud provider region. |
-| `networkRef` _[ObjectRef](#objectref)_ | NetworkRef is the reference to the network that this data-plane group will be deployed on.<br /><br /> Cross namespace references are not supported for networkRef of type namespacedRef. This will be enforced in the future but currently (due to limitation in CEL validation in Kubernetes 1.31 and older) it is not. |
+| `networkRef` _[ObjectRef](#objectref)_ | NetworkRef is the reference to the network that this data-plane group will be deployed on.<br /><br />Cross namespace references are not supported for networkRef of type namespacedRef. This will be enforced in the future but currently (due to limitation in CEL validation in Kubernetes 1.31 and older) it is not. |
 | `autoscale` _[ConfigurationDataPlaneGroupAutoscale](#configurationdataplanegroupautoscale)_ | Autoscale configuration for the data-plane group. |
 | `environment` _[ConfigurationDataPlaneGroupEnvironmentField](#configurationdataplanegroupenvironmentfield) array_ | Array of environment variables to set for a data-plane group. |
 
@@ -4716,7 +4677,7 @@ KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayContro
 | `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
 | `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
 | `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
-| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
+| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br />Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
 | `mirror` _[MirrorSpec](#mirrorspec)_ | Mirror is the Konnect Mirror configuration. It is only applicable for ControlPlanes that are created as Mirrors. |
 | `source` _[EntitySource](#entitysource)_ | Source represents the source type of the Konnect entity. |
 | `members` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#localobjectreference-v1-core) array_ | Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group. Only applicable for ControlPlanes that are created as groups. |

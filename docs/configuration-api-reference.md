@@ -1209,7 +1209,7 @@ KongPluginBindingSpec defines specification of a KongPluginBinding.
 | Field | Description |
 | --- | --- |
 | `pluginRef` _[PluginRef](#pluginref)_ | PluginReference is a reference to the KongPlugin or KongClusterPlugin resource. |
-| `targets` _[KongPluginBindingTargets](#kongpluginbindingtargets)_ | Targets contains the targets references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br /> 1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service |
+| `targets` _[KongPluginBindingTargets](#kongpluginbindingtargets)_ | Targets contains the targets references. It is possible to set multiple combinations of references, as described in https://docs.konghq.com/gateway/latest/key-concepts/plugins/#precedence The complete set of allowed combinations and their order of precedence for plugins configured to multiple entities is:<br /><br />1. Consumer + route + service 2. Consumer group + service + route 3. Consumer + route 4. Consumer + service 5. Consumer group + route 6. Consumer group + service 7. Route + service 8. Consumer 9. Consumer group 10. Route 11. Service |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this KongPluginBinding is associated with. |
 | `scope` _[KongPluginBindingScope](#kongpluginbindingscope)_ | Scope defines the scope of the plugin binding. |
 
@@ -1240,8 +1240,7 @@ _Appears in:_
 #### KongRouteAPISpec
 
 
-KongRouteAPISpec represents the configuration of a Route in Kong as defined by the Konnect API.<br /><br />
-These fields are mostly copied from sdk-konnect-go but some modifications have been made
+KongRouteAPISpec represents the configuration of a Route in Kong as defined by the Konnect API.<br /><br />These fields are mostly copied from sdk-konnect-go but some modifications have been made
 to make the code generation required for Kubernetes CRDs work.
 
 
@@ -1525,21 +1524,7 @@ _Appears in:_
 
 
 
-#### KonnectNamespacedRef
 
-
-KonnectNamespacedRef is the schema for the KonnectNamespacedRef type.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the Konnect Control Plane. |
-| `namespace` _string_ | Namespace is the namespace where the Konnect Control Plane is in. Currently only cluster scoped resources (KongVault) are allowed to set `konnectNamespacedRef.namespace`. |
-
-
-_Appears in:_
-- [ControlPlaneRef](#controlplaneref)
 
 #### Namespace
 _Underlying type:_ `string`
@@ -1695,16 +1680,11 @@ KongConsumerGroup is the Schema for the kongconsumergroups API.
 
 
 KongUpstreamPolicy allows configuring algorithm that should be used for load balancing traffic between Kong
-Upstream's Targets. It also allows configuring health checks for Kong Upstream's Targets.<br /><br />
-Its configuration is similar to Kong Upstream object (https://docs.konghq.com/gateway/latest/admin-api/#upstream-object),
-and it is applied to Kong Upstream objects created by the controller.<br /><br />
-It can be attached to Services. To attach it to a Service, it has to be annotated with
+Upstream's Targets. It also allows configuring health checks for Kong Upstream's Targets.<br /><br />Its configuration is similar to Kong Upstream object (https://docs.konghq.com/gateway/latest/admin-api/#upstream-object),
+and it is applied to Kong Upstream objects created by the controller.<br /><br />It can be attached to Services. To attach it to a Service, it has to be annotated with
 `konghq.com/upstream-policy: <name>`, where `<name>` is the name of the KongUpstreamPolicy
-object in the same namespace as the Service.<br /><br />
-When attached to a Service, it will affect all Kong Upstreams created for the Service.<br /><br />
-When attached to a Service used in a Gateway API *Route rule with multiple BackendRefs, all of its Services MUST
-be configured with the same KongUpstreamPolicy. Otherwise, the controller will *ignore* the KongUpstreamPolicy.<br /><br />
-Note: KongUpstreamPolicy doesn't implement Gateway API's GEP-713 strictly.
+object in the same namespace as the Service.<br /><br />When attached to a Service, it will affect all Kong Upstreams created for the Service.<br /><br />When attached to a Service used in a Gateway API *Route rule with multiple BackendRefs, all of its Services MUST
+be configured with the same KongUpstreamPolicy. Otherwise, the controller will *ignore* the KongUpstreamPolicy.<br /><br />Note: KongUpstreamPolicy doesn't implement Gateway API's GEP-713 strictly.
 In particular, it doesn't use the TargetRef for attaching to Services and Gateway API *Routes - annotations are
 used instead. This is to allow reusing the same KongUpstreamPolicy for multiple Services and Gateway API *Routes.
 

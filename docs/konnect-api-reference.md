@@ -298,7 +298,7 @@ CreateControlPlaneRequest - The request schema for the create control plane requ
 | `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
 | `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
 | `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
-| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
+| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br />Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
 
 
 _Appears in:_
@@ -491,7 +491,7 @@ KonnectConfigurationDataPlaneGroup is the schema for the KonnectConfiguration ty
 | --- | --- |
 | `provider` _[ProviderName](#providername)_ | Name of cloud provider. |
 | `region` _string_ | Region for cloud provider region. |
-| `networkRef` _[ObjectRef](#objectref)_ | NetworkRef is the reference to the network that this data-plane group will be deployed on.<br /><br /> Cross namespace references are not supported for networkRef of type namespacedRef. This will be enforced in the future but currently (due to limitation in CEL validation in Kubernetes 1.31 and older) it is not. |
+| `networkRef` _[ObjectRef](#objectref)_ | NetworkRef is the reference to the network that this data-plane group will be deployed on.<br /><br />Cross namespace references are not supported for networkRef of type namespacedRef. This will be enforced in the future but currently (due to limitation in CEL validation in Kubernetes 1.31 and older) it is not. |
 | `autoscale` _[ConfigurationDataPlaneGroupAutoscale](#configurationdataplanegroupautoscale)_ | Autoscale configuration for the data-plane group. |
 | `environment` _[ConfigurationDataPlaneGroupEnvironmentField](#configurationdataplanegroupenvironmentfield) array_ | Array of environment variables to set for a data-plane group. |
 
@@ -716,7 +716,7 @@ KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayContro
 | `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
 | `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
 | `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
-| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br /> Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
+| `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br />Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
 | `mirror` _[MirrorSpec](#mirrorspec)_ | Mirror is the Konnect Mirror configuration. It is only applicable for ControlPlanes that are created as Mirrors. |
 | `source` _[EntitySource](#entitysource)_ | Source represents the source type of the Konnect entity. |
 | `members` _[LocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#localobjectreference-v1-core) array_ | Members is a list of references to the KonnectGatewayControlPlaneMembers that are part of this control plane group. Only applicable for ControlPlanes that are created as groups. |
