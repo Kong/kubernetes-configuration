@@ -147,7 +147,7 @@ type ControlPlaneOptions struct {
 // cluster resources into Kong configuration.
 type ControlPlaneTranslationOptions struct {
 	// CombinedServicesFromDifferentHTTPRoutes indicates whether the ControlPlane should
-	// combine services from different HTTPRoutes into a single service.
+	// combine services from different HTTPRoutes into a single Kong DataPlane service.
 	//
 	// +optional
 	// +kubebuilder:default=enabled
