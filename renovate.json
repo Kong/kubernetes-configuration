@@ -33,6 +33,18 @@
       "matchStrings": [
         "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\nversion: v(?<currentValue>.*)"
       ]
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        ".custom-gcl\\.yml$"
+      ],
+      "matchStrings": [
+        "version:\\s*(?<currentValue>)(?<currentDigest>[a-f0-9]{7,40})"
+      ],
+      "currentValueTemplate": "main",
+      "datasourceTemplate": "git-refs",
+      "lookupNameTemplate": "https://github.com/kubernetes-sigs/kube-api-linter"
     }
   ],
   "packageRules": [
