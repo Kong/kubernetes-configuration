@@ -3396,6 +3396,19 @@ GatewayConfiguration is the Schema for the gatewayconfigurations API.
 ### Types
 
 In this section you will find types that the CRDs rely on.
+#### ControlPlaneCombinedServicesFromDifferentHTTPRoutesState
+_Underlying type:_ `string`
+
+ControlPlaneCombinedServicesFromDifferentHTTPRoutesState defines the state of the
+feature that allows the ControlPlane to combine services from different HTTPRoutes.
+
+
+
+
+
+_Appears in:_
+- [ControlPlaneTranslationOptions](#controlplanetranslationoptions)
+
 #### ControlPlaneController
 
 
@@ -3555,6 +3568,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 | `gatewayDiscovery` _[ControlPlaneGatewayDiscovery](#controlplanegatewaydiscovery)_ | GatewayDiscovery defines the configuration for the Gateway Discovery feature. |
 | `cache` _[ControlPlaneK8sCache](#controlplanek8scache)_ | Cache defines the configuration related to the kubernetes object caches. |
 | `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane. |
+| `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
 
 
 _Appears in:_
@@ -3590,6 +3604,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `gatewayDiscovery` _[ControlPlaneGatewayDiscovery](#controlplanegatewaydiscovery)_ | GatewayDiscovery defines the configuration for the Gateway Discovery feature. |
 | `cache` _[ControlPlaneK8sCache](#controlplanek8scache)_ | Cache defines the configuration related to the kubernetes object caches. |
 | `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane. |
+| `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 
 
@@ -3597,6 +3612,24 @@ _Appears in:_
 - [ControlPlane](#controlplane)
 
 
+
+#### ControlPlaneTranslationOptions
+
+
+ControlPlaneTranslationOptions defines the configuration for translating
+cluster resources into Kong configuration.
+
+
+
+| Field | Description |
+| --- | --- |
+| `combinedServicesFromDifferentHTTPRoutes` _[ControlPlaneCombinedServicesFromDifferentHTTPRoutesState](#controlplanecombinedservicesfromdifferenthttproutesstate)_ | CombinedServicesFromDifferentHTTPRoutes indicates whether the ControlPlane should combine services from different HTTPRoutes into a single Kong DataPlane service. |
+
+
+_Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
 #### ControllerState
 _Underlying type:_ `string`
@@ -3639,6 +3672,7 @@ ControlPlane resources that will be managed as part of the Gateway.
 | `gatewayDiscovery` _[ControlPlaneGatewayDiscovery](#controlplanegatewaydiscovery)_ | GatewayDiscovery defines the configuration for the Gateway Discovery feature. |
 | `cache` _[ControlPlaneK8sCache](#controlplanek8scache)_ | Cache defines the configuration related to the kubernetes object caches. |
 | `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane. |
+| `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
 
 
 _Appears in:_
