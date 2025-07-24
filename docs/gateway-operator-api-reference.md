@@ -1368,7 +1368,7 @@ ControlPlaneDataPlaneSync defines the configuration for syncing Kong configurati
 
 | Field | Description |
 | --- | --- |
-| `enableReverse` _boolean_ | EnableReverse sends configuration to DataPlane (Kong Gateway) even if the configuration checksum has not changed since previous update. |
+| `reverseSync` _[ControlPlaneReverseSyncState](#controlplanereversesyncstate)_ | ReverseSync sends configuration to DataPlane (Kong Gateway) even if the configuration checksum has not changed since previous update. |
 | `interval` _[Duration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#duration-v1-meta)_ | Interval is the interval between two rounds of syncing Kong configuration with dataplanes. |
 | `timeout` _[Duration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#duration-v1-meta)_ | Timeout is the timeout of a single run of syncing Kong configuration with dataplanes. |
 
@@ -1503,6 +1503,18 @@ deploy and connect a ControlPlane to a DataPlane object.
 _Appears in:_
 - [ControlPlaneSpec](#controlplanespec)
 - [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
+
+#### ControlPlaneReverseSyncState
+_Underlying type:_ `string`
+
+ControlPlaneReverseSyncState defines the state of the reverse sync feature.
+
+
+
+
+
+_Appears in:_
+- [ControlPlaneDataPlaneSync](#controlplanedataplanesync)
 
 #### ControlPlaneSpec
 
