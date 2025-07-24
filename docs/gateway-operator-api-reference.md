@@ -1566,7 +1566,7 @@ cluster resources into Kong configuration.
 
 | Field | Description |
 | --- | --- |
-| `combinedServicesFromDifferentHTTPRoutes` _[ControlPlaneCombinedServicesFromDifferentHTTPRoutesState](#controlplanecombinedservicesfromdifferenthttproutesstate)_ | CombinedServicesFromDifferentHTTPRoutes indicates whether the ControlPlane should combine services from different HTTPRoutes into a single service. |
+| `combinedServicesFromDifferentHTTPRoutes` _[ControlPlaneCombinedServicesFromDifferentHTTPRoutesState](#controlplanecombinedservicesfromdifferenthttproutesstate)_ | CombinedServicesFromDifferentHTTPRoutes indicates whether the ControlPlane should combine services from different HTTPRoutes into a single Kong DataPlane service. |
 
 
 _Appears in:_

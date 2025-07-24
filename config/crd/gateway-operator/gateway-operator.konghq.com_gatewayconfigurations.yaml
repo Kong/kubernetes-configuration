@@ -17847,7 +17847,7 @@ spec:
                         default: enabled
                         description: |-
                           CombinedServicesFromDifferentHTTPRoutes indicates whether the ControlPlane should
-                          combine services from different HTTPRoutes into a single service.
+                          combine services from different HTTPRoutes into a single Kong DataPlane service.
                         enum:
                         - enabled
                         - disabled
