@@ -1467,6 +1467,33 @@ that the ControlPlane is responsible for configuring.
 _Appears in:_
 - [ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)
 
+#### ControlPlaneFallbackConfiguration
+
+
+ControlPlaneFallbackConfiguration defines the fallback configuration options for the ControlPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `useLastValidConfig` _[ControlPlaneFallbackConfigurationState](#controlplanefallbackconfigurationstate)_ | UseLastValidConfig indicates whether the ControlPlane should use the last valid configuration when the current configuration is invalid. |
+
+
+_Appears in:_
+- [ControlPlaneTranslationOptions](#controlplanetranslationoptions)
+
+#### ControlPlaneFallbackConfigurationState
+_Underlying type:_ `string`
+
+ControlPlaneFallbackConfigurationState defines the state of the fallback configuration feature.
+
+
+
+
+
+_Appears in:_
+- [ControlPlaneFallbackConfiguration](#controlplanefallbackconfiguration)
+
 #### ControlPlaneFeatureGate
 
 
@@ -1599,6 +1626,7 @@ cluster resources into Kong configuration.
 | Field | Description |
 | --- | --- |
 | `combinedServicesFromDifferentHTTPRoutes` _[ControlPlaneCombinedServicesFromDifferentHTTPRoutesState](#controlplanecombinedservicesfromdifferenthttproutesstate)_ | CombinedServicesFromDifferentHTTPRoutes indicates whether the ControlPlane should combine services from different HTTPRoutes into a single Kong DataPlane service. |
+| `fallbackConfiguration` _[ControlPlaneFallbackConfiguration](#controlplanefallbackconfiguration)_ | FallbackConfiguration defines the fallback configuration options for the ControlPlane. |
 
 
 _Appears in:_
