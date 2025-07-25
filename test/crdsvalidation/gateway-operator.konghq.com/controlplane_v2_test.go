@@ -370,8 +370,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 								ConfigDump: &operatorv2alpha1.ControlPlaneConfigDump{
-									State:         operatorv2alpha1.ControllerStateEnabled,
-									DumpSensitive: operatorv2alpha1.ControllerStateEnabled,
+									State:         operatorv2alpha1.ConfigDumpStateEnabled,
+									DumpSensitive: operatorv2alpha1.ConfigDumpStateEnabled,
 								},
 							},
 						},
@@ -385,8 +385,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 								ConfigDump: &operatorv2alpha1.ControlPlaneConfigDump{
-									State:         operatorv2alpha1.ControllerStateDisabled,
-									DumpSensitive: operatorv2alpha1.ControllerStateDisabled,
+									State:         operatorv2alpha1.ConfigDumpStateDisabled,
+									DumpSensitive: operatorv2alpha1.ConfigDumpStateDisabled,
 								},
 							},
 						},
@@ -400,8 +400,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 								ConfigDump: &operatorv2alpha1.ControlPlaneConfigDump{
-									State:         operatorv2alpha1.ControllerStateEnabled,
-									DumpSensitive: operatorv2alpha1.ControllerStateDisabled,
+									State:         operatorv2alpha1.ConfigDumpStateEnabled,
+									DumpSensitive: operatorv2alpha1.ConfigDumpStateDisabled,
 								},
 							},
 						},
@@ -415,8 +415,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 								ConfigDump: &operatorv2alpha1.ControlPlaneConfigDump{
-									State:         operatorv2alpha1.ControllerStateDisabled,
-									DumpSensitive: operatorv2alpha1.ControllerStateEnabled,
+									State:         operatorv2alpha1.ConfigDumpStateDisabled,
+									DumpSensitive: operatorv2alpha1.ConfigDumpStateEnabled,
 								},
 							},
 						},
@@ -431,8 +431,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 								ConfigDump: &operatorv2alpha1.ControlPlaneConfigDump{
-									State:         operatorv2alpha1.ControllerState("invalid"),
-									DumpSensitive: operatorv2alpha1.ControllerStateDisabled,
+									State:         operatorv2alpha1.ConfigDumpState("invalid"),
+									DumpSensitive: operatorv2alpha1.ConfigDumpStateEnabled,
 								},
 							},
 						},
@@ -447,8 +447,8 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 								ConfigDump: &operatorv2alpha1.ControlPlaneConfigDump{
-									State:         operatorv2alpha1.ControllerStateEnabled,
-									DumpSensitive: operatorv2alpha1.ControllerState("invalid"),
+									State:         operatorv2alpha1.ConfigDumpStateEnabled,
+									DumpSensitive: operatorv2alpha1.ConfigDumpState("invalid"),
 								},
 							},
 						},

@@ -3396,6 +3396,18 @@ GatewayConfiguration is the Schema for the gatewayconfigurations API.
 ### Types
 
 In this section you will find types that the CRDs rely on.
+#### ConfigDumpState
+_Underlying type:_ `string`
+
+ConfigDumpState defines the state of configuration dump.
+
+
+
+
+
+_Appears in:_
+- [ControlPlaneConfigDump](#controlplaneconfigdump)
+
 #### ControlPlaneCombinedServicesFromDifferentHTTPRoutesState
 _Underlying type:_ `string`
 
@@ -3418,8 +3430,8 @@ ControlPlaneConfigDump defines the options for dumping translated Kong configura
 
 | Field | Description |
 | --- | --- |
-| `state` _[ControllerState](#controllerstate)_ | When State is enabled, Operator will dump the translated Kong configuration by it from a diagnostics server. |
-| `dumpSensitive` _[ControllerState](#controllerstate)_ | When DumpSensitive is enabled, the configuration will be dumped unchanged, including sensitive parts like private keys and credentials. When DumpSensitive is disabled, the sensitive configuration parts like private keys and credentials are redacted. |
+| `state` _[ConfigDumpState](#configdumpstate)_ | When State is enabled, Operator will dump the translated Kong configuration by it from a diagnostics server. |
+| `dumpSensitive` _[ConfigDumpState](#configdumpstate)_ | When DumpSensitive is enabled, the configuration will be dumped unchanged, including sensitive parts like private keys and credentials. When DumpSensitive is disabled, the sensitive configuration parts like private keys and credentials are redacted. |
 
 
 _Appears in:_
@@ -3654,14 +3666,13 @@ _Appears in:_
 #### ControllerState
 _Underlying type:_ `string`
 
-ControllerState defines the state of a feature gate.
+ControllerState defines the state of a controller.
 
 
 
 
 
 _Appears in:_
-- [ControlPlaneConfigDump](#controlplaneconfigdump)
 - [ControlPlaneController](#controlplanecontroller)
 
 #### FeatureGateState
