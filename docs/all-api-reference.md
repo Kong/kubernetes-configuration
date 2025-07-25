@@ -3524,6 +3524,19 @@ that the ControlPlane is responsible for configuring.
 _Appears in:_
 - [ControlPlaneDataPlaneTarget](#controlplanedataplanetarget)
 
+#### ControlPlaneDrainSupportState
+_Underlying type:_ `string`
+
+ControlPlaneDrainSupportState defines the state of the feature that allows the ControlPlane
+to include terminating endpoints in Kong upstreams with weight=0 for graceful connection draining.
+
+
+
+
+
+_Appears in:_
+- [ControlPlaneTranslationOptions](#controlplanetranslationoptions)
+
 #### ControlPlaneFallbackConfiguration
 
 
@@ -3684,6 +3697,7 @@ cluster resources into Kong configuration.
 | --- | --- |
 | `combinedServicesFromDifferentHTTPRoutes` _[ControlPlaneCombinedServicesFromDifferentHTTPRoutesState](#controlplanecombinedservicesfromdifferenthttproutesstate)_ | CombinedServicesFromDifferentHTTPRoutes indicates whether the ControlPlane should combine services from different HTTPRoutes into a single Kong DataPlane service. |
 | `fallbackConfiguration` _[ControlPlaneFallbackConfiguration](#controlplanefallbackconfiguration)_ | FallbackConfiguration defines the fallback configuration options for the ControlPlane. |
+| `drainSupport` _[ControlPlaneDrainSupportState](#controlplanedrainsupportstate)_ | DrainSupport defines the configuration for the ControlPlane to include terminating endpoints in Kong upstreams with weight=0 for graceful connection draining. |
 
 
 _Appears in:_
