@@ -82,6 +82,9 @@ Adding a new version? You'll need three changes:
   - under `spec.dataplaneSync`:
     - `interval` and `timeout`
     [#513](https://github.com/Kong/kubernetes-configuration/pull/513)
+  - under `spec.configDump`:
+    - `enabled` and `dumpSensitive`
+    [#518](https://github.com/Kong/kubernetes-configuration/pull/518)
 
 ## [v1.5.2]
 
