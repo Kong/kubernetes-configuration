@@ -119,7 +119,10 @@ jobs:
       with:
         install: false
 
-    - run: make lint.golangci-lint
+    - env:
+        # Our .golangci.yaml has fix: true, but we don't want that in CI therefore the below override.
+        GOLANGCI_LINT_FLAGS: "--fix=false"
+      run: make lint.golangci-lint
 
   kube-api-linter:
     runs-on: ubuntu-latest
