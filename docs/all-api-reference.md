@@ -3418,8 +3418,8 @@ ControlPlaneConfigDump defines the options for dumping translated Kong configura
 
 | Field | Description |
 | --- | --- |
-| `enabled` _boolean_ | When Enabled is true, Operator will dump the translated Kong configuration by it from a diagnostics server. |
-| `dumpSensitive` _boolean_ | When DumpSensitive is true, the configuration will be dumped unchanged, including sensitive parts like private keys and credentials. When DumpSensitive is false, the sensitive configuration parts like private keys and credentials are redacted. |
+| `state` _[ControllerState](#controllerstate)_ | When State is enabled, Operator will dump the translated Kong configuration by it from a diagnostics server. |
+| `dumpSensitive` _[ControllerState](#controllerstate)_ | When DumpSensitive is enabled, the configuration will be dumped unchanged, including sensitive parts like private keys and credentials. When DumpSensitive is disabled, the sensitive configuration parts like private keys and credentials are redacted. |
 
 
 _Appears in:_
@@ -3661,6 +3661,7 @@ ControllerState defines the state of a feature gate.
 
 
 _Appears in:_
+- [ControlPlaneConfigDump](#controlplaneconfigdump)
 - [ControlPlaneController](#controlplanecontroller)
 
 #### FeatureGateState

@@ -278,20 +278,22 @@ type ControlPlaneK8sCache struct {
 // ControlPlaneConfigDump defines the options for dumping translated Kong configuration from a diagnostics server.
 //
 // +apireference:kgo:include
-// +kubebuilder:validation:XValidation:message="Cannot enable dumpSensitive when enabled is set to false",rule="self.enabled || !self.dumpSensitive"
+// +kubebuilder:validation:XValidation:message="Cannot enable dumpSensitive when state is disabled",rule="self.state == 'enabled' || self.dumpSensitive == 'disabled'"
 type ControlPlaneConfigDump struct {
-	// When Enabled is true, Operator will dump the translated Kong configuration by it from a diagnostics server.
+	// When State is enabled, Operator will dump the translated Kong configuration by it from a diagnostics server.
 	//
 	// +required
-	// +kubebuilder:default=false
-	Enabled bool `json:"enabled"`
+	// +kubebuilder:validation:Enum=enabled;disabled
+	// +kubebuilder:default="disabled"
+	State ControllerState `json:"state"`
 
-	// When DumpSensitive is true, the configuration will be dumped unchanged, including sensitive parts like private keys and credentials.
-	// When DumpSensitive is false, the sensitive configuration parts like private keys and credentials are redacted.
+	// When DumpSensitive is enabled, the configuration will be dumped unchanged, including sensitive parts like private keys and credentials.
+	// When DumpSensitive is disabled, the sensitive configuration parts like private keys and credentials are redacted.
 	//
 	// +required
-	// +kubebuilder:default=false
-	DumpSensitive bool `json:"dumpSensitive"`
+	// +kubebuilder:validation:Enum=enabled;disabled
+	// +kubebuilder:default="disabled"
+	DumpSensitive ControllerState `json:"dumpSensitive"`
 }
 
 // DefaultControlPlaneInitialCacheSyncDelay defines the default initial delay
