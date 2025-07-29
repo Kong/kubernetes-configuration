@@ -60,6 +60,7 @@ type HorizontalScaling struct {
 
 	// maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up.
 	// It cannot be less that minReplicas.
+	// +required
 	MaxReplicas int32 `json:"maxReplicas" protobuf:"varint,3,opt,name=maxReplicas"`
 
 	// metrics contains the specifications for which to use to calculate the
@@ -85,6 +86,7 @@ type HorizontalScaling struct {
 // +apireference:kgo:include
 type Rollout struct {
 	// Strategy contains the deployment strategy for rollout.
+	// +optional
 	Strategy RolloutStrategy `json:"strategy"`
 }
 
@@ -101,6 +103,7 @@ type RolloutStrategy struct {
 // +apireference:kgo:include
 type BlueGreenStrategy struct {
 	// Promotion defines how the operator handles promotion of resources.
+	// +optional
 	Promotion Promotion `json:"promotion"`
 
 	// Resources controls what happens to operator managed resources during or
