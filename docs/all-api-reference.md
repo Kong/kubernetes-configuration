@@ -3427,6 +3427,68 @@ _Appears in:_
 - [ControlPlaneSpec](#controlplanespec)
 - [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
+#### ControlPlaneKonnectConsumersSyncState
+_Underlying type:_ `string`
+
+ControlPlaneKonnectConsumersSyncState defines the state of consumer synchronization with Konnect.
+
+
+
+
+
+_Appears in:_
+- [ControlPlaneKonnectOptions](#controlplanekonnectoptions)
+
+#### ControlPlaneKonnectLicensing
+
+
+ControlPlaneKonnectLicensing defines the configuration for Konnect licensing.
+
+
+
+| Field | Description |
+| --- | --- |
+| `state` _[ControlPlaneKonnectLicensingState](#controlplanekonnectlicensingstate)_ | State indicates whether Konnect licensing is enabled. |
+| `initialPollingPeriod` _[Duration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#duration-v1-meta)_ | InitialPollingPeriod is the initial polling period for license checks. |
+| `pollingPeriod` _[Duration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#duration-v1-meta)_ | PollingPeriod is the polling period for license checks. |
+| `storageState` _[ControlPlaneKonnectLicensingState](#controlplanekonnectlicensingstate)_ | StorageState indicates whether to store licenses fetched from Konnect to Secrets locally to use them later when connection to Konnect is broken. Only effective when State is set to enabled. |
+
+
+_Appears in:_
+- [ControlPlaneKonnectOptions](#controlplanekonnectoptions)
+
+#### ControlPlaneKonnectLicensingState
+_Underlying type:_ `string`
+
+ControlPlaneKonnectLicensingState defines the state of Konnect licensing.
+
+
+
+
+
+_Appears in:_
+- [ControlPlaneKonnectLicensing](#controlplanekonnectlicensing)
+
+#### ControlPlaneKonnectOptions
+
+
+ControlPlaneKonnectOptions defines the Konnect-related configuration options for the ControlPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `consumersSync` _[ControlPlaneKonnectConsumersSyncState](#controlplanekonnectconsumerssyncstate)_ | ConsumersSync indicates whether consumer synchronization with Konnect is enabled. |
+| `licensing` _[ControlPlaneKonnectLicensing](#controlplanekonnectlicensing)_ | Licensing defines the configuration for Konnect licensing. |
+| `nodeRefreshPeriod` _[Duration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#duration-v1-meta)_ | NodeRefreshPeriod is the period for refreshing the node information in Konnect. |
+| `configUploadPeriod` _[Duration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#duration-v1-meta)_ | ConfigUploadPeriod is the period for uploading configuration to Konnect. |
+
+
+_Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
+
 #### ControlPlaneObjectFilters
 
 
@@ -3465,6 +3527,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 | `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
 | `configDump` _[ControlPlaneConfigDump](#controlplaneconfigdump)_ | ConfigDump defines the options for dumping generated Kong configuration from a diagnostics server. |
 | `objectFilters` _[ControlPlaneObjectFilters](#controlplaneobjectfilters)_ | ObjectFilters defines the filters to limit watched objects by the controllers. |
+| `konnect` _[ControlPlaneKonnectOptions](#controlplanekonnectoptions)_ | Konnect defines the Konnect-related configuration options for the ControlPlane. |
 
 
 _Appears in:_
@@ -3503,6 +3566,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
 | `configDump` _[ControlPlaneConfigDump](#controlplaneconfigdump)_ | ConfigDump defines the options for dumping generated Kong configuration from a diagnostics server. |
 | `objectFilters` _[ControlPlaneObjectFilters](#controlplaneobjectfilters)_ | ObjectFilters defines the filters to limit watched objects by the controllers. |
+| `konnect` _[ControlPlaneKonnectOptions](#controlplanekonnectoptions)_ | Konnect defines the Konnect-related configuration options for the ControlPlane. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 
 
@@ -3615,6 +3679,7 @@ ControlPlane resources that will be managed as part of the Gateway.
 | `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
 | `configDump` _[ControlPlaneConfigDump](#controlplaneconfigdump)_ | ConfigDump defines the options for dumping generated Kong configuration from a diagnostics server. |
 | `objectFilters` _[ControlPlaneObjectFilters](#controlplaneobjectfilters)_ | ObjectFilters defines the filters to limit watched objects by the controllers. |
+| `konnect` _[ControlPlaneKonnectOptions](#controlplanekonnectoptions)_ | Konnect defines the Konnect-related configuration options for the ControlPlane. |
 
 
 _Appears in:_

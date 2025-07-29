@@ -45,6 +45,22 @@ Adding a new version? You'll need three changes:
 - Added test cases to cover CEL rules.
   [#538](https://github.com/Kong/kubernetes-configuration/pull/538)
 
+### Added
+
+- Added `spec.konnect` for `ControlPlane` `v2alpha1` allows configuration
+  of Konnect-related options:
+  - `consumersSync.enabled`: Configure consumer synchronization with Konnect (enabled/disabled)
+  - `licensing.state`: Enable or disable Konnect licensing
+  - `licensing.initialPollingPeriod`: Set initial polling period for license checks
+  - `licensing.pollingPeriod`: Set regular polling period for license checks
+  - `licensing.storageState`: Configure whether to store licenses fetched from Konnect to Secrets locally (enabled/disabled)
+  - `nodeRefreshPeriod`: Configure refresh period for node information in Konnect
+  - `configUploadPeriod`: Configure period for uploading configuration to Konnect
+  Also added CEL validation rules for `ControlPlane` `v2alpha1` Konnect licensing configuration:
+  - `initialPollingPeriod` and `pollingPeriod` are now required when `licensing.state` is set to `enabled`
+  - `storageState` can only be set to `enabled` when `licensing.state` is set to `enabled`
+  [#535](https://github.com/Kong/kubernetes-configuration/pull/535)
+
 ## [v2.0.0-alpha.0]
 
 [v2.0.0-alpha.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.5.2...v2.0.0-alpha.0

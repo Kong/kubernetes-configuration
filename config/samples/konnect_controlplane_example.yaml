@@ -1,0 +1,32 @@
+apiVersion: gateway-operator.konghq.com/v2alpha1
+kind: ControlPlane
+metadata:
+  name: controlplane-with-konnect-config
+spec:
+  dataplane:
+    type: ref
+    ref:
+      name: kong-dp
+  
+  # Konnect-related configuration options
+  konnect:
+    # Consumer synchronization configuration
+    consumersSync: disabled  # Disable consumer sync with Konnect (corresponds to --konnect-disable-consumers-sync)
+    
+    # Konnect licensing configuration
+    licensing:
+      enabled: enabled  # Enable Konnect licensing (corresponds to --konnect-licensing-enabled)
+      initialPollingPeriod: 30s  # Initial polling period for license checks (corresponds to --konnect-initial-license-polling-period)
+      pollingPeriod: 300s  # Regular polling period for license checks (corresponds to --konnect-license-polling-period)
+      storageEnabled: enabled  # Store licenses fetched from Konnect to Secrets locally (corresponds to --konnect-license-storage-enabled)
+    
+    # Node refresh period configuration
+    nodeRefreshPeriod: 60s  # Refresh node information every 60 seconds (corresponds to --konnect-refresh-node-period)
+    
+    # Config upload period configuration
+    configUploadPeriod: 30s  # Upload configuration to Konnect every 30 seconds (corresponds to --konnect-upload-config-period)
+
+  # Other ControlPlane configurations...
+  ingressClass: kong
+  watchNamespaces:
+    type: all
