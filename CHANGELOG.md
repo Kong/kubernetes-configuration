@@ -85,6 +85,9 @@ Adding a new version? You'll need three changes:
   - under `spec.configDump`:
     - `enabled` and `dumpSensitive`
     [#518](https://github.com/Kong/kubernetes-configuration/pull/518)
+  - under `spec.objectFilters`:
+    - `secrets` and `configMaps` to constrain watched `Secret`s and `ConfigMap`s
+    [#534](https://github.com/Kong/kubernetes-configuration/pull/534)
 
 ## [v1.5.2]
 
