@@ -569,5 +569,49 @@ func TestControlPlaneV2(t *testing.T) {
 				},
 			}.Run(t)
 		})
+
+		t.Run("objectFilters", func(t *testing.T) {
+			common.TestCasesGroup[*operatorv2alpha1.ControlPlane]{
+				{
+					Name: "objectFilters.secrets and objectFilters.configMaps are set",
+					TestObject: &operatorv2alpha1.ControlPlane{
+						ObjectMeta: common.CommonObjectMeta,
+						Spec: operatorv2alpha1.ControlPlaneSpec{
+							DataPlane: validDataPlaneTarget,
+							ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+								ObjectFilters: &operatorv2alpha1.ControlPlaneObjectFilters{
+									Secrets: &operatorv2alpha1.ControlPlaneFilterForSingleObject{
+										AllowedLabel: lo.ToPtr("konghq.com/secret"),
+									},
+									ConfigMaps: &operatorv2alpha1.ControlPlaneFilterForSingleObject{
+										AllowedLabel: lo.ToPtr("konhq.com/configmap"),
+									},
+								},
+							},
+						},
+					},
+				},
+				{
+					Name: "objectFilters.*.allowedLabel must have minimum length 1",
+					TestObject: &operatorv2alpha1.ControlPlane{
+						ObjectMeta: common.CommonObjectMeta,
+						Spec: operatorv2alpha1.ControlPlaneSpec{
+							DataPlane: validDataPlaneTarget,
+							ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
+								ObjectFilters: &operatorv2alpha1.ControlPlaneObjectFilters{
+									Secrets: &operatorv2alpha1.ControlPlaneFilterForSingleObject{
+										AllowedLabel: lo.ToPtr("konghq.com/secret"),
+									},
+									ConfigMaps: &operatorv2alpha1.ControlPlaneFilterForSingleObject{
+										AllowedLabel: lo.ToPtr(""),
+									},
+								},
+							},
+						},
+					},
+					ExpectedErrorMessage: lo.ToPtr(`spec.objectFilters.configMaps.allowedLabel: Invalid value: "": spec.objectFilters.configMaps.allowedLabel in body should be at least 1 chars long`),
+				},
+			}.Run(t)
+		})
 	})
 }

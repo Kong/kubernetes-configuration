@@ -17867,6 +17867,32 @@ spec:
 
                       If omitted, Ingress resources will not be supported by the ControlPlane.
                     type: string
+                  objectFilters:
+                    description: ObjectFilters defines the filters to limit watched
+                      objects by the controllers.
+                    properties:
+                      configMaps:
+                        description: ConfigMaps defines the filters for watched config
+                          maps.
+                        properties:
+                          allowedLabel:
+                            description: |-
+                              AllowedLabel specifies a label that an object must have the label with value "true" to get watched by the controllers.
+                              For example, if the secrets.allowedLabel is set to "some-label", only secrets with label "some-label=true" are reconciled.
+                            minLength: 1
+                            type: string
+                        type: object
+                      secrets:
+                        description: Secrets defines the filters for watched secrets.
+                        properties:
+                          allowedLabel:
+                            description: |-
+                              AllowedLabel specifies a label that an object must have the label with value "true" to get watched by the controllers.
+                              For example, if the secrets.allowedLabel is set to "some-label", only secrets with label "some-label=true" are reconciled.
+                            minLength: 1
+                            type: string
+                        type: object
+                    type: object
                   translation:
                     description: Translation defines the configuration for translating
                       Kong configuration.
