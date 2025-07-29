@@ -26204,8 +26204,6 @@ spec:
                                         enum:
                                         - BreakBeforePromotion
                                         type: string
-                                    required:
-                                    - strategy
                                     type: object
                                   resources:
                                     default:
