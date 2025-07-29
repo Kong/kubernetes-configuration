@@ -15,7 +15,7 @@ generate() {
       --templates-dir="${SCRIPT_ROOT}/scripts/apidocs-gen/template" \
       --renderer=markdown \
       --output-path="${SCRIPT_ROOT}${2}" \
-      --max-depth=10
+      --max-depth=20
 }
 
 generate "/api/configuration" "/docs/configuration-api-reference.md"
