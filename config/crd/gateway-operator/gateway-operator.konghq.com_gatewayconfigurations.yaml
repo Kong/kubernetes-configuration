@@ -21,8 +21,8 @@ spec:
   scope: Namespaced
   versions:
   - deprecated: true
-    deprecationWarning: This API has been deprecated in favor of v2alpha1 API version
-      and it will be removed in future.
+    deprecationWarning: GatewayConfiguration v1beta1 has been deprecated in favor
+      of v2alpha1 and it will be removed in future.
     name: v1beta1
     schema:
       openAPIV3Schema:
