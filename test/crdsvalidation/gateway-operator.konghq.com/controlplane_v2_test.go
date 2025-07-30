@@ -580,11 +580,11 @@ func TestControlPlaneV2(t *testing.T) {
 							DataPlane: validDataPlaneTarget,
 							ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 								ObjectFilters: &operatorv2alpha1.ControlPlaneObjectFilters{
-									Secrets: &operatorv2alpha1.ControlPlaneFilterForSingleObject{
-										AllowedLabel: lo.ToPtr("konghq.com/secret"),
+									Secrets: &operatorv2alpha1.ControlPlaneFilterForObjectType{
+										MustHaveLabel: lo.ToPtr("konghq.com/secret"),
 									},
-									ConfigMaps: &operatorv2alpha1.ControlPlaneFilterForSingleObject{
-										AllowedLabel: lo.ToPtr("konhq.com/configmap"),
+									ConfigMaps: &operatorv2alpha1.ControlPlaneFilterForObjectType{
+										MustHaveLabel: lo.ToPtr("konhq.com/configmap"),
 									},
 								},
 							},
@@ -592,24 +592,24 @@ func TestControlPlaneV2(t *testing.T) {
 					},
 				},
 				{
-					Name: "objectFilters.*.allowedLabel must have minimum length 1",
+					Name: "objectFilters.*.mustHaveLabel must have minimum length 1",
 					TestObject: &operatorv2alpha1.ControlPlane{
 						ObjectMeta: common.CommonObjectMeta,
 						Spec: operatorv2alpha1.ControlPlaneSpec{
 							DataPlane: validDataPlaneTarget,
 							ControlPlaneOptions: operatorv2alpha1.ControlPlaneOptions{
 								ObjectFilters: &operatorv2alpha1.ControlPlaneObjectFilters{
-									Secrets: &operatorv2alpha1.ControlPlaneFilterForSingleObject{
-										AllowedLabel: lo.ToPtr("konghq.com/secret"),
+									Secrets: &operatorv2alpha1.ControlPlaneFilterForObjectType{
+										MustHaveLabel: lo.ToPtr("konghq.com/secret"),
 									},
-									ConfigMaps: &operatorv2alpha1.ControlPlaneFilterForSingleObject{
-										AllowedLabel: lo.ToPtr(""),
+									ConfigMaps: &operatorv2alpha1.ControlPlaneFilterForObjectType{
+										MustHaveLabel: lo.ToPtr(""),
 									},
 								},
 							},
 						},
 					},
-					ExpectedErrorMessage: lo.ToPtr(`spec.objectFilters.configMaps.allowedLabel: Invalid value: "": spec.objectFilters.configMaps.allowedLabel in body should be at least 1 chars long`),
+					ExpectedErrorMessage: lo.ToPtr(`spec.objectFilters.configMaps.mustHaveLabel: Invalid value: "": spec.objectFilters.configMaps.mustHaveLabel in body should be at least 1 chars long`),
 				},
 			}.Run(t)
 		})

@@ -3614,16 +3614,16 @@ _Appears in:_
 - [ControlPlaneStatus](#controlplanestatus)
 - [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
-#### ControlPlaneFilterForSingleObject
+#### ControlPlaneFilterForObjectType
 
 
-ControlPlaneFilterForSingleObject defines the filters for a certain type of object.
+ControlPlaneFilterForObjectType defines the filters for a certain type of object.
 
 
 
 | Field | Description |
 | --- | --- |
-| `allowedLabel` _string_ | AllowedLabel specifies a label that an object must have the label with value "true" to get watched by the controllers. For example, if the secrets.allowedLabel is set to "some-label", only secrets with label "some-label=true" are reconciled. |
+| `mustHaveLabel` _string_ | MustHaveLabel specifies a label that an object must have the label with value "true" to get watched by the controllers. For example, if the secrets.mustHaveLabel is set to "some-label", only secrets with label "some-label=true" are reconciled. |
 
 
 _Appears in:_
@@ -3675,8 +3675,8 @@ ControlPlaneObjectFilters defines filters to limit watched objects by the contro
 
 | Field | Description |
 | --- | --- |
-| `secrets` _[ControlPlaneFilterForSingleObject](#controlplanefilterforsingleobject)_ | Secrets defines the filters for watched secrets. |
-| `configMaps` _[ControlPlaneFilterForSingleObject](#controlplanefilterforsingleobject)_ | ConfigMaps defines the filters for watched config maps. |
+| `secrets` _[ControlPlaneFilterForObjectType](#controlplanefilterforobjecttype)_ | Secrets defines the filters for watched secrets. |
+| `configMaps` _[ControlPlaneFilterForObjectType](#controlplanefilterforobjecttype)_ | ConfigMaps defines the filters for watched config maps. |
 
 
 _Appears in:_

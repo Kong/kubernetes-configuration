@@ -361,21 +361,21 @@ type ControlPlaneObjectFilters struct {
 	// Secrets defines the filters for watched secrets.
 	//
 	// +optional
-	Secrets *ControlPlaneFilterForSingleObject `json:"secrets,omitempty"`
+	Secrets *ControlPlaneFilterForObjectType `json:"secrets,omitempty"`
 	// ConfigMaps defines the filters for watched config maps.
 	//
 	// +optional
-	ConfigMaps *ControlPlaneFilterForSingleObject `json:"configMaps,omitempty"`
+	ConfigMaps *ControlPlaneFilterForObjectType `json:"configMaps,omitempty"`
 }
 
-// ControlPlaneFilterForSingleObject defines the filters for a certain type of object.
-type ControlPlaneFilterForSingleObject struct {
-	// AllowedLabel specifies a label that an object must have the label with value "true" to get watched by the controllers.
-	// For example, if the secrets.allowedLabel is set to "some-label", only secrets with label "some-label=true" are reconciled.
+// ControlPlaneFilterForObjectType defines the filters for a certain type of object.
+type ControlPlaneFilterForObjectType struct {
+	// MustHaveLabel specifies a label that an object must have the label with value "true" to get watched by the controllers.
+	// For example, if the secrets.mustHaveLabel is set to "some-label", only secrets with label "some-label=true" are reconciled.
 	//
 	// +optional
 	// +kubebuilder:validation:MinLength=1
-	AllowedLabel *string `json:"allowedLabel,omitempty"` // REVIEW: add other validation of label keys, like the prefix/name format, max length, used chars?
+	MustHaveLabel *string `json:"mustHaveLabel,omitempty"` // REVIEW: add other validation of label keys, like the prefix/name format, max length, used chars?
 }
 
 // DefaultControlPlaneInitialCacheSyncDelay defines the default initial delay

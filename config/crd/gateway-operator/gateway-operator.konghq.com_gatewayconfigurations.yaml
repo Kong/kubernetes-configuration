@@ -17875,20 +17875,20 @@ spec:
                         description: ConfigMaps defines the filters for watched config
                           maps.
                         properties:
-                          allowedLabel:
+                          mustHaveLabel:
                             description: |-
-                              AllowedLabel specifies a label that an object must have the label with value "true" to get watched by the controllers.
-                              For example, if the secrets.allowedLabel is set to "some-label", only secrets with label "some-label=true" are reconciled.
+                              MustHaveLabel specifies a label that an object must have the label with value "true" to get watched by the controllers.
+                              For example, if the secrets.mustHaveLabel is set to "some-label", only secrets with label "some-label=true" are reconciled.
                             minLength: 1
                             type: string
                         type: object
                       secrets:
                         description: Secrets defines the filters for watched secrets.
                         properties:
-                          allowedLabel:
+                          mustHaveLabel:
                             description: |-
-                              AllowedLabel specifies a label that an object must have the label with value "true" to get watched by the controllers.
-                              For example, if the secrets.allowedLabel is set to "some-label", only secrets with label "some-label=true" are reconciled.
+                              MustHaveLabel specifies a label that an object must have the label with value "true" to get watched by the controllers.
+                              For example, if the secrets.mustHaveLabel is set to "some-label", only secrets with label "some-label=true" are reconciled.
                             minLength: 1
                             type: string
                         type: object
