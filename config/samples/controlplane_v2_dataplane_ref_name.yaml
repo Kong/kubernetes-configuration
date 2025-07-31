@@ -12,7 +12,5 @@ spec:
   - name: GatewayAlpha
     state: enabled
   controllers:
-  - name: TCPIngress
-    state: disabled
   - name: Konnect
     state: enabled

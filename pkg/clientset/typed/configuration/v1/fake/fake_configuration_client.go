@@ -36,10 +36,6 @@ func (c *FakeConfigurationV1) KongConsumers(namespace string) v1.KongConsumerInt
 	return newFakeKongConsumers(c, namespace)
 }
 
-func (c *FakeConfigurationV1) KongIngresses(namespace string) v1.KongIngressInterface {
-	return newFakeKongIngresses(c, namespace)
-}
-
 func (c *FakeConfigurationV1) KongPlugins(namespace string) v1.KongPluginInterface {
 	return newFakeKongPlugins(c, namespace)
 }

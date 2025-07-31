@@ -22,6 +22,4 @@ type KongClusterPluginExpansion interface{}
 
 type KongConsumerExpansion interface{}
 
-type KongIngressExpansion interface{}
-
 type KongPluginExpansion interface{}
