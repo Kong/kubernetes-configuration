@@ -35,6 +35,11 @@ Adding a new version? You'll need three changes:
   - Update any manifests or code that reference these fields to use the new nested structure.
   [#502](https://github.com/Kong/kubernetes-configuration/pull/502)
 
+### Changes
+
+- Added test cases to cover CEL rules.
+  [#538](https://github.com/Kong/kubernetes-configuration/pull/538)
+
 ## [v2.0.0-alpha.0]
 
 [v2.0.0-alpha.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.5.2...v2.0.0-alpha.0
