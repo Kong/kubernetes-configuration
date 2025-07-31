@@ -34,14 +34,14 @@ Adding a new version? You'll need three changes:
   *Action required*:
   - Update any manifests or code that reference these fields to use the new nested structure.
   [#502](https://github.com/Kong/kubernetes-configuration/pull/502)
+- Removed `all` CRD categories from all CRDs.
+  Added `konnect` category to all Konnect CRDs.
+  [#541](https://github.com/Kong/kubernetes-configuration/pull/541)
 
 ### Changes
 
 - Added test cases to cover CEL rules.
   [#538](https://github.com/Kong/kubernetes-configuration/pull/538)
-- Removed `all` CRD categories from all CRDs.
-  Added `konnect` category to all Konnect CRDs.
-  [#541](https://github.com/Kong/kubernetes-configuration/pull/541)
 
 ## [v2.0.0-alpha.0]
 
