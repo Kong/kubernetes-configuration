@@ -11,6 +11,7 @@ spec:
   names:
     categories:
     - kong
+    - konnect
     kind: KonnectExtension
     listKind: KonnectExtensionList
     plural: konnectextensions
