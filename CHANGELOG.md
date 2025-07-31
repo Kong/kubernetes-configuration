@@ -27,12 +27,6 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
-### Changes
-
-- Removed `all` CRD categories from all CRDs.
-  Added `konnect` category to all Konnect CRDs.
-  [#541](https://github.com/Kong/kubernetes-configuration/pull/541)
-
 ### Breaking Changes
 
 - `KonnectGatewayControlPlane v1alpha2` has been introduced.
@@ -45,6 +39,9 @@ Adding a new version? You'll need three changes:
 
 - Added test cases to cover CEL rules.
   [#538](https://github.com/Kong/kubernetes-configuration/pull/538)
+- Removed `all` CRD categories from all CRDs.
+  Added `konnect` category to all Konnect CRDs.
+  [#541](https://github.com/Kong/kubernetes-configuration/pull/541)
 
 ## [v2.0.0-alpha.0]
 
