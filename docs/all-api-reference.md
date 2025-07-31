@@ -3614,6 +3614,21 @@ _Appears in:_
 - [ControlPlaneStatus](#controlplanestatus)
 - [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
+#### ControlPlaneFilterForObjectType
+
+
+ControlPlaneFilterForObjectType defines the filters for a certain type of object.
+
+
+
+| Field | Description |
+| --- | --- |
+| `matchLabels` _object (keys:string, values:string)_ | MatchLabels defines the labels that the object must match to get reconciled by the controller for the ControlPlane. For example, if `secrets.matchLabels` is `{"label1":"val1","label2":"val2"}`, only secrets with labels `label1=val1` and `label2=val2` are reconciled. |
+
+
+_Appears in:_
+- [ControlPlaneObjectFilters](#controlplaneobjectfilters)
+
 #### ControlPlaneGatewayDiscovery
 
 
@@ -3651,6 +3666,24 @@ _Appears in:_
 - [ControlPlaneSpec](#controlplanespec)
 - [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
+#### ControlPlaneObjectFilters
+
+
+ControlPlaneObjectFilters defines filters to limit watched objects by the controllers.
+
+
+
+| Field | Description |
+| --- | --- |
+| `secrets` _[ControlPlaneFilterForObjectType](#controlplanefilterforobjecttype)_ | Secrets defines the filters for watched secrets. |
+| `configMaps` _[ControlPlaneFilterForObjectType](#controlplanefilterforobjecttype)_ | ConfigMaps defines the filters for watched config maps. |
+
+
+_Appears in:_
+- [ControlPlaneOptions](#controlplaneoptions)
+- [ControlPlaneSpec](#controlplanespec)
+- [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
+
 #### ControlPlaneOptions
 
 
@@ -3670,6 +3703,7 @@ deploy and connect a ControlPlane to a DataPlane object.
 | `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane. |
 | `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
 | `configDump` _[ControlPlaneConfigDump](#controlplaneconfigdump)_ | ConfigDump defines the options for dumping generated Kong configuration from a diagnostics server. |
+| `objectFilters` _[ControlPlaneObjectFilters](#controlplaneobjectfilters)_ | ObjectFilters defines the filters to limit watched objects by the controllers. |
 
 
 _Appears in:_
@@ -3707,6 +3741,7 @@ ControlPlaneSpec defines the desired state of ControlPlane
 | `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane. |
 | `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
 | `configDump` _[ControlPlaneConfigDump](#controlplaneconfigdump)_ | ConfigDump defines the options for dumping generated Kong configuration from a diagnostics server. |
+| `objectFilters` _[ControlPlaneObjectFilters](#controlplaneobjectfilters)_ | ObjectFilters defines the filters to limit watched objects by the controllers. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the ControlPlane resources to influence or enhance functionality. |
 
 
@@ -3818,6 +3853,7 @@ ControlPlane resources that will be managed as part of the Gateway.
 | `dataplaneSync` _[ControlPlaneDataPlaneSync](#controlplanedataplanesync)_ | DataPlaneSync defines the configuration for syncing Kong configuration to the DataPlane. |
 | `translation` _[ControlPlaneTranslationOptions](#controlplanetranslationoptions)_ | Translation defines the configuration for translating Kong configuration. |
 | `configDump` _[ControlPlaneConfigDump](#controlplaneconfigdump)_ | ConfigDump defines the options for dumping generated Kong configuration from a diagnostics server. |
+| `objectFilters` _[ControlPlaneObjectFilters](#controlplaneobjectfilters)_ | ObjectFilters defines the filters to limit watched objects by the controllers. |
 
 
 _Appears in:_
