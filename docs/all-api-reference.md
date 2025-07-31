@@ -3623,7 +3623,7 @@ ControlPlaneFilterForObjectType defines the filters for a certain type of object
 
 | Field | Description |
 | --- | --- |
-| `mustHaveLabel` _string_ | MustHaveLabel specifies a label that an object must have the label with value "true" to get watched by the controllers. For example, if the secrets.mustHaveLabel is set to "some-label", only secrets with label "some-label=true" are reconciled. |
+| `matchLabels` _object (keys:string, values:string)_ | MatchLabels defines the labels that the object must match to get reconciled by the controller for the ControlPlane. For example, if `secrets.matchLabels` is `{"label1":"val1","label2":"val2"}`, only secrets with labels `label1=val1` and `label2=val2` are reconciled. |
 
 
 _Appears in:_

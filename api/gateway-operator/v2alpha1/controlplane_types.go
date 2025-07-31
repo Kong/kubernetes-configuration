@@ -370,12 +370,15 @@ type ControlPlaneObjectFilters struct {
 
 // ControlPlaneFilterForObjectType defines the filters for a certain type of object.
 type ControlPlaneFilterForObjectType struct {
-	// MustHaveLabel specifies a label that an object must have the label with value "true" to get watched by the controllers.
-	// For example, if the secrets.mustHaveLabel is set to "some-label", only secrets with label "some-label=true" are reconciled.
+	// MatchLabels defines the labels that the object must match to get reconciled by the controller for the ControlPlane.
+	// For example, if `secrets.matchLabels` is `{"label1":"val1","label2":"val2"}`,
+	// only secrets with labels `label1=val1` and `label2=val2` are reconciled.
 	//
 	// +optional
-	// +kubebuilder:validation:MinLength=1
-	MustHaveLabel *string `json:"mustHaveLabel,omitempty"` // REVIEW: add other validation of label keys, like the prefix/name format, max length, used chars?
+	// +kubebuilder:validation:MaxProperties=8
+	// +kubebuilder:validation:XValidation:message="Minimum length of key in matchLabels is 1",rule="self.all(key,key.size() >= 1)"
+	// +kubebuilder:validation:XValidation:message="Maximum length of value in matchLabels is 63",rule="self.all(key,self[key].size() <= 63)"
+	MatchLabels map[string]string `json:"matchLabels,omitempty"`
 }
 
 // DefaultControlPlaneInitialCacheSyncDelay defines the default initial delay
