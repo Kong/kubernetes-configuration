@@ -8670,11 +8670,11 @@ spec:
                         type: string
                     type: object
                     x-kubernetes-validations:
-                    - message: initialPollingPeriod is required when licensing is
-                        enabled
-                      rule: '!has(self.state) || self.state != ''enabled'' || has(self.initialPollingPeriod)'
-                    - message: pollingPeriod is required when licensing is enabled
-                      rule: '!has(self.state) || self.state != ''enabled'' || has(self.pollingPeriod)'
+                    - message: initialPollingPeriod can only be set when licensing
+                        is enabled
+                      rule: '!has(self.initialPollingPeriod) || self.state == ''enabled'''
+                    - message: pollingPeriod can only be set when licensing is enabled
+                      rule: '!has(self.pollingPeriod) || self.state == ''enabled'''
                     - message: storageState can only be set to enabled when licensing
                         is enabled
                       rule: '!has(self.storageState) || self.storageState == ''disabled''

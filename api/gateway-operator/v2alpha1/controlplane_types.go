@@ -533,8 +533,8 @@ const (
 // ControlPlaneKonnectLicensing defines the configuration for Konnect licensing.
 //
 // +apireference:kgo:include
-// +kubebuilder:validation:XValidation:message="initialPollingPeriod is required when licensing is enabled",rule="!has(self.state) || self.state != 'enabled' || has(self.initialPollingPeriod)"
-// +kubebuilder:validation:XValidation:message="pollingPeriod is required when licensing is enabled",rule="!has(self.state) || self.state != 'enabled' || has(self.pollingPeriod)"
+// +kubebuilder:validation:XValidation:message="initialPollingPeriod can only be set when licensing is enabled",rule="!has(self.initialPollingPeriod) || self.state == 'enabled'"
+// +kubebuilder:validation:XValidation:message="pollingPeriod can only be set when licensing is enabled",rule="!has(self.pollingPeriod) || self.state == 'enabled'"
 // +kubebuilder:validation:XValidation:message="storageState can only be set to enabled when licensing is enabled",rule="!has(self.storageState) || self.storageState == 'disabled' || self.state == 'enabled'"
 type ControlPlaneKonnectLicensing struct {
 	// State indicates whether Konnect licensing is enabled.
