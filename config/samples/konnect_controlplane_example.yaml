@@ -15,10 +15,10 @@ spec:
     
     # Konnect licensing configuration
     licensing:
-      enabled: enabled  # Enable Konnect licensing (corresponds to --konnect-licensing-enabled)
+      state: enabled  # Enable Konnect licensing (corresponds to --konnect-licensing-enabled)
       initialPollingPeriod: 30s  # Initial polling period for license checks (corresponds to --konnect-initial-license-polling-period)
       pollingPeriod: 300s  # Regular polling period for license checks (corresponds to --konnect-license-polling-period)
-      storageEnabled: enabled  # Store licenses fetched from Konnect to Secrets locally (corresponds to --konnect-license-storage-enabled)
+      storageState: enabled  # Store licenses fetched from Konnect to Secrets locally (corresponds to --konnect-license-storage-enabled)
     
     # Node refresh period configuration
     nodeRefreshPeriod: 60s  # Refresh node information every 60 seconds (corresponds to --konnect-refresh-node-period)
