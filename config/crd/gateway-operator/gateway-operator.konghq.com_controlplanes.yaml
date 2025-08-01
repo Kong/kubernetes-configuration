@@ -8623,6 +8623,67 @@ spec:
 
                   If omitted, Ingress resources will not be supported by the ControlPlane.
                 type: string
+              konnect:
+                description: Konnect defines the Konnect-related configuration options
+                  for the ControlPlane.
+                properties:
+                  configUploadPeriod:
+                    description: ConfigUploadPeriod is the period for uploading configuration
+                      to Konnect.
+                    type: string
+                  consumersSync:
+                    default: enabled
+                    description: ConsumersSync indicates whether consumer synchronization
+                      with Konnect is enabled.
+                    enum:
+                    - enabled
+                    - disabled
+                    type: string
+                  licensing:
+                    description: Licensing defines the configuration for Konnect licensing.
+                    properties:
+                      initialPollingPeriod:
+                        description: InitialPollingPeriod is the initial polling period
+                          for license checks.
+                        type: string
+                      pollingPeriod:
+                        description: PollingPeriod is the polling period for license
+                          checks.
+                        type: string
+                      state:
+                        default: disabled
+                        description: State indicates whether Konnect licensing is
+                          enabled.
+                        enum:
+                        - enabled
+                        - disabled
+                        type: string
+                      storageState:
+                        default: enabled
+                        description: |-
+                          StorageState indicates whether to store licenses fetched from Konnect
+                          to Secrets locally to use them later when connection to Konnect is broken.
+                          Only effective when State is set to enabled.
+                        enum:
+                        - enabled
+                        - disabled
+                        type: string
+                    type: object
+                    x-kubernetes-validations:
+                    - message: initialPollingPeriod can only be set when licensing
+                        is enabled
+                      rule: '!has(self.initialPollingPeriod) || self.state == ''enabled'''
+                    - message: pollingPeriod can only be set when licensing is enabled
+                      rule: '!has(self.pollingPeriod) || self.state == ''enabled'''
+                    - message: storageState can only be set to enabled when licensing
+                        is enabled
+                      rule: '!has(self.storageState) || self.storageState == ''disabled''
+                        || self.state == ''enabled'''
+                  nodeRefreshPeriod:
+                    description: NodeRefreshPeriod is the period for refreshing the
+                      node information in Konnect.
+                    type: string
+                type: object
               objectFilters:
                 description: ObjectFilters defines the filters to limit watched objects
                   by the controllers.
