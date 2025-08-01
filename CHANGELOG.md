@@ -57,7 +57,7 @@ Adding a new version? You'll need three changes:
   - `nodeRefreshPeriod`: Configure refresh period for node information in Konnect
   - `configUploadPeriod`: Configure period for uploading configuration to Konnect
   Also added CEL validation rules for `ControlPlane` `v2alpha1` Konnect licensing configuration:
-  - `initialPollingPeriod` and `pollingPeriod` are now required when `licensing.state` is set to `enabled`
+  - `initialPollingPeriod` and `pollingPeriod` can only be set to `enabled` when `licensing.state` is set to `enabled`
   - `storageState` can only be set to `enabled` when `licensing.state` is set to `enabled`
   [#535](https://github.com/Kong/kubernetes-configuration/pull/535)
 
