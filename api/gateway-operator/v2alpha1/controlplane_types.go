@@ -487,3 +487,6 @@ func (c *ControlPlane) SetConditions(conditions []metav1.Condition) {
 func (c *ControlPlane) GetExtensions() []commonv1alpha1.ExtensionRef {
 	return c.Spec.Extensions
 }
+
+// Hub marks the ControlPlane type as a hub type (storageversion) for conversion webhook.
+func (c *ControlPlane) Hub() {}
