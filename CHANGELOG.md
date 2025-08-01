@@ -37,6 +37,8 @@ Adding a new version? You'll need three changes:
 - Removed `all` CRD categories from all CRDs.
   Added `konnect` category to all Konnect CRDs.
   [#541](https://github.com/Kong/kubernetes-configuration/pull/541)
+- Removed `KongIngress`, `TCPIngress`, `UDPIngress`.
+  [#542](https://github.com/Kong/kubernetes-configuration/pull/542)
 
 ### Changes
 

@@ -21,7 +21,3 @@ package v1beta1
 type KongConsumerGroupExpansion interface{}
 
 type KongUpstreamPolicyExpansion interface{}
-
-type TCPIngressExpansion interface{}
-
-type UDPIngressExpansion interface{}

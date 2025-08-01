@@ -36,14 +36,6 @@ func (c *FakeConfigurationV1beta1) KongUpstreamPolicies(namespace string) v1beta
 	return newFakeKongUpstreamPolicies(c, namespace)
 }
 
-func (c *FakeConfigurationV1beta1) TCPIngresses(namespace string) v1beta1.TCPIngressInterface {
-	return newFakeTCPIngresses(c, namespace)
-}
-
-func (c *FakeConfigurationV1beta1) UDPIngresses(namespace string) v1beta1.UDPIngressInterface {
-	return newFakeUDPIngresses(c, namespace)
-}
-
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeConfigurationV1beta1) RESTClient() rest.Interface {
