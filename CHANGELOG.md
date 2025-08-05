@@ -45,8 +45,8 @@ Adding a new version? You'll need three changes:
 - Added test cases to cover CEL rules.
   [#538](https://github.com/Kong/kubernetes-configuration/pull/538)
 - The `ControlPlane` provisioned conditions reasons have been renamed.
-  The reason for the condition status true is now `Provisioned`, while the related
-  to the provisioning non completed yet has been renamed to `ProvisioningInProgress`.
+  The reason for the condition status true is now `Provisioned`, while the reason
+  related to the provisioning non completed yet has been renamed to `ProvisioningInProgress`.
   [#546](https://github.com/Kong/kubernetes-configuration/pull/546)
 
 ### Added
