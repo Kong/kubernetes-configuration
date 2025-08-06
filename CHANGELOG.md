@@ -29,6 +29,9 @@ Adding a new version? You'll need three changes:
 
 ### Breaking Changes
 
+- `ControlPlane` `v2alpha1` has been replaced by `ControlPlane` `v2beta1`
+  `GatewayConfiguration` `v2alpha1` has been replaced by `GatewayConfiguration` `v2beta1`
+  [#548](https://github.com/Kong/kubernetes-configuration/pull/548)
 - `KonnectGatewayControlPlane v1alpha2` has been introduced.
   The `CreateControlPlaneRequest` fields (`name, description, clusterType, authType, cloudGateway, proxyUrls, labels`) have been moved from the top level of `spec` into a new structured field: `spec.createControlPlaneRequest`. The old flat field layout is no longer supported in `v1alpha2`.
   *Action required*:
