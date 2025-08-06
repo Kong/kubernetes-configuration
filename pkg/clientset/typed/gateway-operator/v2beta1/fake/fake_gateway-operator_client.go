@@ -19,26 +19,26 @@ limitations under the License.
 package fake
 
 import (
-	v2alpha1 "github.com/kong/kubernetes-configuration/v2/pkg/clientset/typed/gateway-operator/v2alpha1"
+	v2beta1 "github.com/kong/kubernetes-configuration/v2/pkg/clientset/typed/gateway-operator/v2beta1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )
 
-type FakeGatewayOperatorV2alpha1 struct {
+type FakeGatewayOperatorV2beta1 struct {
 	*testing.Fake
 }
 
-func (c *FakeGatewayOperatorV2alpha1) ControlPlanes(namespace string) v2alpha1.ControlPlaneInterface {
+func (c *FakeGatewayOperatorV2beta1) ControlPlanes(namespace string) v2beta1.ControlPlaneInterface {
 	return newFakeControlPlanes(c, namespace)
 }
 
-func (c *FakeGatewayOperatorV2alpha1) GatewayConfigurations(namespace string) v2alpha1.GatewayConfigurationInterface {
+func (c *FakeGatewayOperatorV2beta1) GatewayConfigurations(namespace string) v2beta1.GatewayConfigurationInterface {
 	return newFakeGatewayConfigurations(c, namespace)
 }
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *FakeGatewayOperatorV2alpha1) RESTClient() rest.Interface {
+func (c *FakeGatewayOperatorV2beta1) RESTClient() rest.Interface {
 	var ret *rest.RESTClient
 	return ret
 }

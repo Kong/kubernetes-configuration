@@ -183,7 +183,7 @@ generate.clientsets: client-gen
 		--input incubator/v1alpha1 \
 		--input gateway-operator/v1alpha1 \
 		--input gateway-operator/v1beta1 \
-		--input gateway-operator/v2alpha1 \
+		--input gateway-operator/v2beta1 \
 		--output-dir pkg/ \
 		--output-pkg $(REPO_URL)/$(GO_MOD_MAJOR_VERSION)/pkg/
 
@@ -261,7 +261,7 @@ lint.api.remove:
 lint.api: download.golangci-lint
 	@[[ -f $(GOLANGCI_LINT_KUBE_API_LINTER) ]] || $(GOLANGCI_LINT) custom -v
 	$(GOLANGCI_LINT_KUBE_API_LINTER) run --config $(PROJECT_DIR)/.golangci-kube-api.yaml -v \
-		./api/gateway-operator/v2alpha1/... \
+		./api/gateway-operator/v2beta1/... \
 		./api/konnect/v1alpha1/... \
 		./api/konnect/v1alpha2/... \
 		./api/common/v1alpha1/...

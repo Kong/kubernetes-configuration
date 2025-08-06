@@ -3,7 +3,7 @@
 ## Packages
 - [gateway-operator.konghq.com/v1alpha1](#gateway-operatorkonghqcomv1alpha1)
 - [gateway-operator.konghq.com/v1beta1](#gateway-operatorkonghqcomv1beta1)
-- [gateway-operator.konghq.com/v2alpha1](#gateway-operatorkonghqcomv2alpha1)
+- [gateway-operator.konghq.com/v2beta1](#gateway-operatorkonghqcomv2beta1)
 
 
 ## gateway-operator.konghq.com/v1alpha1
@@ -1310,11 +1310,11 @@ _Appears in:_
 - [WatchNamespaces](#watchnamespaces)
 
 
-## gateway-operator.konghq.com/v2alpha1
+## gateway-operator.konghq.com/v2beta1
 
-Package v2alpha1 contains API Schema definitions for the gateway-operator.konghq.com v2alpha1 API group.
+Package v2beta1 contains API Schema definitions for the gateway-operator.konghq.com v2beta1 API group.
 
-Package v2alpha1 contains API Schema definitions for the gateway-operator.konghq.com v2alpha1 API group
+Package v2beta1 contains API Schema definitions for the gateway-operator.konghq.com v2beta1 API group
 
 - [ControlPlane](#controlplane)
 - [GatewayConfiguration](#gatewayconfiguration)
@@ -1327,7 +1327,7 @@ ControlPlane is the Schema for the controlplanes API
 
 | Field | Description |
 | --- | --- |
-| `apiVersion` _string_ | `gateway-operator.konghq.com/v2alpha1`
+| `apiVersion` _string_ | `gateway-operator.konghq.com/v2beta1`
 | `kind` _string_ | `ControlPlane`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[ControlPlaneSpec](#controlplanespec)_ | Spec is the specification of the ControlPlane resource. |
@@ -1343,7 +1343,7 @@ GatewayConfiguration is the Schema for the gatewayconfigurations API.
 
 | Field | Description |
 | --- | --- |
-| `apiVersion` _string_ | `gateway-operator.konghq.com/v2alpha1`
+| `apiVersion` _string_ | `gateway-operator.konghq.com/v2beta1`
 | `kind` _string_ | `GatewayConfiguration`
 | `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |
 | `spec` _[GatewayConfigurationSpec](#gatewayconfigurationspec)_ | Spec defines the desired state of GatewayConfiguration. |
