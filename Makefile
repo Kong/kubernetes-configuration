@@ -273,13 +273,14 @@ test.samples: kustomize
 GOTESTSUM_FORMAT ?= standard-verbose
 
 .PHONY: test
-test: test.unit test.crds-validation
+test: test.unit test.crds-validation test.conversion
 
 .PHONY: test.pretty
 test.pretty: test.unit.pretty test.crds-validation.pretty
 
 UNIT_TEST_PATHS := ./test/unit/... ./pkg/...
 CRDS_VALIDATION_TEST_PATHS := ./test/crdsvalidation/...
+CONVERSION_TEST_PATHS := ./test/conversion/...
 
 .PHONY: _test.unit
 _test.unit: gotestsum
@@ -295,6 +296,13 @@ _test.crds-validation: gotestsum
 		-race \
 		$(CRDS_VALIDATION_TEST_PATHS)
 
+.PHONY: _test.conversion
+_test.conversion: gotestsum
+	GOTESTSUM_FORMAT=$(GOTESTSUM_FORMAT) \
+		$(GOTESTSUM) -- $(GOTESTFLAGS) \
+		-race \
+		$(CONVERSION_TEST_PATHS)
+
 .PHONY: test.unit
 test.unit:
 	@$(MAKE) _test.unit GOTESTFLAGS="$(GOTESTFLAGS)"
@@ -302,6 +310,10 @@ test.unit:
 .PHONY: test.crds-validation
 test.crds-validation:
 	@$(MAKE) _test.crds-validation GOTESTFLAGS="$(GOTESTFLAGS)"
+
+.PHONY: test.conversion
+test.conversion:
+	@$(MAKE) _test.conversion GOTESTFLAGS="$(GOTESTFLAGS)"
 
 .PHONY: test.unit.pretty
 test.unit.pretty:
@@ -314,3 +326,9 @@ test.crds-validation.pretty:
 	@$(MAKE) _test.crds-validation GOTESTSUM_FORMAT=testname \
 		GOTESTFLAGS="$(GOTESTFLAGS)" \
 		UNIT_TEST_PATHS="$(UNIT_TEST_PATHS)"
+
+.PHONY: test.conversion.pretty
+test.conversion.pretty:
+	@$(MAKE) _test.conversion GOTESTSUM_FORMAT=testname \
+	    GOTESTFLAGS="$(GOTESTFLAGS)" \
+		CONVERSION_TEST_PATHS="$(CONVERSION_TEST_PATHS)"

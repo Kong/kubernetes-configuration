@@ -26,6 +26,15 @@ Adding a new version? You'll need three changes:
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
+## Unrealeased
+
+### Changes
+
+- Implemented conversion functions between KonnectGatewayControlPlane v1alpha1 and
+  v1alpha2, enabling seamless migration between API versions.
+  To prevent import cycles, `v1alpha1` now imports required types from `v1alpha2`.
+  [#550](https://github.com/Kong/kubernetes-configuration/pull/550)
+
 ## [v2.0.0-alpha.3]
 
 [v2.0.0-alpha.3]: https://github.com/Kong/kubernetes-configuration/compare/v2.0.0-alpha.0...v2.0.0-alpha.3
