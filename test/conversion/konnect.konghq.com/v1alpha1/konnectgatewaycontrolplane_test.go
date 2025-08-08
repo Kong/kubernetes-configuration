@@ -157,8 +157,7 @@ func TestKonnectGatewayControlPlane_ConvertFrom(t *testing.T) {
 				Spec: tc.src,
 			}
 			src.Spec.Mirror = tc.mirror
-			err := obj.ConvertFrom(src)
-			assert.NoError(t, err)
+			require.NoError(t, obj.ConvertFrom(src))
 			if tc.expectsCreateReq {
 				assert.NotNil(t, obj.Spec.CreateControlPlaneRequest)
 				assert.Equal(t, lo.ToPtr(tc.src.CreateControlPlaneRequest.Name), obj.Spec.Name)
