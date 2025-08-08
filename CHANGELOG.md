@@ -6,6 +6,7 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v2.0.0-alpha.3](#v200-alpha3)
 - [v2.0.0-alpha.0](#v200-alpha0)
 - [v1.5.2](#v152)
 - [v1.5.1](#v151)
@@ -27,8 +28,22 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
+### Changes
+
+- Implemented conversion functions between `KonnectGatewayControlPlane` `v1alpha1` and
+  `v1alpha2`, enabling seamless migration between API versions.
+  To prevent import cycles, `v1alpha1` now imports required types from `v1alpha2`.
+  [#550](https://github.com/Kong/kubernetes-configuration/pull/550)
+
+## [v2.0.0-alpha.3]
+
+[v2.0.0-alpha.3]: https://github.com/Kong/kubernetes-configuration/compare/v2.0.0-alpha.0...v2.0.0-alpha.3
+
 ### Breaking Changes
 
+- `ControlPlane` `v2alpha1` has been replaced by `ControlPlane` `v2beta1`
+  `GatewayConfiguration` `v2alpha1` has been replaced by `GatewayConfiguration` `v2beta1`
+  [#548](https://github.com/Kong/kubernetes-configuration/pull/548)
 - `KonnectGatewayControlPlane v1alpha2` has been introduced.
   The `CreateControlPlaneRequest` fields (`name, description, clusterType, authType, cloudGateway, proxyUrls, labels`) have been moved from the top level of `spec` into a new structured field: `spec.createControlPlaneRequest`. The old flat field layout is no longer supported in `v1alpha2`.
   *Action required*:
@@ -44,6 +59,10 @@ Adding a new version? You'll need three changes:
 
 - Added test cases to cover CEL rules.
   [#538](https://github.com/Kong/kubernetes-configuration/pull/538)
+- The `ControlPlane` provisioned conditions reasons have been renamed.
+  The reason for the condition status true is now `Provisioned`, while the reason
+  related to the provisioning non completed yet has been renamed to `ProvisioningInProgress`.
+  [#546](https://github.com/Kong/kubernetes-configuration/pull/546)
 
 ### Added
 

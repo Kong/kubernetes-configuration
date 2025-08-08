@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     kubernetes-configuration.konghq.com/channels: gateway-operator
-    kubernetes-configuration.konghq.com/version: v2.0.0-alpha.1
+    kubernetes-configuration.konghq.com/version: v2.0.0-alpha.3
   name: gatewayconfigurations.gateway-operator.konghq.com
 spec:
   group: gateway-operator.konghq.com
@@ -21,7 +21,7 @@ spec:
   versions:
   - deprecated: true
     deprecationWarning: GatewayConfiguration v1beta1 has been deprecated in favor
-      of v2alpha1 and it will be removed in future.
+      of v2beta1 and it will be removed in future.
     name: v1beta1
     schema:
       openAPIV3Schema:
@@ -17699,7 +17699,7 @@ spec:
     storage: false
     subresources:
       status: {}
-  - name: v2alpha1
+  - name: v2beta1
     schema:
       openAPIV3Schema:
         description: GatewayConfiguration is the Schema for the gatewayconfigurations

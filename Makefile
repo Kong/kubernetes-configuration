@@ -183,7 +183,7 @@ generate.clientsets: client-gen
 		--input incubator/v1alpha1 \
 		--input gateway-operator/v1alpha1 \
 		--input gateway-operator/v1beta1 \
-		--input gateway-operator/v2alpha1 \
+		--input gateway-operator/v2beta1 \
 		--output-dir pkg/ \
 		--output-pkg $(REPO_URL)/$(GO_MOD_MAJOR_VERSION)/pkg/
 
@@ -261,7 +261,7 @@ lint.api.remove:
 lint.api: download.golangci-lint
 	@[[ -f $(GOLANGCI_LINT_KUBE_API_LINTER) ]] || $(GOLANGCI_LINT) custom -v
 	$(GOLANGCI_LINT_KUBE_API_LINTER) run --config $(PROJECT_DIR)/.golangci-kube-api.yaml -v \
-		./api/gateway-operator/v2alpha1/... \
+		./api/gateway-operator/v2beta1/... \
 		./api/konnect/v1alpha1/... \
 		./api/konnect/v1alpha2/... \
 		./api/common/v1alpha1/...
@@ -273,13 +273,14 @@ test.samples: kustomize
 GOTESTSUM_FORMAT ?= standard-verbose
 
 .PHONY: test
-test: test.unit test.crds-validation
+test: test.unit test.crds-validation test.conversion
 
 .PHONY: test.pretty
 test.pretty: test.unit.pretty test.crds-validation.pretty
 
 UNIT_TEST_PATHS := ./test/unit/... ./pkg/...
 CRDS_VALIDATION_TEST_PATHS := ./test/crdsvalidation/...
+CONVERSION_TEST_PATHS := ./test/conversion/...
 
 .PHONY: _test.unit
 _test.unit: gotestsum
@@ -295,6 +296,13 @@ _test.crds-validation: gotestsum
 		-race \
 		$(CRDS_VALIDATION_TEST_PATHS)
 
+.PHONY: _test.conversion
+_test.conversion: gotestsum
+	GOTESTSUM_FORMAT=$(GOTESTSUM_FORMAT) \
+		$(GOTESTSUM) -- $(GOTESTFLAGS) \
+		-race \
+		$(CONVERSION_TEST_PATHS)
+
 .PHONY: test.unit
 test.unit:
 	@$(MAKE) _test.unit GOTESTFLAGS="$(GOTESTFLAGS)"
@@ -302,6 +310,10 @@ test.unit:
 .PHONY: test.crds-validation
 test.crds-validation:
 	@$(MAKE) _test.crds-validation GOTESTFLAGS="$(GOTESTFLAGS)"
+
+.PHONY: test.conversion
+test.conversion:
+	@$(MAKE) _test.conversion GOTESTFLAGS="$(GOTESTFLAGS)"
 
 .PHONY: test.unit.pretty
 test.unit.pretty:
@@ -314,3 +326,9 @@ test.crds-validation.pretty:
 	@$(MAKE) _test.crds-validation GOTESTSUM_FORMAT=testname \
 		GOTESTFLAGS="$(GOTESTFLAGS)" \
 		UNIT_TEST_PATHS="$(UNIT_TEST_PATHS)"
+
+.PHONY: test.conversion.pretty
+test.conversion.pretty:
+	@$(MAKE) _test.conversion GOTESTSUM_FORMAT=testname \
+	    GOTESTFLAGS="$(GOTESTFLAGS)" \
+		CONVERSION_TEST_PATHS="$(CONVERSION_TEST_PATHS)"
