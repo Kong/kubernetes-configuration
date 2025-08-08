@@ -26,7 +26,7 @@ Adding a new version? You'll need three changes:
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
-## Unrealeased
+## Unreleased
 
 ### Changes
 
