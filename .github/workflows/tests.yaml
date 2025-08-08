@@ -284,6 +284,7 @@ jobs:
       - apply
       - CRDs-validation
       - upgrade-crds-from-latest-release
+      - test-conversion
     if: always()
     steps:
       - if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')

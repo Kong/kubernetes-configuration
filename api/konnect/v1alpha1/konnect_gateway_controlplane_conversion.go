@@ -1,6 +1,8 @@
 package v1alpha1
 
 import (
+	"fmt"
+
 	"github.com/samber/lo"
 	"sigs.k8s.io/controller-runtime/pkg/conversion"
 
@@ -9,10 +11,19 @@ import (
 	konnectv1alpha2 "github.com/kong/kubernetes-configuration/v2/api/konnect/v1alpha2"
 )
 
+const (
+	errWrongConvertToKonnectGatewayControlPlane   = "KonnectGatewayControlPlane ConvertTo: expected *konnectv1alpha2.KonnectGatewayControlPlane, got %T"
+	errWrongConvertFromKonnectGatewayControlPlane = "KonnectGatewayControlPlane ConvertFrom: expected *konnectv1alpha2.KonnectGatewayControlPlane, got %T"
+)
+
 // ConvertTo converts this KonnectGatewayControlPlane (v1alpha1) to the Hub version (v1alpha2).
 func (src *KonnectGatewayControlPlane) ConvertTo(dstRaw conversion.Hub) error {
 
-	dst := dstRaw.(*konnectv1alpha2.KonnectGatewayControlPlane)
+	dst, ok := dstRaw.(*konnectv1alpha2.KonnectGatewayControlPlane)
+	if !ok {
+		return fmt.Errorf(errWrongConvertToKonnectGatewayControlPlane, dstRaw)
+	}
+
 	dst.ObjectMeta = src.ObjectMeta
 
 	// Convert the changed fields between v1alpha1 and v1alpha2.
@@ -38,7 +49,11 @@ func (src *KonnectGatewayControlPlane) ConvertTo(dstRaw conversion.Hub) error {
 // ConvertFrom converts the Hub version (v1alpha2) to this KonnectGatewayControlPlane (v1alpha1).
 func (dst *KonnectGatewayControlPlane) ConvertFrom(srcRaw conversion.Hub) error { //nolint:staticcheck // ST1016 methods on the same type can have different receiver names
 
-	src := srcRaw.(*konnectv1alpha2.KonnectGatewayControlPlane)
+	src, ok := srcRaw.(*konnectv1alpha2.KonnectGatewayControlPlane)
+	if !ok {
+		return fmt.Errorf(errWrongConvertFromKonnectGatewayControlPlane, srcRaw)
+	}
+
 	dst.ObjectMeta = src.ObjectMeta
 
 	dst.Spec.CreateControlPlaneRequest = createInlineControlPlaneRequest(src.Spec.CreateControlPlaneRequest)
