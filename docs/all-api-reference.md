@@ -4391,7 +4391,7 @@ CreateControlPlaneRequest - The request schema for the create control plane requ
 | `cluster_type` _[CreateControlPlaneRequestClusterType](#createcontrolplanerequestclustertype)_ | The ClusterType value of the cluster associated with the Control Plane. |
 | `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
 | `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
-| `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
+| `proxy_urls` _[ProxyURL](#proxyurl) array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
 | `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br />Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
 
 
@@ -4424,21 +4424,6 @@ DataPlaneLabelValue is the type that defines the value of a label that will be a
 
 _Appears in:_
 - [KonnectExtensionDataPlane](#konnectextensiondataplane)
-
-#### KonnectAPIAuthConfigurationRef
-
-
-KonnectAPIAuthConfigurationRef is a reference to a KonnectAPIAuthConfiguration resource.
-
-
-
-| Field | Description |
-| --- | --- |
-| `name` _string_ | Name is the name of the KonnectAPIAuthConfiguration resource. |
-
-
-_Appears in:_
-- [KonnectConfiguration](#konnectconfiguration)
 
 #### KonnectAPIAuthConfigurationSpec
 
@@ -4556,24 +4541,6 @@ _Appears in:_
 
 
 
-#### KonnectConfiguration
-
-
-KonnectConfiguration is the Schema for the KonnectConfiguration API.
-
-
-
-| Field | Description |
-| --- | --- |
-| `authRef` _[KonnectAPIAuthConfigurationRef](#konnectapiauthconfigurationref)_ | APIAuthConfigurationRef is the reference to the API Auth Configuration that should be used for this Konnect Configuration. |
-
-
-_Appears in:_
-- [KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)
-- [KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)
-- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
-- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
-
 #### KonnectConfigurationDataPlaneGroup
 
 
@@ -4609,179 +4576,6 @@ KonnectEndpoints defines the Konnect endpoints for the control plane.
 _Appears in:_
 - [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
-
-#### KonnectEntityStatus
-
-
-KonnectEntityStatus represents the status of a Konnect entity.
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-
-
-_Appears in:_
-- [KonnectCloudGatewayDataPlaneGroupConfigurationStatus](#konnectcloudgatewaydataplanegroupconfigurationstatus)
-- [KonnectCloudGatewayNetworkStatus](#konnectcloudgatewaynetworkstatus)
-- [KonnectCloudGatewayTransitGatewayStatus](#konnectcloudgatewaytransitgatewaystatus)
-- [KonnectEntityStatusWithControlPlaneAndCertificateRefs](#konnectentitystatuswithcontrolplaneandcertificaterefs)
-- [KonnectEntityStatusWithControlPlaneAndConsumerRefs](#konnectentitystatuswithcontrolplaneandconsumerrefs)
-- [KonnectEntityStatusWithControlPlaneAndKeySetRef](#konnectentitystatuswithcontrolplaneandkeysetref)
-- [KonnectEntityStatusWithControlPlaneAndServiceRefs](#konnectentitystatuswithcontrolplaneandservicerefs)
-- [KonnectEntityStatusWithControlPlaneAndUpstreamRefs](#konnectentitystatuswithcontrolplaneandupstreamrefs)
-- [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
-- [KonnectEntityStatusWithNetworkRef](#konnectentitystatuswithnetworkref)
-- [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
-- [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
-
-#### KonnectEntityStatusWithControlPlaneAndCertificateRefs
-
-
-KonnectEntityStatusWithControlPlaneAndCertificateRefs represents the status of a Konnect entity with references to a ControlPlane and a Certificate.
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with. |
-| `certificateID` _string_ | CertificateID is the Konnect ID of the Certificate this entity is associated with. |
-
-
-_Appears in:_
-- [KongSNIStatus](#kongsnistatus)
-
-#### KonnectEntityStatusWithControlPlaneAndConsumerRefs
-
-
-KonnectEntityStatusWithControlPlaneAndConsumerRefs represents the status of a Konnect entity with references to a ControlPlane and a Consumer.
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this Route is associated with. |
-| `consumerID` _string_ | ConsumerID is the Konnect ID of the Consumer this entity is associated with. |
-
-
-_Appears in:_
-- [KongCredentialACLStatus](#kongcredentialaclstatus)
-- [KongCredentialAPIKeyStatus](#kongcredentialapikeystatus)
-- [KongCredentialBasicAuthStatus](#kongcredentialbasicauthstatus)
-- [KongCredentialHMACStatus](#kongcredentialhmacstatus)
-- [KongCredentialJWTStatus](#kongcredentialjwtstatus)
-
-#### KonnectEntityStatusWithControlPlaneAndKeySetRef
-
-
-KonnectEntityStatusWithControlPlaneAndKeySetRef represents the status of a Konnect entity with references to a ControlPlane and a KeySet.
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with. |
-| `keySetID` _string_ | KeySetID is the Konnect ID of the KeySet this entity is associated with. |
-
-
-_Appears in:_
-- [KongKeyStatus](#kongkeystatus)
-
-#### KonnectEntityStatusWithControlPlaneAndServiceRefs
-
-
-KonnectEntityStatusWithControlPlaneAndServiceRefs represents the status of a Konnect entity with references to a ControlPlane and a Service.
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with. |
-| `serviceID` _string_ | ServiceID is the Konnect ID of the Service this entity is associated with. |
-
-
-_Appears in:_
-- [KongRouteStatus](#kongroutestatus)
-
-#### KonnectEntityStatusWithControlPlaneAndUpstreamRefs
-
-
-KonnectEntityStatusWithControlPlaneAndUpstreamRefs represents the status of a Konnect entity with references to a ControlPlane and an Upstream.
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with. |
-| `upstreamID` _string_ | UpstreamID is the Konnect ID of the Upstream this entity is associated with. |
-
-
-_Appears in:_
-- [KongTargetStatus](#kongtargetstatus)
-
-#### KonnectEntityStatusWithControlPlaneRef
-
-
-KonnectEntityStatusWithControlPlaneRef represents the status of a Konnect entity with a reference to a ControlPlane.
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this Route is associated with. |
-
-
-_Appears in:_
-- [KongCACertificateStatus](#kongcacertificatestatus)
-- [KongCertificateStatus](#kongcertificatestatus)
-- [KongConsumerGroupStatus](#kongconsumergroupstatus)
-- [KongConsumerStatus](#kongconsumerstatus)
-- [KongDataPlaneClientCertificateStatus](#kongdataplaneclientcertificatestatus)
-- [KongKeySetStatus](#kongkeysetstatus)
-- [KongPluginBindingStatus](#kongpluginbindingstatus)
-- [KongServiceStatus](#kongservicestatus)
-- [KongUpstreamStatus](#kongupstreamstatus)
-- [KongVaultStatus](#kongvaultstatus)
-- [KonnectCloudGatewayDataPlaneGroupConfigurationStatus](#konnectcloudgatewaydataplanegroupconfigurationstatus)
-
-#### KonnectEntityStatusWithNetworkRef
-
-
-KonnectEntityStatusWithNetworkRef represents the status of a Konnect entity with reference to a Konnect cloud gateway network.
-
-
-
-| Field | Description |
-| --- | --- |
-| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
-| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
-| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
-| `networkID` _string_ | NetworkID is the Konnect ID of the Konnect cloud gateway network this entity is associated with. |
-
-
-_Appears in:_
-- [KonnectCloudGatewayTransitGatewayStatus](#konnectcloudgatewaytransitgatewaystatus)
 
 #### KonnectExtensionClientAuth
 
@@ -4908,7 +4702,7 @@ KonnectGatewayControlPlaneSpec defines the desired state of KonnectGatewayContro
 | `cluster_type` _[CreateControlPlaneRequestClusterType](#createcontrolplanerequestclustertype)_ | The ClusterType value of the cluster associated with the Control Plane. |
 | `auth_type` _[AuthType](#authtype)_ | The auth type value of the cluster associated with the Runtime Group. |
 | `cloud_gateway` _boolean_ | Whether this control-plane can be used for cloud-gateways. |
-| `proxy_urls` _ProxyURL array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
+| `proxy_urls` _[ProxyURL](#proxyurl) array_ | Array of proxy URLs associated with reaching the data-planes connected to a control-plane. |
 | `labels` _object (keys:string, values:string)_ | Labels store metadata of an entity that can be used for filtering an entity list or for searching across entity types.<br /><br />Keys must be of length 1-63 characters, and cannot start with "kong", "konnect", "mesh", "kic", or "_". |
 | `mirror` _[MirrorSpec](#mirrorspec)_ | Mirror is the Konnect Mirror configuration. It is only applicable for ControlPlanes that are created as Mirrors. |
 | `source` _[EntitySource](#entitysource)_ | Source represents the source type of the Konnect entity. |
@@ -5130,7 +4924,23 @@ KonnectAPIAuthConfigurationRef is a reference to a KonnectAPIAuthConfiguration r
 _Appears in:_
 - [KonnectConfiguration](#konnectconfiguration)
 
+#### KonnectConfiguration
 
+
+KonnectConfiguration is the Schema for the KonnectConfiguration API.
+
+
+
+| Field | Description |
+| --- | --- |
+| `authRef` _[KonnectAPIAuthConfigurationRef](#konnectapiauthconfigurationref)_ | APIAuthConfigurationRef is the reference to the API Auth Configuration that should be used for this Konnect Configuration. |
+
+
+_Appears in:_
+- [KonnectCloudGatewayNetworkSpec](#konnectcloudgatewaynetworkspec)
+- [KonnectExtensionKonnectSpec](#konnectextensionkonnectspec)
+- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
+- [KonnectGatewayControlPlaneSpec](#konnectgatewaycontrolplanespec)
 
 #### KonnectEndpoints
 
@@ -5148,6 +4958,179 @@ KonnectEndpoints defines the Konnect endpoints for the control plane.
 _Appears in:_
 - [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
 - [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
+
+#### KonnectEntityStatus
+
+
+KonnectEntityStatus represents the status of a Konnect entity.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+
+
+_Appears in:_
+- [KonnectCloudGatewayDataPlaneGroupConfigurationStatus](#konnectcloudgatewaydataplanegroupconfigurationstatus)
+- [KonnectCloudGatewayNetworkStatus](#konnectcloudgatewaynetworkstatus)
+- [KonnectCloudGatewayTransitGatewayStatus](#konnectcloudgatewaytransitgatewaystatus)
+- [KonnectEntityStatusWithControlPlaneAndCertificateRefs](#konnectentitystatuswithcontrolplaneandcertificaterefs)
+- [KonnectEntityStatusWithControlPlaneAndConsumerRefs](#konnectentitystatuswithcontrolplaneandconsumerrefs)
+- [KonnectEntityStatusWithControlPlaneAndKeySetRef](#konnectentitystatuswithcontrolplaneandkeysetref)
+- [KonnectEntityStatusWithControlPlaneAndServiceRefs](#konnectentitystatuswithcontrolplaneandservicerefs)
+- [KonnectEntityStatusWithControlPlaneAndUpstreamRefs](#konnectentitystatuswithcontrolplaneandupstreamrefs)
+- [KonnectEntityStatusWithControlPlaneRef](#konnectentitystatuswithcontrolplaneref)
+- [KonnectEntityStatusWithNetworkRef](#konnectentitystatuswithnetworkref)
+- [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
+- [KonnectGatewayControlPlaneStatus](#konnectgatewaycontrolplanestatus)
+
+#### KonnectEntityStatusWithControlPlaneAndCertificateRefs
+
+
+KonnectEntityStatusWithControlPlaneAndCertificateRefs represents the status of a Konnect entity with references to a ControlPlane and a Certificate.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with. |
+| `certificateID` _string_ | CertificateID is the Konnect ID of the Certificate this entity is associated with. |
+
+
+_Appears in:_
+- [KongSNIStatus](#kongsnistatus)
+
+#### KonnectEntityStatusWithControlPlaneAndConsumerRefs
+
+
+KonnectEntityStatusWithControlPlaneAndConsumerRefs represents the status of a Konnect entity with references to a ControlPlane and a Consumer.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this Route is associated with. |
+| `consumerID` _string_ | ConsumerID is the Konnect ID of the Consumer this entity is associated with. |
+
+
+_Appears in:_
+- [KongCredentialACLStatus](#kongcredentialaclstatus)
+- [KongCredentialAPIKeyStatus](#kongcredentialapikeystatus)
+- [KongCredentialBasicAuthStatus](#kongcredentialbasicauthstatus)
+- [KongCredentialHMACStatus](#kongcredentialhmacstatus)
+- [KongCredentialJWTStatus](#kongcredentialjwtstatus)
+
+#### KonnectEntityStatusWithControlPlaneAndKeySetRef
+
+
+KonnectEntityStatusWithControlPlaneAndKeySetRef represents the status of a Konnect entity with references to a ControlPlane and a KeySet.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with. |
+| `keySetID` _string_ | KeySetID is the Konnect ID of the KeySet this entity is associated with. |
+
+
+_Appears in:_
+- [KongKeyStatus](#kongkeystatus)
+
+#### KonnectEntityStatusWithControlPlaneAndServiceRefs
+
+
+KonnectEntityStatusWithControlPlaneAndServiceRefs represents the status of a Konnect entity with references to a ControlPlane and a Service.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with. |
+| `serviceID` _string_ | ServiceID is the Konnect ID of the Service this entity is associated with. |
+
+
+_Appears in:_
+- [KongRouteStatus](#kongroutestatus)
+
+#### KonnectEntityStatusWithControlPlaneAndUpstreamRefs
+
+
+KonnectEntityStatusWithControlPlaneAndUpstreamRefs represents the status of a Konnect entity with references to a ControlPlane and an Upstream.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this entity is associated with. |
+| `upstreamID` _string_ | UpstreamID is the Konnect ID of the Upstream this entity is associated with. |
+
+
+_Appears in:_
+- [KongTargetStatus](#kongtargetstatus)
+
+#### KonnectEntityStatusWithControlPlaneRef
+
+
+KonnectEntityStatusWithControlPlaneRef represents the status of a Konnect entity with a reference to a ControlPlane.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `controlPlaneID` _string_ | ControlPlaneID is the Konnect ID of the ControlPlane this Route is associated with. |
+
+
+_Appears in:_
+- [KongCACertificateStatus](#kongcacertificatestatus)
+- [KongCertificateStatus](#kongcertificatestatus)
+- [KongConsumerGroupStatus](#kongconsumergroupstatus)
+- [KongConsumerStatus](#kongconsumerstatus)
+- [KongDataPlaneClientCertificateStatus](#kongdataplaneclientcertificatestatus)
+- [KongKeySetStatus](#kongkeysetstatus)
+- [KongPluginBindingStatus](#kongpluginbindingstatus)
+- [KongServiceStatus](#kongservicestatus)
+- [KongUpstreamStatus](#kongupstreamstatus)
+- [KongVaultStatus](#kongvaultstatus)
+- [KonnectCloudGatewayDataPlaneGroupConfigurationStatus](#konnectcloudgatewaydataplanegroupconfigurationstatus)
+
+#### KonnectEntityStatusWithNetworkRef
+
+
+KonnectEntityStatusWithNetworkRef represents the status of a Konnect entity with reference to a Konnect cloud gateway network.
+
+
+
+| Field | Description |
+| --- | --- |
+| `id` _string_ | ID is the unique identifier of the Konnect entity as assigned by Konnect API. If it's unset (empty string), it means the Konnect entity hasn't been created yet. |
+| `serverURL` _string_ | ServerURL is the URL of the Konnect server in which the entity exists. |
+| `organizationID` _string_ | OrgID is ID of Konnect Org that this entity has been created in. |
+| `networkID` _string_ | NetworkID is the Konnect ID of the Konnect cloud gateway network this entity is associated with. |
+
+
+_Appears in:_
+- [KonnectCloudGatewayTransitGatewayStatus](#konnectcloudgatewaytransitgatewaystatus)
 
 #### KonnectExtensionClientAuth
 
