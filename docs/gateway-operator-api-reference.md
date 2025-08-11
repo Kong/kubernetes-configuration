@@ -982,7 +982,7 @@ GatewayConfigDataPlaneServices contains Services related DataPlane configuration
 
 | Field | Description |
 | --- | --- |
-| `ingress` _[GatewayConfigServiceOptions](#gatewayconfigserviceoptions)_ | Ingress is the Kubernetes Service that will be used to expose ingress traffic for the DataPlane. Here you can determine whether the DataPlane will be exposed outside the cluster (e.g. using a LoadBalancer type Services) or only internally (e.g. ClusterIP), and inject any additional annotations you need on the service (for instance, if you need to influence a cloud provider LoadBalancer configuration). |
+| `ingress` _[GatewayConfigServiceOptions](#gatewayconfigserviceoptions)_ | Ingress is the Kubernetes Service that will be used to expose ingress traffic for the DataPlane. Here you can determine whether the DataPlane will be exposed outside the cluster (e.g. using a LoadBalancer type Services) or only internally (e.g. ClusterIP), and inject any additional annotations you need on the service (for instance, if you need to influence a cloud provider LoadBalancer configuration). The `port` in the ports of ingress service must be the same as the port in one of the Gateway's listeners. |
 
 
 _Appears in:_
@@ -992,7 +992,7 @@ _Appears in:_
 
 
 GatewayConfigServiceOptions is used to includes options to customize the ingress service,
-such as the annotations.
+such as the annotations and ports.
 
 
 
@@ -1002,10 +1002,29 @@ such as the annotations.
 | `name` _string_ | Name defines the name of the service. If Name is empty, the controller will generate a service name from the owning object. |
 | `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br />More info: http://kubernetes.io/docs/user-guide/annotations |
 | `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br />More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
+| `ports` _[GatewayConfigurationServicePort](#gatewayconfigurationserviceport) array_ | Ports defines the list of ports that are exposed by the service. The ports field allows defining the name, port and targetPort of the underlying service ports, while the protocol is defaulted to TCP, as it is the only protocol currently supported. |
 
 
 _Appears in:_
 - [GatewayConfigDataPlaneServices](#gatewayconfigdataplaneservices)
+
+#### GatewayConfigurationServicePort
+
+
+GatewayConfigurationServicePort contains information on service's port.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service. |
+| `port` _integer_ | The port that will be exposed by this service. |
+| `targetPort` _[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#intorstring-intstr-util)_ | Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service |
+| `nodePort` _integer_ | The port on each node on which this service is exposed when type is NodePort or LoadBalancer. Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail. If not specified, a port will be allocated if this Service requires one. If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP).<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport<br /><br />Can only be specified if type is NodePort or LoadBalancer. |
+
+
+_Appears in:_
+- [GatewayConfigServiceOptions](#gatewayconfigserviceoptions)
 
 #### GatewayConfigurationSpec
 
@@ -1926,7 +1945,7 @@ GatewayConfigDataPlaneServices contains Services related DataPlane configuration
 
 | Field | Description |
 | --- | --- |
-| `ingress` _[GatewayConfigServiceOptions](#gatewayconfigserviceoptions)_ | Ingress is the Kubernetes Service that will be used to expose ingress traffic for the DataPlane. Here you can determine whether the DataPlane will be exposed outside the cluster (e.g. using a LoadBalancer type Services) or only internally (e.g. ClusterIP), and inject any additional annotations you need on the service (for instance, if you need to influence a cloud provider LoadBalancer configuration). |
+| `ingress` _[GatewayConfigServiceOptions](#gatewayconfigserviceoptions)_ | Ingress is the Kubernetes Service that will be used to expose ingress traffic for the DataPlane. Here you can determine whether the DataPlane will be exposed outside the cluster (e.g. using a LoadBalancer type Services) or only internally (e.g. ClusterIP), and inject any additional annotations you need on the service (for instance, if you need to influence a cloud provider LoadBalancer configuration). The `port` in the ports of ingress service must be the same as the port in one of the Gateway's listeners. |
 
 
 _Appears in:_
@@ -1936,7 +1955,7 @@ _Appears in:_
 
 
 GatewayConfigServiceOptions is used to includes options to customize the ingress service,
-such as the annotations.
+such as the annotations and ports.
 
 
 
@@ -1946,10 +1965,29 @@ such as the annotations.
 | `name` _string_ | Name defines the name of the service. If Name is empty, the controller will generate a service name from the owning object. |
 | `annotations` _object (keys:string, values:string)_ | Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.<br /><br />More info: http://kubernetes.io/docs/user-guide/annotations |
 | `externalTrafficPolicy` _[ServiceExternalTrafficPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#serviceexternaltrafficpolicy-v1-core)_ | ExternalTrafficPolicy describes how nodes distribute service traffic they receive on one of the Service's "externally-facing" addresses (NodePorts, ExternalIPs, and LoadBalancer IPs). If set to "Local", the proxy will configure the service in a way that assumes that external load balancers will take care of balancing the service traffic between nodes, and so each node will deliver traffic only to the node-local endpoints of the service, without masquerading the client source IP. (Traffic mistakenly sent to a node with no endpoints will be dropped.) The default value, "Cluster", uses the standard behavior of routing to all endpoints evenly (possibly modified by topology and other features). Note that traffic sent to an External IP or LoadBalancer IP from within the cluster will always get "Cluster" semantics, but clients sending to a NodePort from within the cluster may need to take traffic policy into account when picking a node.<br /><br />More info: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
+| `ports` _[GatewayConfigurationServicePort](#gatewayconfigurationserviceport) array_ | Ports defines the list of ports that are exposed by the service. The ports field allows defining the name, port and targetPort of the underlying service ports, while the protocol is defaulted to TCP, as it is the only protocol currently supported. |
 
 
 _Appears in:_
 - [GatewayConfigDataPlaneServices](#gatewayconfigdataplaneservices)
+
+#### GatewayConfigurationServicePort
+
+
+GatewayConfigurationServicePort contains information on service's port.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service. |
+| `port` _integer_ | The port that will be exposed by this service. |
+| `targetPort` _[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#intorstring-intstr-util)_ | Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service |
+| `nodePort` _integer_ | The port on each node on which this service is exposed when type is NodePort or LoadBalancer. Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail. If not specified, a port will be allocated if this Service requires one. If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP).<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport<br /><br />Can only be specified if type is NodePort or LoadBalancer. |
+
+
+_Appears in:_
+- [GatewayConfigServiceOptions](#gatewayconfigserviceoptions)
 
 #### GatewayConfigurationSpec
 

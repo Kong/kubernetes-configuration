@@ -26,6 +26,10 @@ const (
 	// to express that the Gateway Service is not properly configured.
 	GatewayReasonServiceError consts.ConditionReason = "GatewayServiceError"
 
+	// GatewayReasonPortsInvalid must be used with the GatewayService condition
+	// to express that the ports of the Gateway Service is invalid.
+	GatewayReasonPortsInvalid consts.ConditionReason = "GatewayServicePortsInvalid"
+
 	// ListenerReasonTooManyTLSSecrets must be used with the ResolvedRefs condition
 	// to express that more than one TLS secret has been set in the listener
 	// TLS configuration.

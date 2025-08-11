@@ -18,6 +18,7 @@ package v1beta1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/intstr"
 	"sigs.k8s.io/controller-runtime/pkg/conversion"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/common/v1alpha1"
@@ -122,6 +123,8 @@ type GatewayConfigDataPlaneServices struct {
 	// Services) or only internally (e.g. ClusterIP), and inject any additional
 	// annotations you need on the service (for instance, if you need to
 	// influence a cloud provider LoadBalancer configuration).
+	// The `port` in the ports of ingress service must be the same as the port
+	// in one of the Gateway's listeners.
 	//
 	// +optional
 	Ingress *GatewayConfigServiceOptions `json:"ingress,omitempty"`
@@ -131,6 +134,7 @@ type GatewayConfigDataPlaneServices struct {
 // created and managed for Gateway's DataPlane.
 // +apireference:kgo:include
 type GatewayConfigDataPlaneResources struct {
+
 	// PodDisruptionBudget is the configuration for the PodDisruptionBudget
 	// that will be created for the DataPlane.
 	//
@@ -139,10 +143,61 @@ type GatewayConfigDataPlaneResources struct {
 }
 
 // GatewayConfigServiceOptions is used to includes options to customize the ingress service,
-// such as the annotations.
+// such as the annotations and ports.
 // +apireference:kgo:include
+// +kubebuilder:validation:XValidation:message="Cannot set NodePort when service type is not NodePort or LoadBalancer", rule="!has(self.ports) || !(self.ports.exists(p, has(p.nodePort))) ? true : has(self.type) && ['LoadBalancer', 'NodePort'].exists(t, t == self.type)"
 type GatewayConfigServiceOptions struct {
 	ServiceOptions `json:",inline"`
+
+	// Ports defines the list of ports that are exposed by the service.
+	// The ports field allows defining the name, port and targetPort of
+	// the underlying service ports, while the protocol is defaulted to TCP,
+	// as it is the only protocol currently supported.
+	//
+	// +kubebuilder:validation:MaxItems=4
+	Ports []GatewayConfigurationServicePort `json:"ports,omitempty"`
+}
+
+// GatewayConfigurationServicePort contains information on service's port.
+// +apireference:kgo:include
+type GatewayConfigurationServicePort struct {
+	// The name of this port within the service. This must be a DNS_LABEL.
+	// All ports within a ServiceSpec must have unique names. When considering
+	// the endpoints for a Service, this must match the 'name' field in the
+	// EndpointPort.
+	// Optional if only one ServicePort is defined on this service.
+	// +optional
+	Name string `json:"name,omitempty"`
+
+	// The port that will be exposed by this service.
+	Port int32 `json:"port"`
+
+	// Number or name of the port to access on the pods targeted by the service.
+	// Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+	// If this is a string, it will be looked up as a named port in the
+	// target Pod's container ports. If this is not specified, the value
+	// of the 'port' field is used (an identity map).
+	// This field is ignored for services with clusterIP=None, and should be
+	// omitted or set equal to the 'port' field.
+	// More info: https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
+	// +optional
+	TargetPort intstr.IntOrString `json:"targetPort,omitempty"`
+
+	// The port on each node on which this service is exposed when type is
+	// NodePort or LoadBalancer. Usually assigned by the system. If a value is
+	// specified, in-range, and not in use it will be used, otherwise the
+	// operation will fail. If not specified, a port will be allocated if this
+	// Service requires one. If this field is specified when creating a
+	// Service which does not need it, creation will fail. This field will be
+	// wiped when updating a Service to no longer need it (e.g. changing type
+	// from NodePort to ClusterIP).
+	//
+	// More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+	//
+	// Can only be specified if type is NodePort or LoadBalancer.
+	//
+	// +optional
+	NodePort int32 `json:"nodePort,omitempty"`
 }
 
 // GatewayConfigurationStatus defines the observed state of GatewayConfiguration
