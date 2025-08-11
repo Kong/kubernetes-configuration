@@ -3,7 +3,7 @@ kind: ControlPlane
 metadata:
   name: controlplane-v2-example
 spec:
-  ingressClass: kong
+  ingressClass: kong # required if dataplane.type is ref
   dataplane:
     type: ref
     ref:

@@ -1432,6 +1432,22 @@ _Appears in:_
 - [ControlPlaneStatus](#controlplanestatus)
 - [GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)
 
+#### ControlPlaneDataPlaneStatus
+
+
+ControlPlaneDataPlaneStatus defines the status of the DataPlane that the
+ControlPlane is responsible for configuring.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _string_ | Name is the name of the DataPlane. |
+
+
+_Appears in:_
+- [ControlPlaneStatus](#controlplanestatus)
+
 #### ControlPlaneDataPlaneSync
 
 
