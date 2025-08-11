@@ -35,6 +35,12 @@ Adding a new version? You'll need three changes:
   To prevent import cycles, `v1alpha1` now imports required types from `v1alpha2`.
   [#550](https://github.com/Kong/kubernetes-configuration/pull/550)
 
+### Added
+
+- Added `ports` in service options of `GatewayConfiguration` to allow setting
+  ports of ingress service by `spec.dataplaneOptions.services.ingress.ports`.
+  [#553](https://github.com/Kong/kubernetes-configuration/pull/553)
+
 ## [v2.0.0-alpha.3]
 
 [v2.0.0-alpha.3]: https://github.com/Kong/kubernetes-configuration/compare/v2.0.0-alpha.0...v2.0.0-alpha.3

@@ -155,6 +155,7 @@ type GatewayConfigServiceOptions struct {
 	// as it is the only protocol currently supported.
 	//
 	// +kubebuilder:validation:MaxItems=4
+	// +optional
 	Ports []GatewayConfigurationServicePort `json:"ports,omitempty"`
 }
 
@@ -170,6 +171,7 @@ type GatewayConfigurationServicePort struct {
 	Name string `json:"name,omitempty"`
 
 	// The port that will be exposed by this service.
+	// +required
 	Port int32 `json:"port"`
 
 	// Number or name of the port to access on the pods targeted by the service.
