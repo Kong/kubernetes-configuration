@@ -37,8 +37,13 @@ Adding a new version? You'll need three changes:
 
 ### Added
 
-- Added `ports` in service options of `GatewayConfiguration` to allow setting
-  ports of ingress service by `spec.dataplaneOptions.services.ingress.ports`.
+- Added `listenerOptions` in `GatewayConfiguration`'s `spec` to allow overriding
+  the default confiugration related to a certain listener in the `Gateway`.
+  Each item of `listenerOptions` matches a listener in the `Gateway` which the
+  `GatewayConfiguration` configures by its `name`. The listeners without a
+  matching item in `GatewayConfiguration` remains the default configuration.
+  Currently `nodePort` can be configured to set the exposed nodeport of the
+  dataplane's ingress service port serving for the listener.
   [#553](https://github.com/Kong/kubernetes-configuration/pull/553)
 
 ## [v2.0.0-alpha.3]

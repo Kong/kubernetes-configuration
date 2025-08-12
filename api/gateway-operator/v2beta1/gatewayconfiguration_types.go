@@ -20,6 +20,7 @@ import (
 	policyv1 "k8s.io/api/policy/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
+	gatewayv1 "sigs.k8s.io/gateway-api/apis/v1"
 
 	commonv1alpha1 "github.com/kong/kubernetes-configuration/v2/api/common/v1alpha1"
 )
@@ -53,6 +54,7 @@ type GatewayConfiguration struct {
 
 // GatewayConfigurationSpec defines the desired state of GatewayConfiguration
 //
+// +kubebuilder:validation:XValidation:message="Can only specify listener's NodePort when DataPlane ingress service is NodePort or LoadBalancer",rule="(has(self.dataPlaneOptions) && has(self.dataPlaneOptions.network) && has(self.dataPlaneOptions.network.services) &&  has(self.dataPlaneOptions.network.services.ingress) && (self.dataPlaneOptions.network.services.ingress.type == 'LoadBalancer' || self.dataPlaneOptions.network.services.ingress.type == 'NodePort')) ? true : (!has(self.listenerOptions) || self.listenerOptions.all(l,!has(l.nodePort)))"
 // +apireference:kgo:include
 type GatewayConfigurationSpec struct {
 	// DataPlaneOptions is the specification for configuration
@@ -66,6 +68,15 @@ type GatewayConfigurationSpec struct {
 	//
 	// +optional
 	ControlPlaneOptions *GatewayConfigControlPlaneOptions `json:"controlPlaneOptions,omitempty"`
+
+	// ListenerOptions is the specification for configuration bound to specific listeners in the Gateway.
+	// It will override the default configuration of control plane or data plane for the specified listener.
+	//
+	// +optional
+	// +kubebuilder:validation:MaxItems=64
+	// +kubebuilder:validation:XValidation:message="Listener name must be unique within the Gateway",rule="self.all(l1, self.exists_one(l2, l1.name == l2.name))"
+	// +kubebuilder:validation:XValidation:message="Nodeport must be unique within the Gateway if specified",rule="self.all(l1, !has(l1.nodePort) || self.exists_one(l2, l1.nodePort == l2.nodePort))"
+	ListenerOptions []GatewayConfigurationListenerOptions `json:"listenerOptions,omitempty"`
 
 	// Extensions provide additional or replacement features for the Gateway
 	// resource to influence or enhance functionality.
@@ -142,8 +153,6 @@ type GatewayConfigDataPlaneServices struct {
 	// Services) or only internally (e.g. ClusterIP), and inject any additional
 	// annotations you need on the service (for instance, if you need to
 	// influence a cloud provider LoadBalancer configuration).
-	// The `port` in the ports of ingress service must be the same as the port
-	// in one of the Gateway's listeners.
 	//
 	// +optional
 	Ingress *GatewayConfigServiceOptions `json:"ingress,omitempty"`
@@ -222,48 +231,27 @@ type PodDisruptionBudgetSpec struct {
 }
 
 // GatewayConfigServiceOptions is used to includes options to customize the ingress service,
-// such as the annotations and ports.
+// such as the annotations.
 //
 // +apireference:kgo:include
-// +kubebuilder:validation:XValidation:message="Cannot set NodePort when service type is not NodePort or LoadBalancer", rule="!has(self.ports) || !(self.ports.exists(p, has(p.nodePort))) ? true : has(self.type) && ['LoadBalancer', 'NodePort'].exists(t, t == self.type)"
 type GatewayConfigServiceOptions struct {
 	ServiceOptions `json:",inline"`
-
-	// Ports defines the list of ports that are exposed by the service.
-	// The ports field allows defining the name, port and targetPort of
-	// the underlying service ports, while the protocol is defaulted to TCP,
-	// as it is the only protocol currently supported.
-	//
-	// +kubebuilder:validation:MaxItems=4
-	// +optional
-	Ports []GatewayConfigurationServicePort `json:"ports,omitempty"`
 }
 
-// GatewayConfigurationServicePort contains information on service's port.
+// GatewayConfigurationListenerOptions specifies configuration overrides of defaults on certain listener of the Gateway.
+// The name must match the name of a listener in the Gateway
+// and the options are applied to the configuration of the matching listener.
+// For example, if the option for listener "http" specified the nodeport number to 30080,
+// The ingress service will expose the nodeport 30080 for the "http" listener of the Gateway.
+// For listeners without an item in listener options of GatewayConfiguration, default configuration is used for it.
+//
 // +apireference:kgo:include
-type GatewayConfigurationServicePort struct {
-	// The name of this port within the service. This must be a DNS_LABEL.
-	// All ports within a ServiceSpec must have unique names. When considering
-	// the endpoints for a Service, this must match the 'name' field in the
-	// EndpointPort.
-	// Optional if only one ServicePort is defined on this service.
-	// +optional
-	Name string `json:"name,omitempty"`
-
-	// The port that will be exposed by this service.
+type GatewayConfigurationListenerOptions struct {
+	// Name is the name of the Listener. This name MUST be unique within a
+	// Gateway.
+	//
 	// +required
-	Port int32 `json:"port"`
-
-	// Number or name of the port to access on the pods targeted by the service.
-	// Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-	// If this is a string, it will be looked up as a named port in the
-	// target Pod's container ports. If this is not specified, the value
-	// of the 'port' field is used (an identity map).
-	// This field is ignored for services with clusterIP=None, and should be
-	// omitted or set equal to the 'port' field.
-	// More info: https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
-	// +optional
-	TargetPort intstr.IntOrString `json:"targetPort,omitempty"`
+	Name gatewayv1.SectionName `json:"name"`
 
 	// The port on each node on which this service is exposed when type is
 	// NodePort or LoadBalancer. Usually assigned by the system. If a value is
@@ -276,7 +264,7 @@ type GatewayConfigurationServicePort struct {
 	//
 	// More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
 	//
-	// Can only be specified if type is NodePort or LoadBalancer.
+	// Can only be specified if type of the dataplane ingress service is NodePort or LoadBalancer.
 	//
 	// +optional
 	NodePort int32 `json:"nodePort,omitempty"`
