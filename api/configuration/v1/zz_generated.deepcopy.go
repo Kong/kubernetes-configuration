@@ -86,6 +86,11 @@ func (in *KongClusterPlugin) DeepCopyInto(out *KongClusterPlugin) {
 		*out = new(kong.PluginOrdering)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.IngressClassName != nil {
+		in, out := &in.IngressClassName, &out.IngressClassName
+		*out = new(string)
+		**out = **in
+	}
 	in.Status.DeepCopyInto(&out.Status)
 }
 
@@ -242,6 +247,11 @@ func (in *KongConsumerSpec) DeepCopyInto(out *KongConsumerSpec) {
 		in, out := &in.Tags, &out.Tags
 		*out = make(v1alpha1.Tags, len(*in))
 		copy(*out, *in)
+	}
+	if in.IngressClassName != nil {
+		in, out := &in.IngressClassName, &out.IngressClassName
+		*out = new(string)
+		**out = **in
 	}
 }
 

@@ -80,6 +80,10 @@ type KongConsumerSpec struct {
 
 	// Tags is an optional set of tags applied to the consumer.
 	Tags commonv1alpha1.Tags `json:"tags,omitempty"`
+
+	// IngressClassName is the name of the IngressClass associated with this resource.
+	// +optional
+	IngressClassName *string `json:"ingressClassName,omitempty"`
 }
 
 // KongConsumerList contains a list of KongConsumer.

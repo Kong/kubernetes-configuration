@@ -144,6 +144,10 @@ spec:
           disabled:
             description: Disabled set if the plugin is disabled or not.
             type: boolean
+          ingressClassName:
+            description: IngressClassName is the name of the IngressClass associated
+              with this resource.
+            type: string
           instance_name:
             description: |-
               InstanceName is an optional custom name to identify an instance of the plugin. This is useful when running the

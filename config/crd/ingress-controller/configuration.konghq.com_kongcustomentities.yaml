@@ -65,6 +65,10 @@ spec:
               fields:
                 description: Fields defines the fields of the Kong entity itself.
                 x-kubernetes-preserve-unknown-fields: true
+              ingressClassName:
+                description: IngressClassName is the name of the IngressClass associated
+                  with this resource.
+                type: string
               parentRef:
                 description: |-
                   ParentRef references the kubernetes resource it attached to when its scope is "attached".

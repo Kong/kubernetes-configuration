@@ -98,6 +98,10 @@ type KongClusterPlugin struct {
 	// same plugin in multiple contexts, for example, on multiple services.
 	InstanceName string `json:"instance_name,omitempty"`
 
+	// IngressClassName is the name of the IngressClass associated with this resource.
+	// +optional
+	IngressClassName *string `json:"ingressClassName,omitempty"`
+
 	// Status represents the current status of the KongClusterPlugin resource.
 	Status KongClusterPluginStatus `json:"status,omitempty"`
 }

@@ -35,6 +35,15 @@ Adding a new version? You'll need three changes:
   To prevent import cycles, `v1alpha1` now imports required types from `v1alpha2`.
   [#550](https://github.com/Kong/kubernetes-configuration/pull/550)
 
+### Added
+
+- Added optional `ingressClassName` pointer field to the following CRDs to allow association with a specific `IngressClass` and ingress controller:
+  - `KongConsumer` (v1, in KongConsumerSpec)
+  - `KongConsumerGroup` (v1beta1, in KongConsumerGroupSpec)
+  - `KongClusterPlugin` (v1)
+  - `KongVault` (v1alpha1, in KongVaultSpec)
+  - `KongCustomEntity` (v1alpha1, in KongCustomEntitySpec)
+
 ## [v2.0.0-alpha.3]
 
 [v2.0.0-alpha.3]: https://github.com/Kong/kubernetes-configuration/compare/v2.0.0-alpha.0...v2.0.0-alpha.3

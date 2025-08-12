@@ -148,6 +148,10 @@ spec:
                   rule: '!has(self.type) ? !has(self.konnectID) : true'
                 - message: when type is unset, konnectNamespacedRef must not be set
                   rule: '!has(self.type) ? !has(self.konnectNamespacedRef) : true'
+              ingressClassName:
+                description: IngressClassName is the name of the IngressClass associated
+                  with this resource.
+                type: string
               tags:
                 description: Tags is an optional set of tags applied to the consumer.
                 items:

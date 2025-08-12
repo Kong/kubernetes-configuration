@@ -52,6 +52,10 @@ type KongCustomEntitySpec struct {
 	// Currently only KongPlugin/KongClusterPlugin allowed. This will make the custom entity to be attached
 	// to the entity(service/route/consumer) where the plugin is attached.
 	ParentRef *ObjectReference `json:"parentRef,omitempty"`
+
+	// IngressClassName is the name of the IngressClass associated with this resource.
+	// +optional
+	IngressClassName *string `json:"ingressClassName,omitempty"`
 }
 
 // ObjectReference defines reference of a kubernetes object.

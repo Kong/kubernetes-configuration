@@ -153,6 +153,10 @@ spec:
               description:
                 description: Description is the additional information about the vault.
                 type: string
+              ingressClassName:
+                description: IngressClassName is the name of the IngressClass associated
+                  with this resource.
+                type: string
               prefix:
                 description: |-
                   Prefix is the prefix of vault URI for referencing values in the vault.
