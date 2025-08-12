@@ -3,6 +3,7 @@ kind: ControlPlane
 metadata:
   name: controlplane-v2-example
 spec:
+  # ingressClass: kong # optional for managedByOwner
   dataplane:
     type: managedByOwner
   featureGates:
