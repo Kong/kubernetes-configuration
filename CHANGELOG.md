@@ -30,6 +30,9 @@ Adding a new version? You'll need three changes:
 
 ### Changes
 
+- Implemented conversion functions between `Controlplane` `v1beta1` and
+  `v2beta1`, enabling seamless migration between API versions.
+  [#558](https://github.com/Kong/kubernetes-configuration/pull/558)
 - Implemented conversion functions between `KonnectGatewayControlPlane` `v1alpha1` and
   `v1alpha2`, enabling seamless migration between API versions.
   To prevent import cycles, `v1alpha1` now imports required types from `v1alpha2`.
