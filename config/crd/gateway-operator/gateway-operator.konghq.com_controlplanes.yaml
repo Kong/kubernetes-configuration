@@ -8805,7 +8805,7 @@ spec:
                   message: Waiting for controller
                   reason: NotReconciled
                   status: Unknown
-                  type: Scheduled
+                  type: Provisioned
                 description: Conditions describe the current conditions of the Gateway.
                 items:
                   description: Condition contains details for one aspect of the current
