@@ -799,8 +799,8 @@ func (in *GatewayConfigurationSpec) DeepCopyInto(out *GatewayConfigurationSpec) 
 		*out = new(ControlPlaneOptions)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.ListenerOptions != nil {
-		in, out := &in.ListenerOptions, &out.ListenerOptions
+	if in.ListenersOptions != nil {
+		in, out := &in.ListenersOptions, &out.ListenersOptions
 		*out = make([]GatewayConfigurationListenerOptions, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])

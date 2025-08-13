@@ -17610,7 +17610,7 @@ spec:
                 maxItems: 1
                 minItems: 0
                 type: array
-              listenerOptions:
+              listenersOptions:
                 description: |-
                   ListenerOptions is the specification for configuration bound to specific listeners in the Gateway.
                   It will override the default configuration of control plane or data plane for the specified listener.
@@ -17675,7 +17675,7 @@ spec:
                 && has(self.dataPlaneOptions.network.services) &&  has(self.dataPlaneOptions.network.services.ingress)
                 && (self.dataPlaneOptions.network.services.ingress.type == ''LoadBalancer''
                 || self.dataPlaneOptions.network.services.ingress.type == ''NodePort''))
-                ? true : (!has(self.listenerOptions) || self.listenerOptions.all(l,!has(l.nodePort)))'
+                ? true : (!has(self.listenersOptions) || self.listenersOptions.all(l,!has(l.nodePort)))'
           status:
             description: GatewayConfigurationStatus defines the observed state of
               GatewayConfiguration
@@ -27288,7 +27288,7 @@ spec:
                   rule: self.all(e, (e.group == 'konnect.konghq.com' && e.kind ==
                     'KonnectExtension') || (e.group == 'gateway-operator.konghq.com'
                     && e.kind == 'DataPlaneMetricsExtension'))
-              listenerOptions:
+              listenersOptions:
                 description: |-
                   ListenerOptions is the specification for configuration bound to specific listeners in the Gateway.
                   It will override the default configuration of control plane or data plane for the specified listener.
@@ -27343,7 +27343,7 @@ spec:
                 && has(self.dataPlaneOptions.network.services) &&  has(self.dataPlaneOptions.network.services.ingress)
                 && (self.dataPlaneOptions.network.services.ingress.type == ''LoadBalancer''
                 || self.dataPlaneOptions.network.services.ingress.type == ''NodePort''))
-                ? true : (!has(self.listenerOptions) || self.listenerOptions.all(l,!has(l.nodePort)))'
+                ? true : (!has(self.listenersOptions) || self.listenersOptions.all(l,!has(l.nodePort)))'
           status:
             description: Status defines the observed state of GatewayConfiguration.
             properties:

@@ -50,7 +50,7 @@ type GatewayConfiguration struct {
 // +apireference:kgo:include
 // +kubebuilder:validation:XValidation:message="KonnectExtension must be set at the Gateway level",rule="has(self.dataPlaneOptions) && has(self.dataPlaneOptions.extensions) ? self.dataPlaneOptions.extensions.all(e, (e.group != 'konnect.konghq.com' && e.group != 'gateway-operator.konghq.com') || e.kind != 'KonnectExtension') : true"
 // +kubebuilder:validation:XValidation:message="KonnectExtension must be set at the Gateway level",rule="has(self.controlPlaneOptions) && has(self.controlPlaneOptions.extensions) ? self.controlPlaneOptions.extensions.all(e, (e.group != 'konnect.konghq.com' && e.group != 'gateway-operator.konghq.com') || e.kind != 'KonnectExtension') : true"
-// +kubebuilder:validation:XValidation:message="Can only specify listener's NodePort when DataPlane ingress service is NodePort or LoadBalancer",rule="(has(self.dataPlaneOptions) && has(self.dataPlaneOptions.network) && has(self.dataPlaneOptions.network.services) &&  has(self.dataPlaneOptions.network.services.ingress) && (self.dataPlaneOptions.network.services.ingress.type == 'LoadBalancer' || self.dataPlaneOptions.network.services.ingress.type == 'NodePort')) ? true : (!has(self.listenerOptions) || self.listenerOptions.all(l,!has(l.nodePort)))"
+// +kubebuilder:validation:XValidation:message="Can only specify listener's NodePort when DataPlane ingress service is NodePort or LoadBalancer",rule="(has(self.dataPlaneOptions) && has(self.dataPlaneOptions.network) && has(self.dataPlaneOptions.network.services) &&  has(self.dataPlaneOptions.network.services.ingress) && (self.dataPlaneOptions.network.services.ingress.type == 'LoadBalancer' || self.dataPlaneOptions.network.services.ingress.type == 'NodePort')) ? true : (!has(self.listenersOptions) || self.listenersOptions.all(l,!has(l.nodePort)))"
 type GatewayConfigurationSpec struct {
 	// DataPlaneOptions is the specification for configuration
 	// overrides for DataPlane resources that will be created for the Gateway.
@@ -72,7 +72,7 @@ type GatewayConfigurationSpec struct {
 	// +kubebuilder:validation:MaxItems=64
 	// +kubebuilder:validation:XValidation:message="Listener name must be unique within the Gateway",rule="self.all(l1, self.exists_one(l2, l1.name == l2.name))"
 	// +kubebuilder:validation:XValidation:message="Nodeport must be unique within the Gateway if specified",rule="self.all(l1, !has(l1.nodePort) || self.exists_one(l2, l1.nodePort == l2.nodePort))"
-	ListenerOptions []GatewayConfigurationListenerOptions `json:"listenerOptions,omitempty"`
+	ListenersOptions []GatewayConfigurationListenerOptions `json:"listenersOptions,omitempty"`
 
 	// Extensions provide additional or replacement features for the Gateway
 	// resource to influence or enhance functionality.
@@ -183,8 +183,6 @@ type GatewayConfigurationListenerOptions struct {
 	//
 	// Can only be specified if type of the dataplane ingress service (specified in `spec.dataplaneOptions.network.services.ingress.type`)
 	// is NodePort or LoadBalancer.
-	//
-	// +optional
 	//
 	// +optional
 	NodePort *int32 `json:"nodePort,omitempty"`

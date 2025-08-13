@@ -54,7 +54,7 @@ type GatewayConfiguration struct {
 
 // GatewayConfigurationSpec defines the desired state of GatewayConfiguration
 //
-// +kubebuilder:validation:XValidation:message="Can only specify listener's NodePort when DataPlane ingress service is NodePort or LoadBalancer",rule="(has(self.dataPlaneOptions) && has(self.dataPlaneOptions.network) && has(self.dataPlaneOptions.network.services) &&  has(self.dataPlaneOptions.network.services.ingress) && (self.dataPlaneOptions.network.services.ingress.type == 'LoadBalancer' || self.dataPlaneOptions.network.services.ingress.type == 'NodePort')) ? true : (!has(self.listenerOptions) || self.listenerOptions.all(l,!has(l.nodePort)))"
+// +kubebuilder:validation:XValidation:message="Can only specify listener's NodePort when DataPlane ingress service is NodePort or LoadBalancer",rule="(has(self.dataPlaneOptions) && has(self.dataPlaneOptions.network) && has(self.dataPlaneOptions.network.services) &&  has(self.dataPlaneOptions.network.services.ingress) && (self.dataPlaneOptions.network.services.ingress.type == 'LoadBalancer' || self.dataPlaneOptions.network.services.ingress.type == 'NodePort')) ? true : (!has(self.listenersOptions) || self.listenersOptions.all(l,!has(l.nodePort)))"
 // +apireference:kgo:include
 type GatewayConfigurationSpec struct {
 	// DataPlaneOptions is the specification for configuration
@@ -76,7 +76,7 @@ type GatewayConfigurationSpec struct {
 	// +kubebuilder:validation:MaxItems=64
 	// +kubebuilder:validation:XValidation:message="Listener name must be unique within the Gateway",rule="self.all(l1, self.exists_one(l2, l1.name == l2.name))"
 	// +kubebuilder:validation:XValidation:message="Nodeport must be unique within the Gateway if specified",rule="self.all(l1, !has(l1.nodePort) || self.exists_one(l2, l1.nodePort == l2.nodePort))"
-	ListenerOptions []GatewayConfigurationListenerOptions `json:"listenerOptions,omitempty"`
+	ListenersOptions []GatewayConfigurationListenerOptions `json:"listenersOptions,omitempty"`
 
 	// Extensions provide additional or replacement features for the Gateway
 	// resource to influence or enhance functionality.

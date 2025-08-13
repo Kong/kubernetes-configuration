@@ -276,7 +276,7 @@ func TestGatewayConfigurationV2(t *testing.T) {
 								},
 							},
 						},
-						ListenerOptions: []operatorv2beta1.GatewayConfigurationListenerOptions{
+						ListenersOptions: []operatorv2beta1.GatewayConfigurationListenerOptions{
 							{
 								Name:     "http",
 								NodePort: lo.ToPtr(int32(30080)),
@@ -301,7 +301,7 @@ func TestGatewayConfigurationV2(t *testing.T) {
 								},
 							},
 						},
-						ListenerOptions: []operatorv2beta1.GatewayConfigurationListenerOptions{
+						ListenersOptions: []operatorv2beta1.GatewayConfigurationListenerOptions{
 							{
 								Name:     "http",
 								NodePort: lo.ToPtr(int32(30080)),
@@ -316,7 +316,7 @@ func TestGatewayConfigurationV2(t *testing.T) {
 				TestObject: &operatorv2beta1.GatewayConfiguration{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv2beta1.GatewayConfigurationSpec{
-						ListenerOptions: []operatorv2beta1.GatewayConfigurationListenerOptions{
+						ListenersOptions: []operatorv2beta1.GatewayConfigurationListenerOptions{
 							{
 								Name:     "http",
 								NodePort: lo.ToPtr(int32(30080)),
@@ -335,7 +335,7 @@ func TestGatewayConfigurationV2(t *testing.T) {
 				TestObject: &operatorv2beta1.GatewayConfiguration{
 					ObjectMeta: common.CommonObjectMeta,
 					Spec: operatorv2beta1.GatewayConfigurationSpec{
-						ListenerOptions: []operatorv2beta1.GatewayConfigurationListenerOptions{
+						ListenersOptions: []operatorv2beta1.GatewayConfigurationListenerOptions{
 							{
 								Name:     "http",
 								NodePort: lo.ToPtr(int32(30080)),

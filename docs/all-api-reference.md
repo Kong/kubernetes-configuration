@@ -2857,7 +2857,7 @@ GatewayConfigurationSpec defines the desired state of GatewayConfiguration
 | --- | --- |
 | `dataPlaneOptions` _[GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)_ | DataPlaneOptions is the specification for configuration overrides for DataPlane resources that will be created for the Gateway. |
 | `controlPlaneOptions` _[ControlPlaneOptions](#controlplaneoptions)_ | ControlPlaneOptions is the specification for configuration overrides for ControlPlane resources that will be created for the Gateway. |
-| `listenerOptions` _[GatewayConfigurationListenerOptions](#gatewayconfigurationlisteneroptions) array_ | ListenerOptions is the specification for configuration bound to specific listeners in the Gateway. It will override the default configuration of control plane or data plane for the specified listener. |
+| `listenersOptions` _[GatewayConfigurationListenerOptions](#gatewayconfigurationlisteneroptions) array_ | ListenerOptions is the specification for configuration bound to specific listeners in the Gateway. It will override the default configuration of control plane or data plane for the specified listener. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: currently, there's only 1 extension that can be attached at the Gateway level (KonnectExtension), so the amount of extensions is limited to 1. |
 
 
@@ -3823,7 +3823,7 @@ GatewayConfigurationSpec defines the desired state of GatewayConfiguration
 | --- | --- |
 | `dataPlaneOptions` _[GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)_ | DataPlaneOptions is the specification for configuration overrides for DataPlane resources that will be created for the Gateway. |
 | `controlPlaneOptions` _[GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)_ | ControlPlaneOptions is the specification for configuration overrides for ControlPlane resources that will be managed as part of the Gateway. |
-| `listenerOptions` _[GatewayConfigurationListenerOptions](#gatewayconfigurationlisteneroptions) array_ | ListenerOptions is the specification for configuration bound to specific listeners in the Gateway. It will override the default configuration of control plane or data plane for the specified listener. |
+| `listenersOptions` _[GatewayConfigurationListenerOptions](#gatewayconfigurationlisteneroptions) array_ | ListenerOptions is the specification for configuration bound to specific listeners in the Gateway. It will override the default configuration of control plane or data plane for the specified listener. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: currently, there are only 2 extensions that can be attached at the Gateway level (KonnectExtension, DataPlaneMetricsExtension), so the amount of extensions is limited to 2. |
 
 
