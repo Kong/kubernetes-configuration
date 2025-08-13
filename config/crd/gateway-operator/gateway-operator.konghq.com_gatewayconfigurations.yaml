@@ -17624,9 +17624,7 @@ spec:
                     For listeners without an item in listener options of GatewayConfiguration, default configuration is used for it.
                   properties:
                     name:
-                      description: |-
-                        Name is the name of the Listener. This name MUST be unique within a
-                        Gateway.
+                      description: Name is the name of the Listener.
                       maxLength: 253
                       minLength: 1
                       pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
@@ -17644,7 +17642,8 @@ spec:
 
                         More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
 
-                        Can only be specified if type of the dataplane ingress service is NodePort or LoadBalancer.
+                        Can only be specified if type of the dataplane ingress service (specified in `spec.dataplaneOptions.network.services.ingress.type`)
+                        is NodePort or LoadBalancer.
                       format: int32
                       type: integer
                   required:
@@ -27303,9 +27302,7 @@ spec:
                     For listeners without an item in listener options of GatewayConfiguration, default configuration is used for it.
                   properties:
                     name:
-                      description: |-
-                        Name is the name of the Listener. This name MUST be unique within a
-                        Gateway.
+                      description: Name is the name of the Listener.
                       maxLength: 253
                       minLength: 1
                       pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
@@ -27323,7 +27320,8 @@ spec:
 
                         More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
 
-                        Can only be specified if type of the dataplane ingress service is NodePort or LoadBalancer.
+                        Can only be specified if type of the dataplane ingress service (specified in `spec.dataplaneOptions.network.services.ingress.type`)
+                        is NodePort or LoadBalancer.
                       format: int32
                       type: integer
                   required:

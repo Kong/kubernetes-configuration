@@ -1021,8 +1021,8 @@ For listeners without an item in listener options of GatewayConfiguration, defau
 
 | Field | Description |
 | --- | --- |
-| `name` _[SectionName](#sectionname)_ | Name is the name of the Listener. This name MUST be unique within a Gateway. |
-| `nodePort` _integer_ | The port on each node on which this service is exposed when type is NodePort or LoadBalancer. Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail. If not specified, a port will be allocated if this Service requires one. If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP).<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport<br /><br />Can only be specified if type of the dataplane ingress service is NodePort or LoadBalancer. |
+| `name` _[SectionName](#sectionname)_ | Name is the name of the Listener. |
+| `nodePort` _integer_ | The port on each node on which this service is exposed when type is NodePort or LoadBalancer. Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail. If not specified, a port will be allocated if this Service requires one. If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP).<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport<br /><br />Can only be specified if type of the dataplane ingress service (specified in `spec.dataplaneOptions.network.services.ingress.type`) is NodePort or LoadBalancer. |
 
 
 _Appears in:_
@@ -1987,8 +1987,8 @@ For listeners without an item in listener options of GatewayConfiguration, defau
 
 | Field | Description |
 | --- | --- |
-| `name` _[SectionName](#sectionname)_ | Name is the name of the Listener. This name MUST be unique within a Gateway. |
-| `nodePort` _integer_ | The port on each node on which this service is exposed when type is NodePort or LoadBalancer. Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail. If not specified, a port will be allocated if this Service requires one. If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP).<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport<br /><br />Can only be specified if type of the dataplane ingress service is NodePort or LoadBalancer. |
+| `name` _[SectionName](#sectionname)_ | Name is the name of the Listener. |
+| `nodePort` _integer_ | The port on each node on which this service is exposed when type is NodePort or LoadBalancer. Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail. If not specified, a port will be allocated if this Service requires one. If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP).<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport<br /><br />Can only be specified if type of the dataplane ingress service (specified in `spec.dataplaneOptions.network.services.ingress.type`) is NodePort or LoadBalancer. |
 
 
 _Appears in:_

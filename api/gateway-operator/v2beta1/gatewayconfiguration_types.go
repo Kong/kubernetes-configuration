@@ -247,8 +247,7 @@ type GatewayConfigServiceOptions struct {
 //
 // +apireference:kgo:include
 type GatewayConfigurationListenerOptions struct {
-	// Name is the name of the Listener. This name MUST be unique within a
-	// Gateway.
+	// Name is the name of the Listener.
 	//
 	// +required
 	Name gatewayv1.SectionName `json:"name"`
@@ -264,10 +263,11 @@ type GatewayConfigurationListenerOptions struct {
 	//
 	// More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
 	//
-	// Can only be specified if type of the dataplane ingress service is NodePort or LoadBalancer.
+	// Can only be specified if type of the dataplane ingress service (specified in `spec.dataplaneOptions.network.services.ingress.type`)
+	// is NodePort or LoadBalancer.
 	//
 	// +optional
-	NodePort int32 `json:"nodePort,omitempty"`
+	NodePort *int32 `json:"nodePort,omitempty"`
 }
 
 // GatewayConfigurationStatus defines the observed state of GatewayConfiguration
