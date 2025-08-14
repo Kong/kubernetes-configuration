@@ -35,6 +35,7 @@ KongClusterPlugin is the Schema for the kongclusterplugins API.
 | `protocols` _[KongProtocol](#kongprotocol) array_ | Protocols configures plugin to run on requests received on specific protocols. |
 | `ordering` _[PluginOrdering](#pluginordering)_ | Ordering overrides the normal plugin execution order. It's only available on Kong Enterprise. `<phase>` is a request processing phase (for example, `access` or `body_filter`) and `<plugin>` is the name of the plugin that will run before or after the KongPlugin. For example, a KongPlugin with `plugin: rate-limiting` and `before.access: ["key-auth"]` will create a rate limiting plugin that limits requests _before_ they are authenticated. |
 | `instance_name` _string_ | InstanceName is an optional custom name to identify an instance of the plugin. This is useful when running the same plugin in multiple contexts, for example, on multiple services. |
+| `ingressClassName` _string_ | IngressClassName is the name of the IngressClass associated with this resource. |
 
 
 
@@ -137,6 +138,7 @@ KongConsumerSpec defines the specification of the KongConsumer.
 | --- | --- |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this Consumer is associated with. |
 | `tags` _[Tags](#tags)_ | Tags is an optional set of tags applied to the consumer. |
+| `ingressClassName` _string_ | IngressClassName is the name of the IngressClass associated with this resource. |
 
 
 _Appears in:_
@@ -946,6 +948,7 @@ KongCustomEntitySpec defines the specification of the KongCustomEntity.
 | `fields` _[JSON](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#json-v1-apiextensions-k8s-io)_ | Fields defines the fields of the Kong entity itself. |
 | `controllerName` _string_ | ControllerName specifies the controller that should reconcile it, like ingress class. |
 | `parentRef` _[ObjectReference](#objectreference)_ | ParentRef references the kubernetes resource it attached to when its scope is "attached". Currently only KongPlugin/KongClusterPlugin allowed. This will make the custom entity to be attached to the entity(service/route/consumer) where the plugin is attached. |
+| `ingressClassName` _string_ | IngressClassName is the name of the IngressClass associated with this resource. |
 
 
 _Appears in:_
@@ -1418,6 +1421,7 @@ KongVaultSpec defines specification of a custom Kong vault.
 | `config` _[JSON](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.33/#json-v1-apiextensions-k8s-io)_ | Config is the configuration of the vault. Varies for different backends. |
 | `tags` _[Tags](#tags)_ | Tags are the tags associated to the vault for grouping and filtering. |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a Konnect ControlPlane this KongVault is associated with. |
+| `ingressClassName` _string_ | IngressClassName is the name of the IngressClass associated with this resource. |
 
 
 _Appears in:_
@@ -1639,6 +1643,7 @@ KongConsumerGroupSpec defines the desired state of KongConsumerGroup.
 | `name` _string_ | Name is the name of the ConsumerGroup in Kong. |
 | `controlPlaneRef` _[ControlPlaneRef](#controlplaneref)_ | ControlPlaneRef is a reference to a ControlPlane this ConsumerGroup is associated with. |
 | `tags` _[Tags](#tags)_ | Tags is an optional set of tags applied to the ConsumerGroup. |
+| `ingressClassName` _string_ | IngressClassName is the name of the IngressClass associated with this resource. |
 
 
 _Appears in:_

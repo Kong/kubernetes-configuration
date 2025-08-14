@@ -81,6 +81,10 @@ type KongVaultSpec struct {
 	// +kubebuilder:validation:XValidation:message="'konnectID' type is not supported", rule="self.type != 'konnectID'"
 	// +optional
 	ControlPlaneRef *commonv1alpha1.ControlPlaneRef `json:"controlPlaneRef,omitempty"`
+
+	// IngressClassName is the name of the IngressClass associated with this resource.
+	// +optional
+	IngressClassName *string `json:"ingressClassName,omitempty"`
 }
 
 // KongVaultStatus represents the current status of the KongVault resource.
