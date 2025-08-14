@@ -266,8 +266,8 @@ type GatewayConfigurationListenerOptions struct {
 	// Can only be specified if type of the dataplane ingress service (specified in `spec.dataplaneOptions.network.services.ingress.type`)
 	// is NodePort or LoadBalancer.
 	//
-	// +optional
-	NodePort *int32 `json:"nodePort,omitempty"`
+	// +required
+	NodePort int32 `json:"nodePort"`
 }
 
 // GatewayConfigurationStatus defines the observed state of GatewayConfiguration

@@ -17648,6 +17648,7 @@ spec:
                       type: integer
                   required:
                   - name
+                  - nodePort
                   type: object
                 maxItems: 64
                 type: array
@@ -27326,6 +27327,7 @@ spec:
                       type: integer
                   required:
                   - name
+                  - nodePort
                   type: object
                 maxItems: 64
                 type: array
