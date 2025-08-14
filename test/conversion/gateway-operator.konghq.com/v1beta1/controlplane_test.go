@@ -1,6 +1,7 @@
 package v1beta1_test
 
 import (
+	"errors"
 	"fmt"
 	"testing"
 	"time"
@@ -46,6 +47,7 @@ func TestControlPlane_ConvertTo(t *testing.T) {
 		expectsDataPlane     bool
 		expectedFeatureGates []operatorv2beta1.ControlPlaneFeatureGate
 		expectedControllers  []operatorv2beta1.ControlPlaneController
+		expectedError        error
 	}{
 		{
 			name: "With DataPlane ref",
@@ -105,6 +107,99 @@ func TestControlPlane_ConvertTo(t *testing.T) {
 			},
 		},
 		{
+			name: "With EnvFrom and ValueFrom returns error",
+			spec: operatorv1beta1.ControlPlaneSpec{
+				ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
+					DataPlane: lo.ToPtr("test-dataplane"),
+					Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
+						PodTemplateSpec: &corev1.PodTemplateSpec{
+							Spec: corev1.PodSpec{
+								Containers: []corev1.Container{
+									{
+										Name:  "controller",
+										Image: "kong/controller:latest",
+										Env: []corev1.EnvVar{
+											{
+												Name: "POD_NAME",
+												ValueFrom: &corev1.EnvVarSource{
+													FieldRef: &corev1.ObjectFieldSelector{
+														FieldPath: "metadata.name",
+													},
+												},
+											},
+											{
+												Name: "POD_NAMESPACE",
+												ValueFrom: &corev1.EnvVarSource{
+													FieldRef: &corev1.ObjectFieldSelector{
+														FieldPath: "metadata.namespace",
+													},
+												},
+											},
+											{
+												Name: "CONTROLLER_FEATURE_GATES",
+												ValueFrom: &corev1.EnvVarSource{
+													SecretKeyRef: &corev1.SecretKeySelector{
+														LocalObjectReference: corev1.LocalObjectReference{
+															Name: "secret-with-fg",
+														},
+														Key: "fg-key",
+													},
+												},
+											},
+											{
+												Name: "CONTROLLER_ENABLE_CONTROLLER_KONG_PLUGIN",
+												ValueFrom: &corev1.EnvVarSource{
+													SecretKeyRef: &corev1.SecretKeySelector{
+														LocalObjectReference: corev1.LocalObjectReference{
+															Name: "configmap-controllers",
+														},
+														Key: "kp-key",
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+				IngressClass: lo.ToPtr("kong"),
+			},
+			expectedError: errors.New("ControlPlane v1beta1 can't be converted, because environment variable: CONTROLLER_FEATURE_GATES is populated with EnvFrom, manual adjustment is needed"),
+		},
+		{
+			name: "With EnvFrom on container level",
+			spec: operatorv1beta1.ControlPlaneSpec{
+				ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
+					DataPlane: lo.ToPtr("test-dataplane"),
+					Deployment: operatorv1beta1.ControlPlaneDeploymentOptions{
+						PodTemplateSpec: &corev1.PodTemplateSpec{
+							Spec: corev1.PodSpec{
+								Containers: []corev1.Container{
+									{
+										Name:  "controller",
+										Image: "kong/controller:latest",
+										EnvFrom: []corev1.EnvFromSource{
+											{
+												ConfigMapRef: &corev1.ConfigMapEnvSource{
+													LocalObjectReference: corev1.LocalObjectReference{
+														Name: "configmap-controllers",
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+				IngressClass: lo.ToPtr("kong"),
+			},
+			expectedError: errors.New("ControlPlane v1beta1 can't be converted, because EnvFrom is used on container level (converter can't reason about values), manual adjustment is needed"),
+		},
+		{
 			name: "Without DataPlane ref (managed by owner)",
 			spec: operatorv1beta1.ControlPlaneSpec{
 				ControlPlaneOptions: operatorv1beta1.ControlPlaneOptions{
@@ -151,6 +246,11 @@ func TestControlPlane_ConvertTo(t *testing.T) {
 
 			dst := &operatorv2beta1.ControlPlane{}
 			err := obj.ConvertTo(dst)
+			if tc.expectedError != nil {
+				require.Error(t, err)
+				require.Contains(t, err.Error(), tc.expectedError.Error())
+				return
+			}
 			require.NoError(t, err)
 
 			require.Equal(t, obj.ObjectMeta, dst.ObjectMeta)
@@ -171,7 +271,7 @@ func TestControlPlane_ConvertTo(t *testing.T) {
 				require.Equal(t, operatorv2beta1.WatchNamespacesType(tc.spec.WatchNamespaces.Type), dst.Spec.WatchNamespaces.Type)
 				require.Equal(t, tc.spec.WatchNamespaces.List, dst.Spec.WatchNamespaces.List)
 			} else {
-				require.Nil(t, dst.Spec.WatchNamespaces)
+				require.Empty(t, dst.Spec.WatchNamespaces)
 			}
 
 			require.Equal(t, tc.spec.Extensions, dst.Spec.Extensions)

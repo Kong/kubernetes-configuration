@@ -1,6 +1,7 @@
 package v1beta1
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -16,6 +17,8 @@ import (
 const (
 	errWrongConvertToControlPlane   = "ControlPlane ConvertTo: expected *operatorv2beta1.ControlPlane, got %T"
 	errWrongConvertFromControlPlane = "ControlPlane ConvertFrom: expected *operatorv2beta1.ControlPlane, got %T"
+	errEnvVarPopulatedWithEnvFrom   = "ControlPlane v1beta1 can't be converted, because environment variable: %s is populated with EnvFrom, manual adjustment is needed"
+	errEnvFromOnContainerLevel      = "ControlPlane v1beta1 can't be converted, because EnvFrom is used on container level (converter can't reason about values), manual adjustment is needed"
 )
 
 // Environment variable names for configuration.
@@ -65,6 +68,9 @@ func (c *ControlPlane) ConvertTo(dstRaw conversion.Hub) error {
 
 	var containerEnvVars []corev1.EnvVar
 	if pts := c.Spec.Deployment.PodTemplateSpec; pts != nil && len(pts.Spec.Containers) > 0 {
+		if pts.Spec.Containers[0].EnvFrom != nil {
+			return errors.New(errEnvFromOnContainerLevel)
+		}
 		containerEnvVars = pts.Spec.Containers[0].Env
 	}
 
@@ -78,6 +84,93 @@ func (c *ControlPlane) ConvertTo(dstRaw conversion.Hub) error {
 	}
 
 	nn := lo.FromPtr(c.Spec.WatchNamespaces)
+	reverseSync, err := parseEnvForToggle[operatorv2beta1.ControlPlaneReverseSyncState](envControllerEnableReverseSync, containerEnvVars)
+	if err != nil {
+		return err
+	}
+
+	readinessCheckInterval, err := parseEnvForDuration(envControllerGatewayDiscoveryReadinessCheckInterval, containerEnvVars)
+	if err != nil {
+		return err
+	}
+
+	readinessCheckTimeout, err := parseEnvForDuration(envControllerGatewayDiscoveryReadinessCheckTimeout, containerEnvVars)
+	if err != nil {
+		return err
+	}
+
+	initSyncDuration, err := parseEnvForDuration(envControllerK8sInitCacheSyncDuration, containerEnvVars)
+	if err != nil {
+		return err
+	}
+
+	combinedServicesFromDifferentHTTPRoutes, err := parseEnvForToggle[operatorv2beta1.ControlPlaneCombinedServicesFromDifferentHTTPRoutesState](envControllerCombinedServicesFromDifferentHTTPRoutes, containerEnvVars)
+	if err != nil {
+		return err
+	}
+
+	drainSupport, err := parseEnvForToggle[operatorv2beta1.ControlPlaneDrainSupportState](envControllerEnableDrainSupport, containerEnvVars)
+	if err != nil {
+		return err
+	}
+
+	// Handle FallbackConfiguration parsing
+	lastCfg, err := parseEnvForToggle[operatorv2beta1.ControlPlaneFallbackConfigurationState](envControllerUseLastValidConfigForFallback, containerEnvVars)
+	if err != nil {
+		return err
+	}
+	var fallbackConfig *operatorv2beta1.ControlPlaneFallbackConfiguration
+	if lastCfg != nil {
+		fallbackConfig = &operatorv2beta1.ControlPlaneFallbackConfiguration{
+			UseLastValidConfig: lastCfg,
+		}
+	}
+
+	consumersSync, err := parseEnvForToggle[operatorv2beta1.ControlPlaneKonnectConsumersSyncState](envControllerEnableKonnectConsumersSync, containerEnvVars)
+	if err != nil {
+		return err
+	}
+
+	// Handle Konnect Licensing parsing
+	licensingState, err := parseEnvForToggle[operatorv2beta1.ControlPlaneKonnectLicensingState](envControllerEnableKonnectLicensing, containerEnvVars)
+	if err != nil {
+		return err
+	}
+	var licensing *operatorv2beta1.ControlPlaneKonnectLicensing
+	if licensingState != nil && *licensingState != operatorv2beta1.ControlPlaneKonnectLicensingStateDisabled {
+		initialPollingPeriod, err := parseEnvForDuration(envControllerKonnectInitialLicensePollingPeriod, containerEnvVars)
+		if err != nil {
+			return err
+		}
+
+		pollingPeriod, err := parseEnvForDuration(envControllerKonnectPollingPeriod, containerEnvVars)
+		if err != nil {
+			return err
+		}
+
+		storageState, err := parseEnvForToggle[operatorv2beta1.ControlPlaneKonnectLicensingState](envControllerEnableKonnectLicensingStorage, containerEnvVars)
+		if err != nil {
+			return err
+		}
+
+		licensing = &operatorv2beta1.ControlPlaneKonnectLicensing{
+			State:                licensingState,
+			InitialPollingPeriod: initialPollingPeriod,
+			PollingPeriod:        pollingPeriod,
+			StorageState:         storageState,
+		}
+	}
+
+	nodeRefreshPeriod, err := parseEnvForDuration(envControllerKonnectNodeRefreshPeriod, containerEnvVars)
+	if err != nil {
+		return err
+	}
+
+	configUploadPeriod, err := parseEnvForDuration(envControllerKonnectConfigUploadPeriod, containerEnvVars)
+	if err != nil {
+		return err
+	}
+
 	dst.Spec.ControlPlaneOptions = operatorv2beta1.ControlPlaneOptions{
 		IngressClass: c.Spec.IngressClass,
 
@@ -88,48 +181,29 @@ func (c *ControlPlane) ConvertTo(dstRaw conversion.Hub) error {
 		FeatureGates: fgs,
 		Controllers:  ctrls,
 		DataPlaneSync: &operatorv2beta1.ControlPlaneDataPlaneSync{
-			ReverseSync: parseEnvForToggle[operatorv2beta1.ControlPlaneReverseSyncState](envControllerEnableReverseSync, containerEnvVars),
+			ReverseSync: reverseSync,
 		},
 		GatewayDiscovery: &operatorv2beta1.ControlPlaneGatewayDiscovery{
-			ReadinessCheckInterval: parseEnvForDuration(envControllerGatewayDiscoveryReadinessCheckInterval, containerEnvVars),
-			ReadinessCheckTimeout:  parseEnvForDuration(envControllerGatewayDiscoveryReadinessCheckTimeout, containerEnvVars),
+			ReadinessCheckInterval: readinessCheckInterval,
+			ReadinessCheckTimeout:  readinessCheckTimeout,
 		},
 		Cache: &operatorv2beta1.ControlPlaneK8sCache{
-			InitSyncDuration: parseEnvForDuration(envControllerK8sInitCacheSyncDuration, containerEnvVars),
+			InitSyncDuration: initSyncDuration,
 		},
 		Translation: &operatorv2beta1.ControlPlaneTranslationOptions{
-			CombinedServicesFromDifferentHTTPRoutes: parseEnvForToggle[operatorv2beta1.ControlPlaneCombinedServicesFromDifferentHTTPRoutesState](envControllerCombinedServicesFromDifferentHTTPRoutes, containerEnvVars),
-			FallbackConfiguration: func() *operatorv2beta1.ControlPlaneFallbackConfiguration {
-				lastCfg := parseEnvForToggle[operatorv2beta1.ControlPlaneFallbackConfigurationState](envControllerUseLastValidConfigForFallback, containerEnvVars)
-				if lastCfg == nil {
-					return nil
-				}
-				return &operatorv2beta1.ControlPlaneFallbackConfiguration{
-					UseLastValidConfig: lastCfg,
-				}
-			}(),
-			DrainSupport: parseEnvForToggle[operatorv2beta1.ControlPlaneDrainSupportState](envControllerEnableDrainSupport, containerEnvVars),
+			CombinedServicesFromDifferentHTTPRoutes: combinedServicesFromDifferentHTTPRoutes,
+			FallbackConfiguration:                   fallbackConfig,
+			DrainSupport:                            drainSupport,
 		},
 		ConfigDump: &operatorv2beta1.ControlPlaneConfigDump{
 			State:         getConfigDumpState(envControllerEnableConfigDump, containerEnvVars),
 			DumpSensitive: getConfigDumpState(envControllerEnableConfigDumpSensitive, containerEnvVars),
 		},
 		Konnect: &operatorv2beta1.ControlPlaneKonnectOptions{
-			ConsumersSync: parseEnvForToggle[operatorv2beta1.ControlPlaneKonnectConsumersSyncState](envControllerEnableKonnectConsumersSync, containerEnvVars),
-			Licensing: func() *operatorv2beta1.ControlPlaneKonnectLicensing {
-				state := parseEnvForToggle[operatorv2beta1.ControlPlaneKonnectLicensingState](envControllerEnableKonnectLicensing, containerEnvVars)
-				if state == nil || *state == operatorv2beta1.ControlPlaneKonnectLicensingStateDisabled {
-					return nil
-				}
-				return &operatorv2beta1.ControlPlaneKonnectLicensing{
-					State:                state,
-					InitialPollingPeriod: parseEnvForDuration(envControllerKonnectInitialLicensePollingPeriod, containerEnvVars),
-					PollingPeriod:        parseEnvForDuration(envControllerKonnectPollingPeriod, containerEnvVars),
-					StorageState:         parseEnvForToggle[operatorv2beta1.ControlPlaneKonnectLicensingState](envControllerEnableKonnectLicensingStorage, containerEnvVars),
-				}
-			}(),
-			NodeRefreshPeriod:  parseEnvForDuration(envControllerKonnectNodeRefreshPeriod, containerEnvVars),
-			ConfigUploadPeriod: parseEnvForDuration(envControllerKonnectConfigUploadPeriod, containerEnvVars),
+			ConsumersSync:      consumersSync,
+			Licensing:          licensing,
+			NodeRefreshPeriod:  nodeRefreshPeriod,
+			ConfigUploadPeriod: configUploadPeriod,
 		},
 	}
 	dst.Spec.Extensions = c.Spec.Extensions
@@ -200,6 +274,9 @@ func featureGatesFromEnvVar(envs []corev1.EnvVar) ([]operatorv2beta1.ControlPlan
 	if !ok {
 		return nil, nil
 	}
+	if fgEnvVar.ValueFrom != nil {
+		return nil, fmt.Errorf(errEnvVarPopulatedWithEnvFrom, fgEnvVar.Name)
+	}
 
 	fgKeyValues := strings.Split(fgEnvVar.Value, ",")
 	featureGates := make([]operatorv2beta1.ControlPlaneFeatureGate, 0, len(fgKeyValues))
@@ -240,7 +317,7 @@ func envVarFromFeatureGates(featureGates []operatorv2beta1.ControlPlaneFeatureGa
 		case operatorv2beta1.FeatureGateStateDisabled:
 			value = envValueFalse
 		default:
-			// Skip invalid states,
+			// Skip invalid states.
 			continue
 		}
 		fgPairs = append(fgPairs, fmt.Sprintf("%s=%s", fg.Name, value))
@@ -291,6 +368,9 @@ func cpControllersFormatFromEnvVars(envs []corev1.EnvVar) ([]operatorv2beta1.Con
 	})
 	var ctrls []operatorv2beta1.ControlPlaneController
 	for _, ctrlEnv := range controllersEnvs {
+		if ctrlEnv.ValueFrom != nil {
+			return nil, fmt.Errorf(errEnvVarPopulatedWithEnvFrom, ctrlEnv.Name)
+		}
 		ctrlName := strings.TrimPrefix(ctrlEnv.Name, envControllerPrefix)
 		var ctrlState operatorv2beta1.ControllerState
 		switch strings.ToLower(strings.TrimSpace(ctrlEnv.Value)) {
@@ -324,39 +404,45 @@ func parseKeyValue(keyValue string) (key string, value string, err error) {
 	return key, value, nil
 }
 
-func parseEnvForToggle[T ~string](key string, envVars []corev1.EnvVar) (value *T) {
+func parseEnvForToggle[T ~string](key string, envVars []corev1.EnvVar) (value *T, err error) {
 	v, ok := lo.Find(envVars, func(env corev1.EnvVar) bool {
 		return env.Name == key
 	})
 	if !ok {
-		return nil
+		return nil, nil
+	}
+	if v.ValueFrom != nil {
+		return nil, fmt.Errorf(errEnvVarPopulatedWithEnvFrom, v.Name)
 	}
 	switch strings.ToLower(v.Value) {
 	case envValueTrue, envValueOne:
-		return lo.ToPtr(T(stateEnabled))
+		return lo.ToPtr(T(stateEnabled)), nil
 	case envValueFalse, envValueZero:
-		return lo.ToPtr(T(stateDisabled))
+		return lo.ToPtr(T(stateDisabled)), nil
 	}
-	return nil
+	return nil, nil
 }
 
-func parseEnvForDuration(key string, envVars []corev1.EnvVar) *metav1.Duration {
+func parseEnvForDuration(key string, envVars []corev1.EnvVar) (*metav1.Duration, error) {
 	v, ok := lo.Find(envVars, func(env corev1.EnvVar) bool {
 		return env.Name == key
 	})
 	if !ok {
-		return nil
+		return nil, nil
+	}
+	if v.ValueFrom != nil {
+		return nil, fmt.Errorf(errEnvVarPopulatedWithEnvFrom, v.Name)
 	}
 	if v.Value == "" {
-		return nil
+		return nil, nil
 	}
 	d, err := time.ParseDuration(v.Value)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	return &metav1.Duration{
 		Duration: d,
-	}
+	}, nil
 }
 
 // buildContainerEnvVars builds the complete set of environment variables from ControlPlaneOptions.
@@ -544,8 +630,8 @@ func toggleToEnvValue[T ~string](state T) string {
 
 // getConfigDumpState safely gets ConfigDumpState from environment variables.
 func getConfigDumpState(key string, envVars []corev1.EnvVar) operatorv2beta1.ConfigDumpState {
-	state := parseEnvForToggle[operatorv2beta1.ConfigDumpState](key, envVars)
-	if state == nil {
+	state, err := parseEnvForToggle[operatorv2beta1.ConfigDumpState](key, envVars)
+	if err != nil || state == nil {
 		return operatorv2beta1.ConfigDumpStateDisabled
 	}
 	return *state
