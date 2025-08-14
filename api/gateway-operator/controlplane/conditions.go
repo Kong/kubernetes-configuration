@@ -56,10 +56,10 @@ const (
 	ConditionReasonWatchNamespaceGrantValid consts.ConditionReason = "WatchNamespaceGrantValid"
 
 	// ConditionReasonOptionsValid is a reason which indicates that the options
-	// of the ControlPlane is valid with the check of the operator.
+	// on the ControlPlane are valid.
 	ConditionReasonOptionsValid consts.ConditionReason = "OptionsValid"
 
 	// ConditionReasonOptionsInvalid is a reason which indicates that the options
-	// of the ControlPlane is not valid with the check of the operator.
+	// on the ControlPlane are invalid.
 	ConditionReasonOptionsInvalid consts.ConditionReason = "OptionsInvalid"
 )
