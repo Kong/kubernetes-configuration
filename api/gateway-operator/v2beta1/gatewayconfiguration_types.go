@@ -54,7 +54,7 @@ type GatewayConfiguration struct {
 
 // GatewayConfigurationSpec defines the desired state of GatewayConfiguration
 //
-// +kubebuilder:validation:XValidation:message="Can only specify listener's NodePort when DataPlane ingress service is NodePort or LoadBalancer",rule="(has(self.dataPlaneOptions) && has(self.dataPlaneOptions.network) && has(self.dataPlaneOptions.network.services) &&  has(self.dataPlaneOptions.network.services.ingress) && (self.dataPlaneOptions.network.services.ingress.type == 'LoadBalancer' || self.dataPlaneOptions.network.services.ingress.type == 'NodePort')) ? true : (!has(self.listenersOptions) || self.listenersOptions.all(l,!has(l.nodePort)))"
+// +kubebuilder:validation:XValidation:message="Can only specify listener's NodePort when the type of service for dataplane to receive ingress traffic ('spec.dataPlaneOptions.network.services.ingress') is NodePort or LoadBalancer",rule="(has(self.dataPlaneOptions) && has(self.dataPlaneOptions.network) && has(self.dataPlaneOptions.network.services) &&  has(self.dataPlaneOptions.network.services.ingress) && (self.dataPlaneOptions.network.services.ingress.type == 'LoadBalancer' || self.dataPlaneOptions.network.services.ingress.type == 'NodePort')) ? true : (!has(self.listenersOptions) || self.listenersOptions.all(l,!has(l.nodePort)))"
 // +apireference:kgo:include
 type GatewayConfigurationSpec struct {
 	// DataPlaneOptions is the specification for configuration

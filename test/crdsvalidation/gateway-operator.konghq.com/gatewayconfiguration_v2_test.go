@@ -335,7 +335,7 @@ func TestGatewayConfigurationV2(t *testing.T) {
 						},
 					},
 				},
-				ExpectedErrorMessage: lo.ToPtr("Can only specify listener's NodePort when DataPlane ingress service is NodePort or LoadBalancer"),
+				ExpectedErrorMessage: lo.ToPtr("Can only specify listener's NodePort when the type of service for dataplane to receive ingress traffic ('spec.dataPlaneOptions.network.services.ingress') is NodePort or LoadBalancer"),
 			},
 			{
 				Name: "Name must be unique in listener options",
