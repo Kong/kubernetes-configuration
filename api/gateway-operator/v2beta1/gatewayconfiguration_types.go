@@ -267,6 +267,8 @@ type GatewayConfigurationListenerOptions struct {
 	// is NodePort or LoadBalancer.
 	//
 	// +required
+	// +kubebuilder:validation:Minimum=1
+	// +kubebuilder:validation:Maximum=65535
 	NodePort int32 `json:"nodePort"`
 }
 

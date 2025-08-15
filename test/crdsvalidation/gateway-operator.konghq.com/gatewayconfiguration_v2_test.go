@@ -286,6 +286,32 @@ func TestGatewayConfigurationV2(t *testing.T) {
 				},
 			},
 			{
+				Name: "nodePort out of range",
+				TestObject: &operatorv2beta1.GatewayConfiguration{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv2beta1.GatewayConfigurationSpec{
+						DataPlaneOptions: &operatorv2beta1.GatewayConfigDataPlaneOptions{
+							Network: operatorv2beta1.GatewayConfigDataPlaneNetworkOptions{
+								Services: &operatorv2beta1.GatewayConfigDataPlaneServices{
+									Ingress: &operatorv2beta1.GatewayConfigServiceOptions{
+										ServiceOptions: operatorv2beta1.ServiceOptions{
+											Type: corev1.ServiceTypeNodePort,
+										},
+									},
+								},
+							},
+						},
+						ListenersOptions: []operatorv2beta1.GatewayConfigurationListenerOptions{
+							{
+								Name:     "http",
+								NodePort: int32(0),
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("spec.listenersOptions[0].nodePort in body should be greater than or equal to 1"),
+			},
+			{
 				Name: "Cannot specify nodeport for listeners with 'ClusterIP' dataplane ingress service",
 				TestObject: &operatorv2beta1.GatewayConfiguration{
 					ObjectMeta: common.CommonObjectMeta,
