@@ -38,6 +38,17 @@ Adding a new version? You'll need three changes:
   To prevent import cycles, `v1alpha1` now imports required types from `v1alpha2`.
   [#550](https://github.com/Kong/kubernetes-configuration/pull/550)
 
+### Added
+
+- Added `listenersOptions` in `GatewayConfiguration`'s `spec` to allow overriding
+  the default configuration related to a certain listener in the `Gateway`.
+  Each item of `listenersOptions` matches a listener in the `Gateway` which the
+  `GatewayConfiguration` configures by its `name`. The listeners without a
+  matching item in `GatewayConfiguration` remains the default configuration.
+  Currently `nodePort` can be configured to set the exposed nodeport of the
+  dataplane's ingress service port serving for the listener.
+  [#553](https://github.com/Kong/kubernetes-configuration/pull/553)
+
 ## [v2.0.0-alpha.3]
 
 [v2.0.0-alpha.3]: https://github.com/Kong/kubernetes-configuration/compare/v2.0.0-alpha.0...v2.0.0-alpha.3

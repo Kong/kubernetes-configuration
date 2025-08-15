@@ -1,0 +1,43 @@
+kind: GatewayConfiguration
+apiVersion: gateway-operator.konghq.com/v2beta1
+metadata:
+  name: kong
+  namespace: default
+spec:
+  dataPlaneOptions:
+    resources:
+      podDisruptionBudget:
+        spec:
+          maxUnavailable: 1
+    deployment:
+      replicas: 2
+      podTemplateSpec:
+        metadata:
+          labels:
+            dataplane-pod-label: example
+          annotations:
+            dataplane-pod-annotation: example
+        spec:
+          containers:
+          - name: proxy
+            # renovate: datasource=docker versioning=docker
+            image: kong/kong-gateway:3.10
+            readinessProbe:
+              initialDelaySeconds: 1
+              periodSeconds: 1
+    network:
+      services:
+        ingress:
+          type: NodePort
+          annotations:
+            foo: bar
+  controlPlaneOptions:
+    featureGates:
+    - name: GatewayAlpha
+      state: enabled
+    controllers:
+    - name: Konnect
+      state: enabled
+  listenersOptions:
+  - name: http
+    nodePort: 30080
