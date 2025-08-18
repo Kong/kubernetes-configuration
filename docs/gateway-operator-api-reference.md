@@ -1007,6 +1007,27 @@ such as the annotations.
 _Appears in:_
 - [GatewayConfigDataPlaneServices](#gatewayconfigdataplaneservices)
 
+#### GatewayConfigurationListenerOptions
+
+
+GatewayConfigurationListenerOptions specifies configuration overrides of defaults on certain listener of the Gateway.
+The name must match the name of a listener in the Gateway
+and the options are applied to the configuration of the matching listener.
+For example, if the option for listener "http" specified the nodeport number to 30080,
+The ingress service will expose the nodeport 30080 for the "http" listener of the Gateway.
+For listeners without an item in listener options of GatewayConfiguration, default configuration is used for it.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _[SectionName](#sectionname)_ | Name is the name of the Listener. |
+| `nodePort` _integer_ | The port on each node on which this service is exposed when type is NodePort or LoadBalancer. Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail. If not specified, a port will be allocated if this Service requires one. If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP).<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport<br /><br />Can only be specified if type of the dataplane ingress service (specified in `spec.dataplaneOptions.network.services.ingress.type`) is NodePort or LoadBalancer. |
+
+
+_Appears in:_
+- [GatewayConfigurationSpec](#gatewayconfigurationspec)
+
 #### GatewayConfigurationSpec
 
 
@@ -1018,6 +1039,7 @@ GatewayConfigurationSpec defines the desired state of GatewayConfiguration
 | --- | --- |
 | `dataPlaneOptions` _[GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)_ | DataPlaneOptions is the specification for configuration overrides for DataPlane resources that will be created for the Gateway. |
 | `controlPlaneOptions` _[ControlPlaneOptions](#controlplaneoptions)_ | ControlPlaneOptions is the specification for configuration overrides for ControlPlane resources that will be created for the Gateway. |
+| `listenersOptions` _[GatewayConfigurationListenerOptions](#gatewayconfigurationlisteneroptions) array_ | ListenerOptions is the specification for configuration bound to specific listeners in the Gateway. It will override the default configuration of control plane or data plane for the specified listener. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: currently, there's only 1 extension that can be attached at the Gateway level (KonnectExtension), so the amount of extensions is limited to 1. |
 
 
@@ -1967,6 +1989,27 @@ such as the annotations.
 _Appears in:_
 - [GatewayConfigDataPlaneServices](#gatewayconfigdataplaneservices)
 
+#### GatewayConfigurationListenerOptions
+
+
+GatewayConfigurationListenerOptions specifies configuration overrides of defaults on certain listener of the Gateway.
+The name must match the name of a listener in the Gateway
+and the options are applied to the configuration of the matching listener.
+For example, if the option for listener "http" specified the nodeport number to 30080,
+The ingress service will expose the nodeport 30080 for the "http" listener of the Gateway.
+For listeners without an item in listener options of GatewayConfiguration, default configuration is used for it.
+
+
+
+| Field | Description |
+| --- | --- |
+| `name` _[SectionName](#sectionname)_ | Name is the name of the Listener. |
+| `nodePort` _integer_ | The port on each node on which this service is exposed when type is NodePort or LoadBalancer. Usually assigned by the system. If a value is specified, in-range, and not in use it will be used, otherwise the operation will fail. If not specified, a port will be allocated if this Service requires one. If this field is specified when creating a Service which does not need it, creation will fail. This field will be wiped when updating a Service to no longer need it (e.g. changing type from NodePort to ClusterIP).<br /><br />More info: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport<br /><br />Can only be specified if type of the dataplane ingress service (specified in `spec.dataplaneOptions.network.services.ingress.type`) is NodePort or LoadBalancer. |
+
+
+_Appears in:_
+- [GatewayConfigurationSpec](#gatewayconfigurationspec)
+
 #### GatewayConfigurationSpec
 
 
@@ -1978,6 +2021,7 @@ GatewayConfigurationSpec defines the desired state of GatewayConfiguration
 | --- | --- |
 | `dataPlaneOptions` _[GatewayConfigDataPlaneOptions](#gatewayconfigdataplaneoptions)_ | DataPlaneOptions is the specification for configuration overrides for DataPlane resources that will be created for the Gateway. |
 | `controlPlaneOptions` _[GatewayConfigControlPlaneOptions](#gatewayconfigcontrolplaneoptions)_ | ControlPlaneOptions is the specification for configuration overrides for ControlPlane resources that will be managed as part of the Gateway. |
+| `listenersOptions` _[GatewayConfigurationListenerOptions](#gatewayconfigurationlisteneroptions) array_ | ListenerOptions is the specification for configuration bound to specific listeners in the Gateway. It will override the default configuration of control plane or data plane for the specified listener. |
 | `extensions` _ExtensionRef array_ | Extensions provide additional or replacement features for the Gateway resource to influence or enhance functionality. NOTE: currently, there are only 2 extensions that can be attached at the Gateway level (KonnectExtension, DataPlaneMetricsExtension), so the amount of extensions is limited to 2. |
 
 
