@@ -21,6 +21,19 @@ Adding a new version? You'll need three changes:
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
+## Unreleased
+
+### Added
+
+- Added `listenersOptions` in `GatewayConfiguration`'s `spec` to allow overriding
+  the default configuration related to a certain listener in the `Gateway`.
+  Each item of `listenersOptions` matches a listener in the `Gateway` which the
+  `GatewayConfiguration` configures by its `name`. The listeners without a
+  matching item in `GatewayConfiguration` remains the default configuration.
+  Currently `nodePort` can be configured to set the exposed nodeport of the
+  dataplane's ingress service port serving for the listener.
+  [#553](https://github.com/Kong/kubernetes-configuration/pull/553)
+
 ## [v1.4.2]
 
 [v1.4.2]: https://github.com/Kong/kubernetes-configuration/compare/v1.4.1...v1.4.2

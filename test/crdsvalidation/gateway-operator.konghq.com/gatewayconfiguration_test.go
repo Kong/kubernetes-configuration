@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/samber/lo"
+	corev1 "k8s.io/api/core/v1"
 	policyv1 "k8s.io/api/policy/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
@@ -214,6 +215,126 @@ func TestGatewayConfiguration(t *testing.T) {
 						},
 					},
 				},
+			},
+		}.Run(t)
+	})
+
+	t.Run("ListenersOptions", func(t *testing.T) {
+		common.TestCasesGroup[*operatorv1beta1.GatewayConfiguration]{
+			{
+				Name: "specify nodeport for listeners with 'NodePort' dataplane ingress service",
+				TestObject: &operatorv1beta1.GatewayConfiguration{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.GatewayConfigurationSpec{
+						DataPlaneOptions: &operatorv1beta1.GatewayConfigDataPlaneOptions{
+							Network: operatorv1beta1.GatewayConfigDataPlaneNetworkOptions{
+								Services: &operatorv1beta1.GatewayConfigDataPlaneServices{
+									Ingress: &operatorv1beta1.GatewayConfigServiceOptions{
+										ServiceOptions: operatorv1beta1.ServiceOptions{
+											Type: corev1.ServiceTypeNodePort,
+										},
+									},
+								},
+							},
+						},
+						ListenersOptions: []operatorv1beta1.GatewayConfigurationListenerOptions{
+							{
+								Name:     "http",
+								NodePort: int32(30080),
+							},
+						},
+					},
+				},
+			},
+			{
+				Name: "nodePort out of range",
+				TestObject: &operatorv1beta1.GatewayConfiguration{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.GatewayConfigurationSpec{
+						DataPlaneOptions: &operatorv1beta1.GatewayConfigDataPlaneOptions{
+							Network: operatorv1beta1.GatewayConfigDataPlaneNetworkOptions{
+								Services: &operatorv1beta1.GatewayConfigDataPlaneServices{
+									Ingress: &operatorv1beta1.GatewayConfigServiceOptions{
+										ServiceOptions: operatorv1beta1.ServiceOptions{
+											Type: corev1.ServiceTypeNodePort,
+										},
+									},
+								},
+							},
+						},
+						ListenersOptions: []operatorv1beta1.GatewayConfigurationListenerOptions{
+							{
+								Name:     "http",
+								NodePort: int32(0),
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("spec.listenersOptions[0].nodePort in body should be greater than or equal to 1"),
+			},
+			{
+				Name: "Cannot specify nodeport for listeners with 'ClusterIP' dataplane ingress service",
+				TestObject: &operatorv1beta1.GatewayConfiguration{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.GatewayConfigurationSpec{
+						DataPlaneOptions: &operatorv1beta1.GatewayConfigDataPlaneOptions{
+							Network: operatorv1beta1.GatewayConfigDataPlaneNetworkOptions{
+								Services: &operatorv1beta1.GatewayConfigDataPlaneServices{
+									Ingress: &operatorv1beta1.GatewayConfigServiceOptions{
+										ServiceOptions: operatorv1beta1.ServiceOptions{
+											Type: corev1.ServiceTypeClusterIP,
+										},
+									},
+								},
+							},
+						},
+						ListenersOptions: []operatorv1beta1.GatewayConfigurationListenerOptions{
+							{
+								Name:     "http",
+								NodePort: int32(30080),
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("Can only specify listener's NodePort when the type of service for dataplane to receive ingress traffic ('spec.dataPlaneOptions.network.services.ingress') is NodePort or LoadBalancer"),
+			},
+			{
+				Name: "Name must be unique in listener options",
+				TestObject: &operatorv1beta1.GatewayConfiguration{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.GatewayConfigurationSpec{
+						ListenersOptions: []operatorv1beta1.GatewayConfigurationListenerOptions{
+							{
+								Name:     "http",
+								NodePort: int32(30080),
+							},
+							{
+								Name:     "http",
+								NodePort: int32(30081),
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("Listener name must be unique within the Gateway"),
+			},
+			{
+				Name: "Nodeport must be unique in listener options",
+				TestObject: &operatorv1beta1.GatewayConfiguration{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: operatorv1beta1.GatewayConfigurationSpec{
+						ListenersOptions: []operatorv1beta1.GatewayConfigurationListenerOptions{
+							{
+								Name:     "http",
+								NodePort: int32(30080),
+							},
+							{
+								Name:     "http-1",
+								NodePort: int32(30080),
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("Nodeport must be unique within the Gateway if specified"),
 			},
 		}.Run(t)
 	})
