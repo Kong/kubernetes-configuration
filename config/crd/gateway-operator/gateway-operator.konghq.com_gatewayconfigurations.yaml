@@ -17757,7 +17757,12 @@ spec:
     storage: false
     subresources:
       status: {}
-  - name: v2beta1
+  - additionalPrinterColumns:
+    - description: Age
+      jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v2beta1
     schema:
       openAPIV3Schema:
         description: GatewayConfiguration is the Schema for the gatewayconfigurations
