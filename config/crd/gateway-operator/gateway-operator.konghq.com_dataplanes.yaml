@@ -20,6 +20,10 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
+    - description: Age
+      jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
     - description: The Resource is ready
       jsonPath: .status.conditions[?(@.type=='Ready')].status
       name: Ready
