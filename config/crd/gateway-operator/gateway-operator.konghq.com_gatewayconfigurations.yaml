@@ -26359,6 +26359,8 @@ spec:
                                   for Blue Green Deployments.
                                 properties:
                                   promotion:
+                                    default:
+                                      strategy: BreakBeforePromotion
                                     description: Promotion defines how the operator
                                       handles promotion of resources.
                                     properties:
@@ -26399,7 +26401,11 @@ spec:
                                         type: object
                                     type: object
                                 type: object
+                            required:
+                            - blueGreen
                             type: object
+                        required:
+                        - strategy
                         type: object
                       scaling:
                         description: Scaling defines the scaling options for the deployment.
