@@ -576,12 +576,10 @@ func TestGatewayConfiguration_RoundTrip(t *testing.T) {
 			}
 
 			intermediate := &operatorv1beta1.GatewayConfiguration{}
-			err := intermediate.ConvertFrom(original)
-			require.NoError(t, err)
+			require.NoError(t, intermediate.ConvertFrom(original))
 
 			roundTrip := &operatorv2beta1.GatewayConfiguration{}
-			err = intermediate.ConvertTo(roundTrip)
-			require.NoError(t, err)
+			require.NoError(t, intermediate.ConvertTo(roundTrip))
 
 			require.Equal(t, original.ObjectMeta, roundTrip.ObjectMeta)
 			require.Equal(t, original.Spec.ControlPlaneOptions.IngressClass, roundTrip.Spec.ControlPlaneOptions.IngressClass)
