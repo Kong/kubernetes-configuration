@@ -278,7 +278,7 @@ func listenersOptionsV1ToV2(o []GatewayConfigurationListenerOptions) []operatorv
 		return nil
 	}
 
-	var options []operatorv2beta1.GatewayConfigurationListenerOptions
+	options := make([]operatorv2beta1.GatewayConfigurationListenerOptions, 0, len(o))
 	for _, listenerOpt := range o {
 		options = append(options, operatorv2beta1.GatewayConfigurationListenerOptions{
 			Name:     listenerOpt.Name,
