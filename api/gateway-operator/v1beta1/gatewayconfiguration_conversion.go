@@ -32,28 +32,9 @@ func (g *GatewayConfiguration) ConvertTo(dstRaw conversion.Hub) error {
 		dst.Spec.DataPlaneOptions = gatewayConfigDataPlaneOptionsV1ToV2(g.Spec.DataPlaneOptions)
 		extensions = append(extensions, g.Spec.DataPlaneOptions.Extensions...)
 	}
-	// There is no IngressClass field in GatewayConfiguration v1beta1
-	if g.Spec.ControlPlaneOptions != nil {
-		if g.Spec.ControlPlaneOptions.DataPlane != nil {
-			return errors.New(errControlPlaneDataPlaneNotSupported)
-		}
 
-		// get the IngressClass env var and convert it to the proper ControlPlaneOption
-		var ingressClass *string
-		if g.Spec.ControlPlaneOptions.Deployment.PodTemplateSpec != nil &&
-			len(g.Spec.ControlPlaneOptions.Deployment.PodTemplateSpec.Spec.Containers) > 0 {
-			container, found := lo.Find(g.Spec.ControlPlaneOptions.Deployment.PodTemplateSpec.Spec.Containers, func(c corev1.Container) bool {
-				return c.Name == "controller"
-			})
-			if found {
-				ingressClass = ingressClassFormatFromEnvVars(container.Env)
-			}
-		}
-		dst.Spec.ControlPlaneOptions = &operatorv2beta1.GatewayConfigControlPlaneOptions{}
-		if err := g.Spec.ControlPlaneOptions.convertTo(&dst.Spec.ControlPlaneOptions.ControlPlaneOptions, ingressClass); err != nil {
-			return err
-		}
-		extensions = append(extensions, g.Spec.ControlPlaneOptions.Extensions...)
+	if err := g.convertControlPlaneOptions(dst, &extensions); err != nil {
+		return err
 	}
 
 	// Remove all the duplicates in KonnectExtension references.
@@ -68,6 +49,32 @@ func (g *GatewayConfiguration) ConvertTo(dstRaw conversion.Hub) error {
 	dst.Spec.Extensions = extensions
 	dst.Status = operatorv2beta1.GatewayConfigurationStatus(g.Status)
 
+	return nil
+}
+
+// convertControlPlaneOptions converts the ControlPlaneOptions from v1beta1 to v2beta1.
+func (g *GatewayConfiguration) convertControlPlaneOptions(dst *operatorv2beta1.GatewayConfiguration, extensions *[]commonv1alpha1.ExtensionRef) error {
+	if g.Spec.ControlPlaneOptions != nil {
+		if g.Spec.ControlPlaneOptions.DataPlane != nil {
+			return errors.New(errControlPlaneDataPlaneNotSupported)
+		}
+		// There is no IngressClass field in GatewayConfiguration v1beta1, so we need to extract it from the pod template spec.
+		var ingressClass *string
+		if g.Spec.ControlPlaneOptions.Deployment.PodTemplateSpec != nil &&
+			len(g.Spec.ControlPlaneOptions.Deployment.PodTemplateSpec.Spec.Containers) > 0 {
+			container, found := lo.Find(g.Spec.ControlPlaneOptions.Deployment.PodTemplateSpec.Spec.Containers, func(c corev1.Container) bool {
+				return c.Name == "controller"
+			})
+			if found {
+				ingressClass = ingressClassFormatFromEnvVars(container.Env)
+			}
+		}
+		dst.Spec.ControlPlaneOptions = &operatorv2beta1.GatewayConfigControlPlaneOptions{}
+		if err := g.Spec.ControlPlaneOptions.convertTo(&dst.Spec.ControlPlaneOptions.ControlPlaneOptions, ingressClass); err != nil {
+			return err
+		}
+		*extensions = append(*extensions, g.Spec.ControlPlaneOptions.Extensions...)
+	}
 	return nil
 }
 
