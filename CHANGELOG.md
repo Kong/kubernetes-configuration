@@ -24,7 +24,11 @@ Adding a new version? You'll need three changes:
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
-## Unreleased
+## [v1.5.3]
+
+> Release DateL 2025-08-25
+
+[v1.5.3]: https://github.com/Kong/kubernetes-configuration/compare/v1.5.2...v1.5.3
 
 ### Added
 
