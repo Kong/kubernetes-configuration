@@ -4,10 +4,4 @@ kind: Kustomization
 resources:
   - configuration.konghq.com_ingressclassparameterses.yaml
   - configuration.konghq.com_kongclusterplugins.yaml
-  - configuration.konghq.com_kongconsumergroups.yaml
-  - configuration.konghq.com_kongconsumers.yaml
   - configuration.konghq.com_kongcustomentities.yaml
-  - configuration.konghq.com_konglicenses.yaml
-  - configuration.konghq.com_kongplugins.yaml
-  - configuration.konghq.com_kongupstreampolicies.yaml
-  - configuration.konghq.com_kongvaults.yaml
