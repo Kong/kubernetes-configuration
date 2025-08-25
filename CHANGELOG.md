@@ -28,6 +28,10 @@ Adding a new version? You'll need three changes:
 
 ## Unreleased
 
+- Deduplicate KIC and KGO CRDs (remove duplicates from KIC) and get rid of
+  deprecated `KonnectExtension` from `gateway-operator.konghq.com` group.
+  [580](https://github.com/Kong/kubernetes-configuration/pull/580)
+
 ### Changes
 
 - Implemented conversion functions between `Controlplane` `v1beta1` and
