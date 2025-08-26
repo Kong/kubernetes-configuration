@@ -24,7 +24,7 @@ Adding a new version? You'll need three changes:
 
 ## [v1.4.3]
 
-> Release date: 2025-08-25
+> Release date: 2025-08-26
 
 [v1.4.3]: https://github.com/Kong/kubernetes-configuration/compare/v1.4.2...v1.4.3
 
