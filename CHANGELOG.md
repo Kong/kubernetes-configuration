@@ -6,6 +6,7 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
+- [v2.0.0-alpha.4](#v200-alpha4)
 - [v2.0.0-alpha.3](#v200-alpha3)
 - [v2.0.0-alpha.0](#v200-alpha0)
 - [v1.5.2](#v152)
@@ -26,14 +27,15 @@ Adding a new version? You'll need three changes:
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
-## Unreleased
+## [v2.0.0-alpha.4]
+
+[v2.0.0-alpha.4]: https://github.com/Kong/kubernetes-configuration/compare/v2.0.0-alpha.3...v2.0.0-alpha.4
+
+### Changes
 
 - Deduplicate KIC and KGO CRDs (remove duplicates from KIC) and get rid of
   deprecated `KonnectExtension` from `gateway-operator.konghq.com` group.
   [580](https://github.com/Kong/kubernetes-configuration/pull/580)
-
-### Changes
-
 - Implemented conversion functions between `Controlplane` `v1beta1` and
   `v2beta1`, enabling seamless migration between API versions.
   [#558](https://github.com/Kong/kubernetes-configuration/pull/558)
