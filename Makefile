@@ -216,9 +216,12 @@ install.only: kustomize
 	done
 
 .PHONY: uninstall
-uninstall: generate.crds kustomize
+uninstall: generate.crds uninstall.only
+
+.PHONY: uninstall.only
+uninstall.only: kustomize
 	@for channel in $(CHANNELS); do \
-		$(KUSTOMIZE) build config/crd/$$channel | kubectl delete -f -; \
+		$(KUSTOMIZE) build config/crd/$$channel | kubectl delete --ignore-not-found=true -f -; \
 	done
 
 # lint target runs all linters.
