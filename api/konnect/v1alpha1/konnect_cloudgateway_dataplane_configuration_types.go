@@ -136,6 +136,9 @@ type ConfigurationDataPlaneGroupAutoscaleType string
 
 const (
 	// ConfigurationDataPlaneGroupAutoscaleTypeStatic is the autoscale type for static configuration.
+	//
+	// Deprecated: ConfigurationDataPlaneGroupAutoscaleTypeStatic is deprecated. Use
+	// ConfigurationDataPlaneGroupAutoscaleTypeAutopilot instead.
 	ConfigurationDataPlaneGroupAutoscaleTypeStatic ConfigurationDataPlaneGroupAutoscaleType = "static"
 
 	// ConfigurationDataPlaneGroupAutoscaleTypeAutopilot is the autoscale type for autopilot configuration.
