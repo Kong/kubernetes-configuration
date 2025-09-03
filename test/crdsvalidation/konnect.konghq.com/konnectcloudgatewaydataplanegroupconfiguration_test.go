@@ -25,7 +25,7 @@ func TestKonnectDataPlaneGroupConfiguration(t *testing.T) {
 		KonnectID: lo.ToPtr("12345"),
 	}
 	autoscaleConfiguration := konnectv1alpha1.ConfigurationDataPlaneGroupAutoscale{
-		Type: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleTypeStatic,
+		Type: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleTypeStatic, //nolint:staticcheck
 		Static: &konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleStatic{
 			InstanceType:       sdkkonnectcomp.InstanceTypeNameSmall,
 			RequestedInstances: 3,
@@ -48,7 +48,7 @@ func TestKonnectDataPlaneGroupConfiguration(t *testing.T) {
 								Region:     "us-west-2",
 								NetworkRef: networkRefKonnectID,
 								Autoscale: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscale{
-									Type: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleTypeStatic,
+									Type: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleTypeStatic, //nolint:staticcheck
 									Static: &konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleStatic{
 										InstanceType:       sdkkonnectcomp.InstanceTypeNameSmall,
 										RequestedInstances: 3,
@@ -73,7 +73,7 @@ func TestKonnectDataPlaneGroupConfiguration(t *testing.T) {
 								Region:     "us-west-2",
 								NetworkRef: networkRefKonnectID,
 								Autoscale: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscale{
-									Type: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleTypeStatic,
+									Type: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleTypeStatic, //nolint:staticcheck
 									Autopilot: &konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleAutopilot{
 										BaseRps: 123,
 									},
@@ -159,7 +159,7 @@ func TestKonnectDataPlaneGroupConfiguration(t *testing.T) {
 									},
 								},
 								Autoscale: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscale{
-									Type: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleTypeStatic,
+									Type: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleTypeStatic, //nolint:staticcheck
 									Static: &konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleStatic{
 										InstanceType:       sdkkonnectcomp.InstanceTypeNameSmall,
 										RequestedInstances: 3,
@@ -190,7 +190,7 @@ func TestKonnectDataPlaneGroupConfiguration(t *testing.T) {
 									},
 								},
 								Autoscale: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscale{
-									Type: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleTypeStatic,
+									Type: konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleTypeStatic, //nolint:staticcheck
 									Static: &konnectv1alpha1.ConfigurationDataPlaneGroupAutoscaleStatic{
 										InstanceType:       sdkkonnectcomp.InstanceTypeNameSmall,
 										RequestedInstances: 3,
