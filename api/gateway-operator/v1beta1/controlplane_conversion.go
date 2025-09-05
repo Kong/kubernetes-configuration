@@ -68,7 +68,7 @@ func (c *ControlPlane) ConvertTo(dstRaw conversion.Hub) error {
 
 	dst.ObjectMeta = c.ObjectMeta
 
-	hasGatewayAsOwner := lo.ContainsBy(c.GetOwnerReferences(), func(owner metav1.OwnerReference) bool {
+	isOwnedByGateway := lo.ContainsBy(c.GetOwnerReferences(), func(owner metav1.OwnerReference) bool {
 		return strings.HasPrefix(owner.APIVersion, gatewayv1.GroupName) &&
 			owner.Kind == "Gateway"
 	})
@@ -77,7 +77,7 @@ func (c *ControlPlane) ConvertTo(dstRaw conversion.Hub) error {
 	// when ControlPlane is not managed by a Gateway,
 	// thus fill with a default value to make it work without hassle.
 	class := c.Spec.IngressClass
-	if !hasGatewayAsOwner && class == nil {
+	if !isOwnedByGateway && class == nil {
 		class = lo.ToPtr("kong")
 	}
 
@@ -86,7 +86,7 @@ func (c *ControlPlane) ConvertTo(dstRaw conversion.Hub) error {
 	}
 	dst.Spec.Extensions = c.Spec.Extensions
 
-	if dp := lo.FromPtr(c.Spec.DataPlane); dp == "" || hasGatewayAsOwner {
+	if dp := lo.FromPtr(c.Spec.DataPlane); dp == "" || isOwnedByGateway {
 		dst.Spec.DataPlane = operatorv2beta1.ControlPlaneDataPlaneTarget{
 			Type: operatorv2beta1.ControlPlaneDataPlaneTargetManagedByType,
 		}
