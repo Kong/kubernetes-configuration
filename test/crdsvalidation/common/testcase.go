@@ -48,6 +48,15 @@ type EventuallyConfig struct {
 	Period time.Duration
 }
 
+type warningCollector struct {
+	warnings []string
+}
+
+// HandleWarningHeader implements the rest.WarningHandler interface.
+func (wc *warningCollector) HandleWarningHeader(_ int, _ string, warning string) {
+	wc.warnings = append(wc.warnings, warning)
+}
+
 // TestCase represents a test case for CRD validation.
 type TestCase[T client.Object] struct {
 	// Name is the name of the test case.
@@ -68,6 +77,9 @@ type TestCase[T client.Object] struct {
 
 	// ExpectedUpdateErrorMessage is the expected error message when updating the object.
 	ExpectedUpdateErrorMessage *string
+
+	// ExpectedWarningMessage is the expected warning message when creating the object.
+	ExpectedWarningMessage *string
 
 	// Update is a function that updates the object in the test case after it's created.
 	// It can be used to verify CEL rules that verify the previous object's version against the new one.
@@ -117,6 +129,10 @@ func (tc *TestCase[T]) RunWithConfig(t *testing.T, cfg *rest.Config, scheme *run
 			})
 		}
 
+		// Setup to capture warnings
+		wc := &warningCollector{}
+		cfg.WarningHandler = wc
+
 		if !assert.EventuallyWithT(
 			t,
 			func(c *assert.CollectT) {
@@ -126,6 +142,20 @@ func (tc *TestCase[T]) RunWithConfig(t *testing.T, cfg *rest.Config, scheme *run
 				err = cl.Create(ctx, toCreate)
 				if err == nil {
 					tCleanupObject(ctx, t, toCreate)
+				}
+
+				// Check for expected warning message
+				if tc.ExpectedWarningMessage != nil {
+					found := false
+					for _, w := range wc.warnings {
+						if assert.Contains(c, w, *tc.ExpectedWarningMessage) {
+							found = true
+							break
+						}
+					}
+					if !assert.True(c, found, "expected warning message not found", *tc.ExpectedWarningMessage) {
+						return
+					}
 				}
 
 				// If the error message is expected, check if the error message contains the expected message and return.
@@ -168,6 +198,10 @@ func (tc *TestCase[T]) RunWithConfig(t *testing.T, cfg *rest.Config, scheme *run
 				// Update the object state and push the update to the server.
 				tc.Update(tc.TestObject)
 				err = cl.Update(ctx, tc.TestObject)
+				if tc.ExpectedWarningMessage != nil {
+					assert.Contains(c, wc.warnings, *tc.ExpectedWarningMessage)
+					return
+				}
 				// If the expected update error message is defined, check if the error message contains the expected message
 				// and return. Otherwise, expect no error.
 				if tc.ExpectedUpdateErrorMessage != nil {
