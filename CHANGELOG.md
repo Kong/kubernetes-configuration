@@ -6,10 +6,7 @@ Adding a new version? You'll need three changes:
 * Add the section header, like "## [v1.2.3]".
 * Add the diff link, like "[v2.7.0]: https://github.com/kong/kubernetes-ingress-controller/compare/v1.2.2...v1.2.3".
 --->
-- [v2.0.0-alpha.5](#v200-alpha5)
-- [v2.0.0-alpha.4](#v200-alpha4)
-- [v2.0.0-alpha.3](#v200-alpha3)
-- [v2.0.0-alpha.0](#v200-alpha0)
+- [v2.0.0](#v200)
 - [v1.5.2](#v152)
 - [v1.5.1](#v151)
 - [v1.5.0](#v150)
@@ -28,91 +25,9 @@ Adding a new version? You'll need three changes:
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
-## [v2.0.0-alpha.5]
+## [v2.0.0]
 
-[v2.0.0-alpha.5]: https://github.com/Kong/kubernetes-configuration/compare/v2.0.0-alpha.4...v2.0.0-alpha.5
-
-### Fixes
-
-- Set default IngressClass for `ControlPlane` conversion.
-  [#591](https://github.com/Kong/kubernetes-configuration/pull/591)
-
-## [v2.0.0-alpha.4]
-
-[v2.0.0-alpha.4]: https://github.com/Kong/kubernetes-configuration/compare/v2.0.0-alpha.3...v2.0.0-alpha.4
-
-### Changes
-
-- Deduplicate KIC and KGO CRDs (remove duplicates from KIC) and get rid of
-  deprecated `KonnectExtension` from `gateway-operator.konghq.com` group.
-  [580](https://github.com/Kong/kubernetes-configuration/pull/580)
-- Implemented conversion functions between `Controlplane` `v1beta1` and
-  `v2beta1`, enabling seamless migration between API versions.
-  [#558](https://github.com/Kong/kubernetes-configuration/pull/558)
-- Implemented conversion functions between `KonnectGatewayControlPlane` `v1alpha1` and
-  `v1alpha2`, enabling seamless migration between API versions.
-  To prevent import cycles, `v1alpha1` now imports required types from `v1alpha2`.
-  [#550](https://github.com/Kong/kubernetes-configuration/pull/550)
-
-### Added
-
-- Added `listenersOptions` in `GatewayConfiguration`'s `spec` to allow overriding
-  the default configuration related to a certain listener in the `Gateway`.
-  Each item of `listenersOptions` matches a listener in the `Gateway` which the
-  `GatewayConfiguration` configures by its `name`. The listeners without a
-  matching item in `GatewayConfiguration` remains the default configuration.
-  Currently `nodePort` can be configured to set the exposed nodeport of the
-  dataplane's ingress service port serving for the listener.
-  [#553](https://github.com/Kong/kubernetes-configuration/pull/553)
-
-## [v2.0.0-alpha.3]
-
-[v2.0.0-alpha.3]: https://github.com/Kong/kubernetes-configuration/compare/v2.0.0-alpha.0...v2.0.0-alpha.3
-
-### Breaking Changes
-
-- `ControlPlane` `v2alpha1` has been replaced by `ControlPlane` `v2beta1`
-  `GatewayConfiguration` `v2alpha1` has been replaced by `GatewayConfiguration` `v2beta1`
-  [#548](https://github.com/Kong/kubernetes-configuration/pull/548)
-- `KonnectGatewayControlPlane v1alpha2` has been introduced.
-  The `CreateControlPlaneRequest` fields (`name, description, clusterType, authType, cloudGateway, proxyUrls, labels`) have been moved from the top level of `spec` into a new structured field: `spec.createControlPlaneRequest`. The old flat field layout is no longer supported in `v1alpha2`.
-  *Action required*:
-  - Update any manifests or code that reference these fields to use the new nested structure.
-  [#502](https://github.com/Kong/kubernetes-configuration/pull/502)
-- Removed `all` CRD categories from all CRDs.
-  Added `konnect` category to all Konnect CRDs.
-  [#541](https://github.com/Kong/kubernetes-configuration/pull/541)
-- Removed `KongIngress`, `TCPIngress`, `UDPIngress`.
-  [#542](https://github.com/Kong/kubernetes-configuration/pull/542)
-
-### Changes
-
-- Added test cases to cover CEL rules.
-  [#538](https://github.com/Kong/kubernetes-configuration/pull/538)
-- The `ControlPlane` provisioned conditions reasons have been renamed.
-  The reason for the condition status true is now `Provisioned`, while the reason
-  related to the provisioning non completed yet has been renamed to `ProvisioningInProgress`.
-  [#546](https://github.com/Kong/kubernetes-configuration/pull/546)
-
-### Added
-
-- Added `spec.konnect` for `ControlPlane` `v2alpha1` allows configuration
-  of Konnect-related options:
-  - `consumersSync.enabled`: Configure consumer synchronization with Konnect (enabled/disabled)
-  - `licensing.state`: Enable or disable Konnect licensing
-  - `licensing.initialPollingPeriod`: Set initial polling period for license checks
-  - `licensing.pollingPeriod`: Set regular polling period for license checks
-  - `licensing.storageState`: Configure whether to store licenses fetched from Konnect to Secrets locally (enabled/disabled)
-  - `nodeRefreshPeriod`: Configure refresh period for node information in Konnect
-  - `configUploadPeriod`: Configure period for uploading configuration to Konnect
-  Also added CEL validation rules for `ControlPlane` `v2alpha1` Konnect licensing configuration:
-  - `initialPollingPeriod` and `pollingPeriod` can only be set to `enabled` when `licensing.state` is set to `enabled`
-  - `storageState` can only be set to `enabled` when `licensing.state` is set to `enabled`
-  [#535](https://github.com/Kong/kubernetes-configuration/pull/535)
-
-## [v2.0.0-alpha.0]
-
-[v2.0.0-alpha.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.5.2...v2.0.0-alpha.0
+[v2.0.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.5.2...v2.0.0
 
 ### Breaking Changes
 
@@ -126,16 +41,46 @@ Adding a new version? You'll need three changes:
   `GatewayConfiguration` does not have `ControlPlane` and `DataPlane` extension
   API fields anymore.
   [#470](https://github.com/Kong/kubernetes-configuration/pull/470)
+- `ControlPlane` `v2alpha1` has been replaced by `ControlPlane` `v2beta1`
+  `GatewayConfiguration` `v2alpha1` has been replaced by `GatewayConfiguration` `v2beta1`
+  [#548](https://github.com/Kong/kubernetes-configuration/pull/548)
+- `KonnectGatewayControlPlane v1alpha2` has been introduced.
+  The `CreateControlPlaneRequest` fields (`name, description, clusterType, authType, cloudGateway, proxyUrls, labels`) have been moved from the top level of `spec` into a new structured field: `spec.createControlPlaneRequest`. The old flat field layout is no longer supported in `v1alpha2`.
+  *Action required*:
+- Update any manifests or code that reference these fields to use the new nested structure.
+  [#502](https://github.com/Kong/kubernetes-configuration/pull/502)
+- Removed `all` CRD categories from all CRDs.
+  Added `konnect` category to all Konnect CRDs.
+  [#541](https://github.com/Kong/kubernetes-configuration/pull/541)
+- Removed `KongIngress`, `TCPIngress`, `UDPIngress`.
+  [#542](https://github.com/Kong/kubernetes-configuration/pull/542)
 
 ### Cleanups
 
-- Unsuported `gateway-operator.konghq.com` `KonnectExtension` marked as deprecated
+- Unsupported `gateway-operator.konghq.com` `KonnectExtension` marked as deprecated
   ( it's already been since v1.5.0 but now the CRD is marked as such ).
   The only API version affected is `v1alpha1` which is now marked as unserved.
   Users should migrate to `v1alpha2` version of `konnect.konghq.com/KonnectExtension` API instead.
   [#450](https://github.com/Kong/kubernetes-configuration/pull/450)
 - `DataPlaneMetricsExtension` is not marked as EE only anymore.
   [#456](https://github.com/Kong/kubernetes-configuration/pull/456)
+
+### Changes
+
+- The `ControlPlane` provisioned conditions reasons have been renamed.
+  The reason for the condition status true is now `Provisioned`, while the reason
+  related to the provisioning non completed yet has been renamed to `ProvisioningInProgress`.
+  [#546](https://github.com/Kong/kubernetes-configuration/pull/546)
+- Deduplicate KIC and KGO CRDs (remove duplicates from KIC) and get rid of
+  deprecated `KonnectExtension` from `gateway-operator.konghq.com` group.
+  [#580](https://github.com/Kong/kubernetes-configuration/pull/580)
+- Implemented conversion functions between `Controlplane` `v1beta1` and
+  `v2beta1`, enabling seamless migration between API versions.
+  [#558](https://github.com/Kong/kubernetes-configuration/pull/558)
+- Implemented conversion functions between `KonnectGatewayControlPlane` `v1alpha1` and
+  `v1alpha2`, enabling seamless migration between API versions.
+  To prevent import cycles, `v1alpha1` now imports required types from `v1alpha2`.
+  [#550](https://github.com/Kong/kubernetes-configuration/pull/550)
 
 ### Added
 
@@ -163,6 +108,27 @@ Adding a new version? You'll need three changes:
   - under `spec.objectFilters`:
     - `secrets` and `configMaps` to constrain watched `Secret`s and `ConfigMap`s
     [#534](https://github.com/Kong/kubernetes-configuration/pull/534)
+- Added `spec.konnect` for `ControlPlane` `v2alpha1` allows configuration
+  of Konnect-related options:
+  - `consumersSync.enabled`: Configure consumer synchronization with Konnect (enabled/disabled)
+  - `licensing.state`: Enable or disable Konnect licensing
+  - `licensing.initialPollingPeriod`: Set initial polling period for license checks
+  - `licensing.pollingPeriod`: Set regular polling period for license checks
+  - `licensing.storageState`: Configure whether to store licenses fetched from Konnect to Secrets locally (enabled/disabled)
+  - `nodeRefreshPeriod`: Configure refresh period for node information in Konnect
+  - `configUploadPeriod`: Configure period for uploading configuration to Konnect
+  Also added CEL validation rules for `ControlPlane` `v2alpha1` Konnect licensing configuration:
+  - `initialPollingPeriod` and `pollingPeriod` can only be set to `enabled` when `licensing.state` is set to `enabled`
+  - `storageState` can only be set to `enabled` when `licensing.state` is set to `enabled`
+  [#535](https://github.com/Kong/kubernetes-configuration/pull/535)
+- Added `listenersOptions` in `GatewayConfiguration`'s `spec` to allow overriding
+  the default configuration related to a certain listener in the `Gateway`.
+  Each item of `listenersOptions` matches a listener in the `Gateway` which the
+  `GatewayConfiguration` configures by its `name`. The listeners without a
+  matching item in `GatewayConfiguration` remains the default configuration.
+  Currently `nodePort` can be configured to set the exposed nodeport of the
+  dataplane's ingress service port serving for the listener.
+  [#553](https://github.com/Kong/kubernetes-configuration/pull/553)
 
 ## [v1.5.2]
 
