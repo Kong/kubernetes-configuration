@@ -93,6 +93,7 @@ spec:
                     properties:
                       name:
                         description: Name is the name of the Konnect Control Plane.
+                        minLength: 1
                         type: string
                       namespace:
                         description: |-
@@ -304,6 +305,7 @@ spec:
                       type: string
                     region:
                       description: Region for cloud provider region.
+                      minLength: 1
                       type: string
                   required:
                   - autoscale
@@ -314,6 +316,7 @@ spec:
                 type: array
               version:
                 description: Version specifies the desired Kong Gateway version.
+                minLength: 1
                 type: string
             required:
             - controlPlaneRef
@@ -407,6 +410,7 @@ spec:
                     cloud_gateway_network_id:
                       description: CloudGatewayNetworkID is the ID of the cloud gateway
                         network.
+                      minLength: 1
                       type: string
                     egress_ip_addresses:
                       description: EgressIPAddresses is a list of egress IP addresses
@@ -416,6 +420,7 @@ spec:
                       type: array
                     id:
                       description: ID is the ID of the deployed data-plane group.
+                      minLength: 1
                       type: string
                     private_ip_addresses:
                       description: PrivateIPAddresses is a list of private IP addresses
@@ -429,10 +434,12 @@ spec:
                       type: string
                     region:
                       description: Region ID for cloud provider region.
+                      minLength: 1
                       type: string
                     state:
                       description: State is the current state of the data plane group.
                         Can be e.g. initializing, ready, terminating.
+                      minLength: 1
                       type: string
                   required:
                   - cloud_gateway_network_id
