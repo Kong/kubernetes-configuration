@@ -79,6 +79,7 @@ spec:
                   ServerURL is the URL of the Konnect server.
                   It can be either a full URL with an HTTPs scheme or just a hostname.
                   Please refer to https://docs.konghq.com/konnect/network/ for the list of supported hostnames.
+                minLength: 1
                 type: string
                 x-kubernetes-validations:
                 - message: Server URL is required

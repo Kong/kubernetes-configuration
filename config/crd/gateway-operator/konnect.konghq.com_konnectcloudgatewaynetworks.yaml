@@ -71,9 +71,11 @@ spec:
                 type: array
               cidr_block:
                 description: CIDR block configuration for the network.
+                minLength: 1
                 type: string
               cloud_gateway_provider_account_id:
                 description: Specifies the provider Account ID.
+                minLength: 1
                 type: string
               konnect:
                 description: KonnectConfiguration is the Schema for the KonnectConfiguration
@@ -87,6 +89,7 @@ spec:
                       name:
                         description: Name is the name of the KonnectAPIAuthConfiguration
                           resource.
+                        minLength: 1
                         type: string
                     required:
                     - name
@@ -96,9 +99,11 @@ spec:
                 type: object
               name:
                 description: Specifies the name of the network on Konnect.
+                minLength: 1
                 type: string
               region:
                 description: Region ID for cloud provider region.
+                minLength: 1
                 type: string
               state:
                 description: Initial state for creating a network.

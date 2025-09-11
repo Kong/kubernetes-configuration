@@ -85,6 +85,7 @@ spec:
                           name:
                             description: Name is the name of the Secret containing
                               the Konnect Control Plane's cluster certificate.
+                            minLength: 1
                             type: string
                         required:
                         - name
@@ -115,6 +116,7 @@ spec:
                           name:
                             description: Name is the name of the KonnectAPIAuthConfiguration
                               resource.
+                            minLength: 1
                             type: string
                         required:
                         - name
@@ -145,6 +147,7 @@ spec:
                               name:
                                 description: Name is the name of the Konnect Control
                                   Plane.
+                                minLength: 1
                                 type: string
                               namespace:
                                 description: |-
@@ -246,9 +249,7 @@ spec:
             description: Status is the status of the KonnectExtension resource.
             properties:
               conditions:
-                description: |-
-                  Conditions describe the current conditions of the KonnectExtensionStatus.
-                  Known condition types are:
+                description: Conditions describe the current conditions of the KonnectExtensionStatus.
                 items:
                   description: Condition contains details for one aspect of the current
                     state of this API Resource.
@@ -346,6 +347,7 @@ spec:
                       name:
                         description: Name is the name of the Secret containing the
                           Konnect Control Plane's cluster certificate.
+                        minLength: 1
                         type: string
                     required:
                     - name
@@ -391,6 +393,7 @@ spec:
                   controlPlaneID:
                     description: ControlPlaneID is the Konnect ID of the ControlPlane
                       this KonnectExtension is associated with.
+                    minLength: 1
                     type: string
                   endpoints:
                     description: Endpoints defines the Konnect endpoints for the control
@@ -399,9 +402,11 @@ spec:
                       controlPlane:
                         description: ControlPlaneEndpoint is the endpoint for the
                           control plane.
+                        minLength: 1
                         type: string
                       telemetry:
                         description: TelemetryEndpoint is the endpoint for telemetry.
+                        minLength: 1
                         type: string
                     required:
                     - controlPlane
@@ -493,6 +498,7 @@ spec:
                           name:
                             description: Name is the name of the Secret containing
                               the Konnect Control Plane's cluster certificate.
+                            minLength: 1
                             type: string
                         required:
                         - name
@@ -528,6 +534,7 @@ spec:
                               name:
                                 description: Name is the name of the Konnect Control
                                   Plane.
+                                minLength: 1
                                 type: string
                               namespace:
                                 description: |-
@@ -697,6 +704,7 @@ spec:
                       name:
                         description: Name is the name of the Secret containing the
                           Konnect Control Plane's cluster certificate.
+                        minLength: 1
                         type: string
                     required:
                     - name
@@ -742,6 +750,7 @@ spec:
                   controlPlaneID:
                     description: ControlPlaneID is the Konnect ID of the ControlPlane
                       this KonnectExtension is associated with.
+                    minLength: 1
                     type: string
                   endpoints:
                     description: Endpoints defines the Konnect endpoints for the control
@@ -750,9 +759,11 @@ spec:
                       controlPlane:
                         description: ControlPlaneEndpoint is the endpoint for the
                           control plane.
+                        minLength: 1
                         type: string
                       telemetry:
                         description: TelemetryEndpoint is the endpoint for telemetry.
+                        minLength: 1
                         type: string
                     required:
                     - controlPlane
