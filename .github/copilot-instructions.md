@@ -63,6 +63,7 @@ This runs multiple generators:
 - `generate.crds` - CRD manifests via controller-tools
 - `generate.deepcopy` - Runtime deepcopy methods
 - `generate.clientsets` - Go client libraries
+- `generate.applyconfigurations` - Apply configurations for server-side apply
 - `generate.docs` - API reference documentation
 - `generate.apitypes-funcs` - Helper functions
 
@@ -98,6 +99,7 @@ All CRDs should include these kubebuilder markers:
 // +kubebuilder:resource:categories=kong
 // +kubebuilder:storageversion  // For the storage version
 // +kubebuilder:subresource:status
+// +kubebuilder:ac:generate=true  // For apply configuration generation
 ```
 
 ### Common Validation Patterns
@@ -150,11 +152,32 @@ Gateway Operator APIs heavily integrate with Kubernetes Gateway API:
 
 1. Add to appropriate API package with correct markers
 2. Add channel annotation: `+kong:channels=<channel-name>`
-3. Add to unit tests in `test/unit/`
-4. Add CRD validation tests in `test/crdsvalidation/`
-5. Update `scripts/apitypes-funcs/supportedtypes.go` if helper functions needed
-6. Run `make generate` and commit all generated files
-7. Add sample manifests to `config/samples/`
+3. Add apply configuration marker: `+kubebuilder:ac:generate=true`
+4. Add to unit tests in `test/unit/`
+5. Add CRD validation tests in `test/crdsvalidation/`
+6. Update `scripts/apitypes-funcs/supportedtypes.go` if helper functions needed
+7. Run `make generate` and commit all generated files
+8. Add sample manifests to `config/samples/`
+
+## Apply Configurations
+
+The repository generates apply configurations for server-side apply with structured merge-diff. These are located in `pkg/configuration/v1alpha1/` and enable:
+
+- **Partial updates**: Only specified fields are updated
+- **Conflict resolution**: Kubernetes manages field ownership automatically
+- **Efficient operations**: Only modified fields sent to API server
+
+Example usage:
+```go
+import applyv1alpha1 "github.com/kong/kubernetes-configuration/v2/pkg/configuration/v1alpha1"
+
+service := applyv1alpha1.KongService("my-service", "default").
+    WithSpec(applyv1alpha1.KongServiceSpec().
+        WithHost("api.example.com").
+        WithPort(80))
+```
+
+Add `+kubebuilder:ac:generate=true` marker to enable generation for new CRDs.
 
 ## Testing Against Live Clusters
 
