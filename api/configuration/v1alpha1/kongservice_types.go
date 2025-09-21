@@ -42,6 +42,7 @@ import (
 // +kubebuilder:validation:XValidation:rule="(!has(self.spec.controlPlaneRef)) ? true : (!has(self.status) || !self.status.conditions.exists(c, c.type == 'Programmed' && c.status == 'True')) ? true : oldSelf.spec.controlPlaneRef == self.spec.controlPlaneRef", message="spec.controlPlaneRef is immutable when an entity is already Programmed"
 // +apireference:kgo:include
 // +kong:channels=gateway-operator
+// +kubebuilder:ac:generate=true
 type KongService struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

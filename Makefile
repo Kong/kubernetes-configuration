@@ -153,7 +153,7 @@ CRD_OPTIONS ?= "+crd:allowDangerousTypes=true"
 API_DIR ?= api
 
 .PHONY: generate
-generate: generate.crds generate.deepcopy generate.clientsets generate.docs generate.apitypes-funcs
+generate: generate.crds generate.deepcopy generate.clientsets generate.docs generate.apitypes-funcs generate.applyconfigurations
 
 .PHONY: generate.apitypes-funcs
 generate.apitypes-funcs:
@@ -186,6 +186,17 @@ generate.clientsets: client-gen
 		--input gateway-operator/v2beta1 \
 		--output-dir pkg/ \
 		--output-pkg $(REPO_URL)/$(GO_MOD_MAJOR_VERSION)/pkg/
+
+# this will generate the apply configurations for server-side apply with structured merge-diff.
+.PHONY: generate.applyconfigurations
+generate.applyconfigurations:
+	GOBIN=$(PROJECT_DIR)/bin go install -v \
+		k8s.io/code-generator/cmd/applyconfiguration-gen@v0.34.0
+	$(PROJECT_DIR)/bin/applyconfiguration-gen \
+		--go-header-file ./hack/boilerplate.go.txt \
+		--output-dir pkg/ \
+		--output-pkg "$(REPO_URL)/$(GO_MOD_MAJOR_VERSION)/pkg" \
+		./api/configuration/v1alpha1
 
 .PHONY: generate.docs
 generate.docs: generate.apidocs
