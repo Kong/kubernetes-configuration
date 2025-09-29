@@ -25,6 +25,16 @@ Adding a new version? You'll need three changes:
 - [v1.0.2](#v102)
 - [v1.0.0](#v100)
 
+## Unreleased
+
+### Fixes
+
+- Add `status.clusterType` in `KonnectGatewayControlPlane` to save the
+  clusterType of the Konnect control plane after the `KonnectGatewayControlPlane`
+  is attached to a Konnect control plane. This is used to fix the wrong
+  cluster type fetched in `KonnectExtension` for mirrored control planes.
+  [#626](https://github.com/Kong/kubernetes-configuration/pull/626)
+
 ## [v2.0.0]
 
 [v2.0.0]: https://github.com/Kong/kubernetes-configuration/compare/v1.5.2...v2.0.0
