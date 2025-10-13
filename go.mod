@@ -3,7 +3,7 @@ module github.com/kong/kubernetes-configuration/v2
 go 1.24.0
 
 require (
-	github.com/Kong/sdk-konnect-go v0.9.1
+	github.com/Kong/sdk-konnect-go v0.10.1
 	github.com/kong/go-kong v0.69.0
 	github.com/stretchr/testify v1.11.1
 	k8s.io/api v0.33.4

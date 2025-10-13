@@ -1,5 +1,5 @@
-github.com/Kong/sdk-konnect-go v0.9.1 h1:EjpbYVzjph4eTG5SRsR1nFl5ZVs036A9E11T29MqfXQ=
-github.com/Kong/sdk-konnect-go v0.9.1/go.mod h1:lDQ6eNibkcSYhqZd+A4qhoLbNCrJGtvGOKttJFJX0OQ=
+github.com/Kong/sdk-konnect-go v0.10.1 h1:UHAO5oPAP5+0a5iX0YrR9iGYUcz9nfZIcJlot4hMau0=
+github.com/Kong/sdk-konnect-go v0.10.1/go.mod h1:az8esosWWya1qnpOqY40xopT0uhp0oMNmefZXtv9Yn0=
 github.com/Masterminds/goutils v1.1.1 h1:5nUrii3FMTL5diU80unEVvNevw1nH4+ZV4DSLVJLSYI=
 github.com/Masterminds/goutils v1.1.1/go.mod h1:8cTjp+g8YejhMuvIA5y2vz3BpJxksy863GQaJW2MFNU=
 github.com/Masterminds/semver v1.5.0 h1:H65muMkzWKEuNDnfl9d70GUjFniHKHRbFPGBuZ3QEww=
