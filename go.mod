@@ -3,7 +3,7 @@ module github.com/kong/kubernetes-configuration/v2
 go 1.24.0
 
 require (
-	github.com/Kong/sdk-konnect-go v0.9.1
+	github.com/Kong/sdk-konnect-go v0.11.0
 	github.com/kong/go-kong v0.69.0
 	github.com/stretchr/testify v1.11.1
 	k8s.io/api v0.33.4
@@ -39,7 +39,6 @@ require (
 	github.com/Masterminds/sprig v2.22.0+incompatible
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/emicklei/go-restful/v3 v3.12.0 // indirect
-	github.com/ericlagergren/decimal v0.0.0-20240411145413-00de7ca16731 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-openapi/jsonpointer v0.21.0 // indirect
 	github.com/go-openapi/jsonreference v0.21.0 // indirect
