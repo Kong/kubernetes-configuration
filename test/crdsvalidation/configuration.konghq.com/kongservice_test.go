@@ -100,4 +100,116 @@ func TestKongService(t *testing.T) {
 			},
 		}.Run(t)
 	})
+
+	t.Run("adopt options testing", func(t *testing.T) {
+		common.TestCasesGroup[*configurationv1alpha1.KongService]{
+			{
+				Name: "valid adopt options",
+				TestObject: &configurationv1alpha1.KongService{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: configurationv1alpha1.KongServiceSpec{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						Adopt: &commonv1alpha1.AdoptOptions{
+							From: commonv1alpha1.AdoptSourceKonnect,
+							Konnect: &commonv1alpha1.AdoptKonnectOptions{
+								ID: "test-konnect-id",
+							},
+						},
+					},
+				},
+			},
+			{
+				Name: "invalid adopt.from",
+				TestObject: &configurationv1alpha1.KongService{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: configurationv1alpha1.KongServiceSpec{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						Adopt: &commonv1alpha1.AdoptOptions{
+							From: "invalid-adopt-from",
+							Konnect: &commonv1alpha1.AdoptKonnectOptions{
+								ID: "test-konnect-id",
+							},
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("spec.adopt.from: Unsupported value"),
+			},
+			{
+				Name: "missing adopt.konnect",
+				TestObject: &configurationv1alpha1.KongService{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: configurationv1alpha1.KongServiceSpec{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						Adopt: &commonv1alpha1.AdoptOptions{
+							From: commonv1alpha1.AdoptSourceKonnect,
+						},
+					},
+				},
+				ExpectedErrorMessage: lo.ToPtr("Must specify Konnect options when from='konnect'"),
+			},
+			{
+				Name: "adopt.konnect.id is immutable",
+				TestObject: &configurationv1alpha1.KongService{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: configurationv1alpha1.KongServiceSpec{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						Adopt: &commonv1alpha1.AdoptOptions{
+							From: commonv1alpha1.AdoptSourceKonnect,
+							Konnect: &commonv1alpha1.AdoptKonnectOptions{
+								ID: "test-konnect-id",
+							},
+						},
+					},
+				},
+				Update: func(ks *configurationv1alpha1.KongService) {
+					ks.Spec.Adopt.Konnect.ID = "test-konnect-id-2"
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("konnect.id is immutable"),
+			},
+			{
+				Name: "Cannot unset adopt",
+				TestObject: &configurationv1alpha1.KongService{
+					ObjectMeta: common.CommonObjectMeta,
+					Spec: configurationv1alpha1.KongServiceSpec{
+						ControlPlaneRef: &commonv1alpha1.ControlPlaneRef{
+							Type: configurationv1alpha1.ControlPlaneRefKonnectNamespacedRef,
+							KonnectNamespacedRef: &commonv1alpha1.KonnectNamespacedRef{
+								Name: "test-konnect-control-plane",
+							},
+						},
+						Adopt: &commonv1alpha1.AdoptOptions{
+							From: commonv1alpha1.AdoptSourceKonnect,
+							Konnect: &commonv1alpha1.AdoptKonnectOptions{
+								ID: "test-konnect-id",
+							},
+						},
+					},
+				},
+				Update: func(ks *configurationv1alpha1.KongService) {
+					ks.Spec.Adopt = nil
+				},
+				ExpectedUpdateErrorMessage: lo.ToPtr("Cannot set or unset spec.adopt in updates"),
+			},
+		}.Run(t)
+	})
 }
