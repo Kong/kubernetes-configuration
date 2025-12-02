@@ -267,6 +267,13 @@ ConfigurationDataPlaneGroupAutoscaleType is the type of autoscale configuration 
 _Appears in:_
 - [ConfigurationDataPlaneGroupAutoscale](#configurationdataplanegroupautoscale)
 
+Allowed values:
+
+| Value | Description |
+| --- | --- |
+| `static` | ConfigurationDataPlaneGroupAutoscaleTypeStatic is the autoscale type for static configuration.<br /> |
+| `autopilot` | ConfigurationDataPlaneGroupAutoscaleTypeAutopilot is the autoscale type for autopilot configuration.<br /> |
+
 #### ConfigurationDataPlaneGroupEnvironmentField
 
 
@@ -362,6 +369,13 @@ KonnectAPIAuthType is the type of authentication used to authenticate with the K
 
 _Appears in:_
 - [KonnectAPIAuthConfigurationSpec](#konnectapiauthconfigurationspec)
+
+Allowed values:
+
+| Value | Description |
+| --- | --- |
+| `token` | KonnectAPIAuthTypeToken is the token authentication type.<br /> |
+| `secretRef` | KonnectAPIAuthTypeSecretRef is the secret reference authentication type.<br /> |
 
 #### KonnectCloudGatewayDataPlaneGroupConfigurationSpec
 
@@ -511,6 +525,13 @@ KonnectExtensionClusterType is the type of the Konnect Control Plane.
 
 _Appears in:_
 - [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
+
+Allowed values:
+
+| Value | Description |
+| --- | --- |
+| `ControlPlane` | ClusterTypeControlPlane is the type of the Konnect Control Plane.<br /> |
+| `K8SIngressController` | ClusterTypeK8sIngressController is the type of the Kubernetes Control Plane.<br /> |
 
 #### KonnectExtensionControlPlane
 
@@ -681,6 +702,13 @@ ProvisioningMethod is the type of the provisioning methods available to provisio
 _Appears in:_
 - [CertificateSecret](#certificatesecret)
 
+Allowed values:
+
+| Value | Description |
+| --- | --- |
+| `Manual` | ManualSecretProvisioning is the method used to provision the certificate manually.<br /> |
+| `Automatic` | AutomaticSecretProvisioning is the method used to provision the certificate automatically.<br /> |
+
 #### SecretRef
 
 
@@ -726,6 +754,13 @@ TransitGatewayType defines the type of Konnect transit gateway.
 _Appears in:_
 - [KonnectCloudGatewayTransitGatewaySpec](#konnectcloudgatewaytransitgatewayspec)
 - [KonnectTransitGatewayAPISpec](#konnecttransitgatewayapispec)
+
+Allowed values:
+
+| Value | Description |
+| --- | --- |
+| `AWSTransitGateway` | TransitGatewayTypeAWSTransitGateway defines the the AWS transit gateway type.<br /> |
+| `AzureTransitGateway` | TransitGatewayTypeAzureTransitGateway defines the Azure transit gateway type.<br /> |
 
 
 ## konnect.konghq.com/v1alpha2
@@ -968,6 +1003,13 @@ KonnectExtensionClusterType is the type of the Konnect Control Plane.
 _Appears in:_
 - [KonnectExtensionControlPlaneStatus](#konnectextensioncontrolplanestatus)
 
+Allowed values:
+
+| Value | Description |
+| --- | --- |
+| `ControlPlane` | ClusterTypeControlPlane is the type of the Konnect Control Plane.<br /> |
+| `K8SIngressController` | ClusterTypeK8sIngressController is the type of the Kubernetes Control Plane.<br /> |
+
 #### KonnectExtensionControlPlane
 
 
@@ -1111,6 +1153,13 @@ ProvisioningMethod is the type of the provisioning methods available to provisio
 
 _Appears in:_
 - [CertificateSecret](#certificatesecret)
+
+Allowed values:
+
+| Value | Description |
+| --- | --- |
+| `Manual` | ManualSecretProvisioning is the method used to provision the certificate manually.<br /> |
+| `Automatic` | AutomaticSecretProvisioning is the method used to provision the certificate automatically.<br /> |
 
 #### SecretRef
 
