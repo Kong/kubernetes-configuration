@@ -17,4 +17,4 @@ actionlint: "1.7.7"
 # renovate: datasource=github-releases depName=koalaman/shellcheck
 shellcheck: "0.11.0"
 # renovate: datasource=github-tags depName=DavidAnson/markdownlint-cli2
-markdownlint-cli2: "0.18.1"
+markdownlint-cli2: "0.20.0"
