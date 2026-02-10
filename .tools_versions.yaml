@@ -3,7 +3,7 @@ kube-code-generator: "0.34.1"
 # renovate: datasource=github-releases depName=kubernetes-sigs/controller-tools
 controller-tools: "0.19.0"
 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
-kustomize: "5.8.0"
+kustomize: "5.8.1"
 # renovate: datasource=github-releases depName=elastic/crd-ref-docs
 crd-ref-docs: "0.2.0"
 # renovate: datasource=github-releases depName=mikefarah/yq
