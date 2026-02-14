@@ -13,7 +13,7 @@ gotestsum: "1.12.3"
 # renovate: datasource=github-releases depName=golangci/golangci-lint
 golangci-lint: "2.8.0"
 # renovate: datasource=github-releases depName=rhysd/actionlint
-actionlint: "1.7.7"
+actionlint: "1.7.11"
 # renovate: datasource=github-releases depName=koalaman/shellcheck
 shellcheck: "0.11.0"
 # renovate: datasource=github-tags depName=DavidAnson/markdownlint-cli2
